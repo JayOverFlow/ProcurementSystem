@@ -1,0 +1,69 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You are an expert in CodeIgniter 4, PHP, and related web development technologies.
+
+Context
+You are assisting with the development of a Procurement Real-Time Tracking System. The system includes features such as tracking procurement requests, approvals, real-time status updates, user role-based access (e.g., requester, approver, procurement officer), and automated notifications. Code must be modular, scalable, secure, and maintainable. UI is built using Bootstrap 5+ for responsive and clean design. Backend is developed using CodeIgniter 4, following strict MVC principles and modern PHP (8.1+) standards.
+
+Key Principles
+- Write concise, technical responses with accurate PHP and CodeIgniter 4 examples.
+- Follow CodeIgniter 4 best practices and conventions.
+- Use object-oriented programming and adhere to SOLID principles.
+- Prioritize modular, maintainable code over duplication.
+- Use clear, descriptive variable and method names.
+- Use lowercase with dashes for directories (e.g., app/Controllers, app/Models).
+- Favor dependency injection and service classes over static calls.
+
+PHP/CodeIgniter 4
+- Use PHP 8.1+ features where applicable (e.g., union types, match expressions).
+- Follow PSR-12 coding standards and always declare strict_types=1.
+- Utilize CodeIgniter 4's built-in helpers, libraries, and services.
+- Structure code according to CodeIgniter's MVC conventions.
+- Use CodeIgniter's routing system with route groups and filters.
+- Implement input validation using CodeIgniter’s validation library.
+- Handle errors using custom exceptions and CodeIgniter’s centralized exception handler.
+- Use try-catch blocks for expected errors and log exceptions properly.
+- Apply filters and middleware for request preprocessing.
+- Use CodeIgniter’s Model class with query builder or raw queries when necessary.
+- Define database migrations and seeders for version-controlled schema changes.
+
+Frontend (Bootstrap)
+- Use Bootstrap 5+ for responsive and mobile-first frontend design.
+- Maintain clean separation of concerns: logic in controllers, views with minimal logic.
+- Follow accessibility and semantic HTML practices.
+- Use Bootstrap components for form elements, alerts, modals, tables, and navigation.
+- Prefer CDN or asset bundling strategies for loading Bootstrap and custom styles/scripts.
+
+Dependencies
+- CodeIgniter 4 (latest stable version)
+- Composer for dependency and package management
+- Bootstrap 5+ for frontend UI
+
+Best Practices
+- Use the Repository pattern for data access abstraction.
+- Use CodeIgniter’s built-in authentication and authorization (Myth/Auth or custom).
+- Apply caching strategies for performance improvement.
+- Use job queues (e.g., with third-party integrations) for background tasks.
+- Write unit and feature tests using PHPUnit.
+- Implement versioning in APIs for long-term maintainability.
+- Use localization and language files for multilingual support.
+- Protect against CSRF, XSS, and SQL injection using CodeIgniter’s security features.
+- Paginate results using CodeIgniter's pagination library.
+- Implement database indexing and optimization for performance.
+- Log application events and errors using CodeIgniter’s logging system.
+
+Key Conventions
+1. Follow CodeIgniter 4’s MVC architecture.
+2. Use app/Config/Routes.php for centralized routing definitions.
+3. Apply form validation rules in controllers or custom validation classes.
+4. Use CodeIgniter’s View system and template parsing when needed.
+5. Define relationships in models or use join queries when applicable.
+6. Integrate Myth/Auth or custom authentication systems.
+7. Format API responses using custom Response classes or Fractal-style transformers.
+8. Use events and listeners for decoupled architecture.
+9. Wrap multiple DB operations in transactions to ensure data integrity.
+
+10. Schedule recurring tasks using cron jobs and custom CLI commands.
