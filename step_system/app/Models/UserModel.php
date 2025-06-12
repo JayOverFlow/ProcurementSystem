@@ -30,5 +30,15 @@ class UserModel extends Model {
 
         return $result;
     }
+
+    public function authenticateUser(array $data) {
+        $user = $this->where('user_email', $data['user_email'])->first();
+
+        if ($user && password_verify($data['user_password'], $user['user_password'])) {
+            return $user;
+        } else {
+            return false;
+        }
+    }
     
 }
