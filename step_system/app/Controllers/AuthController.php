@@ -5,47 +5,161 @@ use App\Models\UserModel;
 
 class AuthController extends BaseController {
     protected $userModel;
+    protected $validation;
 
     public function __construct() {
         $this->userModel = new UserModel();
+        $this->validation = service('validation');
+        helper(['form', 'url']);
     }
 
-    public function register() {
+    public function testing() {
+        // If the request is post
         if ($this->request->is('post')) {
-            $validation = \Config\Services::validation();
 
-            $rules = [
-                'user_firstname' => 'required|alpha_space|min_length[2]|max_length[80]',
-                'user_middlename' => 'permit_empty|min_length[2]|max_length[50]',
-                'user_lastname' => 'required|alpha_space|min_length[2]|max_length[50]',
-                'user_suffix' => 'permit_empty|min_length[1]|max_length[15]',
-                'user_password' => 'required|min_length[8]|max_length[70]',
-                'confirm_password' => 'required|matches[user_password]',
-                'user_email' => 'required|valid_email|is_unique[users_tbl.user_email]',
-                'user_type' => 'required|in_list[Faculty, Staff]'
-            ];
-    
-            if (!$this->validate($rules)) {
-                return view('auth/register', 
-                    ['validation' => $this->validator]);
-            }
-
-            $userModel = new UserModel();
-            $userModel->insert([
+            // Get user data
+            $data = [
                 'user_firstname' => $this->request->getPost('user_firstname'),
                 'user_middlename' => $this->request->getPost('user_middlename'),
                 'user_lastname' => $this->request->getPost('user_lastname'),
                 'user_suffix' => $this->request->getPost('user_suffix'),
+                // 'user_tupt_id' => $this->request->getPost('user_tupt_id'),
                 'user_email' => $this->request->getPost('user_email'),
-                'user_password' => password_hash($this->request->getPost('user_password'), PASSWORD_DEFAULT),
-                'user_type' => $this->request->getPost('user_type')
-            ]);
-            
-            return redirect()->to('/login')->with('success', 'Registration successful. Please login.');
-        } else {
-            return view('auth/register');
+                'user_password' => $this->request->getPost('user_password'),
+                'confirm_password' => $this->request->getPost('confirm_password'),
+                'user_type' => $this->request->getPost('user_type'),
+            ];
+
+            // Define validtion rules
+            $rules = [
+                'user_firstname' => [
+                    'rules' => 'required|alpha_space|max_length[80]',
+                    'errors' => [
+                        'required' => 'First name is required',
+                        'max_length' => 'First name cannot exceed 10 characters'
+                    ]
+                ],
+                'user_middlename' => [
+                    'rules' => 'required|max_length[50]',
+                    'errors' => [
+                        'required' => 'Middle name is required',
+                        'max_length' => 'Middle name cannot exceed 50 characters'
+                    ]
+                ],
+                'user_lastname' => [
+                    'rules' => 'required|max_length[50]',
+                    'errors' => [
+                        'required' => 'Last name is required',
+                        'max_length' => 'Last name cannot exceed 50 characters'
+                    ]
+                ],
+                'user_suffix' => [
+                    'rules' => 'permit_empty|max_length[15]',
+                    'errors' => [
+                        'max_length' => 'Suffix cannot exceed 15 characters'
+                    ]
+                ],
+                // 'user_tupt_id' => [
+                //     'rules' => 'required|exact_length[6]|is_unique[users_tbl.user_tupt_id]',
+                //     'errors' => [
+                //         'required' => 'TUP-T ID is required',
+                //         'exact_length' => 'TUP-T ID must be exactly 6 characters',
+                //         'is_unique' => 'This TUP-T ID is already registered'
+                //     ]
+                // ],
+                'user_email' => [
+                    'rules' => 'required|regex_match[^[a-zA-Z0-9._%+-]+@tup\.edu\.ph$]|is_unique[users_tbl.user_email]',
+                    'errors' => [
+                        'required' => 'Email address is required',
+                        'regex_match' => 'Please use a valid TUP email address (@tup.edu.ph)',
+                        'is_unique' => 'This email address is already registered'
+                    ]
+                ],
+                'user_password' => [
+                    'rules' => 'required|min_length[8]|max_length[70]',
+                    'errors' => [
+                        'required' => 'Password is required',
+                        'min_length' => 'Password must be at least 8 characters long',
+                        'max_length' => 'Password cannot exceed 70 characters'
+                    ]
+                ],
+                'confirm_password' => [
+                    'rules' => 'required|matches[user_password]',
+                    'errors' => [
+                        'required' => 'Please confirm your password',
+                        'matches' => 'Passwords do not match'
+                    ]
+                ],
+                'user_type' => [
+                    'rules' => 'required|in_list[Faculty, Staff]',
+                    'errors' => [
+                        'required' => 'User type is required',
+                        'in_list' => 'Please select either Faculty or Staff'
+                    ]
+                ]
+            ];
+
+            if (!$this->validate($rules)) {
+                return view('auth/testing', [
+                    'validation' => $this->validator,
+                    'data' => $data
+                ]);
+            }
+
+            return view('auth/login');
         }
+        
+        // For GET request, initialize empty data
+        $data = [
+            'user_firstname' => '',
+            'user_middlename' => '',
+            'user_lastname' => '',
+            'user_suffix' => '',
+            'user_email' => '',
+            'user_password' => '',
+            'confirm_password' => '',
+            'user_type' => ''
+        ];
+        
+        return view('auth/testing', ['data' => $data]);
     }
+
+    // public function register() {
+    //     if ($this->request->is('post')) {
+    //         $validation = \Config\Services::validation();
+
+    //         $rules = [
+    //             'user_firstname' => 'required|alpha_space|min_length[2]|max_length[80]',
+    //             'user_middlename' => 'permit_empty|min_length[2]|max_length[50]',
+    //             'user_lastname' => 'required|alpha_space|min_length[2]|max_length[50]',
+    //             'user_suffix' => 'permit_empty|min_length[1]|max_length[15]',
+    //             'user_password' => 'required|min_length[8]|max_length[70]',
+    //             'confirm_password' => 'required|matches[user_password]',
+    //             'user_email' => 'required|valid_email|is_unique[users_tbl.user_email]',
+    //             'user_type' => 'required|in_list[Faculty, Staff]'
+    //         ];
+    
+    //         if (!$this->validate($rules)) {
+    //             return view('auth/register', 
+    //                 ['validation' => $this->validator]);
+    //         }
+
+    //         $userModel = new UserModel();
+    //         $userModel->insert([
+    //             'user_firstname' => $this->request->getPost('user_firstname'),
+    //             'user_middlename' => $this->request->getPost('user_middlename'),
+    //             'user_lastname' => $this->request->getPost('user_lastname'),
+    //             'user_suffix' => $this->request->getPost('user_suffix'),
+    //             'user_email' => $this->request->getPost('user_email'),
+    //             'user_password' => password_hash($this->request->getPost('user_password'), PASSWORD_DEFAULT),
+    //             'user_type' => $this->request->getPost('user_type')
+    //         ]);
+            
+    //         return redirect()->to('/login')->with('success', 'Registration successful. Please login.');
+    //     } else {
+    //         return view('auth/register');
+    //     }
+    // }
 
     public function login() {
         if ($this->request->is('post')) {

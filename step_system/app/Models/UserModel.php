@@ -7,7 +7,6 @@ class UserModel extends Model {
 
     protected $table = 'users_tbl';
     protected $primaryKey = 'user_id';
-    protected $user_email;
 
     protected $allowedFields = [
         'user_firstname',
@@ -20,13 +19,16 @@ class UserModel extends Model {
         'user_dep_fk'
     ];
 
-    public function __construct($user_email = null)
-    {
-        parent::__construct();
-        $this->user_email = $user_email;
-    }
+    public function insertUser(array $data) {
+        // Hash the password
+        if (isset($data['user_password'])) {
+            $data['user_password'] = password_hash($data['user_password'], PASSWORD_DEFAULT);
+        }
 
-    public function getUserByEmail() {
-        return $this->where('user_email', $this->user_email)->first();
+        // Inserts data and returns true on success and false on failure
+        $result = $this->insert($data, false);
+
+        return $result;
     }
+    
 }
