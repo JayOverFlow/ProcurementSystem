@@ -23,7 +23,7 @@ class AuthController extends BaseController {
                 'user_middlename' => $this->request->getPost('user_middlename'),
                 'user_lastname' => $this->request->getPost('user_lastname'),
                 'user_suffix' => $this->request->getPost('user_suffix'),
-                // 'user_tupt_id' => $this->request->getPost('user_tupt_id'),
+                'user_tupt_id' => $this->request->getPost('user_tupt_id'),
                 'user_email' => $this->request->getPost('user_email'),
                 'user_password' => $this->request->getPost('user_password'),
                 'confirm_password' => $this->request->getPost('confirm_password'),
@@ -59,14 +59,14 @@ class AuthController extends BaseController {
                         'max_length' => 'Suffix cannot exceed 15 characters'
                     ]
                 ],
-                // 'user_tupt_id' => [
-                //     'rules' => 'required|exact_length[6]|is_unique[users_tbl.user_tupt_id]',
-                //     'errors' => [
-                //         'required' => 'TUP-T ID is required',
-                //         'exact_length' => 'TUP-T ID must be exactly 6 characters',
-                //         'is_unique' => 'This TUP-T ID is already registered'
-                //     ]
-                // ],
+                'user_tupt_id' => [
+                    'rules' => 'required|exact_length[6]|is_unique[users_tbl.user_tupt_id]',
+                    'errors' => [
+                        'required' => 'TUP-T ID is required',
+                        'exact_length' => 'TUP-T ID must be exactly 6 characters',
+                        'is_unique' => 'This TUP-T ID is already registered'
+                    ]
+                ],
                 'user_email' => [
                     'rules' => 'required|regex_match[^[a-zA-Z0-9._%+-]+@tup\.edu\.ph$]|is_unique[users_tbl.user_email]',
                     'errors' => [
