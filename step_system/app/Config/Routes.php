@@ -21,3 +21,10 @@ $routes->group('', function($routes) {
     $routes->get('login', 'AuthController::login');
     $routes->post('login', 'AuthController::login');
 });
+
+
+// DH Dashboard
+$routes->group('', function($routes) {
+    $routes->get('dh-dashboard', 'Dashboard\DepartmentHeadDashboard::index');
+
+});
