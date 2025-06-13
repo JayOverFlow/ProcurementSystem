@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Dashboard;
+namespace App\Controllers\DepartmentHead;
 use App\Controllers\BaseController;
 
-class DepartmentHeadDashboard extends BaseController {
+class DHDashboard extends BaseController {
 
     public function index() {
         return view('user-pages/department-head/dh-dashboard');

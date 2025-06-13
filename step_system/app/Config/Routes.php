@@ -23,8 +23,9 @@ $routes->group('', function($routes) {
 });
 
 
-// DH Dashboard
+// Department Head
 $routes->group('', function($routes) {
-    $routes->get('dh-dashboard', 'Dashboard\DepartmentHeadDashboard::index');
+    $routes->get('dh-dashboard', 'DepartmentHead\DHDashboard::index');
+    $routes->get('dh-mr', 'DepartmentHead\DHMr::index');
 
 });
