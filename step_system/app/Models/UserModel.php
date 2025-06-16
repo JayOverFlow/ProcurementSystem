@@ -16,7 +16,9 @@ class UserModel extends Model {
         'user_password',
         'user_type',
         'user_role_fk',
-        'user_dep_fk'
+        'user_dep_fk',
+        'user_suffix',
+        'user_tupid'
     ];
 
     public function insertUser(array $data) {
