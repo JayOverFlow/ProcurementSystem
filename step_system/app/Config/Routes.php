@@ -17,6 +17,15 @@ $routes->group('', function($routes) {
     $routes->post('register', 'AuthController::register');
 });
 
+// For registration stepper for AJAX
+$routes->group('auth', function($routes) {
+    $routes->post('sendOtp', 'AuthController::sendOtp');
+    $routes->post('verifyOtp', 'AuthController::verifyOtp');
+    $routes->post('resendOtp', 'AuthController::resendOtp');
+    $routes->post('checkTupId', 'AuthController::checkTupId');
+    $routes->post('checkEmail', 'AuthController::checkEmail');
+});
+
 $routes->group('', function($routes) {
     $routes->get('login', 'AuthController::login');
     $routes->post('login', 'AuthController::login');
