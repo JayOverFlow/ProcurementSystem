@@ -117,7 +117,7 @@ table.dataTable {
   text-transform: initial;
   font-weight: 600;
   border-top: none;
-  background: #fae2e4;
+  background: rgba(234, 241, 255, 0.74);
   border-right: none;
   border-left: none;
   padding-top: 0;
@@ -189,7 +189,7 @@ table.dataTable {
 div.dataTables_wrapper div.dataTables_info {
   padding-top: 0.85em;
   white-space: normal;
-  color: #c62742;
+  color: #4361ee;
   font-weight: 600;
   border: 1px solid #e0e6ed;
   display: inline-block;
@@ -328,7 +328,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   width: 17px;
 }
 .page-item.active .page-link {
-  background-color: #c62742;
+  background-color: #4361ee;
 }
 
 #alter_pagination_next a, #alter_pagination_previous a {

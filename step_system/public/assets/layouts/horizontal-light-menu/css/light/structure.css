@@ -113,7 +113,7 @@ code {
 #content {
   width: 50%;
   flex-grow: 8;
-  margin-top: 120px;
+  margin-top: 119px;
   margin-bottom: 0;
   -webkit-transition: 0.3s ease all;
   transition: 0.3s ease all;
@@ -237,7 +237,6 @@ body.enable-secondaryNav .layout-top-spacing {
   padding: 4px 0 4px 0;
   padding: 11px 0 11px 0;
   width: 100%;
-  box-shadow: 0px 0px 5px 0px;
 }
 .header-container.container-xxl {
   left: 0;
@@ -255,8 +254,8 @@ body.enable-secondaryNav .layout-top-spacing {
   justify-content: space-between;
 }
 .header-container .theme-brand .theme-logo a img {
-  width: 100px;
-  height:40px;
+  width: 34px;
+  height: 34px;
 }
 .header-container .theme-text {
   margin-right: 32px;
@@ -788,7 +787,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
 .sidebar-wrapper #sidebar {
   width: 100%;
   border-radius: 8px;
-  background: #c62742;
+  background: #191e3a;
   min-height: 51px;
 }
 
