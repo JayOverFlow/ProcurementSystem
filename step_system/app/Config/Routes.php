@@ -37,3 +37,14 @@ $routes->group('', function($routes) {
     $routes->get('dh-mr', 'DepartmentHead\DHMr::index');
 
 });
+
+// @Emman Proposed routing convention from sir PJ's discussion
+// $routes->group('dh', function($routes) {
+//     $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
+//     $routes->get('mr', 'DepartmentHead\DHMr::index');
+
+//     // The browser's URL/URI difference:
+//     // localhost:8080/dh-dashboard, it will be localhost:8080/dh/dashboard
+//     // localhost:8080/dh-mr, it will be localhost:8080/dh/mr
+
+// });
