@@ -30,3 +30,10 @@ $routes->group('', function($routes) {
     $routes->get('login', 'AuthController::login');
     $routes->post('login', 'AuthController::login');
 });
+
+// Department Head
+$routes->group('', function($routes) {
+    $routes->get('dh-dashboard', 'DepartmentHead\DHDashboard::index');
+    $routes->get('dh-mr', 'DepartmentHead\DHMr::index');
+
+});
