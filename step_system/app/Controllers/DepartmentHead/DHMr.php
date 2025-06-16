@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controllers\DepartmentHead;
+
 use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class DHMr extends BaseController {
 

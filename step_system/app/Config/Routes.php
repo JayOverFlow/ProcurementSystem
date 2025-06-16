@@ -23,6 +23,13 @@ $routes->group('', function($routes) {
 });
 
 
+// Master Admin
+$routes->group('', function($routes) {
+    $routes->get('ma-dashboard', 'MasterAdmin\MADashboard::index');
+
+});
+
+
 // Department Head
 $routes->group('', function($routes) {
     $routes->get('dh-dashboard', 'DepartmentHead\DHDashboard::index');

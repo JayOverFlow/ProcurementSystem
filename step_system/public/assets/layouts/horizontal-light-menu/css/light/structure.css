@@ -113,7 +113,7 @@ code {
 #content {
   width: 50%;
   flex-grow: 8;
-  margin-top: 119px;
+  margin-top: 120px;
   margin-bottom: 0;
   -webkit-transition: 0.3s ease all;
   transition: 0.3s ease all;
@@ -237,6 +237,7 @@ body.enable-secondaryNav .layout-top-spacing {
   padding: 4px 0 4px 0;
   padding: 11px 0 11px 0;
   width: 100%;
+  box-shadow: 0px 0px 5px 0px;
 }
 .header-container.container-xxl {
   left: 0;
