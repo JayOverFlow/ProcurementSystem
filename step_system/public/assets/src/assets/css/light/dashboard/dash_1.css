@@ -190,16 +190,20 @@
   margin-bottom: 0;
 }
 .widget-t-sales-widget.widget-m-sales .media .media-body .widget-text {
-  color: #805dca;
+  color: #e7515a;
+  font-weight: bold;
 }
 .widget-t-sales-widget.widget-m-orders .media .media-body .widget-text {
-  color: #4361ee;
+  color: #e7515a;
+  font-weight: bold;
 }
 .widget-t-sales-widget.widget-m-customers .media .media-body .widget-text {
   color: #e7515a;
+  font-weight: bold;
 }
 .widget-t-sales-widget.widget-m-income .media .media-body .widget-text {
-  color: #00ab55;
+  color: #e7515a;
+  font-weight: bold;
 }
 .widget-t-sales-widget .widget-numeric-value {
   font-size: 22px;
@@ -467,14 +471,14 @@ body.dark .widget-t-sales-widget.widget-m-income .media .icon {
   display: flex;
   justify-content: space-between;
   padding: 20px 20px;
-  padding-bottom: 20px;
+  padding-bottom: 0;
   margin-bottom: 0;
 }
 .widget.widget-activity-five .widget-heading h5 {
   font-size: 17px;
   display: block;
-  color: #0e1726;
-  font-weight: 600;
+  color: #e7515a;
+  font-weight: 800;
   margin-bottom: 0;
 }
 .widget.widget-activity-five .widget-heading .task-action svg {
@@ -516,8 +520,7 @@ body.dark .widget-t-sales-widget.widget-m-income .media .icon {
 }
 .widget.widget-activity-five .mt-container {
   position: relative;
-  height: 332px;
-  overflow: auto;
+  height: 100%;
   padding: 15px 12px 0 12px;
 }
 .widget.widget-activity-five .timeline-line .item-timeline {

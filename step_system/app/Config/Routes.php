@@ -36,10 +36,14 @@ $routes->group('', function($routes) {
 
 
 // Department Head
-$routes->group('', function($routes) {
-    $routes->get('dh-dashboard', 'DepartmentHead\DHDashboard::index');
-    $routes->get('dh-mr', 'DepartmentHead\DHMr::index');
+$routes->group('dh', function($routes) {
+    $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
+    $routes->get('mr', 'DepartmentHead\DHMr::index');
 
+});
+// Master Admin
+$routes->group('ma', function($routes){
+    $routes->get('dashboard', 'MasterAdmin\MADashboard::index');
 });
 
 // @Emman Proposed routing convention from sir PJ's discussion

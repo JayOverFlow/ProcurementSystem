@@ -8,23 +8,23 @@
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="<?= base_url('assets/equation/src/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
-    <link href="<?= base_url('assets/equation/layouts/horizontal-light-menu/css/light/plugins.css') ?>" rel="stylesheet" type="text/css" />
-    <link href="<?= base_url('assets/equation/layouts/horizontal-light-menu/css/dark/plugins.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/src/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/layouts/horizontal-light-menu/css/light/plugins.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/layouts/horizontal-light-menu/css/dark/plugins.css') ?>" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="<?= base_url('assets/equation/src/plugins/src/apex/apexcharts.css') ?>" rel="stylesheet" type="text/css">
-    <link href="<?= base_url('assets/equation/src/assets/css/light/dashboard/dash_1.css') ?>" rel="stylesheet" type="text/css" />
-    <link href="<?= base_url('assets/equation/src/assets/css/dark/dashboard/dash_1.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/src/plugins/src/apex/apexcharts.css') ?>" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('assets/src/assets/css/light/dashboard/dash_1.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/src/assets/css/dark/dashboard/dash_1.css') ?>" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
     <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/equation/src/plugins/src/table/datatable/datatables.css') ?>">
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/equation/src/plugins/css/light/table/datatable/dt-global_style.css') ?>">
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/equation/src/plugins/css/light/table/datatable/custom_dt_custom.css') ?>">
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/equation/src/plugins/css/dark/table/datatable/dt-global_style.css') ?>">
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/equation/src/plugins/css/dark/table/datatable/custom_dt_custom.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/src/table/datatable/datatables.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/light/table/datatable/dt-global_style.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/light/table/datatable/custom_dt_custom.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/dt-global_style.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/custom_dt_custom.css') ?>">
     <!-- END PAGE LEVEL CUSTOM STYLES -->
 
 </head>
@@ -72,7 +72,7 @@
                     <div class="notification-scroll">
                         <div class="dropdown-item">
                             <div class="media server-log">
-                                <img src="<?= base_url('assets/equation/src/assets/img/profile-16.jpeg') ?>" class="img-fluid me-2" alt="avatar">
+                                <img src="<?= base_url('assets/src/assets/img/profile-16.jpeg') ?>" class="img-fluid me-2" alt="avatar">
                                 <div class="media-body">
                                     <div class="data-info">
                                         <h6 class="">Kara Young</h6>
@@ -88,7 +88,7 @@
 
                         <div class="dropdown-item">
                             <div class="media ">
-                                <img src="<?= base_url('assets/equation/src/assets/img/profile-15.jpeg') ?>" alt="avatar">
+                                <img src="<?= base_url('assets/src/assets/img/profile-15.jpeg') ?>" alt="avatar">
                                 <div class="media-body">
                                     <div class="data-info">
                                         <h6 class="">Daisy Anderson</h6>
@@ -752,26 +752,26 @@
 <!-- END MAIN CONTAINER -->
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="<?= base_url('assets/equation/src/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-<script src="<?= base_url('assets/equation/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
-<script src="<?= base_url('assets/equation/layouts/horizontal-light-menu/app.js') ?>"></script>
+<script src="<?= base_url('assets/src/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
+<script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js') ?>"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="<?= base_url('assets/equation/src/plugins/src/apex/apexcharts.min.js') ?>"></script>
-<script src="<?= base_url('assets/equation/src/assets/js/dashboard/dash_1.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/apex/apexcharts.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js') ?>"></script>
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS FOR TABLE-->
-<script src="<?= base_url('assets/equation/src/plugins/src/global/vendors.min.js') ?>"></script>
-<script src="<?= base_url('assets/equation/src/plugins/src/mousetrap/mousetrap.min.js') ?>"></script>
-<script src="<?= base_url('assets/equation/src/plugins/src/waves/waves.min.js') ?>"></script>
-<script src="<?= base_url('assets/equation/layouts/horizontal-light-menu/app.js') ?>"></script>
-<script src="<?= base_url('assets/equation/src/assets/js/custom.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/global/vendors.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js') ?>"></script>
+<script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/custom.js') ?>"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS FOR TABLE -->
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="<?= base_url('assets/equation/src/plugins/src/table/datatable/datatables.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script>
     $(document).ready(function() {
         c3 = $('#style-3').DataTable({

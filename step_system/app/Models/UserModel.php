@@ -49,5 +49,10 @@ class UserModel extends Model {
             return false;
         }
     }
-    
+
+    // Counts number of user (faculty or staff) for the Master Admin Dashboard
+    public function countUsersByType(string $type)
+    {
+        return $this->where('user_type', $type)->countAllResults();
+    }
 }

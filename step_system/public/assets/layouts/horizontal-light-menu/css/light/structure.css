@@ -235,7 +235,7 @@ body.enable-secondaryNav .layout-top-spacing {
   position: fixed;
   top: 0;
   padding: 4px 0 4px 0;
-  padding: 11px 0 11px 0;
+  padding: 11px 0 15px 0;
   width: 100%;
 }
 .header-container.container-xxl {
@@ -787,7 +787,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
 .sidebar-wrapper #sidebar {
   width: 100%;
   border-radius: 8px;
-  background: #191e3a;
+  background: #c62742;
   min-height: 51px;
 }
 

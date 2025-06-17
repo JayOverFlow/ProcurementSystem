@@ -117,7 +117,7 @@ table.dataTable {
   text-transform: initial;
   font-weight: 600;
   border-top: none;
-  background: rgba(234, 241, 255, 0.74);
+  background: #ffefef;
   border-right: none;
   border-left: none;
   padding-top: 0;
