@@ -26,10 +26,14 @@ $routes->group('auth', function($routes) {
     $routes->post('checkEmail', 'AuthController::checkEmail');
 });
 
+// Login
+// Used helper('url') for route_to method
 $routes->group('', function($routes) {
-    $routes->get('login', 'AuthController::login');
-    $routes->post('login', 'AuthController::login');
+    $routes->get('login', 'AuthController::login', ['as' => 'login']);
+    $routes->post('login', 'AuthController::login', ['as' => 'login']);
 });
+
+
 
 // Department Head
 $routes->group('', function($routes) {
