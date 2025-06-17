@@ -322,15 +322,18 @@ class AuthController extends BaseController {
     }
 
     public function login() {
+        // If the request is POST
         if ($this->request->is('post')) {
+            // Get user inputs
             $data = [
                 'user_email' => $this->request->getPost('user_email'),
                 'user_password' => $this->request->getPost('user_password')
             ];
 
+            // Define rules
             $rules = [
                 'user_email' => [
-                    'rules' => 'required|regex_match[^[a-zA-Z0-9._%+-]+@tup\.edu\.ph$]',
+                    'rules' => 'required|regex_match[/^[a-zA-Z0-9._%+-]+@tup\.edu\.ph$/]',
                     'errors' => [
                         'required' => 'Email is required',
                         'regex_match' => 'Please login with valid TUP email address'
@@ -344,37 +347,45 @@ class AuthController extends BaseController {
                 ]
             ];
             
+            // Validate
             if (!$this->validate($rules)){
-                return view('auth/login', [
-                    'validation' => $this->validator,
-                    'data' => $data
-                ]);
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Fill out the fields to login. Duh!',
+                'validation' => $this->validator->getErrors()
+            ]);
             }
+            
+            // Query to database through UserModel
+            $user = $this->userModel->authenticateUser($data['user_email'], $data['user_password']);
 
-            $user = $this->userModel->authenticateUser($data);
-
+            // If a user found in database
             if ($user) {
-                $session = service('session');
-                $session->set([
+                // Set user data in session
+                $this->session->set([
                     'user_id' => $user['user_id'],
-                    // 'user_firstname' => $user['user_firstname'],
-                    // 'user_middlename' => $user['user_middlename'],
-                    // 'user_lastname' => $user['user_lastname'],
-                    // 'user_suffix' => $user['user_suffix'],
-                    // // 'user_tupt_id' => $user['user_tupt_id'],
-                    // 'user_email' => $user['user_email'],
-                    // 'user_type' => $user['user_type'],
-                    // 'user_role_fk' => $user['user_role_fk'],
-                    // 'user_dep_fk' => $user['user_dep_fk'],
+                    'user_firstname' => $user['user_firstname'],
+                    'user_middlename' => $user['user_middlename'],
+                    'user_lastname' => $user['user_lastname'],
+                    'user_fullname' => $user['user_fullname'],
+                    'user_suffix' => $user['user_suffix'],
+                    'user_tupid' => $user['user_tupid'],
+                    'user_email' => $user['user_email'],
+                    'user_type' => $user['user_type'],
                     'isLoggedIn' => true
                 ]);
 
-                // return redirect()->to('/landing');
-                return view('landing');
+                // Return success message and a redirect URL
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Login successful!',
+                    'redirect' => base_url('/landing') // Use base_url for consistency
+                ]);
             } else {
-                return view('auth/login', [
-                    'error' => 'Invalid email or password',
-                    'data' => $data
+                // Return error message if authentication fails
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Invalid email or password.'
                 ]);
             }
         } else {

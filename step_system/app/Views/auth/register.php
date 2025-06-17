@@ -53,21 +53,21 @@
     <!-- OTP Loader Overlay -->
     <div id="sendingOtpLoader" class="d-none">
         <div class="loader-container">
-            <div class="spinner-grow align-self-center text-primary"></div>
+            <div class="spinner-grow align-self-center text-danger"></div>
             <p class="loader-text">Sending OTP...</p>
         </div>
     </div>
 
     <div id="resendingOtpLoader" class="d-none">
         <div class="loader-container">
-            <div class="spinner-grow align-self-center text-primary"></div>
+            <div class="spinner-grow align-self-center text-danger"></div>
             <p class="loader-text">Resending OTP...</p>
         </div>
     </div>
 
     <div id="verifyingOtpLoader" class="d-none">
         <div class="loader-container">
-            <div class="spinner-grow align-self-center text-primary"></div>
+            <div class="spinner-grow align-self-center text-danger"></div>
             <p class="loader-text">Verifying OTP...</p>
         </div>
     </div>
@@ -109,7 +109,7 @@
                             <p>To complete your registration, we need to verify your email address. An OTP will be sent to <strong><span id="modal-email-display"></span></strong>. Do you want to proceed?</p>
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" class="btn btn-primary" id="proceedToOtpBtn">Proceed</button>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                                 <div class="step" data-target="#validationStep-one">
                                     <button type="button" class="step-trigger" role="tab" id="validationStep-one-trigger" aria-controls="validationStep-one">
                                         <div class="d-flex flex-row align-items-center">
-                                            <span class="bs-stepper-circle me-2"><img src="<?= base_url('assets/images/person-vcard 1.png'); ?>" alt="1"></span>
+                                            <span class="bs-stepper-circle bg-danger me-2"><img src="<?= base_url('assets/images/person-vcard 1.png'); ?>" alt="1"></span>
                                             <span class="bs-stepper-label">Step One</span>
                                         </div>
                                     </button>
@@ -139,7 +139,7 @@
                             <div class="step" data-target="#validationStep-two">
                                 <button type="button" class="step-trigger" role="tab" id="validationStep-two-trigger" aria-controls="validationStep-two" >
                                     <div class="d-flex flex-row align-items-center">
-                                        <span class="bs-stepper-circle"><img src="<?= base_url('assets/images/@.png'); ?>" alt="2"></span>
+                                        <span class="bs-stepper-circle bg-danger bg-danger"><img src="<?= base_url('assets/images/@.png'); ?>" alt="2"></span>
                                         <span class="bs-stepper-label">Step Two</span>
                                     </div>
                                 </button>
@@ -148,7 +148,7 @@
                             <div class="step" data-target="#validationStep-three">
                                 <button type="button" class="step-trigger" role="tab" id="validationStep-three-trigger" aria-controls="validationStep-three" >
                                     <div class="d-flex flex-row align-items-center">
-                                        <span class="bs-stepper-circle"><img src="<?= base_url('assets/images/card-checklist.png'); ?>" alt="3"></span>
+                                        <span class="bs-stepper-circle bg-danger"><img src="<?= base_url('assets/images/card-checklist.png'); ?>" alt="3"></span>
                                         <span class="bs-stepper-title">Review</span>
                                     </div>
                                 </button>
@@ -157,7 +157,7 @@
                             <div class="step" data-target="#validationStep-four">
                                 <button type="button" class="step-trigger" role="tab" id="validationStep-four-trigger" aria-controls="validationStep-four" >
                                     <div class="d-flex flex-row align-items-center">
-                                        <span class="bs-stepper-circle"><img src="<?= base_url('assets/images/security.png'); ?>" alt="4"></span>
+                                        <span class="bs-stepper-circle bg-danger"><img src="<?= base_url('assets/images/security.png'); ?>" alt="4"></span>
                                         <span class="bs-stepper-title">Verify OTP</span>
                                     </div>
                                 </button>
@@ -173,13 +173,13 @@
                                             <input type="text" class="form-control" id="user-firstname" placeholder="" required>
                                             <div class="invalid-feedback">Please enter your first name</div>
 
-                                            <label for="user-lastname" class="mt-2">Last Name</label>
-                                            <input type="text" class="form-control" id="user-lastname" placeholder="" required>
-                                            <div class="invalid-feedback">Please enter your last name</div>
-
                                             <label for="user-middlename" class="mt-2">Middle Name</label>
                                             <input type="text" class="form-control" id="user-middlename" placeholder="" required>
                                             <div class="invalid-feedback">Please enter your middle name</div>
+
+                                            <label for="user-lastname" class="mt-2">Last Name</label>
+                                            <input type="text" class="form-control" id="user-lastname" placeholder="" required>
+                                            <div class="invalid-feedback">Please enter your last name</div>
 
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -197,8 +197,8 @@
                                     </div>
                                     
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-secondary btn-prev me-3" disabled>Prev</button>
-                                        <button class="btn btn-secondary btn-nxt">Next</button>
+                                        <button class="btn btn-danger btn-prev me-3" disabled>Prev</button>
+                                        <button class="btn btn-danger btn-nxt">Next</button>
                                     </div>
                                 </div>
                                 <div id="validationStep-two" class="content" role="tabpanel" aria-labelledby="validationStep-two-trigger">
@@ -219,22 +219,22 @@
                                             <div class="invalid-feedback">Please fill the field</div>
                                         </div>
 
-                                        <div class="form-check form-switch form-check-inline form-switch-primary">
+                                        <div class="form-check form-switch form-check-inline form-switch-danger">
                                             <input class="form-check-input" type="checkbox" role="switch" id="form-switch-primary">
                                             <label class="form-check-label" for="form-switch-primary">Show Password</label>
                                         </div>
 
                                         <div class="form-group mb-4">
                                             <label for="form-check-radio-primary" class="mt-2">User Type</label> <br>
-                                            <div class="form-check form-check-primary form-check-inline">
-                                                <input class="form-check-input" type="radio" name="user_type" id="user-type-faculty" value="Faculty"> <!-- Changed ID for unique radio buttons -->
-                                                <label class="form-check-label" for="user-type-faculty"> <!-- Changed FOR for unique radio buttons -->
+                                            <div class="form-check form-check-danger form-check-inline">
+                                                <input class="form-check-input" type="radio" name="user_type" id="user-type-faculty" value="Faculty">
+                                                <label class="form-check-label" for="user-type-faculty">
                                                     Faculty
                                                 </label>
                                             </div>
-                                            <div class="form-check form-check-primary form-check-inline">
-                                                <input class="form-check-input" type="radio" name="user_type" id="user-type-staff" value="Staff"> <!-- Changed ID for unique radio buttons -->
-                                                <label class="form-check-label" for="user-type-staff"> <!-- Changed FOR for unique radio buttons -->
+                                            <div class="form-check form-check-danger form-check-inline">
+                                                <input class="form-check-input" type="radio" name="user_type" id="user-type-staff" value="Staff">
+                                                <label class="form-check-label" for="user-type-staff">
                                                     Staff
                                                 </label>
                                             </div>
@@ -243,8 +243,8 @@
                                     </div>
                                     
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-secondary btn-prev me-3">Prev</button>
-                                        <button class="btn btn-secondary btn-nxt">Next</button>
+                                        <button class="btn btn-danger btn-prev me-3">Prev</button>
+                                        <button class="btn btn-danger btn-nxt">Next</button>
                                     </div>
                                 </div>
                                 <div id="validationStep-three" class="content" role="tabpanel" aria-labelledby="validationStep-three-trigger">
@@ -302,8 +302,8 @@
                                     </div>
 
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-secondary btn-prev me-3">Prev</button>
-                                        <button class="btn btn-secondary" id="confirmSendOtpBtn" data-bs-toggle="modal" data-bs-target="#otpConfirmationModal">Next</button>
+                                        <button class="btn btn-danger btn-prev me-3">Prev</button>
+                                        <button class="btn btn-danger" id="confirmSendOtpBtn" data-bs-toggle="modal" data-bs-target="#otpConfirmationModal">Next</button>
                                     </div>
                                 </div>
                                 <div id="validationStep-four" class="content" role="tabpanel" aria-labelledby="validationStep-four-trigger">
@@ -352,23 +352,28 @@
                                         
                                         <div class="col-12 mt-4">
                                             <div class="mb-4">
-                                                <button class="btn btn-secondary w-100" id="verifyOtpBtn">VERIFY OTP</button>
+                                                <button class="btn btn-danger w-100" id="verifyOtpBtn">VERIFY OTP</button>
                                             </div>
                                         </div>
                                         
                                         <div class="col-12">
                                             <div class="text-center">
-                                                <p class="mb-0">Didn't receive the code ? <a href="javascript:void(0);" class="text-warning" id="resendOtpLink">Resend</a> <span id="resendCountdownDisplay" class="d-none text-muted ms-2"> (60s)</span></p>
+                                                <p class="mb-0">Didn't receive the code ? <a href="javascript:void(0);" class="text-danger" id="resendOtpLink">Resend</a> <span id="resendCountdownDisplay" class="d-none text-muted ms-2"> (60s)</span></p>
                                             </div>
                                         </div>
                                         
                                     </div>
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-secondary btn-prev me-3">Back</button>
+                                        <button class="btn btn-danger btn-prev me-3">Back</button>
                                     </div>
                                 </div>
 
                             </form>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <div class="text-center">
+                            <p class="mb-0">Already have an account ? <a href="<?= base_url('login'); ?>" class="text-danger">Login</a></p>
                         </div>
                     </div>
                 </div>
@@ -390,8 +395,6 @@
      <!-- For Stepper -->
     <script src="<?= base_url('assets/src/plugins/src/stepper/bsStepper.min.js'); ?>"></script>
     <script src="<?= base_url('assets/src/plugins/src/stepper/stepper_registration.js'); ?>"></script>
-
-    <!-- For Loader -->
     
     <!-- END PAGE LEVEL SCRIPTS -->  
 
