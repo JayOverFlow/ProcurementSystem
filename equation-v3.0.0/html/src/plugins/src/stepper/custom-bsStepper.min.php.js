@@ -35,17 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var reviewTUPID = formValidation.querySelector('#review-tupid');
     var reviewTupEmail = formValidation.querySelector('#review-tup-email');
     
-    // --- START: CHANGES FOR PASSWORD TOGGLE ---
     // Corrected variables for Step 3 password review
     var reviewPasswordContainer = formValidation.querySelector('#review-password-container'); // Parent span
     var reviewPasswordText = formValidation.querySelector('#review-password-text'); // Text span inside the container
     var reviewPasswordToggle = formValidation.querySelector('#review-password-toggle'); // The SVG icon
-    // --- END: CHANGES FOR PASSWORD TOGGLE ---
-
     var reviewUserType = formValidation.querySelector('#review-user-type'); // Assuming this element exists for review
-
-    // Step 4 Input
-    var inputEme = formValidation.querySelector('#eme');
 
     var formEl = formValidation.querySelector('.bs-stepper-content form');
 
@@ -282,14 +276,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 // TUP-T ID
                 const tupIdRegex = /^\d+$/; // Regex to ensure only digits
                 if (!inputTUPID.value.trim()) {
-                    showValidationError(inputTUPID, 'TUP-T ID is required');
+                    showValidationError(inputTUPID, 'TUP ID is required');
                     validationFailed = true;
                 } else if (!tupIdRegex.test(inputTUPID.value.trim())) { // Added check for digits only
-                    showValidationError(inputTUPID, 'TUP-T ID must contain only digits');
+                    showValidationError(inputTUPID, 'TUP ID must contain only digits');
                     validationFailed = true;
                 }
                 else if (inputTUPID.value.length !== 6) { // exact_length[6] rule
-                    showValidationError(inputTUPID, 'TUP-T ID must be exactly 6 characters');
+                    showValidationError(inputTUPID, 'TUP ID must be exactly 6 characters');
                     validationFailed = true;
                 } 
                 // 'is_unique' check omitted for client-side JavaScript (requires server-side)

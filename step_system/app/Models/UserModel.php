@@ -15,8 +15,8 @@ class UserModel extends Model {
         'user_email',
         'user_password',
         'user_type',
-        'user_role_fk',
-        'user_dep_fk'
+        'user_suffix',
+        'user_tupid'
     ];
 
     public function insertUser(array $data) {
@@ -31,11 +31,20 @@ class UserModel extends Model {
         return $result;
     }
 
-    public function authenticateUser(array $data) {
-        $user = $this->where('user_email', $data['user_email'])->first();
+    // Authenticate user from login
+    public function authenticateUser(string $user_email, string $user_password) {
+        // Quesy to database to find the email
+        $user = $this->where('user_email', $user_email)->first();
 
-        if ($user && password_verify($data['user_password'], $user['user_password'])) {
-            return $user;
+        // If email dont exist
+        if (!$user) {
+            return false;
+        }
+
+        // If password is correct
+        if(password_verify($user_password, $user['user_password'])) {
+            unset($user['user_password']); // Remove for security
+            return $user; // Return the query result
         } else {
             return false;
         }

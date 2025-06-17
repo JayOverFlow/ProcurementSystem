@@ -38,7 +38,7 @@ module.exports = {
 'use strict';
 
 var emitter = require('contra/emitter');
-var crossvent = require('step_system/public/assets/equation/src/plugins/src/drag-and-drop/dragula/crossvent');
+var crossvent = require('crossvent');
 var classes = require('./classes');
 var doc = document;
 var documentElement = doc.documentElement;
