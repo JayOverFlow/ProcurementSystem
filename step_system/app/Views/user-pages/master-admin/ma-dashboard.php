@@ -236,7 +236,7 @@
                                     <img src="<?= base_url('assets/images/icon-offices.svg') ?>" class="navbar-logo" alt="logo">
                                     <div class="media-body">
                                         <p class="widget-text">Offices</p>
-                                        <p class="widget-numeric-value">1,700</p>
+                                        <p class="widget-numeric-value"><?= esc($officesCount ?? 0) ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
                                     <img src="<?= base_url('assets/images/icon-departments.svg') ?>" class="navbar-logo" alt="logo">
                                     <div class="media-body">
                                         <p class="widget-text">Departments</p>
-                                        <p class="widget-numeric-value">1,560</p>
+                                        <p class="widget-numeric-value"><?= esc($academicDepartmentsCount ?? 0) ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -260,7 +260,7 @@
                                     <img src="<?= base_url('assets/images/icon-faculty.svg') ?>" class="navbar-logo" alt="logo">
                                     <div class="media-body">
                                         <p class="widget-text">Faculty Members</p>
-                                        <p class="widget-numeric-value">1,900</p>
+                                        <p class="widget-numeric-value"><?= esc($facultyMembersCount ?? 0) ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@
                                     <img src="<?= base_url('assets/images/icon-staff.svg') ?>" class="navbar-logo" alt="logo">
                                     <div class="media-body">
                                         <p class="widget-text">Staff</p>
-                                        <p class="widget-numeric-value">1,390</p>
+                                        <p class="widget-numeric-value"><?= esc($staffCount ?? 0) ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -290,34 +290,43 @@
                                             <th>Last Name</th>
                                             <th>Email</th>
                                             <th class="text-center">Role</th>
+                                            <th>Department | Office</th>
                                             <th class="text-center dt-no-sorting">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td class="checkbox-column text-center"> 1 </td>
-                                            <td>Donna</td>
-                                            <td>Rogers</td>
-                                            <td>donna@yahoo.com</td>
-                                            <td class="text-center">
-                                                <div class="btn-group-sm mb-0 me-0" role="group">
-                                                    <button id="btndefault" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Unassigned <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                                                    <div class="dropdown-menu" aria-labelledby="btndefault">
-                                                        <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-home-fill-1 mr-1"></i>Action</a>
-                                                        <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-gear-fill mr-1"></i>Another action</a>
-                                                        <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-bell-fill-2 mr-1"></i>Something else here</a>
-                                                        <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-dots mr-1"></i>Separated link</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <ul class="table-controls">
-                                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-
+                                        <?php if (isset($users) && is_array($users)): ?>
+                                            <?php foreach ($users as $user): ?>
+                                                <tr>
+                                                    <td class="checkbox-column text-center"> <?= esc($user['user_tupid'] ?? 'N/A') ?> </td>
+                                                    <td><?= esc($user['user_firstname']) ?></td>
+                                                    <td><?= esc($user['user_lastname']) ?></td>
+                                                    <td><?= esc($user['user_email']) ?></td>
+                                                    <td class="text-center">
+                                                        <div class="btn-group-sm mb-0 me-0" role="group">
+                                                            <button id="btndefault" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= esc($user['role_name'] ?? 'Unassigned') ?> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                                            <div class="dropdown-menu" aria-labelledby="btndefault">
+                                                                <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-home-fill-1 mr-1"></i>Action</a>
+                                                                <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-gear-fill mr-1"></i>Another action</a>
+                                                                <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-bell-fill-2 mr-1"></i>Something else here</a>
+                                                                <a href="javascript:void(0);" class="dropdown-item"><i class="flaticon-dots mr-1"></i>Separated link</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><?= esc($user['department_name'] ?? 'N/A') ?></td>
+                                                    <td class="text-center">
+                                                        <ul class="table-controls">
+                                                            <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
+                                                            <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="7" class="text-center">No user data available.</td>
+                                            </tr>
+                                        <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -420,23 +429,131 @@
 
     multiCheck(c2);
 
+    // Prepare department data for DataTables lengthMenu - This array is no longer used for lengthMenu but for filter generation
+    var departmentOptions = [];
+    <?php if (isset($departments) && is_array($departments)): ?>
+        <?php foreach ($departments as $department): ?>
+            departmentOptions.push([<?= $department['dep_id'] ?>, "<?= esc($department['dep_name']) ?>"]);
+        <?php endforeach; ?>
+    <?php endif; ?>
+
     c3 = $('#style-3').DataTable({
-        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+        // Re-introduced 'l' (length changing input) for left side, and 'f' (filter) for right side
+        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center align-items-center'f>>>" +
             "<'table-responsive'tr>" +
             "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
         "oLanguage": {
-            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
             "sInfo": "Showing page _PAGE_ of _PAGES_",
             "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
             "sSearchPlaceholder": "Search...",
-            "sLengthMenu": "Results :  _MENU_",
+            "sLengthMenu": "", // Clear default sLengthMenu text, as we're custom rendering
         },
         "stripeClasses": [],
-        "lengthMenu": [5, 10, 20, 50],
-        "pageLength": 10
+        "pageLength": 10,
+        "initComplete": function() {
+            var api = this.api();
+            // Get departments data from PHP variable, safely JSON encoded
+            var departments = <?php echo json_encode($departments); ?>;
+
+            // Build the filter HTML
+            var filterHtml = '<label>Filter: <select class="form-select d-inline-block w-auto ms-2" id="departmentFilter"><option value="">All Offices and Departments</option>';
+
+            var academicDepartments = [];
+            var administrativeDepartments = [];
+
+            if (departments && Array.isArray(departments)) {
+                departments.forEach(function(department) {
+                    if (department.dep_type === 'Academic') {
+                        academicDepartments.push(department);
+                    } else if (department.dep_type === 'Administrative') {
+                        administrativeDepartments.push(department);
+                    }
+                });
+            }
+
+            // Custom sort for academic departments: specified ones first, then others alphabetically
+            var specifiedAcademicOrder = [
+                "Basic Arts and Sciences Department",
+                "Electrical and Allied Department",
+                "Mechanical and Allied Department",
+                "Civil and Allied Department"
+            ];
+
+            academicDepartments.sort((a, b) => {
+                let indexA = specifiedAcademicOrder.indexOf(a.dep_name);
+                let indexB = specifiedAcademicOrder.indexOf(b.dep_name);
+
+                if (indexA !== -1 && indexB !== -1) {
+                    return indexA - indexB; // Both are in the specified list, sort by their order
+                } else if (indexA !== -1) {
+                    return -1; // A is in specified list, B is not, A comes first
+                } else if (indexB !== -1) {
+                    return 1; // B is in specified list, A is not, B comes first
+                } else {
+                    return a.dep_name.localeCompare(b.dep_name); // Neither are in specified list, sort alphabetically
+                }
+            });
+
+            // Sort administrative departments alphabetically
+            administrativeDepartments.sort((a, b) => a.dep_name.localeCompare(b.dep_name));
+
+            // Add Academic Departments optgroup
+            if (academicDepartments.length > 0) {
+                filterHtml += '<optgroup label="Academic">';
+                academicDepartments.forEach(function(department) {
+                    filterHtml += '<option value="' + escapeHtml(department.dep_name) + '">' + escapeHtml(department.dep_name) + '</option>';
+                });
+                filterHtml += '</optgroup>';
+            }
+
+            // Add Administrative Departments optgroup
+            if (administrativeDepartments.length > 0) {
+                filterHtml += '<optgroup label="Administrative">';
+                administrativeDepartments.forEach(function(department) {
+                    filterHtml += '<option value="' + escapeHtml(department.dep_name) + '">' + escapeHtml(department.dep_name) + '</option>';
+                });
+                filterHtml += '</optgroup>';
+            }
+
+            filterHtml += '</select></label>';
+
+            // Inject the custom filter into the length menu container
+            $('#style-3_length').html(filterHtml);
+
+            // Re-attach event listener for the department filter dropdown after moving it
+            $('#departmentFilter').on('change', function() {
+                api.draw(); // Redraw the table to apply the filter
+            });
+        }
     });
 
     multiCheck(c3);
+
+    // Custom filtering for Department column
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var selectedDepartment = $('#departmentFilter').val();
+            var departmentColumn = data[5]; // Department column is at index 5 (0-indexed)
+
+            if (selectedDepartment === "" || departmentColumn === selectedDepartment) {
+                return true;
+            }
+            return false;
+        }
+    );
+
+    // Function to escape HTML for security
+    function escapeHtml(text) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"'\\]/g, function(m) { return map[m]; });
+    }
 </script>
 <!-- END PAGE LEVEL SCRIPTS -->
 
