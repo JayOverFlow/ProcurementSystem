@@ -1764,22 +1764,22 @@ body.dark .btn-outline-warning.dropdown-toggle.show:focus {
   box-shadow: none;
 }
 body.dark .btn-outline-secondary:not(:disabled):not(.disabled).active, body.dark .btn-outline-secondary:not(:disabled):not(.disabled):active {
-  background-color: #805dca;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
 body.dark .btn-outline-secondary.dropdown-toggle.show:focus {
-  background-color: #805dca;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
 body.dark .btn-outline-dark:not(:disabled):not(.disabled).active, body.dark .btn-outline-dark:not(:disabled):not(.disabled):active {
-  background-color: #3b3f5c;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
 body.dark .btn-outline-dark.dropdown-toggle.show:focus {
-  background-color: #3b3f5c;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
@@ -1817,8 +1817,8 @@ body.dark .btn-outline-danger {
   box-shadow: none;
 }
 body.dark .btn-outline-secondary {
-  border: 1px solid #805dca !important;
-  color: #805dca !important;
+  border: 1px solid #292929 !important;
+  color: #292929 !important;
   background-color: transparent;
   box-shadow: none;
 }
