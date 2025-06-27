@@ -114,12 +114,14 @@ code {
   width: 50%;
   flex-grow: 8;
   margin-top: 140px;
+
   margin-bottom: 0;
   -webkit-transition: 0.3s ease all;
   transition: 0.3s ease all;
 }
 #content .middle-content {
   padding: 0 32px !important;
+  margin-top: 70px;
 }
 
 .main-container-fluid > .main-content > .container {
@@ -237,6 +239,7 @@ body.enable-secondaryNav .layout-top-spacing {
   padding: 4px 0 4px 0;
   padding: 11px 0 11px 0;
   width: 100%;
+  box-shadow: 0px 0px 5px 0px;
 }
 .header-container.container-xxl {
   left: 0;
@@ -254,8 +257,8 @@ body.enable-secondaryNav .layout-top-spacing {
   justify-content: space-between;
 }
 .header-container .theme-brand .theme-logo a img {
-  width: 34px;
-  height: 34px;
+  width: 100px;
+  height:40px;
 }
 .header-container .theme-text {
   margin-right: 32px;
@@ -787,7 +790,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
 .sidebar-wrapper #sidebar {
   width: 100%;
   border-radius: 8px;
-  background: #C62742;
+  background: #c62742;
   min-height: 51px;
 }
 
@@ -1082,10 +1085,10 @@ body[layout=full-width] .sidebar-wrapper {
   transition: 0.5s;
 }
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=true] {
-  color: #25d5e4;
+  color: white;
 }
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=true] svg {
-  color: #25d5e4;
+  color: white;
 }
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=true] svg.feather-chevron-right {
   background-color: transparent;
@@ -1093,13 +1096,13 @@ body[layout=full-width] .sidebar-wrapper {
   transition: 0.5s;
 }
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=true] span {
-  color: #25d5e4;
+  color: white;
 }
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=true]:hover {
-  color: #25d5e4;
+  color: white;
 }
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=true]:hover svg {
-  color: #25d5e4 !important;
+  color: white !important;
   fill: rgba(67, 97, 238, 0.0392156863);
 }
 #sidebar ul.menu-categories li.menu > .dropdown-toggle svg.feather-chevron-right {

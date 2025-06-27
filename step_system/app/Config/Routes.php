@@ -42,10 +42,24 @@ $routes->group('faculty', function($routes) {
 });
 
 // Department Head
-$routes->group('', function($routes) {
-    $routes->get('dh-dashboard', 'DepartmentHead\DHDashboard::index');
-    $routes->get('dh-mr', 'DepartmentHead\DHMr::index');
+$routes->group('dh', function($routes) {
+    $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
+    $routes->get('mr', 'DepartmentHead\DHMr::index');
 
+});
+// Master Admin
+$routes->group('ma', function($routes){
+    $routes->get('dashboard', 'MasterAdmin\MADashboardController::index'); // Table 1
+    $routes->get('rolesdep', 'MasterAdmin\MARolesDepController::index'); // Table 2
+    $routes->post('rolesdep/update', 'MasterAdmin\MARolesDepController::updateRoleDepartment'); // Table 2
+    $routes->post('rolesdep/create', 'MasterAdmin\MARolesDepController::createRoleDepartment'); // Table 2
+    $routes->get('usertype', 'MasterAdmin\MAUserTypeController::index'); // Table 3
+    $routes->post('usertype/update', 'MasterAdmin\MAUserTypeController::update'); // Table 3
+    $routes->get('rolesassign', 'MasterAdmin\MARolesAssignmentController::index'); // Table 4
+    $routes->get('rolesassign/getRolesByDepartment/(:num)', 'MasterAdmin\MARolesAssignmentController::getRolesByDepartment/$1');
+    $routes->post('rolesassign/updateUserAssignment', 'MasterAdmin\MARolesAssignmentController::updateUserAssignment');
+    $routes->get('rolesassign/searchUsers', 'MasterAdmin\MARolesAssignmentController::searchUsers');
+    $routes->post('rolesassign/createUserAssignment', 'MasterAdmin\MARolesAssignmentController::createUserAssignment');
 });
 
 // @Emman Proposed routing convention from sir PJ's discussion

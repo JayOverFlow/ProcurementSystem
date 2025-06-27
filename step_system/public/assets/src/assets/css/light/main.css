@@ -1886,23 +1886,23 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-secondary:not(:disabled):not(.disabled).active, .btn-outline-secondary:not(:disabled):not(.disabled):active {
-  background-color: #805dca;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
 .btn-outline-secondary.dropdown-toggle.show:focus {
-  background-color: #805dca;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
 
 .btn-outline-dark:not(:disabled):not(.disabled).active, .btn-outline-dark:not(:disabled):not(.disabled):active {
-  background-color: #3b3f5c;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
 .btn-outline-dark.dropdown-toggle.show:focus {
-  background-color: #3b3f5c;
+  background-color: #292929;
   color: #fff !important;
   box-shadow: none;
 }
@@ -1947,10 +1947,11 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-secondary {
-  border: 1px solid #805dca !important;
-  color: #805dca !important;
+  border: 1px solid #e0e6ed !important;
+  color: #606366 !important;
   background-color: transparent;
   box-shadow: none;
+  outline-width: 30px;
 }
 
 .btn-outline-dark {
@@ -1963,9 +1964,9 @@ fieldset:disabled .btn {
   color: #3b3f5c !important;
 }
 
-.btn-outline-primary:hover, .btn-outline-info:hover, .btn-outline-warning:hover, .btn-outline-success:hover, .btn-outline-danger:hover, .btn-outline-secondary:hover, .btn-outline-dark:hover {
-  box-shadow: 0px 5px 20px 0 rgba(0, 0, 0, 0.1);
-}
+/* .btn-outline-primary:hover, .btn-outline-info:hover, .btn-outline-warning:hover, .btn-outline-success:hover, .btn-outline-danger:hover, .btn-outline-secondary:hover, .btn-outline-dark:hover {
+  /* box-shadow: 0px 5px 20px 0 rgba(0, 0, 0, 0.1); */
+} */
 
 .btn-outline-primary:hover {
   color: #fff !important;
@@ -1997,11 +1998,11 @@ fieldset:disabled .btn {
   box-shadow: 0 10px 20px -10px rgba(231, 81, 90, 0.588) !important;
 }
 
-.btn-outline-secondary:hover {
+/* .btn-outline-secondary:hover {
   color: #fff !important;
   background-color: #805dca !important;
   box-shadow: 0 10px 20px -10px rgba(92, 26, 195, 0.59) !important;
-}
+} */
 
 .btn-outline-dark:hover {
   color: #fff !important;
