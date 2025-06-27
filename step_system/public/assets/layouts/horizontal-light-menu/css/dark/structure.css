@@ -125,7 +125,7 @@ body.dark .layout-boxed #content > .footer-wrapper {
 body.dark #content {
   width: 50%;
   flex-grow: 8;
-  margin-top: 119px;
+  margin-top: 140px;
   margin-bottom: 0;
   -webkit-transition: 0.3s ease all;
   transition: 0.3s ease all;
@@ -762,7 +762,7 @@ body.dark .sidebar-wrapper {
   left: 0;
   right: 0;
 }
-body.dark .sidebar-wrapper #sidebar {
+body.dark .sidebar-wrapper #C62742 {
   width: 100%;
   border-radius: 8px;
   background: #191e3a;
@@ -983,10 +983,10 @@ body.dark #sidebar ul.menu-categories li.menu > .dropdown-toggle {
   justify-content: space-between;
   cursor: pointer;
   font-size: 14px;
-  color: #e0e6ed;
+  color: #FFFFFF;
   font-weight: 500;
   padding: 0 30px 0 0;
-  border-right: 1px solid #515365;
+  border-right: 1px solid #FFFFFF;
   margin-right: 30px;
   padding-bottom: 5px;
 }
