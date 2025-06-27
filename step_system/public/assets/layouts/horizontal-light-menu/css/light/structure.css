@@ -113,7 +113,7 @@ code {
 #content {
   width: 50%;
   flex-grow: 8;
-  margin-top: 119px;
+  margin-top: 140px;
   margin-bottom: 0;
   -webkit-transition: 0.3s ease all;
   transition: 0.3s ease all;
@@ -318,8 +318,8 @@ body.enable-secondaryNav .layout-top-spacing {
 
 body .navbar .light-mode, body:not(.dark) .navbar .light-mode {
   display: inline-block;
-  color: #e2a03f;
-  fill: #e2a03f;
+  color: #8C0404;
+  fill: #8C0404;
 }
 body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
   display: none;
@@ -399,7 +399,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
   display: none;
 }
 .navbar .navbar-item .nav-item.notification-dropdown .nav-link svg {
-  color: #060818;
+  color: #8C0404;
   stroke-width: 1.5;
 }
 .navbar .navbar-item .nav-item.notification-dropdown .nav-link span.badge {
@@ -787,7 +787,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
 .sidebar-wrapper #sidebar {
   width: 100%;
   border-radius: 8px;
-  background: #191e3a;
+  background: #C62742;
   min-height: 51px;
 }
 
@@ -1023,10 +1023,10 @@ body[layout=full-width] .sidebar-wrapper {
   justify-content: space-between;
   cursor: pointer;
   font-size: 14px;
-  color: #e0e6ed;
+  color: #FFFFFF;
   font-weight: 500;
   padding: 0 30px 0 0;
-  border-right: 1px solid #515365;
+  border-right: 1px solid #FFFFFF;
   margin-right: 30px;
   padding-bottom: 5px;
 }

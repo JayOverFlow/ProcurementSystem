@@ -13,9 +13,6 @@ var App = function() {
         class: {
             navbar: document.querySelector(".navbar"),
             overlay: document.querySelector('.overlay'),
-            search: document.querySelector('.toggle-search'),
-            searchOverlay: document.querySelector('.search-overlay'),
-            searchForm: document.querySelector('.search-form-control'),
             mainContainer: document.querySelector('.main-container'),
             mainHeader: document.querySelector('.header.navbar')
         }
@@ -24,11 +21,15 @@ var App = function() {
     var categoryScroll = {
         scrollCat: function() {
             var sidebarWrapper = document.querySelectorAll('.sidebar-wrapper li.active')[0];
+            if (sidebarWrapper) {
             var sidebarWrapperTop = sidebarWrapper.offsetTop - 50;
             setTimeout(() => {
                 const scroll = document.querySelector('.menu-categories');
+                    if (scroll) {
                 scroll.scrollTop = sidebarWrapperTop;
+                    }
             }, 50);
+            }
         }
     }
 
@@ -149,36 +150,14 @@ var App = function() {
                 Dom.main.classList.remove('sidebar-noneoverflow');
             });            
         },
-        search: function() {
-
-            if (Dom.class.search) {
-                
-                Dom.class.search.addEventListener('click', function(event) {
-                    this.classList.add('show-search');
-                    Dom.class.searchOverlay.classList.add('show');
-                    document.querySelector('body').classList.add('search-active');
-                });
-                
-                Dom.class.searchOverlay.addEventListener('click', function(event) {
-                    this.classList.remove('show');
-                    Dom.class.search.classList.remove('show-search');
-                    document.querySelector('body').classList.remove('search-active');
-                });
-                
-                document.querySelector('.search-close').addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    Dom.class.searchOverlay.classList.remove('show');
-                    Dom.class.search.classList.remove('show-search');
-                    document.querySelector('body').classList.remove('search-active');
-                    document.querySelector('.search-form-control').value = ''
-                });
-            }
-
-        },
         themeToggle: function (layoutName) {
 
             var togglethemeEl = document.querySelector('.theme-toggle');
             var getBodyEl = document.body;
+            
+            if (!getBodyEl) {
+                return;
+            }
             
             togglethemeEl.addEventListener('click', function() {
                 
@@ -199,12 +178,17 @@ var App = function() {
                     var getUpdatedParseObject = JSON.parse(getUpdatedLocalObject);
 
                     if (!getUpdatedParseObject.settings.layout.darkMode) {
-                        document.body.classList.remove('dark')
-                        ifStarterKit = document.body.getAttribute('page') === 'starter-pack' ? true : false;
+                        getBodyEl.classList.remove('dark')
+                        ifStarterKit = getBodyEl.hasAttribute('page') && getBodyEl.getAttribute('page') === 'starter-pack' ? true : false;
                         if (ifStarterKit) {
-                            document.querySelector('.navbar-logo').setAttribute('src', '../../src/assets/img/logo2.svg')
+                            var navbarLogoLight = document.querySelector('.navbar-logo');
+                            if (navbarLogoLight) {
+                                navbarLogoLight.setAttribute('src', '../../src/assets/img/logo2.svg')
+                            }
                         } else {
-                            document.querySelector('.navbar-logo').setAttribute('src', getUpdatedParseObject.settings.layout.logo.lightLogo)
+                            var navbarLogoLightElse = document.querySelector('.navbar-logo');
+                            if (navbarLogoLightElse) {
+                                navbarLogoLightElse.setAttribute('src', getUpdatedParseObject.settings.layout.logo.lightLogo)
                         }
                     }
                     
@@ -222,14 +206,22 @@ var App = function() {
                     var getUpdatedParseObject = JSON.parse(getUpdatedLocalObject);
 
                     if (getUpdatedParseObject.settings.layout.darkMode) {
-                        document.body.classList.add('dark')
+                            getBodyEl.classList.add('dark')
 
-                        ifStarterKit = document.body.getAttribute('page') === 'starter-pack' ? true : false;
+                            ifStarterKit = getBodyEl.hasAttribute('page') && getBodyEl.getAttribute('page') === 'starter-pack' ? true : false;
 
                         if (ifStarterKit) {
-                            document.querySelector('.navbar-logo').setAttribute('src', '../../src/assets/img/logo.svg')
+                                var navbarLogoDark = document.querySelector('.navbar-logo');
+                                if (navbarLogoDark) {
+                                    navbarLogoDark.setAttribute('src', '../../src/assets/img/logo.svg')
+                                }
                         } else {
-                            document.querySelector('.navbar-logo').setAttribute('src', getUpdatedParseObject.settings.layout.logo.darkLogo)
+                                var navbarLogoDarkElse = document.querySelector('.navbar-logo');
+                                if (navbarLogoDarkElse) {
+                                    navbarLogoDarkElse.setAttribute('src', getUpdatedParseObject.settings.layout.logo.darkLogo)
+                                }
+                            }
+                            
                         }
                         
                     }
@@ -269,36 +261,21 @@ var App = function() {
             
         },
         preventScrollBody: function() {
-            var nonScrollableElement = document.querySelectorAll('#sidebar, .user-profile-dropdown .dropdown-menu, .notification-dropdown .dropdown-menu,  .language-dropdown .dropdown-menu')
+            var nonScrollableElements = document.querySelectorAll('#sidebar, .user-profile-dropdown .dropdown-menu, .notification-dropdown .dropdown-menu,  .language-dropdown .dropdown-menu');
 
             var preventScrolling = function(e) {
                 e = e || window.event;
                 if (e.preventDefault)
                     e.preventDefault();
                 e.returnValue = false;  
+            };
 
-                nonScrollableElement.scrollTop -= e. wheelDeltaY; 
-            }
-
-            nonScrollableElement.forEach(preventScroll => {
-
+            nonScrollableElements.forEach(preventScroll => {
+                if (preventScroll) {
                 preventScroll.addEventListener('mousewheel', preventScrolling);
                 preventScroll.addEventListener('DOMMouseScroll', preventScrolling);
-                
+                }
             });
-        },
-        searchKeyBind: function() {
-
-            if (Dom.class.search) {
-                Mousetrap.bind('ctrl+/', function() {
-                    document.body.classList.add('search-active');
-                    Dom.class.search.classList.add('show-search');
-                    Dom.class.searchOverlay.classList.add('show');
-                    Dom.class.searchForm.focus();
-                    return false;
-                });                
-            }
-            
         },
         bsTooltip: function() {
             var bsTooltip = document.querySelectorAll('.bs-tooltip')
@@ -314,7 +291,10 @@ var App = function() {
         },
         onCheckandChangeSidebarActiveClass: function() {
             if (document.body.classList.contains('alt-menu')) {
-                document.querySelector('.sidebar-wrapper li.menu.active [aria-expanded="true"]').setAttribute('aria-expanded', 'false');
+                var activeExpandedElement = document.querySelector('.sidebar-wrapper li.menu.active [aria-expanded="true"]');
+                if (activeExpandedElement) {
+                    activeExpandedElement.setAttribute('aria-expanded', 'false');
+                }
             }
         },
         MaterialRippleEffect: function() {
@@ -693,33 +673,6 @@ var App = function() {
                 // })
 
             });
-        },
-        AddAnimationClass: function() {
-            // document.body.classList('scale-up-vertical-top')
-
-            var getMenus = document.querySelectorAll('.menu')
-
-            // console.log(getMenus.classList.contains('menu-heading'))
-
-            getMenus.forEach(menu => {
-                if (!menu.classList.contains('menu-heading')) {
-                    var dropMenu = menu.querySelector('.dropdown-menu');
-
-                    var subSubmenu = menu.querySelectorAll('.dropdown-menu.sub-submenu')
-                    
-                    dropMenu.classList.add('scale-up-top-left')
-
-                    subSubmenu.forEach(subMenu => {
-                        // var subDropMenu = subMenu.querySelector('.dropdown-menu.sub-submenu');
-                        // console.log(subDropMenu)
-                        console.log(subMenu)
-                        subMenu.classList.add('scale-up-top-left-submenu')
-                    });
-                }
-            });
-
-
-            
         }
     }
 
@@ -829,7 +782,6 @@ var App = function() {
     return {
         init: function(Layout) {
             toggleFunction.overlay();
-            toggleFunction.search();
             toggleFunction.themeToggle(Layout);
             
             /*
@@ -852,7 +804,6 @@ var App = function() {
             inBuiltfunctionality.mainCatActivateScroll();
             inBuiltfunctionality.notificationScroll();
             inBuiltfunctionality.preventScrollBody();
-            inBuiltfunctionality.searchKeyBind();
             inBuiltfunctionality.bsTooltip();
             inBuiltfunctionality.bsPopover();
             inBuiltfunctionality.onCheckandChangeSidebarActiveClass();
@@ -860,7 +811,6 @@ var App = function() {
             inBuiltfunctionality.functionalDropdown();
             inBuiltfunctionality.EnableNavBarPopper();
             inBuiltfunctionality.EnableMenuDropdownOnHover();
-            inBuiltfunctionality.AddAnimationClass();
             
         }
     }

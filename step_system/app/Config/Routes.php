@@ -8,8 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 $routes->group('', function($routes) {
-    $routes->get('testing', 'AuthController::testing');
-    $routes->post('testing', 'AuthController::testing');
+    $routes->get('testing', 'TestingController::testing');
+    $routes->post('testing', 'TestingController::testing');
 });
 
 $routes->group('', function($routes) {
@@ -33,7 +33,13 @@ $routes->group('', function($routes) {
     $routes->post('login', 'AuthController::login', ['as' => 'login']);
 });
 
-
+$routes->group('faculty', function($routes) {
+    $routes->get('dashboard', 'FacultyController::dashboard');
+    $routes->get('tasks', 'FacultyController::tasks');
+    $routes->get('mr', 'FacultyController::mr');
+    $routes->get('ppmp', 'FacultyController::ppmp');
+    $routes->get('pr', 'FacultyController::pr');
+});
 
 // Department Head
 $routes->group('', function($routes) {
