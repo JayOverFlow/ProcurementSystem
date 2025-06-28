@@ -105,14 +105,14 @@
                                         
                                         <div class="col-12">
                                             <div class="mb-4">
-                                                <button type="submit" id="loginButton" class="btn btn-danger w-100">LOGIN</button>
+                                                <button type="submit" id="loginButton" class="btn w-100" style="background-color: #C62742; color: #FFFFFF">LOGIN</button>
                                             </div>
                                         </div>
                                     </form>
 
                                     <div class="col-12">
                                         <div class="text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="<?= base_url('register'); ?>" class="text-danger">Register</a></p>
+                                            <p class="mb-0">Don't have an account ? <a href="<?= base_url('register'); ?>" style="color: #C62742">Register</a></p>
                                         </div>
                                     </div>
                                 </div>
