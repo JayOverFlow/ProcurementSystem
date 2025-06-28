@@ -130,7 +130,7 @@
                                 <div class="step" data-target="#validationStep-one">
                                     <button type="button" class="step-trigger" role="tab" id="validationStep-one-trigger" aria-controls="validationStep-one">
                                         <div class="d-flex flex-row align-items-center">
-                                            <span class="bs-stepper-circle bg-danger me-2"><img src="<?= base_url('assets/images/person-vcard 1.png'); ?>" alt="1"></span>
+                                            <span class="bs-stepper-circle me-2" style="background-color: #C62742"><img src="<?= base_url('assets/images/person-vcard 1.png'); ?>" alt="1"></span>
                                             <span class="bs-stepper-label">Step One</span>
                                         </div>
                                     </button>
@@ -139,7 +139,7 @@
                             <div class="step" data-target="#validationStep-two">
                                 <button type="button" class="step-trigger" role="tab" id="validationStep-two-trigger" aria-controls="validationStep-two" >
                                     <div class="d-flex flex-row align-items-center">
-                                        <span class="bs-stepper-circle bg-danger bg-danger"><img src="<?= base_url('assets/images/@.png'); ?>" alt="2"></span>
+                                        <span class="bs-stepper-circle" style="background-color: #C62742"><img src="<?= base_url('assets/images/@.png'); ?>" alt="2"></span>
                                         <span class="bs-stepper-label">Step Two</span>
                                     </div>
                                 </button>
@@ -148,7 +148,7 @@
                             <div class="step" data-target="#validationStep-three">
                                 <button type="button" class="step-trigger" role="tab" id="validationStep-three-trigger" aria-controls="validationStep-three" >
                                     <div class="d-flex flex-row align-items-center">
-                                        <span class="bs-stepper-circle bg-danger"><img src="<?= base_url('assets/images/card-checklist.png'); ?>" alt="3"></span>
+                                        <span class="bs-stepper-circle" style="background-color: #C62742"><img src="<?= base_url('assets/images/card-checklist.png'); ?>" alt="3"></span>
                                         <span class="bs-stepper-title">Review</span>
                                     </div>
                                 </button>
@@ -157,7 +157,7 @@
                             <div class="step" data-target="#validationStep-four">
                                 <button type="button" class="step-trigger" role="tab" id="validationStep-four-trigger" aria-controls="validationStep-four" >
                                     <div class="d-flex flex-row align-items-center">
-                                        <span class="bs-stepper-circle bg-danger"><img src="<?= base_url('assets/images/security.png'); ?>" alt="4"></span>
+                                        <span class="bs-stepper-circle" style="background-color: #C62742"><img src="<?= base_url('assets/images/security.png'); ?>" alt="4"></span>
                                         <span class="bs-stepper-title">Verify OTP</span>
                                     </div>
                                 </button>
@@ -197,8 +197,8 @@
                                     </div>
                                     
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-danger btn-prev me-3" disabled>Prev</button>
-                                        <button class="btn btn-danger btn-nxt">Next</button>
+                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF" disabled>Prev</button>
+                                        <button class="btn btn-nxt" style="background-color: #C62742; color: #FFFFFF">Next</button>
                                     </div>
                                 </div>
                                 <div id="validationStep-two" class="content" role="tabpanel" aria-labelledby="validationStep-two-trigger">
@@ -243,8 +243,8 @@
                                     </div>
                                     
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-danger btn-prev me-3">Prev</button>
-                                        <button class="btn btn-danger btn-nxt">Next</button>
+                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF">Prev</button>
+                                        <button class="btn btn-nxt" style="background-color: #C62742; color: #FFFFFF">Next</button>
                                     </div>
                                 </div>
                                 <div id="validationStep-three" class="content" role="tabpanel" aria-labelledby="validationStep-three-trigger">
@@ -302,8 +302,8 @@
                                     </div>
 
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-danger btn-prev me-3">Prev</button>
-                                        <button class="btn btn-danger" id="confirmSendOtpBtn" data-bs-toggle="modal" data-bs-target="#otpConfirmationModal">Next</button>
+                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF">Prev</button>
+                                        <button class="btn" style="background-color: #C62742; color: #FFFFFF" id="confirmSendOtpBtn" data-bs-toggle="modal" data-bs-target="#otpConfirmationModal">Next</button>
                                     </div>
                                 </div>
                                 <div id="validationStep-four" class="content" role="tabpanel" aria-labelledby="validationStep-four-trigger">
@@ -364,7 +364,7 @@
                                         
                                     </div>
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-danger btn-prev me-3">Back</button>
+                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF">Back</button>
                                     </div>
                                 </div>
 
@@ -373,7 +373,7 @@
                     </div>
                     <div class="col-12 mt-3">
                         <div class="text-center">
-                            <p class="mb-0">Already have an account ? <a href="<?= base_url('login'); ?>" class="text-danger">Login</a></p>
+                            <p class="mb-0">Already have an account ? <a href="<?= base_url('login'); ?>" style="color: #C62742">Login</a></p>
                         </div>
                     </div>
                 </div>

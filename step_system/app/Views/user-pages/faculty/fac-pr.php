@@ -47,14 +47,14 @@
                                             <div class="form-group row">
                                                 <label for="department" class="col-sm-3 col-form-label col-form-label-sm">Department</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="department" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="department" name="department">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="section" class="col-sm-3 col-form-label col-form-label-sm">Section</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="section" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="section" name="section">
                                                 </div>
                                             </div>                                                     
                                             
@@ -70,14 +70,14 @@
                                             <div class="form-group row">
                                                 <label for="po-num-date" class="col-sm-3 col-form-label col-form-label-sm">P.O No. Date</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="num-date" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="num-date" name="num_date">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <label for="sat-no-date" class="col-sm-3 col-form-label col-form-label-sm">SAT. No. Date</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="sat-no-date" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="sat-no-date" name="sat_no_date">
                                                 </div>
                                             </div>
                                             
@@ -110,15 +110,15 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" placeholder="">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" placeholder="">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" placeholder="">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" placeholder="">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" placeholder="">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" placeholder="">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="stock" name="stock">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="unit" name="unit">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="desc" name="desc">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty" name="qty">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="unit-cost" name="unit_cost">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="amount" name="amount">
                                                 <td class="delete-item-row">
                                                     <ul class="table-controls">
-                                                        <li class="mt-2 ms-3"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                        <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -148,14 +148,14 @@
                                             <div class="form-group">
                                                 <label for="printed-name1" class="col-sm-3 col-form-label col-form-label-sm">Printed Name</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="printed-name1" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="printed-name1" name="printed_name1">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="designation1" class="col-sm-3 col-form-label col-form-label-sm">Designation</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="designation1" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="designation1" name="designation1">
                                                 </div>
                                             </div>
                                             
@@ -171,14 +171,14 @@
                                             <div class="form-group">
                                                 <label for="printed-name2" class="col-sm-3 col-form-label col-form-label-sm">Printed Name</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="printed-name2" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="printed-name2" name="printed_name2">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="designation2" class="col-sm-3 col-form-label col-form-label-sm">Designation</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="designation2" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm" id="designation2" name="designation2">
                                                 </div>
                                             </div>
                                             
@@ -203,7 +203,7 @@
 
                             <div class="row">
                                 <div class="col-xl-12 col-md-4">
-                                    <a href="javascript:void(0);" class="btn btn-danger btn-send">Send Invoice</a>
+                                    <a href="javascript:void(0);" class="btn btn-send" style="background-color: #C62742; color: #FFFFFF">Send</a>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
                                     <a href="javascript:void(0);" class="btn btn-dark btn-download">Save</a>
@@ -225,5 +225,5 @@
 
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="<?= base_url('assets/src/assets/js/apps/purchase-request.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/apps/fac-pr.js') ?>"></script>
 <?= $this->endSection() ?>

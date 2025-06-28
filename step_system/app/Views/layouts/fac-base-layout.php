@@ -30,7 +30,7 @@
     <!--  END LOADER -->
 
     <!--  BEGIN HEADER  -->
-    <div class="header-container container-xxl">
+    <div class="header-container container-xxl box-shadow-none">
         <?= $this->include('partials/faculty/fac-header'); ?>
     </div>
     <!--  END HEADER  -->
@@ -46,8 +46,8 @@
         <!--  END NAV  -->
 
         <!--  BEGIN CONTENT AREA  -->
-        <div id="content" class="main-content">
-            <div class="layout-px-spacing">
+        <div id="content" class="main-content mt-5">
+            <div class="layout-px-spacing pt-3">
 
                 <div class="middle-content container-xxl p-0">
                     <?= $this->renderSection('content'); ?>
