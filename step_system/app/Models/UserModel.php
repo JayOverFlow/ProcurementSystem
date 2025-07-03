@@ -25,8 +25,11 @@ class UserModel extends Model {
             $data['user_password'] = password_hash($data['user_password'], PASSWORD_DEFAULT);
         }
 
+        // Remove confirm_password from session data coz no need na siya
+        unset($data['selected_department_id']);
+
         // Inserts data and returns true on success and false on failure
-        $result = $this->insert($data, false);
+        $result = $this->insert($data, true);
 
         return $result;
     }

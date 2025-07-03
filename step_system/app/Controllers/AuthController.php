@@ -2,17 +2,23 @@
 
 namespace App\Controllers;
 use App\Models\UserModel;
+use App\Models\DepartmentModel;
 use App\Models\OtpModel;
+use App\Models\UserRoleDepartmentModel;
 
 class AuthController extends BaseController {
     protected $userModel;
+    protected $departmentModel;
     protected $otpModel;
+    protected $userRoleDepartmentModel;
     protected $validation;
     protected $session;
 
     public function __construct() {
         $this->userModel = new UserModel();
+        $this->departmentModel = new DepartmentModel();
         $this->otpModel = new OtpModel();
+        $this->userRoleDepartmentModel = new UserRoleDepartmentModel();
         $this->validation = service('validation');
         $this->session = service('session');
         helper(['form', 'url']);
@@ -61,6 +67,7 @@ class AuthController extends BaseController {
                 'user_password' => $this->request->getPost('user_password'),
                 'confirm_password' => $this->request->getPost('confirm_password'),
                 'user_type' => $this->request->getPost('user_type'),
+                'selected_department_id' => $this->request->getPost('selected_department_id')
             ];
 
             // Define validtion rules
@@ -143,6 +150,7 @@ class AuthController extends BaseController {
             // Validation passed, store data in session for later use after OTP verification
             // At this point the validation passed
             unset($data['confirm_password']); // Remove confirm_password from session data coz no need na siya
+            log_message('debug', 'Data before session storage: ' . print_r($data, true));
             $this->session->set('registration_data', $data); // Set a temporary session to use email for OTP
             $this->session->setFlashdata('message', 'OTP will be sent to your email for verification.');
 
@@ -164,8 +172,10 @@ class AuthController extends BaseController {
                 'confirm_password' => '',
                 'user_type' => ''
             ];
+
+            $data['departments'] = $this->departmentModel->getAllDepartments();
             
-            return view('auth/register', ['data' => $data]);
+            return view('auth/register', $data);
         }
     }
 
@@ -263,6 +273,8 @@ class AuthController extends BaseController {
             $otp = $this->request->getPost('otp');
             $registrationData = $this->session->get('registration_data');
 
+            log_message('debug', 'Registration data after session retrieval: ' . print_r($registrationData, true));
+
             if (!$registrationData || !isset($registrationData['user_email'])) {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Registration data expired or not found. Please restart registration.']);
             }
@@ -283,15 +295,36 @@ class AuthController extends BaseController {
             // Verify OTP
             if ($otp === $storedOtp['otp_code']) {
                 // OTP is valid, proceed with user registration
-                $result = $this->userModel->insertUser($registrationData);
+                $db = \Config\Database::connect();
+                $db->transBegin(); // Start transaction
 
-                // Clean the otp_temp_tbl after successful registration
-                if ($result) {
-                    $this->otpModel->deleteOtpByEmail($email);
-                    $this->session->remove('registration_data');
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Registration successful!']);
-                } else {
-                    return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to complete registration. Please try again.']);
+                try {
+                    $userId = $this->userModel->insertUser($registrationData);
+
+                    if ($userId) {
+                        // Get dep_id from registrationData
+                        $depId = $registrationData['selected_department_id'];
+
+                        // Insert into user_role_department_tbl
+                        $userRoleDeptResult = $this->userRoleDepartmentModel->insertUserRoleDepartment($userId, $depId);
+
+                        if ($userRoleDeptResult) {
+                            $db->transCommit(); // Commit transaction if both insertions are successful
+                            $this->otpModel->deleteOtpByEmail($email);
+                            $this->session->remove('registration_data');
+                            return $this->response->setJSON(['status' => 'success', 'message' => 'Registration successful!']);
+                        } else {
+                            $db->transRollback(); // Rollback if user role department insertion fails
+                            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to link user with department. Please try again.']);
+                        }
+                    } else {
+                        $db->transRollback(); // Rollback if user insertion fails
+                        return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to complete registration. Please try again.']);
+                    }
+                } catch (\Exception $e) {
+                    $db->transRollback(); // Rollback on any exception
+                    log_message('error', 'Registration transaction failed: ' . $e->getMessage() . '\nStack Trace: ' . $e->getTraceAsString());
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'An unexpected error occurred during registration. Please try again.']);
                 }
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid OTP. Please try again.']);
