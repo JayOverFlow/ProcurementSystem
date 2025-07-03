@@ -56,7 +56,7 @@
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control form-control-sm" id="section" name="section">
                                                 </div>
-                                            </div>                                                     
+                                            </div>                                                                
                                             
                                         </div>
                                         
@@ -147,20 +147,20 @@
 
                                             <div class="form-group">
                                                 <label for="printed-name1" class="col-sm-3 col-form-label col-form-label-sm">Printed Name</label>
-                                                <div class="col-sm-9">
+                                            <div class="col-sm-9">
                                                     <input type="text" class="form-control form-control-sm" id="printed-name1" name="printed_name1">
-                                                </div>
                                             </div>
+                                        </div>
 
                                             <div class="form-group">
                                                 <label for="designation1" class="col-sm-3 col-form-label col-form-label-sm">Designation</label>
-                                                <div class="col-sm-9">
+                                            <div class="col-sm-9">
                                                     <input type="text" class="form-control form-control-sm" id="designation1" name="designation1">
                                                 </div>
                                             </div>
                                             
-                                        </div>
-                                    </div>
+                                                    </div>
+                                                </div>
 
                                     <div class="col-xl-5 invoice-address-client">
 
@@ -196,7 +196,7 @@
                 </div>
 
                 <div class="col-xl-3">
-
+                    
                     <div class="invoice-actions-btn mt-0">
 
                         <div class="invoice-action-btn">

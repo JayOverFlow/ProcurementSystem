@@ -224,21 +224,42 @@
                                             <label class="form-check-label" for="form-switch-primary">Show Password</label>
                                         </div>
 
-                                        <div class="form-group mb-4">
-                                            <label for="form-check-radio-primary" class="mt-2">User Type</label> <br>
-                                            <div class="form-check form-check-danger form-check-inline">
-                                                <input class="form-check-input" type="radio" name="user_type" id="user-type-faculty" value="Faculty">
-                                                <label class="form-check-label" for="user-type-faculty">
-                                                    Faculty
-                                                </label>
+                                        <div class="row">
+                                            <div class="form-group mb-4 col">
+                                                <label for="form-check-radio-primary" class="mt-2">User Type</label> <br>
+                                                <div class="form-check form-check-danger form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="user_type" id="user-type-faculty" value="Faculty">
+                                                    <label class="form-check-label" for="user-type-faculty">
+                                                        Faculty
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-danger form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="user_type" id="user-type-staff" value="Staff">
+                                                    <label class="form-check-label" for="user-type-staff">
+                                                        Staff
+                                                    </label>
+                                                </div>
+                                                <div class="invalid-feedback" id="user-type-feedback" style="display: none;"></div>
                                             </div>
-                                            <div class="form-check form-check-danger form-check-inline">
-                                                <input class="form-check-input" type="radio" name="user_type" id="user-type-staff" value="Staff">
-                                                <label class="form-check-label" for="user-type-staff">
-                                                    Staff
-                                                </label>
+                                            <div class="btn-group mb-4 mr-2 col">
+                                                <div class="d-flex flex-column ms-5">
+                                                    <label for="form-check-radio-primary" class="mt-2">Department / Office</label>
+                                                    <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="departmentDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Select <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                    </button>
+                                                    <input type="hidden" id="selectedDepartmentId" name="selected_department_id" value="">
+                                                    <div class="invalid-feedback" id="department-feedback" style="display: none;">Please select a department or office</div>
+                                                    <div class="dropdown-menu dropdown-menu-scrollable" style="max-height: 250px; overflow-y: auto !important;">
+                                                    <?php if (isset($departments) && is_array($departments)): ?>
+                                                        <?php foreach ($departments as $department): ?>
+                                                            <a href="javascript:void(0);" class="dropdown-item" data-id="<?= esc($department['dep_id']) ?>"><?= esc($department['dep_name']) ?></a>
+                                                        <?php endforeach; ?>
+                                                    <?php else: ?>
+                                                        <a href="javascript:void(0);" class="dropdown-item">No departments found</a>
+                                                    <?php endif; ?>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="invalid-feedback" id="user-type-feedback" style="display: none;"></div>
                                         </div>
                                     </div>
                                     
@@ -297,6 +318,12 @@
                                                     <span id="review-user-type" class="form-control-plaintext fw-bold"></span>
                                                 </div>
                                             </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label text-muted mb-0">Department / Office</label>
+                                                    <span id="review-department" class="form-control-plaintext fw-bold"></span>
+                                                </div>
+                                            </div>
     
                                         </div>
                                     </div>
@@ -352,7 +379,7 @@
                                         
                                         <div class="col-12 mt-4">
                                             <div class="mb-4">
-                                                <button class="btn btn-danger w-100" id="verifyOtpBtn">VERIFY OTP</button>
+                                                <button class="btn w-100" id="verifyOtpBtn" style="background-color: #C62742; color: #FFFFFF">VERIFY OTP</button>
                                             </div>
                                         </div>
                                         

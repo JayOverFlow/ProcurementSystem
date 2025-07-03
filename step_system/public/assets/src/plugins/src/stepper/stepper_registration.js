@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var reviewPasswordText = formValidation.querySelector('#review-password-text');
     var reviewPasswordToggle = formValidation.querySelector('#review-password-toggle'); // Review password
     var reviewUserType = formValidation.querySelector('#review-user-type');
+    var reviewDepartment = formValidation.querySelector('#review-department'); // Review department
 
     // Select all elements on Step 4
     var confirmSendOtpBtn = document.getElementById('confirmSendOtpBtn'); // The Next button on step 3 to trigger the modal
@@ -311,6 +312,24 @@ document.addEventListener('DOMContentLoaded', function () {
             userTypeRadios.forEach(radio => radio.classList.remove('is-invalid'));
         }
 
+        // Validate Department/Office selection
+        const departmentDropdownButton = document.getElementById('departmentDropdownButton');
+        const departmentFeedback = document.getElementById('department-feedback');
+        if (departmentDropdownButton && departmentDropdownButton.textContent.trim().startsWith('Select')) {
+            if (departmentFeedback) {
+                departmentFeedback.textContent = 'Department or Office is required';
+                departmentFeedback.style.display = 'block';
+            }
+            departmentDropdownButton.classList.add('is-invalid');
+            validationFailed = true;
+        } else {
+            if (departmentFeedback) {
+                departmentFeedback.textContent = '';
+                departmentFeedback.style.display = 'none';
+            }
+            departmentDropdownButton.classList.remove('is-invalid');
+        }
+
         if (!validationFailed) {
             // Frontend validation passed, now perform backend validation for email
             const formData = new FormData();
@@ -360,6 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('user_password', inputPassword.value);
             formData.append('confirm_password', inputConfirmPassword.value);
             formData.append('user_type', document.querySelector('input[name="user_type"]:checked').value);
+            formData.append('selected_department_id', selectedDepartmentIdInput.value);
 
             // AJAX Fetch json response from register method in AuthController
             fetch(BASE_URL + 'register', {
@@ -717,4 +737,21 @@ document.addEventListener('DOMContentLoaded', function () {
     if (verifyOtpBtn) {
         verifyOtpBtn.disabled = true;
     }
+
+    // Populate department dropdown and handle selection
+    const departmentDropdownButton = document.getElementById('departmentDropdownButton');
+    const selectedDepartmentIdInput = document.getElementById('selectedDepartmentId');
+    const departmentDropdownItems = document.querySelectorAll('.dropdown-menu .dropdown-item');
+
+    departmentDropdownItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const selectedText = this.textContent;
+            const selectedId = this.dataset.id;
+            departmentDropdownButton.innerHTML = selectedText + ' <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+            selectedDepartmentIdInput.value = selectedId;
+            reviewDepartment.textContent = selectedText;
+            console.log('Selected Department ID (Frontend): ', selectedDepartmentIdInput.value);
+            clearValidationError(departmentDropdownButton); // Clear validation error when an item is selected
+        });
+    });
 });

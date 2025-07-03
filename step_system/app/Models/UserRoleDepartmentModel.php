@@ -1,14 +1,27 @@
 <?php
 
-namespace App\Models\MasterAdmin;
+namespace App\Models;
 
 use CodeIgniter\Model;
 
 class UserRoleDepartmentModel extends Model
 {
     protected $table = 'user_role_department_tbl';
-    protected $primaryKey = 'id'; // Changed from array to 'id'
-    protected $allowedFields = ['user_id', 'role_id', 'department_id'];
+    protected $primaryKey = 'id';
+    protected $allowedFields = [
+        'user_id',
+        'role_id',
+        'department_id'
+    ];
+
+    // Method to insert a new record into user_role_department_tbl
+    public function insertUserRoleDepartment(int $userId, int $depId)
+    {
+        return $this->insert([
+            'user_id' => $userId,
+            'department_id' => $depId
+        ]);
+    }
 
     // Method to update department for a specific user and role
     // NOTE: This method is NOT currently used by the MARolesAssignmentController.
