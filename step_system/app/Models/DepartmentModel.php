@@ -8,7 +8,10 @@ class DepartmentModel extends Model
 {
     protected $table = 'departments_tbl';
     protected $primaryKey = 'dep_id';
-    protected $allowedFields = ['dep_name', 'dep_type'];
+    protected $allowedFields = [
+        'dep_name',
+        'dep_type'
+    ];
 
     public function getAllDepartments()
     {

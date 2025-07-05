@@ -12,6 +12,7 @@ class UserModel extends Model {
         'user_firstname',
         'user_middlename',
         'user_lastname',
+        // 'user_fullname', // Virutal Generate ng MyQSL, so no need siya here
         'user_email',
         'user_password',
         'user_type',
