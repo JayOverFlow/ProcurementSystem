@@ -8,7 +8,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 class DHDashboard extends BaseController {
 
     public function index() {
-        return view('user-pages/department-head/dh-dashboard');
+        $userData = $this->loadUserSession();
+        return view('user-pages/department-head/dh-dashboard', $userData);    
     }
 
 }

@@ -55,7 +55,6 @@
 
             </div>
             <!--  BEGIN FOOTER  -->
-            <?= $this->include('partials/faculty/fac-footer') ?>x`
             <!--  END FOOTER  -->
         </div>
         <!--  END CONTENT AREA  -->
