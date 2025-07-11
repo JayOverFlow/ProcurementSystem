@@ -18,14 +18,6 @@
                 </div>
                 <div class="shadow-bottom"></div>
                 <ul class="list-unstyled menu-categories" id="accordionExample">
-                    <li class="menu">
-                        <a href="<?= base_url('faculty/dashboard') ?>" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                                <span>Dashboard</span>
-                            </div>
-                        </a>
-                    </li>
 
                     <li class="menu">
                         <a href="" data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">
@@ -34,27 +26,18 @@
                                 <span class="ms-2">Procurement</span>
                             </div>
                         </a>
-                        <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample">
+                        <ul class="dropdown-menu submenu list-untyled" id="dashboard" data-bs-parent="#accordionExample" style="min-width: 20rem;">
                             <li class="">
-                                <a href="<?= base_url('faculty/ppmp') ?>">Project Procurement Management Plan</a>
+                                <a href="<?= base_url('unassigned/ppmp') ?>">Project Procurement Management Plan</a>
                             </li>
                             <li>
-                                <a href="<?= base_url('faculty/pr') ?>">Purchase Request</a>
+                                <a href="<?= base_url('unassigned/pr') ?>">Purchase Request</a>
                             </li>
                         </ul>
                     </li>
 
                     <li class="menu">
-                        <a href="<?= base_url('faculty/tasks') ?>" class="dropdown-toggle">
-                            <div class="">
-                                <img src="<?= base_url('assets/images/icon-tasks.svg') ?>" width="24" height="24" alt="checklist">
-                                <span class="ms-2">Tasks</span>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li class="menu">
-                        <a href="<?= base_url('faculty/mr') ?>" class="dropdown-toggle">
+                        <a href="<?= base_url('unassigned/mr') ?>" class="dropdown-toggle">
                             <div class="">
                                 <img src="<?= base_url('assets/images/icon-mr.svg') ?>" width="24" height="24" alt="Box">
                                 <span class="ms-2">MR</span>

@@ -112,3 +112,9 @@ $routes->group('supply', function($routes) {
 //     // localhost:8080/dh-mr, it will be localhost:8080/dh/mr
 
 // });
+
+$routes->group('unassigned', function($routes) {
+    $routes->get('mr', 'UnassignedController::mr');
+    $routes->get('ppmp', 'UnassignedController::ppmp');
+    $routes->get('pr', 'UnassignedController::pr');
+});
