@@ -27,14 +27,25 @@ $routes->group('auth', function($routes) {
 });
 
 // Login
-// Used helper('url') for route_to method
 $routes->group('', function($routes) {
-    $routes->get('login', 'AuthController::login', ['as' => 'login']);
-    $routes->post('login', 'AuthController::login', ['as' => 'login']);
+    $routes->get('login', 'AuthController::login');
+    $routes->post('login', 'AuthController::login');
 });
 
+$routes->get('logout', 'AuthController::logout');
+
+// Faculty
 $routes->group('faculty', function($routes) {
-    $routes->get('dashboard', 'FacultyController::dashboard');
+    $routes->get('dashboard', 'Faculty\FacultyDashboardController::index');
+    $routes->get('ppmp', 'Faculty\FacultyPPMPController::index');
+    $routes->get('pr', 'Faculty\FacultyPRController::index');
+    $routes->get('tasks', 'Faculty\FacultyTasksController::index');
+    $routes->get('mr', 'Faculty\FacultyMRController::index');
+});
+
+// Director
+$routes->group('director', function($routes) {
+    $routes->get('dashboard', 'DirectorController::dashboard');
     $routes->get('tasks', 'FacultyController::tasks');
     $routes->get('mr', 'FacultyController::mr');
     $routes->get('ppmp', 'FacultyController::ppmp');
