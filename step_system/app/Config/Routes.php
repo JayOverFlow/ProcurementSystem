@@ -47,6 +47,9 @@ $routes->group('head', function($routes) {
     $routes->get('mr', 'DepartmentHead\DHDashboard::mr');
     $routes->get('ppmp', 'DepartmentHead\DHDashboard::ppmp');
     $routes->get('pr', 'DepartmentHead\DHDashboard::pr');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/debug-test', 'DebugController::testRoute'); // Temporary debug route
     $routes->get('tasks', 'DepartmentHead\DHDashboard::tasks');
 });
 // Master Admin
