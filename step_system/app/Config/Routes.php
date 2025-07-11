@@ -53,6 +53,17 @@ $routes->group('director', function($routes) {
     $routes->get('ppmp', 'FacultyController::ppmp');
     $routes->get('pr', 'FacultyController::pr');
 });
+// Planning
+    $routes->group('planning', function($routes) {
+    $routes->get('dashboard', 'PlanningController::dashboard');
+    $routes->get('tasks', 'PlanningController::tasks');
+    $routes->get('mr', 'PlanningController::mr');
+    $routes->get('ppmp', 'PlanningController::ppmp');
+    $routes->get('pr', 'PlanningController::pr');
+    $routes->get('app', 'PlanningController::app');
+    $routes->get('inventory', 'PlanningController::inventory');
+
+});
 
 // Department Head
 $routes->group('head', function($routes) {
