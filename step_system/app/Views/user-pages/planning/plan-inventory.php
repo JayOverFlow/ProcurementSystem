@@ -1,0 +1,258 @@
+<?= $this->extend('layouts/plan-base-layout') ?>
+
+<?= $this->section('title') ?>
+    <title>TUP STEP | Planning Inventory</title>
+<?= $this->endSection() ?>
+
+<?= $this->section('css') ?>
+    <link href="<?= base_url('assets/src/plugins/src/apex/apexcharts.css'); ?>" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('assets/src/assets/css/light/dashboard/dash_1.css'); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/src/assets/css/dark/dashboard/dash_1.css'); ?>" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/src/table/datatable/datatables.css') ?>">
+
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/light/table/datatable/dt-global_style.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/light/table/datatable/custom_dt_custom.css') ?>">
+
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/dt-global_style.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/custom_dt_custom.css') ?>">
+<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+        <div class="col">
+            <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                <div class="card-top-content">
+                    <div class="avatar avatar-lg">
+                        <img src="<?= base_url('assets/images/icon-all.png'); ?>" class="rounded-circle" alt="faculty icon">
+                    </div>
+                </div>
+                <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                    <div class="card-body text-end">
+                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>All</strong></h5>
+                        <h5 class="card-text" style="color: #515365">12</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                <div class="card-top-content">
+                    <div class="avatar avatar-lg">
+                        <img src="<?= base_url('assets/images/icon-equipments.png'); ?>" class="rounded-circle" alt="faculty icon">
+                    </div>
+                </div>
+                <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                    <div class="card-body text-end">
+                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Equipments</strong></h5>
+                        <h5 class="card-text" style="color: #515365">12</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                <div class="card-top-content">
+                    <div class="avatar avatar-lg">
+                        <img src="<?= base_url('assets/images/icon-appliances.png'); ?>" class="rounded-circle" alt="faculty icon">
+                    </div>
+                </div>
+                <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                    <div class="card-body text-end">
+                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Appliances</strong></h5>
+                        <h5 class="card-text" style="color: #515365">12</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                <div class="card-top-content">
+                    <div class="avatar avatar-lg">
+                        <img src="<?= base_url('assets/images/icon-furnishings.png'); ?>" class="rounded-circle" alt="faculty icon">
+                    </div>
+                </div>
+                <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                    <div class="card-body text-end">
+                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Furnishings</strong></h5>
+                        <h5 class="card-text" style="color: #515365">12</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                <div class="card-top-content">
+                    <div class="avatar avatar-lg">
+                        <img src="<?= base_url('assets/images/icon-materials.png'); ?>" class="rounded-circle" alt="faculty icon">
+                    </div>
+                </div>
+                <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                    <div class="card-body text-end">
+                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Materials</strong></h5>
+                        <h5 class="card-text" style="color: #515365">12</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row layout-spacing mt-4">
+        <div class="col-lg-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content widget-content-area">
+                    <table id="style-3" class="table style-3 dt-table-hover">
+                        <thead>
+                        <tr>
+                            <th class="checkbox-column text-center">MR-Id</th>
+                            <th class="text-center">Item Name</th>
+                            <th class="text-center">Assigned</th>
+                            <th class="text-center">Department/Office</th>
+                            <th class="text-center">Date Received</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="checkbox-column text-center"> 011111 </td>
+                            <td class="text-center">Stand Fan</td>
+                            <td class="text-center">Ron Eric Legaspi</td>
+                            <td class="text-center">Basic Arts and Sciences Department</td>
+                            <td class="text-center">May 1, 2024</td>
+                        </tr>
+                        <tr>
+                            <td class="checkbox-column text-center"> 011112 </td>
+                            <td class="text-center">Stand Fan</td>
+                            <td class="text-center">Ron Eric Legaspi</td>
+                            <td class="text-center">Basic Arts and Sciences Department</td>
+                            <td class="text-center">August 23, 2023</td>
+                        </tr>
+                        <tr>
+                            <td class="checkbox-column text-center"> 0111113 </td>
+                            <td class="text-center">Stand Fan</td>
+                            <td class="text-center">Ron Eric Legaspi</td>
+                            <td class="text-center">Basic Arts and Sciences Department</td>
+                            <td class="text-center">August 23, 2023</td>
+                        </tr>
+                        <tr>
+                            <td class="checkbox-column text-center"> 0111114 </td>
+                            <td class="text-center">Stand Fan</td>
+                            <td class="text-center">Ron Eric Legaspi</td>
+                            <td class="text-center">Basic Arts and Sciences Department</td>
+                            <td class="text-center">August 23, 2023</td>
+                        </tr>
+                        <tr>
+                            <td class="checkbox-column text-center"> 011115 </td>
+                            <td class="text-center">Stand Fan</td>
+                            <td class="text-center">Ron Eric Legaspi</td>
+                            <td class="text-center">Basic Arts and Sciences Department</td>
+                            <td class="text-center">August 23, 2023</td>
+                        </tr>
+                        <tr>
+                            <td class="checkbox-column text-center"> 011116 </td>
+                            <td class="text-center">Stand Fan</td>
+                            <td class="text-center">Ron Eric Legaspi</td>
+                            <td class="text-center">Basic Arts and Sciences Department</td>
+                            <td class="text-center">August 23, 2023</td>
+                        </tr>
+                        <tr>
+                            <td class="checkbox-column text-center"> 011117 </td>
+                            <td class="text-center">Stand Fan</td>
+                            <td class="text-center">Ron Eric Legaspi</td>
+                            <td class="text-center">Basic Arts and Sciences Department</td>
+                            <td class="text-center">August 23, 2023</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?= $this->endSection() ?>
+
+<?= $this->section('js') ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js'); ?>"></script>
+    <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
+    <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
+    <script>
+        // var e;
+        c1 = $('#style-1').DataTable({
+            headerCallback:function(e, a, t, n, s) {
+                e.getElementsByTagName("th")[0].innerHTML=`
+            <div class="form-check form-check-primary d-block">
+                <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
+            </div>`
+            },
+            columnDefs:[ {
+                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
+                    return `
+                <div class="form-check form-check-primary d-block">
+                    <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
+                </div>`
+                }
+            }],
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                "<'table-responsive'tr>" +
+                "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page PAGE of PAGES",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+                "sLengthMenu": "Results :  MENU",
+            },
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 10
+        });
+
+        multiCheck(c1);
+
+        c2 = $('#style-2').DataTable({
+            headerCallback:function(e, a, t, n, s) {
+                e.getElementsByTagName("th")[0].innerHTML=`
+            <div class="form-check form-check-primary d-block new-control">
+                <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
+            </div>`
+            },
+            columnDefs:[ {
+                targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
+                    return `
+                <div class="form-check form-check-primary d-block new-control">
+                    <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
+                </div>`
+                }
+            }],
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                "<'table-responsive'tr>" +
+                "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page PAGE of PAGES",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+                "sLengthMenu": "Results :  MENU",
+            },
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 10
+        });
+
+        multiCheck(c2);
+
+        c3 = $('#style-3').DataTable({
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'<'title-container'>><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                "<'table-responsive'tr>" +
+                "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page PAGE of PAGES",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+            },
+            "stripeClasses": [],
+            "pageLength": 10
+        });
+
+            $('#style-3_wrapper .title-container').html('<h4 style="font-weight: bold; color: #dc3545;">Inventory</h4>');
+
+        multiCheck(c3);
+    </script>
+<?= $this->endSection() ?>
