@@ -15,7 +15,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         
         <div class="doc-container">
-
+            <form action="<?= base_url('faculty/ppmp/export-excel') ?>" method="POST">
             <div class="row">
                 <div class="col-xl-9">
 
@@ -62,7 +62,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel1" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="personel1" name="personel1">
+                                                        <input type="text" class="form-control form-control-sm" id="personnel1" name="personnel1">
                                                     </div>
                                                 </div>
 
@@ -77,7 +77,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel2" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="personel2" name="personel2">
+                                                        <input type="text" class="form-control form-control-sm" id="personnel2" name="personnel2">
                                                     </div>
                                                 </div> 
                                                 
@@ -92,7 +92,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel3" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="personel3" name="personel3">
+                                                        <input type="text" class="form-control form-control-sm" id="personnel3" name="personnel3">
                                                     </div>
                                                 </div>
                                             </div> 
@@ -123,14 +123,14 @@
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-budget-allocated" class="col-sm-3 col-form-label col-form-label-sm">Total Budget Allocated</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ttl-budget-allocated" name="ttl_budget_allocated">
+                                                    <input type="number" class="form-control form-control-sm" id="ttl-budget-allocated" name="ttl_budget_allocated">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-proposed-budget" class="col-sm-3 col-form-label col-form-label-sm">Total Proposed Budget</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ttl-proposed-budget" name="ttl_proposed_budget">
+                                                    <input type="number" class="form-control form-control-sm" id="ttl-proposed-budget" name="ttl_proposed_budget">
                                                 </div>
                                             </div>
                                             
@@ -143,12 +143,11 @@
                                 
                             </div>
 
-                            <hr class="my-5">
-                            <p class="px-5"><span class="fw-bold">Note: </span>Technical Specification for each item/ project being proposed shall be submitted as part of the PPMP, General description may be used  when filing out this form, however, when preparing your APP, please state full specification of the item.</p>
-                            <hr class="my-5">
+                            <hr class="my-3">
+                                <p class="px-5" style= "text-align: center;"> MOOE/ANY SUPPLIES, MATERIALS AND EQUIPMENT (BELOW PHP 50,000.00/ITEM) </p>
+                            <hr class="my-3">
 
                             <div class="invoice-detail-items pt-0">
-
                                 <div class="table-responsive">
                                     <table class="table item-table">
                                         <thead>
@@ -178,48 +177,50 @@
                                             </tr>
                                             <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
                                         </thead>
+
+                            
                                         <tbody>
                                             <tr>
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="code" name="code">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="gen_desc">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget" name="est_budget">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="schd-milestone-acts" name="schd_milestone_acts">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="code" name="items[0][code]">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="items[0][gen_desc]">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size" name="items[0][qty_size]">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget" name="items[0][est_budget]">
                                                 <td class="d-flex justify-content-between px-0 ps-1 py-3">
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="jan" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="jan" name="items[0][month][jan]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="feb" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="feb" name="items[0][month][feb]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="mar" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="mar" name="items[0][month][mar]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="par" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="par" name="items[0][month][apr]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="may" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="may" name="items[0][month][may]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="jun" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="jun" name="items[0][month][jun]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="jul" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="jul" name="items[0][month][jul]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="aug" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="aug" name="items[0][month][aug]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="sep" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="sep" name="items[0][month][sep]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="oct" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="oct" name="items[0][month][oct]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="nov" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="nov" name="items[0][month][nov]">
                                                     </div>
                                                     <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="dec" name="month">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="dec" name="items[0][month][dec]">
                                                     </div>
                                                 </td>
                                                 <td class="delete-item-row">
@@ -234,15 +235,112 @@
 
                                 <div class="d-flex justify-content-between">
                                     <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF">Add Item</button>
-                                    <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span>1,000</span></p>
+                                    <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span id="total-amount-mooe">1,000</span></p>
                                 </div>
-                                
                             </div>
-                        </div>
-                        
+
+                            <hr class="my-3">
+                                <p class="px-5" style= "text-align: center;"> CO/ANY CAPITAL OUTLAY (PHP 50,000.00/ITEM AND ABOVE) </p>
+                            <hr class="my-3">
+
+                            <div class="invoice-detail-items pt-0">
+                                <div class="table-responsive">
+                                    <table class="table item-table-co">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-1 text-center">Code</th>
+                                                <th class="col-4 text-center">General Description</th>
+                                                <th class="col-1 text-center">Quantity / Size</th>
+                                                <th class="col-1 text-center">Estimated Budget</th>
+                                                <th class="col-4 text-center px-0">
+                                                    Schdule / Milestone of Activities
+                                                    <div class="d-flex justify-content-between text-muted">
+                                                    <small>Jan</small>
+                                                    <small>Feb</small>
+                                                    <small>Mar</small>
+                                                    <small>Apr</small>
+                                                    <small>May</small>
+                                                    <small>Jun</small>
+                                                    <small>Jul</small>
+                                                    <small>Aug</small>
+                                                    <small>Sep</small>
+                                                    <small>Oct</small>
+                                                    <small>Nov</small>
+                                                    <small>Dec</small>
+                                                    </div>
+                                                </th>
+                                                <th class="col-1 text-center">Action</th>
+                                            </tr>
+                                            <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
+                                        </thead>
+
+                            
+                                        <tbody>
+                                            <tr>
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co" name="items_co[0][code]">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co" name="items_co[0][gen_desc]">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co" name="items_co[0][qty_size]">
+                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co" name="items_co[0][est_budget]">
+                                                <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="jan_co" name="items_co[0][month][jan]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="feb_co" name="items_co[0][month][feb]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="mar_co" name="items_co[0][month][mar]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="par_co" name="items_co[0][month][apr]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="may_co" name="items_co[0][month][may]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="jun_co" name="items_co[0][month][jun]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="jul_co" name="items_co[0][month][jul]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="aug_co" name="items_co[0][month][aug]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="sep_co" name="items_co[0][month][sep]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="oct_co" name="items_co[0][month][oct]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="nov_co" name="items_co[0][month][nov]">
+                                                    </div>
+                                                    <div class="form-check form-check-danger form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" value="1" id="dec_co" name="items_co[0][month][dec]">
+                                                    </div>
+                                                </td>
+                                                <td class="delete-item-row-co">
+                                                    <ul class="table-controls">
+                                                        <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-md additem-co" style="background-color: #C62742; color: #FFFFFF">Add Item</button>
+                                    <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span id="total-amount-co">1,000</span></p>
+                                </div>
+                            </div>
+                                        
+                        </div>      
                     </div>
                     
                 </div>
+
+                
 
                 <div class="col-xl-3">
 
@@ -255,7 +353,7 @@
                                     <a href="javascript:void(0);" class="btn btn-send" style="background-color: #C62742; color: #FFFFFF">Send</a>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
-                                    <a href="javascript:void(0);" class="btn btn-dark btn-download">Save</a>
+                                    <button type="submit" class="btn btn-dark btn-download" style="padding-left: 136px; padding-right: 136px">Export</button>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +362,7 @@
                     
                 </div>
             </div>
-            
+            </form>
             
         </div>
 
@@ -279,4 +377,36 @@
 <!-- For Table -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/assets/js/apps/fac-ppmp.js') ?>"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calculateTotal = (tableName, totalElementId) => {
+            let total = 0;
+            document.querySelectorAll(`.${tableName} tbody tr`).forEach(row => {
+                const estBudgetInput = row.querySelector('input[name*="[est_budget]"]');
+                if (estBudgetInput) {
+                    total += parseFloat(estBudgetInput.value) || 0;
+                }
+            });
+            document.getElementById(totalElementId).textContent = total.toFixed(2);
+        };
+
+        // Initial calculation
+        calculateTotal('item-table', 'total-amount-mooe');
+        calculateTotal('item-table-co', 'total-amount-co');
+
+        // Recalculate on input change for MOOE table
+        document.querySelector('.item-table').addEventListener('input', (event) => {
+            if (event.target.name.includes('[est_budget]')) {
+                calculateTotal('item-table', 'total-amount-mooe');
+            }
+        });
+
+        // Recalculate on input change for CO table
+        document.querySelector('.item-table-co').addEventListener('input', (event) => {
+            if (event.target.name.includes('[est_budget]')) {
+                calculateTotal('item-table-co', 'total-amount-co');
+            }
+        });
+    });
+</script>
 <?= $this->endSection() ?>

@@ -9,6 +9,7 @@ use App\Models\PpmpModel;
 use App\Models\PpmpItemModel;
 use App\Models\PrModel;
 use App\Models\PrItemModel;
+use App\Models\FilesModel;
 
 class ExportController extends BaseController
 {
@@ -18,6 +19,16 @@ class ExportController extends BaseController
         // Initialize models
         $ppmpModel = new PpmpModel();
         $ppmpItemModel = new PpmpItemModel();
+        $filesModel = new FilesModel();
+
+        // Define upload path
+        $uploadPath = WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'ppmp' . DIRECTORY_SEPARATOR;
+        
+        // Ensure the upload directory exists
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+            log_message('debug', 'Created upload directory: ' . $uploadPath);
+        }
 
         // Check if db is available
         if ($this->db) {
@@ -233,13 +244,42 @@ class ExportController extends BaseController
             header('Content-Disposition: attachment;filename="' . $filename . '"');
             header('Cache-Control: max-age=0');
 
-            // Output the Excel file
+            // Output the Excel file to a file instead of directly to output
+            $filePath = $uploadPath . $filename;
+            log_message('debug', 'Saving Excel file to: ' . $filePath);
             if (ob_get_length()) ob_end_clean();
             log_message('debug', 'Outputting Excel file.');
 
             $writer = new Xlsx($spreadsheet);
+            $writer->save($filePath);
+            log_message('debug', 'Excel file outputted successfully to: ' . $filePath);
+
+            // Save file information to files_tbl
+            $userData = $this->loadUserSession();
+            $fileData = [
+                'file_type' => 'ppmp',
+                'file_name' => $filename,
+                'file_uploaded_by' => $userData['user_id'] ?? 1, // Use logged in user ID, fallback to 1
+                'file_sent_to' => null, // This can be set later if sent to a specific user
+                'file_path' => 'writable/uploads/ppmp/' . $filename,
+            ];
+            log_message('debug', 'File data to insert: ' . json_encode($fileData));
+            $filesModel->insert($fileData);
+            log_message('debug', 'File information saved to files_tbl.');
+
+            // Set headers for browser download
+            log_message('debug', 'Setting download headers for browser: ' . $filename);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="' . $filename . '"');
+            header('Cache-Control: max-age=0');
+
+            // Output the Excel file to the browser
+            if (ob_get_length()) ob_end_clean();
+            log_message('debug', 'Outputting Excel file to browser.');
+
+            $writer = new Xlsx($spreadsheet); // Re-instantiate writer to output to browser
             $writer->save('php://output');
-            log_message('debug', 'Excel file outputted successfully. Exiting.');
+            log_message('debug', 'Excel file outputted to browser successfully. Exiting.');
             exit();
 
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
@@ -263,6 +303,16 @@ class ExportController extends BaseController
         // Initialize models
         $prModel = new PrModel();
         $prItemModel = new PrItemModel();
+        $filesModel = new FilesModel();
+
+        // Define upload path
+        $uploadPath = WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'pr' . DIRECTORY_SEPARATOR;
+        
+        // Ensure the upload directory exists
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+            log_message('debug', 'Created upload directory: ' . $uploadPath);
+        }
 
         // Start database transaction
         $prModel->db->transBegin();
@@ -368,21 +418,41 @@ class ExportController extends BaseController
             $sheet->setCellValue('F49', $totalAmount); // Map total amount to F49
             // log_message('debug', 'Signature fields mapped.');
 
-            // Set headers for download
-            // log_message('debug', 'Setting headers for download.');
+            // Output the Excel file to a file instead of directly to output
             $filename = 'Purchase_Request_' . date('Ymd_His') . '.xlsx';
+            $filePath = $uploadPath . $filename;
+
+            log_message('debug', 'Saving Excel file to: ' . $filePath);
+            $writer = new Xlsx($spreadsheet);
+            $writer->save($filePath);
+            log_message('debug', 'Excel file saved successfully to: ' . $filePath);
+
+            // Save file information to files_tbl
+            $userData = $this->loadUserSession();
+            $fileData = [
+                'file_type' => 'pr',
+                'file_name' => $filename,
+                'file_uploaded_by' => $userData['user_id'] ?? 1, // Use logged in user ID, fallback to 1
+                'file_sent_to' => null, // This can be set later if sent to a specific user
+                'file_path' => 'writable/uploads/pr/' . $filename,
+            ];
+            log_message('debug', 'File data to insert: ' . json_encode($fileData));
+            $filesModel->insert($fileData);
+            log_message('debug', 'File information saved to files_tbl.');
+
+            // Set headers for browser download
+            log_message('debug', 'Setting download headers for browser: ' . $filename);
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="' . $filename . '"');
             header('Cache-Control: max-age=0');
 
-            // Output the Excel file
-            log_message('debug', 'Attempting to output Excel file.');
-            // Clear any previous output buffer
+            // Output the Excel file to the browser
             if (ob_get_length()) ob_end_clean();
+            log_message('debug', 'Outputting Excel file to browser.');
 
-            $writer = new Xlsx($spreadsheet);
+            $writer = new Xlsx($spreadsheet); // Re-instantiate writer to output to browser
             $writer->save('php://output');
-            // log_message('debug', 'Excel file outputted successfully. Exiting.');
+            log_message('debug', 'Excel file outputted to browser successfully. Exiting.');
             exit();
 
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
