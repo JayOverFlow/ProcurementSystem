@@ -62,6 +62,16 @@ $routes->group('ma', function($routes){
     $routes->post('rolesassign/createUserAssignment', 'MasterAdmin\MARolesAssignmentController::createUserAssignment');
 });
 
+$routes->group('supply', function($routes) {
+    $routes->get('dashboard', 'SupplyController::dashboard');
+    $routes->get('tasks', 'SupplyController::tasks');
+    $routes->get('mr', 'SupplyController::mr');
+    $routes->get('ppmp', 'SupplyController::ppmp');
+    $routes->get('par', 'SupplyController::par');
+    $routes->get('ics', 'SupplyController::ics');
+    $routes->get('su', 'SupplyController::su');
+});
+
 // @Emman Proposed routing convention from sir PJ's discussion
 // $routes->group('dh', function($routes) {
 //     $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
