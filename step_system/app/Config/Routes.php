@@ -41,6 +41,8 @@ $routes->group('faculty', function($routes) {
     $routes->get('pr', 'Faculty\FacultyPRController::index');
     $routes->get('tasks', 'Faculty\FacultyTasksController::index');
     $routes->get('mr', 'Faculty\FacultyMRController::index');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
 });
 
 // Director
@@ -54,7 +56,7 @@ $routes->group('director', function($routes) {
 
 // Department Head
 $routes->group('head', function($routes) {
-    $routes->get('dashboard', 'DepartmentHead\DHDashboard::dashboard');
+    $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
     $routes->get('mr', 'DepartmentHead\DHDashboard::mr');
     $routes->get('ppmp', 'DepartmentHead\DHDashboard::ppmp');
     $routes->get('pr', 'DepartmentHead\DHDashboard::pr');
