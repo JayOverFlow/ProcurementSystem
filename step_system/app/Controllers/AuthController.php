@@ -172,7 +172,8 @@ class AuthController extends BaseController {
                 'confirm_password' => '',
                 'user_type' => ''
             ];
-
+            
+            // Fetch and append departments to be listed in dropdown options
             $data['departments'] = $this->departmentModel->getAllDepartments();
             
             return view('auth/register', $data);
@@ -396,23 +397,39 @@ class AuthController extends BaseController {
             if ($user) {
                 // Set user data in session
                 $this->session->set([
-                    'user_id' => $user['user_id'],
-                    'user_firstname' => $user['user_firstname'],
-                    'user_middlename' => $user['user_middlename'],
-                    'user_lastname' => $user['user_lastname'],
-                    'user_fullname' => $user['user_fullname'],
-                    'user_suffix' => $user['user_suffix'],
-                    'user_tupid' => $user['user_tupid'],
-                    'user_email' => $user['user_email'],
-                    'user_type' => $user['user_type'],
+                    'user_id' => $user['user_id'] ?? null,
+                    'user_firstname' => $user['user_firstname'] ?? null,
+                    'user_middlename' => $user['user_middlename'] ?? null,
+                    'user_lastname' => $user['user_lastname'] ?? null,
+                    'user_fullname' => $user['user_fullname'] ?? null,
+                    'user_email' => $user['user_email'] ?? null,
+                    'user_type' => $user['user_type'] ?? null,
+                    'user_suffix' => $user['user_suffix'] ?? null,
+                    'user_tupid' => $user['user_tupid'] ?? null,
+                    'user_role_name' => $user['role_name'] ?? null,
+                    'user_gen_role' => $user['gen_role'] ?? null,
+                    'user_dep_name' => $user['dep_name'] ?? null,
+                    'user_dep_id' => $user['dep_id'] ?? null,
                     'isLoggedIn' => true
                 ]);
+
+                // Determine redirect URL based on gen_role
+                $redirectUrl = match ($user['gen_role']) {
+                    'Director' => base_url('/director/dashboard'),
+                    'Head' => base_url('/dh/dashboard'),
+                    'Planning Officer' => base_url('/planning/dashboard'),
+                    'Procurement' => base_url('/procurement/dashboard'),
+                    'Supply' => base_url('/supply/dashboard'),
+                    'Faculty' => base_url('/faculty/dashboard'),
+                    null => base_url('/unassigned/dashboard'),
+                    default => base_url('/landing') // Default fallback if gen_role is not matched
+                };
 
                 // Return success message and a redirect URL
                 return $this->response->setJSON([
                     'status' => 'success',
                     'message' => 'Login successful!',
-                    'redirect' => base_url('/landing') // Use base_url for consistency
+                    'redirect' => $redirectUrl
                 ]);
             } else {
                 // Return error message if authentication fails
@@ -428,5 +445,11 @@ class AuthController extends BaseController {
             ];
             return view('auth/login', ['data' => $data]);
         }
+    }
+
+    public function logout()
+    {
+        $this->session->destroy();
+        return redirect()->to('/login');
     }
 }

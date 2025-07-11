@@ -81,7 +81,7 @@
                                         </div>
                                     <?php endif; ?>
 
-                                    <form id="loginForm" method="POST" action="<?= base_url('login'); ?>">
+                                    <form id="loginForm" method="POST" action="<?= base_url('/login'); ?>">
                                         <div class="mb-3">
                                             <label for="user_email" class="form-label">TUP Email</label>
                                             <input type="email" class="form-control" id="user_email" name="user_email" value="<?= esc($data['user_email'] ?? '') ?>">

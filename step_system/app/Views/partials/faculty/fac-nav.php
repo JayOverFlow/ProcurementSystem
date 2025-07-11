@@ -34,7 +34,7 @@
                                 <span class="ms-2">Procurement</span>
                             </div>
                         </a>
-                        <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample">
+                        <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample" style="min-width: 20rem;">
                             <li class="">
                                 <a href="<?= base_url('faculty/ppmp') ?>">Project Procurement Management Plan</a>
                             </li>

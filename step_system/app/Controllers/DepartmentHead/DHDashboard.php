@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class DHDashboard extends BaseController {
 
-    public function dashboard()
+    public function index()
     {
         // We should return page with user data from database
         return view('user-pages/head/head-dashboard');

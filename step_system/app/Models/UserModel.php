@@ -35,20 +35,23 @@ class UserModel extends Model {
         return $result;
     }
 
-    // Authenticate user from login
+    // Authenticate user from login and retrieve their role and department information
     public function authenticateUser(string $user_email, string $user_password) {
-        // Quesy to database to find the email
-        $user = $this->where('user_email', $user_email)->first();
+        $user = $this->select('users_tbl.*, roles_tbl.role_name, roles_tbl.gen_role, departments_tbl.dep_name, departments_tbl.dep_id')
+                     ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id AND user_role_department_tbl.role_id IS NOT NULL', 'left')
+                     ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id', 'left')
+                     ->join('departments_tbl', 'departments_tbl.dep_id = user_role_department_tbl.department_id', 'left')
+                     ->where('users_tbl.user_email', $user_email)
+                     ->first();
 
-        // If email dont exist
         if (!$user) {
             return false;
         }
 
-        // If password is correct
-        if(password_verify($user_password, $user['user_password'])) {
+        if (password_verify($user_password, $user['user_password'])) {
             unset($user['user_password']); // Remove for security
-            return $user; // Return the query result
+            log_message('debug', 'User data after authentication in UserModel: ' . print_r($user, true));
+            return $user; // Return the query result with role and department info
         } else {
             return false;
         }
