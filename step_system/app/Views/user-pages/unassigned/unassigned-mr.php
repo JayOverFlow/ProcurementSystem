@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/unassigned-base-layout') ?>
+<?= $this->extend('/layouts/unassigned-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Faculty MR</title>
@@ -103,133 +103,96 @@
                 <table id="style-3" class="table style-3 dt-table-hover">
                     <thead>
                         <tr>
-                            <th class="checkbox-column text-center"> Record Id </th>
-                            <th class="text-center">Image</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Mobile No.</th>
-                            <th class="text-center">Status</th>
+                            <th class="checkbox-column text-center"> MR-Id </th>
+                            <th>Item Name</th>
+                            <th>Location</th>
+                            <th>Date Received</th>
+                            <th class="text-center">Quantity</th>
                             <th class="text-center dt-no-sorting">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="checkbox-column text-center"> 1 </td>
-                            <td class="text-center">
-                                <span><img src="<?= base_url('assets/src/assets/img/profile-17.jpeg') ?>" class="profile-img" alt="avatar"></span>
-                            </td>
-                            <td>Donna</td>
-                            <td>Rogers</td>
-                            <td>donna@yahoo.com</td>
-                            <td>555-555-5555</td>
-                            <td class="text-center"><span class="shadow-none badge badge-primary">Approved</span></td>
+                            <td class="checkbox-column text-center"> 011111 </td>
+                            <td>Bridge Set ME-6991</td>
+                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>May 1, 2024</td>
+                            <td class="text-center">1x</td>
                             <td class="text-center">
                                 <ul class="table-controls">
                                     <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
                                 </ul>
                             </td>
                         </tr>
                         <tr>
-                            <td class="checkbox-column text-center"> 2 </td>
-                            <td class="text-center">
-                                <span><img src="<?= base_url('assets/src/assets/img/profile-19.jpeg') ?>" class="profile-img" alt="avatar"></span>
-                            </td>
-                            <td>Andy</td>
-                            <td>King</td>
-                            <td>andyking@gmail.com</td>
-                            <td>555-555-6666</td>
-                            <td class="text-center"><span class="shadow-none badge badge-warning">Suspended</span></td>
+                            <td class="checkbox-column text-center"> 011112 </td>
+                            <td>Electric Fan</td>
+                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>May 1, 2024</td>
+                            <td class="text-center">1x</td>
                             <td class="text-center">
                                 <ul class="table-controls">
                                     <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
                                 </ul>
                             </td>
                         </tr>
                         <tr>
-                            <td class="checkbox-column text-center"> 3 </td>
-                            <td class="text-center">
-                                <span><img src="<?= base_url('assets/src/assets/img/profile-20.jpeg') ?>" class="profile-img" alt="avatar"></span>
-                            </td>
-                            <td>Alma</td>
-                            <td>Clarke</td>
-                            <td>Alma@live.com</td>
-                            <td>777-555-5555</td>
-                            <td class="text-center"><span class="shadow-none badge badge-danger">Closed</span></td>
+                            <td class="checkbox-column text-center"> 011112 </td>
+                            <td>Electric Fan</td>
+                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>May 1, 2024</td>
+                            <td class="text-center">1x</td>
                             <td class="text-center">
                                 <ul class="table-controls">
                                     <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
                                 </ul>
                             </td>
                         </tr>
                         <tr>
-                            <td class="checkbox-column text-center"> 4 </td>
-                            <td class="text-center">
-                                <span><img src="<?= base_url('assets/src/assets/img/profile-21.jpeg') ?>" class="profile-img" alt="avatar"></span>
-                            </td>
-                            <td>Vincent</td>
-                            <td>Carpenter</td>
-                            <td>vinnyc@outlook.com</td>
-                            <td>555-666-5555</td>
-                            <td class="text-center"><span class="shadow-none badge badge-primary">Approved</span></td>
+                            <td class="checkbox-column text-center"> 011112 </td>
+                            <td>Electric Fan</td>
+                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>May 1, 2024</td>
+                            <td class="text-center">1x</td>
                             <td class="text-center">
                                 <ul class="table-controls">
                                     <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
                                 </ul>
                             </td>
                         </tr>
                         <tr>
-                            <td class="checkbox-column text-center"> 5 </td>
-                            <td class="text-center">
-                                <span><img src="<?= base_url('assets/src/assets/img/profile-22.jpeg') ?>" class="profile-img" alt="avatar"></span>
-                            </td>
-                            <td>Kristen</td>
-                            <td>Beck</td>
-                            <td>kristen@adobe.com</td>
-                            <td>444-444-4444</td>
-                            <td class="text-center"><span class="shadow-none badge badge-warning">Suspended</span></td>
+                            <td class="checkbox-column text-center"> 011112 </td>
+                            <td>Electric Fan</td>
+                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>May 1, 2024</td>
+                            <td class="text-center">1x</td>
                             <td class="text-center">
                                 <ul class="table-controls">
                                     <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
                                 </ul>
                             </td>
                         </tr>
                         <tr>
-                            <td class="checkbox-column text-center"> 6 </td>
-                            <td class="text-center">
-                                <span><img src="<?= base_url('assets/src/assets/img/profile-23.jpeg') ?>" class="profile-img" alt="avatar"></span>
-                            </td>
-                            <td>Oscar</td>
-                            <td>Garner</td>
-                            <td>oscar@gmail.com</td>
-                            <td>111-111-1111</td>
-                            <td class="text-center"><span class="shadow-none badge badge-danger">Closed</span></td>
+                            <td class="checkbox-column text-center"> 011112 </td>
+                            <td>Electric Fan</td>
+                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>May 1, 2024</td>
+                            <td class="text-center">1x</td>
                             <td class="text-center">
                                 <ul class="table-controls">
                                     <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
                                 </ul>
                             </td>
                         </tr>
                         <tr>
-                            <td class="checkbox-column text-center"> 7 </td>
-                            <td class="text-center">
-                                <span><img src="<?= base_url('assets/src/assets/img/profile-24.jpeg') ?>" class="profile-img" alt="avatar"></span>
-                            </td>
-                            <td>Nia</td>
-                            <td>Hillyer</td>
-                            <td>niaHill@yahoo.com</td>
-                            <td>111-666-1111</td>
-                            <td class="text-center"><span class="shadow-none badge badge-primary">Approved</span></td>
+                            <td class="checkbox-column text-center"> 011112 </td>
+                            <td>Electric Fan</td>
+                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>May 1, 2024</td>
+                            <td class="text-center">1x</td>
                             <td class="text-center">
                                 <ul class="table-controls">
                                     <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
                                 </ul>
                             </td>
                         </tr>
