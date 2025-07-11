@@ -32,13 +32,24 @@ $routes->group('', function($routes) {
     $routes->get('login', 'AuthController::login', ['as' => 'login']);
     $routes->post('login', 'AuthController::login', ['as' => 'login']);
 });
-
+// Faculty
 $routes->group('faculty', function($routes) {
     $routes->get('dashboard', 'FacultyController::dashboard');
     $routes->get('tasks', 'FacultyController::tasks');
     $routes->get('mr', 'FacultyController::mr');
     $routes->get('ppmp', 'FacultyController::ppmp');
     $routes->get('pr', 'FacultyController::pr');
+});
+// Planning
+    $routes->group('planning', function($routes) {
+    $routes->get('dashboard', 'PlanningController::dashboard');
+    $routes->get('tasks', 'PlanningController::tasks');
+    $routes->get('mr', 'PlanningController::mr');
+    $routes->get('ppmp', 'PlanningController::ppmp');
+    $routes->get('pr', 'PlanningController::pr');
+    $routes->get('app', 'PlanningController::app');
+    $routes->get('inventory', 'PlanningController::inventory');
+
 });
 
 // Department Head
