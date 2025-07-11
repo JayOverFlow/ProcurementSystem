@@ -7,9 +7,35 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class DHDashboard extends BaseController {
 
-    public function index() {
-        $userData = $this->loadUserSession();
-        return view('user-pages/department-head/dh-dashboard', $userData);    
+    public function index()
+    {
+        // We should return page with user data from database
+        return view('user-pages/head/head-dashboard');
+    }
+
+
+    public function tasks()
+    {
+        return view('user-pages/head/head-tasks');
+    }
+
+    public function mr()
+    {
+        return view('user-pages/head/head-mr') ;
+    }
+
+    public function ppmp()
+    {
+        return view('user-pages/head/head-ppmp');
+    }
+
+    public function pr()
+    {
+        return view('user-pages/head/head-pr');
+    }
+    public function app()
+    {
+        return view('user-pages/head/head-app');
     }
 
 }
