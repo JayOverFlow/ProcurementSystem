@@ -34,6 +34,15 @@ $routes->group('', function($routes) {
 
 $routes->get('logout', 'AuthController::logout');
 
+// Director
+$routes->group('director', function($routes) {
+    $routes->get('dashboard', 'Director\DirectorDashboardController::index');
+    $routes->get('ppmp', 'Director\DirectorPPMPController::index');
+    $routes->get('pr', 'Director\DirectorPRController::index');
+    $routes->get('tasks', 'Director\DirectorTasksController::index');
+    $routes->get('mr', 'Director\DirectorMRController::index');
+});
+
 // Faculty
 $routes->group('faculty', function($routes) {
     $routes->get('dashboard', 'Faculty\FacultyDashboardController::index');

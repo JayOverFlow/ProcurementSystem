@@ -49,4 +49,11 @@ class UserRoleDepartmentModel extends Model
         }
         return false;
     }
+
+    public function getUsersInDirectorsOffice() {
+        return $this->select('users_tbl.*')
+                    ->join('users_tbl', 'users_tbl.user_id = user_role_department_tbl.user_id')
+                    ->where('user_role_department_tbl.department_id', 35)
+                    ->findAll();
+    }
 } 

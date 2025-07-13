@@ -62,4 +62,14 @@ class UserModel extends Model {
     {
         return $this->where('user_type', $type)->countAllResults();
     }
+
+    public function getAllFacultyCount()
+    {
+        return $this->where('user_type', 'Faculty')->countAllResults();
+    }
+
+    public function getAllStaffCount()
+    {
+        return $this->where('user_type', 'Staff')->countAllResults();
+    }
 }
