@@ -34,15 +34,6 @@ $routes->group('', function($routes) {
 
 $routes->get('logout', 'AuthController::logout');
 
-// Director
-$routes->group('director', function($routes) {
-    $routes->get('dashboard', 'Director\DirectorDashboardController::index');
-    $routes->get('ppmp', 'Director\DirectorPPMPController::index');
-    $routes->get('pr', 'Director\DirectorPRController::index');
-    $routes->get('tasks', 'Director\DirectorTasksController::index');
-    $routes->get('mr', 'Director\DirectorMRController::index');
-});
-
 // Faculty
 $routes->group('faculty', function($routes) {
     $routes->get('dashboard', 'Faculty\FacultyDashboardController::index');
@@ -56,15 +47,15 @@ $routes->group('faculty', function($routes) {
 
 // Director
 $routes->group('director', function($routes) {
-    $routes->get('dashboard', 'DirectorController::dashboard');
-    $routes->get('tasks', 'FacultyController::tasks');
-    $routes->get('mr', 'FacultyController::mr');
-    $routes->get('ppmp', 'FacultyController::ppmp');
-    $routes->get('pr', 'FacultyController::pr');
+    $routes->get('dashboard', 'Director\DirectorDashboardController::index');
+    $routes->get('tasks', 'Director\DirectorTasksController::index');
+    $routes->get('mr', 'Director\DirectorMRController::index');
+    $routes->get('ppmp', 'Director\DirectorPPMPController::index');
+    $routes->get('pr', 'Director\DirectorPRController::index');
 });
 // Planning
     $routes->group('planning', function($routes) {
-    $routes->get('dashboard', 'PlanningController::dashboard');
+    $routes->get('dashboard', 'Planning\PlanningDashboardController::index');
     $routes->get('tasks', 'PlanningController::tasks');
     $routes->get('mr', 'PlanningController::mr');
     $routes->get('ppmp', 'PlanningController::ppmp');
