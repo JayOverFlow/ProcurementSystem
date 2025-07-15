@@ -5,7 +5,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
-<link href="<?= base_url('assets/src/assets/css/light/apps/invoice-add.css') ?>" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/src/assets/css/light/apps/fac-ppmp.css') ?>" rel="stylesheet" type="text/css" />
 
 <link href="<?= base_url('assets/src/assets/css/dark/apps/invoice-add.css') ?>" rel="stylesheet" type="text/css" />
 <?= $this->endSection() ?>
@@ -15,7 +15,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         
         <div class="doc-container">
-            <form action="<?= base_url('faculty/ppmp/export-excel') ?>" method="POST">
+            <form action="<?= base_url('ppmp/create') ?>" method="POST">
             <div class="row">
                 <div class="col-xl-9">
 
@@ -46,7 +46,16 @@
                                             <div class="form-group row">
                                                 <label for="office" class="col-sm-1 col-form-label col-form-label-sm">Office</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="office" name="office">
+                                                    <select class="form-control form-control-sm" id="ppmp-office-fk" name="ppmp_office_fk">
+                                                        <option>Select</option>
+                                                        <?php if(empty($departments)): ?>
+                                                            <option value="null">No Offices</option>
+                                                        <?php else: ?>
+                                                            <?php foreach($departments as $department): ?>
+                                                                <option value="<?= esc($department['dep_id']) ?>"><?= esc($department['dep_name']) ?></option>
+                                                            <?php endforeach; ?>
+                                                        <?php endif;?>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -55,14 +64,23 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position1" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="position1" name="position1">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position">
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel1" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="personnel1" name="personnel1">
+                                                        <select class="form-control form-control-sm" id="ppmp-prepared-by-name" name="ppmp_prepared_by_name">
+                                                            <option>Select</option>
+                                                            <?php if(empty($users)): ?>
+                                                                <option value="null">No Users</option>
+                                                            <?php else: ?>
+                                                                <?php foreach($users as $user): ?>
+                                                                    <option value="<?= esc($user['user_id']) ?>"><?= esc($user['user_fullname']) ?></option>
+                                                                <?php endforeach; ?>
+                                                            <?php endif;?>
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -70,14 +88,23 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position2" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="position2" name="position2">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position">
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel2" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="personnel2" name="personnel2">
+                                                        <select class="form-control form-control-sm" id="ppmp-recommended-by-name" name="ppmp_recommended_by_name">
+                                                            <option>Select</option>
+                                                            <?php if(empty($users)): ?>
+                                                                <option value="null">No Users</option>
+                                                            <?php else: ?>
+                                                                <?php foreach($users as $user): ?>
+                                                                    <option value="<?= esc($user['user_id']) ?>"><?= esc($user['user_fullname']) ?></option>
+                                                                <?php endforeach; ?>
+                                                            <?php endif;?>
+                                                        </select>
                                                     </div>
                                                 </div> 
                                                 
@@ -85,14 +112,23 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position3" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="position3" name="position3">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position">
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel3" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="personnel3" name="personnel3">
+                                                        <select class="form-control form-control-sm" id="ppmp-evaluated-by-name" name="ppmp_evaluated_by_name">
+                                                            <option>Select</option>
+                                                            <?php if(empty($users)): ?>
+                                                                <option value="null">No Users</option>
+                                                            <?php else: ?>
+                                                                <?php foreach($users as $user): ?>
+                                                                    <option value="<?= esc($user['user_id']) ?>"><?= esc($user['user_fullname']) ?></option>
+                                                                <?php endforeach; ?>
+                                                            <?php endif;?>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div> 
@@ -109,28 +145,28 @@
                                             <div class="form-group row">
                                                 <label for="period-covered" class="col-sm-3 col-form-label col-form-label-sm">Period Covered</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="period-covered" name="period_covered">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="date-approved" class="col-sm-3 col-form-label col-form-label-sm">Date Approved</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="date-approved" name="date_approved">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-budget-allocated" class="col-sm-3 col-form-label col-form-label-sm">Total Budget Allocated</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ttl-budget-allocated" name="ttl_budget_allocated">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-proposed-budget" class="col-sm-3 col-form-label col-form-label-sm">Total Proposed Budget</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ttl-proposed-budget" name="ttl_proposed_budget">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget">
                                                 </div>
                                             </div>
                                             
@@ -350,11 +386,17 @@
 
                             <div class="row">
                                 <div class="col-xl-12 col-md-4">
-                                    <a href="javascript:void(0);" class="btn btn-send" style="background-color: #C62742; color: #FFFFFF">Send</a>
+                                    <button type="submit" class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Save</button>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
-                                    <button type="submit" class="btn btn-dark btn-download" style="padding-left: 136px; padding-right: 136px">Export</button>
+                                    <a href="javascript:void(0);" class="btn btn-save w-100" style="background-color: #C62742; color: #FFFFFF">Send</a>
                                 </div>
+                                <div class="col-xl-12 col-md-4">
+                                    <a href="javascript:void(0);" class="btn btn-export w-100" style="background-color: #C62742; color: #FFFFFF">Export</a>
+                                </div>
+                                <!-- <div class="col-xl-12 col-md-4">
+                                    <button type="submit" class="btn btn- btn-export" style="background-color: #C62742; color: #FFFFFF">Export</button>
+                                </div> -->
                             </div>
                         </div>
                         

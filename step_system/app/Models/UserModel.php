@@ -72,4 +72,8 @@ class UserModel extends Model {
     {
         return $this->where('user_type', 'Staff')->countAllResults();
     }
+
+    public function getAllUsers() {
+        return $this->findAll();
+    }
 }
