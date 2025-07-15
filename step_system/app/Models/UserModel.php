@@ -62,4 +62,19 @@ class UserModel extends Model {
     {
         return $this->where('user_type', $type)->countAllResults();
     }
+
+    /**
+     * Retrieves all users belonging to a specific department.
+     *
+     * @param int $departmentId The ID of the department.
+     * @return array An array of user data.
+     */
+    public function getUsersByDepartmentId(int $departmentId): array
+    {
+        return $this->select('users_tbl.user_tupid, users_tbl.user_firstname, users_tbl.user_lastname, users_tbl.user_email, users_tbl.user_type')
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->where('user_role_department_tbl.department_id', $departmentId)
+                    ->distinct() // Ensure unique users in case a user has multiple roles in the same department
+                    ->findAll();
+    }
 }

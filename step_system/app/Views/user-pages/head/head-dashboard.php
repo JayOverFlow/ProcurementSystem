@@ -213,88 +213,25 @@
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
                                                     <th>Email</th>
-                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">Type</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="checkbox-column text-center"> 20-2321 </td>
-                                                    <td>Patrick Justin</td>
-                                                    <td>Ariado</td>
-                                                    <td>patrickjustin.ariado@tup.edu.ph</td>
-                                                    <td class="text-center"><span class="shadow-none badge badge-danger">Approved</span></td>
-                                                </tr>
-                                                
+                                                <?php if (!empty($department_users)): ?>
+                                                    <?php foreach ($department_users as $user): ?>
+                                                        <tr>
+                                                            <td class="checkbox-column text-center"> <?= esc($user['user_tupid']) ?> </td>
+                                                            <td><?= esc($user['user_firstname']) ?></td>
+                                                            <td><?= esc($user['user_lastname']) ?></td>
+                                                            <td><?= esc($user['user_email']) ?></td>
+                                                            <td class="text-center"><span class="shadow-none badge badge-primary"><?= esc($user['user_type']) ?></span></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <tr>
+                                                        <td colspan="5" class="text-center">No users found in your department.</td>
+                                                    </tr>
+                                                <?php endif; ?>
 
                                                 <!-- Add more rows as needed -->
                                             </tbody>

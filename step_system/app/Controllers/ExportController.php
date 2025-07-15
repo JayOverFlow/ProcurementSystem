@@ -114,7 +114,7 @@ class ExportController extends BaseController
             $ppmpModel->insert($ppmpData);
             $ppmpId = $ppmpModel->getInsertID();
             log_message('debug', 'Inserted PPMP ID: ' . $ppmpId);
-            
+
             // Save MOOE items to ppmp_items_tbl
             if (!empty($items) && $ppmpId) {
                 log_message('debug', 'Saving MOOE items.');
