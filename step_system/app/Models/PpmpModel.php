@@ -15,15 +15,17 @@ class PpmpModel extends Model
     protected $allowedFields    = [
         'ppmp_status',
         'ppmp_office_fk',
-        'ppmp_total_budget_allocation',
-        'ppmp_total_proposed_allocation',
+        'ppmp_total_proposed_budget',
+        'ppmp_total_budget_allocated',
         'ppmp_period_covered',
-        'ppmp_date_submitted_fk',
-        'ppmp_date_signed_fk',
-        'ppmp_prepared_by_user_fk',
-        'ppmp_evaluated_by_user_fk',
-        'ppmp_recommended_by_user_fk',
+        'ppmp_prepared_by_name',
+        'ppmp_evaluated_by_name',
         'ppmp_remarks',
+        'ppmp_date_approved',
+        'ppmp_recommended_by_name',
+        'ppmp_prepared_by_position',
+        'ppmp_recommended_by_position',
+        'ppmp_evaluated_by_position',
     ];
 
     protected bool $allowEmptyInserts = false;

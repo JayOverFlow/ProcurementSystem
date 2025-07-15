@@ -131,3 +131,6 @@ $routes->group('unassigned', function($routes) {
     $routes->get('ppmp', 'UnassignedController::ppmp');
     $routes->get('pr', 'UnassignedController::pr');
 });
+
+// PPMP Routes
+$routes->post('/ppmp/create', 'PpmpController::create');

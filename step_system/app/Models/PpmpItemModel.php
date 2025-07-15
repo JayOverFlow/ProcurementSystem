@@ -14,6 +14,7 @@ class PpmpItemModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'ppmp_id_fk',
+        'ppmp_item_code',
         'ppmp_item_name',
         'ppmp_item_quantity',
         'ppmp_item_estimated_budget',
@@ -28,14 +29,10 @@ class PpmpItemModel extends Model
         'ppmp_sched_sep',
         'ppmp_sched_oct',
         'ppmp_sched_nov',
-        'ppmp_sched_dec'
+        'ppmp_sched_dec',
     ];
 
     protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
-
-    protected array $casts = [];
-    protected array $castHandlers = [];
 
     // Dates
     protected $useTimestamps = false;
