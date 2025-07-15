@@ -7,6 +7,10 @@ class UserModel extends Model {
 
     protected $table = 'users_tbl';
     protected $primaryKey = 'user_id';
+    protected $useAutoIncrement = true;
+    protected $returnType = 'array';
+    protected $useSoftDeletes = false;
+    protected $protectFields = true;
 
     protected $allowedFields = [
         'user_firstname',
@@ -74,6 +78,26 @@ class UserModel extends Model {
     }
 
     public function getAllUsers() {
-        return $this->findAll();
+        return $this->orderBy('user_fullname', 'ASC')->findAll();
+    }
+
+    /**
+     * Finds users by their general role.
+     *
+     * @param string $role The general role to search for (e.g., 'Planning Officer').
+     * @return array An array of user IDs.
+     */
+    public function getUsersByGenRole(string $role): array
+    {
+        $builder = $this->db->table('users_tbl u');
+        $builder->select('u.user_id');
+        $builder->join('user_role_department_tbl urd', 'urd.user_id = u.user_id');
+        $builder->join('roles_tbl r', 'r.role_id = urd.role_id');
+        $builder->where('r.gen_role', $role);
+        
+        $result = $builder->get()->getResultArray();
+
+        // Return an array of user_ids
+        return array_column($result, 'user_id');
     }
 }

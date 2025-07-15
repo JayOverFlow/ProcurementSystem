@@ -386,17 +386,11 @@
 
                             <div class="row">
                                 <div class="col-xl-12 col-md-4">
-                                    <button type="submit" class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Save</button>
+                                    <button type="submit" class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Save & Submit</button>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
-                                    <a href="javascript:void(0);" class="btn btn-save w-100" style="background-color: #C62742; color: #FFFFFF">Send</a>
+                                    <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
                                 </div>
-                                <div class="col-xl-12 col-md-4">
-                                    <a href="javascript:void(0);" class="btn btn-export w-100" style="background-color: #C62742; color: #FFFFFF">Export</a>
-                                </div>
-                                <!-- <div class="col-xl-12 col-md-4">
-                                    <button type="submit" class="btn btn- btn-export" style="background-color: #C62742; color: #FFFFFF">Export</button>
-                                </div> -->
                             </div>
                         </div>
                         

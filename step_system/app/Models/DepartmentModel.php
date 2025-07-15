@@ -15,7 +15,7 @@ class DepartmentModel extends Model
 
     public function getAllDepartments()
     {
-        return $this->findAll();
+        return $this->orderBy('dep_name', 'ASC')->findAll();
     }
 
     public function countDepartmentsByType(string $type)

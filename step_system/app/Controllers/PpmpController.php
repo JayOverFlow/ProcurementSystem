@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\PpmpModel;
 use App\Models\PpmpItemModel;
+use App\Models\TaskModel;
+use App\Models\UserModel;
 
 class PpmpController extends BaseController
 {
@@ -12,7 +14,10 @@ class PpmpController extends BaseController
     {
         $ppmpModel = new PpmpModel();
         $ppmpItemModel = new PpmpItemModel();
+        $taskModel = new TaskModel();
+        $userModel = new UserModel();
         $db = \Config\Database::connect();
+        $userId = session()->get('user_id'); 
 
         $db->transStart();
 
@@ -31,7 +36,7 @@ class PpmpController extends BaseController
                 'ppmp_evaluated_by_position' => $this->request->getPost('ppmp_evaluated_by_position'),
                 'ppmp_evaluated_by_name' => $this->request->getPost('ppmp_evaluated_by_name'),
                 'ppmp_status' => 'Pending', // Default status
-                'ppmp_remarks' => 'Testing: PPMP submitted'
+                'ppmp_remarks' => 'PPMP submitted'
             ];
 
             $ppmpModel->insert($ppmpData);
@@ -45,7 +50,6 @@ class PpmpController extends BaseController
             $items = array_merge($mooeItems, $coItems);
 
             foreach ($items as $item) {
-                // Skip empty rows
                 if (empty($item['gen_desc']) && empty($item['code'])) {
                     continue;
                 }
@@ -58,35 +62,47 @@ class PpmpController extends BaseController
                     'ppmp_item_name' => $item['gen_desc'],
                     'ppmp_item_quantity' => $item['qty_size'],
                     'ppmp_item_estimated_budget' => $item['est_budget'],
-                    'ppmp_sched_jan' => isset($months['jan']) ? 1 : 0,
-                    'ppmp_sched_feb' => isset($months['feb']) ? 1 : 0,
-                    'ppmp_sched_mar' => isset($months['mar']) ? 1 : 0,
-                    'ppmp_sched_apr' => isset($months['apr']) ? 1 : 0,
-                    'ppmp_sched_may' => isset($months['may']) ? 1 : 0,
-                    'ppmp_sched_jun' => isset($months['jun']) ? 1 : 0,
-                    'ppmp_sched_jul' => isset($months['jul']) ? 1 : 0,
-                    'ppmp_sched_aug' => isset($months['aug']) ? 1 : 0,
-                    'ppmp_sched_sep' => isset($months['sep']) ? 1 : 0,
-                    'ppmp_sched_oct' => isset($months['oct']) ? 1 : 0,
-                    'ppmp_sched_nov' => isset($months['nov']) ? 1 : 0,
-                    'ppmp_sched_dec' => isset($months['dec']) ? 1 : 0,
+                    'ppmp_sched_jan' => $months['jan'] ?? 0,
+                    'ppmp_sched_feb' => $months['feb'] ?? 0,
+                    'ppmp_sched_mar' => $months['mar'] ?? 0,
+                    'ppmp_sched_apr' => $months['apr'] ?? 0,
+                    'ppmp_sched_may' => $months['may'] ?? 0,
+                    'ppmp_sched_jun' => $months['jun'] ?? 0,
+                    'ppmp_sched_jul' => $months['jul'] ?? 0,
+                    'ppmp_sched_aug' => $months['aug'] ?? 0,
+                    'ppmp_sched_sep' => $months['sep'] ?? 0,
+                    'ppmp_sched_oct' => $months['oct'] ?? 0,
+                    'ppmp_sched_nov' => $months['nov'] ?? 0,
+                    'ppmp_sched_dec' => $months['dec'] ?? 0,
                 ];
             }
 
             if (!empty($allItems)) {
                 $ppmpItemModel->insertBatch($allItems);
             }
+            
+            // 3. Create tasks for Planning Officers
+            $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
+            foreach ($planningOfficers as $officerId) {
+                $taskModel->insert([
+                    'submitted_by' => $userId,
+                    'submitted_to' => $officerId,
+                    'ppmp_id_fk' => $ppmpId,
+                    'task_description' => 'A new PPMP has been submitted for your review.'
+                ]);
+            }
+
 
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'Failed to create PPMP.');
+                return redirect()->back()->with('error', 'Failed to create and submit PPMP.');
             } else {
-                return redirect()->back()->with('success', 'PPMP created successfully!');
+                return redirect()->back()->with('success', 'PPMP created and submitted successfully!');
             }
 
         } catch (\Exception $e) {
-            log_message('error', 'PPMP Creation Error: ' . $e->getMessage());
+            log_message('error', 'PPMP Creation/Submission Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }
