@@ -1,7 +1,7 @@
-<?= $this->extend('layouts/plan-base-layout') ?>
+<?= $this->extend('layouts/pro-base-layout') ?>
 
 <?= $this->section('title') ?>
-    <title>TUP STEP | Planning Inventory</title>
+    <title>TUP STEP | Procurement Inventory</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>

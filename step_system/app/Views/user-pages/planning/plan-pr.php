@@ -116,7 +116,7 @@
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty" name="qty">
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="unit-cost" name="unit_cost">
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="amount" name="amount">
-                                                <td class="delete-item-row">
+                                                <td class="delete-item-row text-center">
                                                     <ul class="table-controls">
                                                         <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                     </ul>
@@ -225,5 +225,5 @@
 
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="<?= base_url('assets/src/assets/js/apps/fac-pr.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/apps/plan-pr.js') ?>"></script>
 <?= $this->endSection() ?>

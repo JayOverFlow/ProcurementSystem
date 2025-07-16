@@ -222,7 +222,7 @@
                                                         <input class="form-check-input" type="checkbox" value="" id="dec" name="month">
                                                     </div>
                                                 </td>
-                                                <td class="delete-item-row">
+                                                <td class="delete-item-row text-center">
                                                     <ul class="table-controls">
                                                         <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                     </ul>
@@ -278,5 +278,5 @@
 
 <!-- For Table -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="<?= base_url('assets/src/assets/js/apps/fac-ppmp.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/apps/plan-ppmp.js') ?>"></script>
 <?= $this->endSection() ?>
