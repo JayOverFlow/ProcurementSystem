@@ -36,6 +36,10 @@ class ProcurementController extends BaseController
     {
         return view('user-pages/procurement/pro-po');
     }
+    public function inventory()
+    {
+        return view('user-pages/procurement/pro-inventory');
+    }
 
 }
 

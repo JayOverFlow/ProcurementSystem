@@ -3306,6 +3306,10 @@ fieldset:disabled .btn {
   color: #515365;
 }
 
+.shadow-text {
+  text-shadow: 1px 1px 4px black;
+}
+
 .btn-toolbar {
   margin-left: 0px;
 }
