@@ -13,9 +13,13 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/dt-global_style.css') ?>">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/custom_dt_custom.css') ?>">
 
-<link href="<?= base_url('assets/src/assets/css/light/components/modal.css') ?>" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="<?= base_url('assets/src/plugins/src/sweetalerts2/step-sweetalert.css') ?>">
 
-<link href="<?= base_url('asssets/src/assets/css/dark/components/modal.css') ?>" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/src/assets/css/light/components/modal.css') ?>" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/src/plugins/css/light/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
+
+<!-- <link href="<?= base_url('asssets/src/assets/css/dark/components/modal.css') ?>" rel="stylesheet" type="text/css" /> -->
+<link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -27,6 +31,7 @@
                     <th>Submitted By</th>
                     <th>Document Type</th>
                     <th>Date Submitted</th>
+                    <th>Status</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -37,14 +42,26 @@
                             <td><?= esc($task['submitted_by_name']) ?></td>
                             <td><?= esc($task['task_type']) ?></td>
                             <td><?= esc(date('F j, Y, g:i a', strtotime($task['created_at']))) ?></td>
+                            <td>
+                                <?php
+                                    $status = esc($task['ppmp_status']);
+                                    $badge_class = 'badge-light-primary'; // Default for Pending
+                                    if ($status === 'Approved') {
+                                        $badge_class = 'badge-light-success';
+                                    } elseif ($status === 'Rejected') {
+                                        $badge_class = 'badge-light-danger';
+                                    }
+                                ?>
+                                <span class="badge <?= $badge_class ?>"><?= $status ?></span>
+                            </td>
                             <td class="text-center">
-                                <button class="btn danger btn-sm view-task-btn" style="background-color: #C62742; color: #FFFFFF" data-task-id="<?= $task['task_id'] ?>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Open</button>
+                                <button class="btn danger btn-sm view-task-btn" style="background-color: #C62742; color: #FFFFFF" data-task-id="<?= esc($task['task_id']) ?>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Open</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="4" class="text-center">No tasks found.</td>
+                        <td colspan="5" class="text-center">No tasks found.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -71,9 +88,12 @@
             <hr class="border border-dark my-1">
             <div class="modal-body">
                 <p id="modal-description"></p>
-                <div class="text-center mt-5">
-                    <button type="button" class="btn btn-sm" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
-                    <button type="button" class="btn btn-sm" style="background-color: #C62742; color: #FFFFFF">APPROVE</button>
+                <div id="modal-action-buttons" class="widget-content text-center mt-5">
+                    <button type="button" id="reject-btn" class="btn btn-sm warning reject" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
+                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #C62742; color: #FFFFFF">APPROVE</button>
+                </div>
+                <div id="modal-status-display" class="text-center mt-5" style="display: none;">
+                    <!-- Content will be set by JavaScript -->
                 </div>
             </div>
             <hr class="border border-dark my-1">
@@ -92,7 +112,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
-<script src="<?= base_url('assets/js/apps/plan-tasks.js') ?>"></script>
+<script src="<?= base_url('assets/js/tasks_page/plan-tasks.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
+
 <script>
     c2 = $('#style-2').DataTable({
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'f><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'>>>" +

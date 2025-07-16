@@ -28,4 +28,23 @@ class TasksController extends BaseController
 
         return $this->response->setStatusCode(404, 'Task not found');
     }
+
+    public function updatePpmpStatus()
+    {
+        $json = $this->request->getJSON();
+        $ppmpId = $json->ppmp_id ?? null;
+        $status = $json->status ?? null;
+
+        if (!$ppmpId || !in_array($status, ['Approved', 'Rejected'])) {
+            return $this->response->setStatusCode(400, 'Invalid data provided.');
+        }
+
+        $ppmpModel = new \App\Models\PpmpModel();
+
+        if ($ppmpModel->updateStatus($ppmpId, $status)) {
+            return $this->response->setJSON(['success' => true]);
+        }
+        
+        return $this->response->setStatusCode(500, 'Failed to update status.');
+    }
 } 
