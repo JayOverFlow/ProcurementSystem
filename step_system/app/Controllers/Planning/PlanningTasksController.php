@@ -25,7 +25,7 @@ class PlanningTasksController extends BaseController
         $userData = $this->loadUserSession();
 
         // Get tasks
-        $tasks = $this->taskModel->getPlanningTasksById($userData['user_id']);
+        $tasks = $this->taskModel->getTasksForUser($userData['user_id']);
 
         // Store data
         $data = [
