@@ -56,7 +56,7 @@ $routes->group('director', function($routes) {
 // Planning
     $routes->group('planning', function($routes) {
     $routes->get('dashboard', 'Planning\PlanningDashboardController::index');
-    $routes->get('tasks', 'PlanningController::tasks');
+    $routes->get('tasks', 'Planning\PlanningTasksController::index');
     $routes->get('mr', 'PlanningController::mr');
     $routes->get('ppmp', 'PlanningController::ppmp');
     $routes->get('pr', 'PlanningController::pr');
