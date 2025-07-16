@@ -185,7 +185,7 @@
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="items[0][gen_desc]">
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size" name="items[0][qty_size]">
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget" name="items[0][est_budget]">
-                                                <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                <td class="d-flex justify-content-between px-0 ps-1 py-2">
                                                     <div class="form-check form-check-danger form-check-inline">
                                                         <input class="form-check-input" type="checkbox" value="1" id="jan" name="items[0][month][jan]">
                                                     </div>
@@ -223,7 +223,7 @@
                                                         <input class="form-check-input" type="checkbox" value="1" id="dec" name="items[0][month][dec]">
                                                     </div>
                                                 </td>
-                                                <td class="delete-item-row">
+                                                <td class="delete-item-row text-center">
                                                     <ul class="table-controls">
                                                         <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                     </ul>
@@ -319,7 +319,7 @@
                                                         <input class="form-check-input" type="checkbox" value="1" id="dec_co" name="items_co[0][month][dec]">
                                                     </div>
                                                 </td>
-                                                <td class="delete-item-row-co">
+                                                <td class="delete-item-row-co text-center">
                                                     <ul class="table-controls">
                                                         <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                     </ul>
