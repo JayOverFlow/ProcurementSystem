@@ -45,4 +45,8 @@ class TaskModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getPlanningTasksById(int $userId) {
+        return $this->where('submitted_to', $userId)->findAll();
+    }
 } 
