@@ -134,3 +134,10 @@ $routes->group('unassigned', function($routes) {
 
 // PPMP Routes
 $routes->post('/ppmp/create', 'PpmpController::create');
+
+// Planning Officer Routes
+$routes->get('/planning/tasks', 'Planning\TasksController::index');
+$routes->get('/planning/tasks/details/(:num)', 'Planning\TasksController::getDetails/$1');
+
+// PPMP Preview Route
+$routes->get('/ppmp/preview/(:num)', 'PpmpController::preview/$1');
