@@ -103,8 +103,10 @@ $routes->group('procurement', function($routes) {
     $routes->get('pr', 'ProcurementOffice\ProcurementController::pr');
     $routes->get('tasks', 'ProcurementOffice\ProcurementController::tasks');
     $routes->get('po', 'ProcurementOffice\ProcurementController::po');
+    $routes->get('inventory', 'ProcurementOffice\ProcurementController::inventory');
 });
 
+// Supply
 $routes->group('supply', function($routes) {
     $routes->get('dashboard', 'SupplyController::dashboard');
     $routes->get('tasks', 'SupplyController::tasks');

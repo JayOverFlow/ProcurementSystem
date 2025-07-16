@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/pro-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Faculty Project Procurement Management Plan</title>
+<title>TUP STEP | Procurement Project Procurement Management Plan</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
@@ -184,7 +184,7 @@
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="gen_desc">
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget" name="est_budget">
                                                 <td class="px-1"><input type="text" class="form-control form-control-sm" id="schd-milestone-acts" name="schd_milestone_acts">
-                                                <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                <td class="d-flex justify-content-between px-0 ps-1 py-2">
                                                     <div class="form-check form-check-danger form-check-inline">
                                                         <input class="form-check-input" type="checkbox" value="" id="jan" name="month">
                                                     </div>
@@ -222,7 +222,7 @@
                                                         <input class="form-check-input" type="checkbox" value="" id="dec" name="month">
                                                     </div>
                                                 </td>
-                                                <td class="delete-item-row">
+                                                <td class="delete-item-row text-center">
                                                     <ul class="table-controls">
                                                         <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                     </ul>
@@ -278,5 +278,5 @@
 
 <!-- For Table -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="<?= base_url('assets/src/assets/js/apps/fac-ppmp.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/apps/sup-ppmp.js') ?>"></script>
 <?= $this->endSection() ?>
