@@ -58,8 +58,8 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
             </li>
 
             <li class="menu">
-                <a href="<?= base_url('planning/tasks') ?>"
-                   class="dropdown-toggle <?= $current_path === 'planning/tasks' ? 'active text-white fw-bold shadow-text' : '' ?>">
+                <a href="<?= base_url('head/tasks') ?>"
+                   class="dropdown-toggle <?= $current_path === 'head/tasks' ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div>
                         <img src="<?= base_url('assets/images/icon-tasks.svg') ?>" width="24" height="24" alt="checklist">
                         <span class="ms-2 shadow-text">Tasks</span>
@@ -68,8 +68,8 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
             </li>
 
             <li class="menu">
-                <a href="<?= base_url('planning/mr') ?>"
-                   class="dropdown-toggle <?= $current_path === 'planning/mr' ? 'active text-white fw-bold shadow-text' : '' ?>">
+                <a href="<?= base_url('head/mr') ?>"
+                   class="dropdown-toggle <?= $current_path === 'head/mr' ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div>
                         <img src="<?= base_url('assets/images/icon-mr.svg') ?>" width="24" height="24" alt="Box">
                         <span class="ms-2 shadow-text">MR</span>

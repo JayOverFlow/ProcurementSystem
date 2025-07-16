@@ -13,9 +13,13 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/dt-global_style.css') ?>">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/custom_dt_custom.css') ?>">
 
-<link href="<?= base_url('assets/src/assets/css/light/components/modal.css') ?>" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="<?= base_url('assets/src/plugins/src/sweetalerts2/step-sweetalert.css') ?>">
 
-<link href="<?= base_url('asssets/src/assets/css/dark/components/modal.css') ?>" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/src/assets/css/light/components/modal.css') ?>" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/src/plugins/css/light/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
+
+<!-- <link href="<?= base_url('asssets/src/assets/css/dark/components/modal.css') ?>" rel="stylesheet" type="text/css" /> -->
+<link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -24,25 +28,42 @@
         <table id="style-2" class="table style-2 dt-table-hover">
             <thead>
                 <tr>
-                    <th class="checkbox-column dt-no-sorting"> Record Id </th>
-                    <th>Full Name</th>
-                    <th>Lorem ipsum</th>
-                    <th>Time</th>
+                    <th>Submitted By</th>
+                    <th>Document Type</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="checkbox-column"> 1 </td>
-                    <td>Jane</td>
-                    <td>Lamb</td>
-                    <td>1:43 AM</td>
-                </tr>
-                <tr>
-                    <td class="checkbox-column"> 2 </td>
-                    <td>Anne</td>
-                    <td>IDK</td>
-                    <td>2:43 AM</td>
-                </tr>
+                <?php if (!empty($tasks)): ?>
+                    <?php foreach ($tasks as $task): ?>
+                        <tr>
+                            <td><?= esc($task['submitted_by_name']) ?></td>
+                            <td><?= esc($task['task_type']) ?></td>
+                            <td><?= esc(date('F j, Y, g:i a', strtotime($task['created_at']))) ?></td>
+                            <td>
+                                <?php
+                                    $status = esc($task['ppmp_status']);
+                                    $badge_class = 'badge-light-primary'; // Default for Pending
+                                    if ($status === 'Approved') {
+                                        $badge_class = 'badge-light-success';
+                                    } elseif ($status === 'Rejected') {
+                                        $badge_class = 'badge-light-danger';
+                                    }
+                                ?>
+                                <span class="badge <?= $badge_class ?>"><?= $status ?></span>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn danger btn-sm view-task-btn" style="background-color: #C62742; color: #FFFFFF" data-task-id="<?= esc($task['task_id']) ?>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Open</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="text-center">No tasks found.</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -58,54 +79,29 @@
             </div>
             <hr class="border border-dark my-1">
             <div class="modal-body d-flex justify-content-start align-items-center">
-                <img src="<?= base_url('assets/images/user.png') ?>" alt="user" class="rounded-circle" width="60" height="60">
                 <div class="ms-3">
-                    <h6>Ron Eric Legaspi</h6>
-                    <p>ronericlegaspi@tup.edu.ph <span class="fw-bold">06/10/2025</span> - 2:01 AM</p>
+                    <h6 id="modal-fullname"></h6>
+                    <p id="modal-role"></p>
+                    <p ><span id="modal-email"></span> - <span id="modal-date" class="fw-bold"></span></p>
                 </div>
             </div>
             <hr class="border border-dark my-1">
             <div class="modal-body">
-                <h6 class="mb-3">Dear Department Head,</h6>
-                <p>
-                I hope this message finds you well.
-                I would like to request the procurement of the following laboratory equipment for the Biology Department:
-                2x Digital Microscopes
-                1x Centrifuge Machine
-                3x Glassware Sets
-                Please find the attached PR form with detailed specifications and justifications.
-                Kindly let me know if further documentation or clarification is needed.
-                </p>
-                <h6 class="d-flex flex-column mt-3">
-                <span>Best regards,</span>
-                <span>Ron Eric Legaspi</span>
-                Faculty, Biology Department
-                </h6>
-                <div class="text-center mt-5">
-                    <button type="button" class="btn btn-sm" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
-                    <button type="button" class="btn btn-sm" style="background-color: #C62742; color: #FFFFFF">APPROVE</button>
+                <p id="modal-description"></p>
+                <div id="modal-action-buttons" class="widget-content text-center mt-5">
+                    <button type="button" id="reject-btn" class="btn btn-sm warning reject" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
+                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #C62742; color: #FFFFFF">APPROVE</button>
+                </div>
+                <div id="modal-status-display" class="text-center mt-5" style="display: none;">
+                    <!-- Content will be set by JavaScript -->
                 </div>
             </div>
             <hr class="border border-dark my-1">
             <div class="modal-footer d-flex justify-content-start border-top-0">
-                <div class="attachment file-pdf">
-                    <div class="media">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        <div class="media-body">
-                            <p class="file-name">Confirm File</p>
-                            <p class="file-size">450kb</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="attachment file-pdf">
-                    <div class="media">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        <div class="media-body">
-                            <p class="file-name">Confirm File</p>
-                            <p class="file-size">450kb</p>
-                        </div>
-                    </div>
-                </div>
+                <a href="#" id="modal-preview-link" target="_blank" class="ms-3" style="display: none;">
+                <img src="<?= base_url('assets/images/red-file-icon.png'); ?>" class="border-0 rounded-0 me-2" alt="file" style="width: 24px; height: 24px;">
+                    <span class="text-primary ms-2">View submitted PPMP</span>
+                </a>
             </div>
         </div>
     </div>
@@ -116,23 +112,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
+<script src="<?= base_url('assets/js/tasks_page/plan-tasks.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
+
 <script>
-    // var e;
     c2 = $('#style-2').DataTable({
-        headerCallback:function(e, a, t, n, s) {
-            e.getElementsByTagName("th")[0].innerHTML=`
-            <div class="form-check form-check-primary d-block new-control">
-                <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
-            </div>`
-        },  
-        columnDefs:[ {
-            targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
-                return `
-                <div class="form-check form-check-primary d-block new-control">
-                    <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
-                </div>`
-            }
-        }],
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'f><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'>>>" +
     "<'table-responsive'tr>" +
     "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
@@ -143,23 +127,7 @@
             "sSearchPlaceholder": "Search...",
         },
         "pageLength": 10,
-        
-    });
-
-    multiCheck(c2);
-
-    $('#style-2 tbody').on('click', 'tr', function() {
-        var rowData = c2.row(this).data();
-
-        // Update modal body with row data
-        var modalBodyContent = "";
-        for (var i = 0; i < rowData.length; i++) {
-            modalBodyContent += rowData[i] + "<br>";
-        }
-        $('.modal-body .modal-text').html(modalBodyContent);
-
-        // Show the modal
-        $('#exampleModalCenter').modal('show');
+        "order": []
     });
 </script>
 <?= $this->endSection() ?>

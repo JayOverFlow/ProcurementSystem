@@ -54,7 +54,7 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                             Purchase Request
                         </a>
                     </li>
-                    <li>        
+                    <li>
                         <a href="<?= base_url('procurement/po') ?>"
                            class="<?= $current_path === 'procurement/po' ? 'active text-primary fw-bold' : '' ?>">
                             Purchase Order

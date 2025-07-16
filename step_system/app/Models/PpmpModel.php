@@ -57,4 +57,9 @@ class PpmpModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function updateStatus(int $ppmpId, string $status)
+    {
+        return $this->update($ppmpId, ['ppmp_status' => $status]);
+    }
 }

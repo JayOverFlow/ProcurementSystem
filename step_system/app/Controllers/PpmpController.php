@@ -7,6 +7,7 @@ use App\Models\PpmpModel;
 use App\Models\PpmpItemModel;
 use App\Models\TaskModel;
 use App\Models\UserModel;
+use App\Models\DepartmentModel;
 
 class PpmpController extends BaseController
 {
@@ -88,6 +89,7 @@ class PpmpController extends BaseController
                     'submitted_by' => $userId,
                     'submitted_to' => $officerId,
                     'ppmp_id_fk' => $ppmpId,
+                    'task_type' => 'PPMP',
                     'task_description' => 'A new PPMP has been submitted for your review.'
                 ]);
             }
@@ -105,5 +107,33 @@ class PpmpController extends BaseController
             log_message('error', 'PPMP Creation/Submission Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
+    }
+
+    public function preview($ppmpId)
+    {
+        $ppmpModel = new PpmpModel();
+        $ppmpItemModel = new PpmpItemModel();
+        $departmentModel = new DepartmentModel;
+        $userModel = new UserModel();
+
+        // $data['ppmp'] = $ppmpModel->find($ppmpId);
+        // $data['ppmp_items'] = $ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
+        $ppmp = $ppmpModel->find($ppmpId);
+        $ppmpItems = $ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
+
+        $data = [
+            'ppmp' => $ppmp,
+            'ppmp_items' => $ppmpItems,
+            'office' => $departmentModel->getDepartmentNameById($ppmp['ppmp_office_fk']),
+            'prepared_by' => $userModel->getUserFullNameById($ppmp['ppmp_prepared_by_name']),
+            'recommended_by' => $userModel->getUserFullNameById($ppmp['ppmp_recommended_by_name']),
+        ];
+
+        
+        if (empty($data['ppmp'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('PPMP not found');
+        }
+        
+        return view('user-pages/ppmp-preview', $data);
     }
 } 
