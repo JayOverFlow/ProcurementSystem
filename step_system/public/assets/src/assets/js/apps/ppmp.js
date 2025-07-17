@@ -147,3 +147,52 @@ document.getElementsByClassName('additem-co')[0].addEventListener('click', funct
 deleteItemRow();
 deleteItemRowCO();
 
+document.addEventListener('DOMContentLoaded', function() {
+  const calculateTotal = (tableName, totalElementId) => {
+      let total = 0;
+      document.querySelectorAll(`.${tableName} tbody tr`).forEach(row => {
+          const estBudgetInput = row.querySelector('input[name*="[est_budget]"]');
+          if (estBudgetInput) {
+              total += parseFloat(estBudgetInput.value) || 0;
+          }
+      });
+      document.getElementById(totalElementId).textContent = total.toFixed(2);
+  };
+
+  // Initial calculation
+  calculateTotal('item-table', 'total-amount-mooe');
+  calculateTotal('item-table-co', 'total-amount-co');
+
+  // Recalculate on input change for MOOE table
+  document.querySelector('.item-table').addEventListener('input', (event) => {
+      if (event.target.name.includes('[est_budget]')) {
+          calculateTotal('item-table', 'total-amount-mooe');
+      }
+  });
+
+  // Recalculate on input change for CO table
+  document.querySelector('.item-table-co').addEventListener('input', (event) => {
+      if (event.target.name.includes('[est_budget]')) {
+          calculateTotal('item-table-co', 'total-amount-co');
+      }
+  });
+});
+
+document.querySelector('.widget-content .warning.save-and-submit').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent the form from submitting immediately
+
+    Swal.fire({
+        title: 'Confirm Save & Submit?',
+        text: "Do you want to save this Project Procurement Management Plan and submit to Planning Officer?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#8ABB2F',
+        cancelButtonColor: '#7B7B7B',
+        confirmButtonText: 'Save & Submit'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If confirmed, submit the form
+            document.getElementById('ppmp-form').submit();
+        }
+    })
+})

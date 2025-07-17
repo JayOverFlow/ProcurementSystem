@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         Swal.fire({
             title: `Confirm ${status.toLowerCase()}?`,
-            text: `Do you want to ${status.toLowerCase()} this PPMP?`,
+            text: `Do you want to ${status.toLowerCase()} this Project Procurement Management Plan?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: confirmButtonColor,

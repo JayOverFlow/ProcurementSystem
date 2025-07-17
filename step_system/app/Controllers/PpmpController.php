@@ -11,6 +11,46 @@ use App\Models\DepartmentModel;
 
 class PpmpController extends BaseController
 {
+    protected $departmentModel;
+    protected $userModel;
+
+    public function __construct() {
+        $this->departmentModel = new DepartmentModel();
+        $this->userModel = new UserModel();
+    }
+
+    public function index()
+    {
+        $userData = $this->loadUserSession();
+        $departments = $this->departmentModel->getAllDepartments();
+        $users = $this->userModel->getAllUsers();
+
+        $data = [
+            'user_data' => $userData,
+            'departments' => $departments,
+            'users' => $users
+        ];
+
+        $role = $userData['gen_role'] ?? null;
+
+        switch ($role) {
+            case 'Director':
+                return view('user-pages/director/dir-ppmp', $data);
+            case 'Planning Officer':
+                return view('user-pages/planning/plan-ppmp', $data);
+            case 'Head':
+                return view('user-pages/department-head/dh-ppmp', $data);
+            case 'Faculty': // = Section Head
+                return view('user-pages/faculty/fac-ppmp', $data);
+            case 'Procurement':
+                return view('user-pages/procurement/pro-ppmp', $data);
+            case 'Supply':
+                return view('user-pages/supply/sup-ppmp', $data);
+            default:
+                return view('user-pages/unassigned/unassigned-ppmp', $data);
+        }
+    }
+
     public function create()
     {
         $ppmpModel = new PpmpModel();
@@ -98,9 +138,9 @@ class PpmpController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'Failed to create and submit PPMP.');
+                return redirect()->back()->with('error', 'An error occurred while saving & submitting the Project Procurement Management Plan.');
             } else {
-                return redirect()->back()->with('success', 'PPMP created and submitted successfully!');
+                return redirect()->back()->with('success', 'Your Project Procurement Management Plan has been saved & submitted.');
             }
 
         } catch (\Exception $e) {
@@ -134,6 +174,6 @@ class PpmpController extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException('PPMP not found');
         }
         
-        return view('user-pages/ppmp-preview', $data);
+        return view('preview-pages/ppmp-preview', $data);
     }
 } 
