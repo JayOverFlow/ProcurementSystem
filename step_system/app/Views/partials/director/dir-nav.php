@@ -45,7 +45,7 @@
                     </li>
 
                     <li class="menu">
-                        <a href="<?= base_url('director/tasks') ?>" class="dropdown-toggle">
+                        <a href="<?= base_url('/tasks') ?>" class="dropdown-toggle">
                             <div class="">
                                 <img src="<?= base_url('assets/images/icon-tasks.svg') ?>" width="24" height="24" alt="checklist">
                                 <span class="ms-2">Tasks</span>
