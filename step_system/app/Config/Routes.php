@@ -56,7 +56,6 @@ $routes->group('director', function($routes) {
 // Planning
     $routes->group('planning', function($routes) {
     $routes->get('dashboard', 'Planning\PlanningDashboardController::index');
-    $routes->get('tasks', 'Planning\PlanningTasksController::index');
     $routes->get('mr', 'PlanningController::mr');
     $routes->get('ppmp', 'PlanningController::ppmp');
     $routes->get('pr', 'PlanningController::pr');
@@ -135,15 +134,16 @@ $routes->group('unassigned', function($routes) {
 });
 
 
-// Planning Officer Routes
-$routes->get('/planning/tasks', 'Planning\TasksController::index');
-$routes->get('/planning/tasks/details/(:num)', 'Planning\TasksController::getDetails/$1');
-$routes->post('/planning/tasks/update-status', 'Planning\TasksController::updatePpmpStatus');
-
-
 // PPMP
 $routes->group('ppmp', function($routes) {
     $routes->get('create', 'PpmpController::index');
     $routes->post('create', 'PpmpController::create');
     $routes->get('preview/(:num)', 'PpmpController::preview/$1');
+});
+
+// Tasks
+$routes->group('tasks', function($routes) {
+    $routes->get('', 'TasksController::index');
+    $routes->get('details/(:num)', 'TasksController::getDetails/$1');
+    $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
 });
