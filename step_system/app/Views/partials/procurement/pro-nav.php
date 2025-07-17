@@ -63,7 +63,7 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                     <li>
                         <a href="<?= base_url('procurement/inventory') ?>"
                            class="<?= $current_path === 'procurement/inventory' ? 'active text-primary fw-bold' : '' ?>">
-                            Inventory Custodian Slip
+                            Inventory
                         </a>
                     </li>
                 </ul>
