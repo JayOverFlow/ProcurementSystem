@@ -63,6 +63,8 @@ $routes->group('director', function($routes) {
     $routes->get('inventory', 'PlanningController::inventory');
     $routes->get('file1', 'PlanningController::file1');
     $routes->get('file2', 'PlanningController::file2');
+    $routes->get('file1', 'PlanningController::file1');
+    $routes->get('file2', 'PlanningController::file2');
 
 });
 
@@ -155,4 +157,9 @@ $routes->group('tasks', function($routes) {
     $routes->get('', 'TasksController::index');
     $routes->get('details/(:num)', 'TasksController::getDetails/$1');
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
+});
+
+// Material Requisition (MR)
+$routes->group('mr', function($routes) {
+    $routes->get('', 'MrController::index');
 });
