@@ -159,7 +159,7 @@
                         <a href="<?= base_url('/logout') ?>">Log Out</a>
                         </div>
                     </div>
-                    
+
                 </li>
     </ul>
 </header>

@@ -46,4 +46,12 @@ class PlanningController extends BaseController
     {
         return view('user-pages/planning/plan-inventory');
     }
+    public function file1()
+    {
+        return view('user-pages/planning/ppmp');
+    }
+    public function file2()
+    {
+        return view('user-pages/planning/po');
+    }
 }

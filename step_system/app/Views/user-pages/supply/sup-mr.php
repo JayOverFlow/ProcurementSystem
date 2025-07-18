@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/sup-base-layout') ?>
 
 <?= $this->section('title') ?>
-    <title>TUP STEP | Supply MR</title>
+    <title>TUP STEP | Supply Officer MR</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
@@ -19,12 +19,13 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
         <div class="col">
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/all.svg'); ?>" class="rounded-circle" alt="faculty icon">
+
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
@@ -39,7 +40,8 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/equipment.svg'); ?>" class="rounded-circle" alt="faculty icon">
+
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
@@ -54,7 +56,8 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/appliances.svg'); ?>" class="rounded-circle" alt="faculty icon">
+
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
@@ -69,7 +72,8 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/furnishings.svg'); ?>" class="rounded-circle" alt="faculty icon">
+
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
@@ -84,12 +88,13 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/materials.svg'); ?>" class="rounded-circle" alt="faculty icon">
+
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Equipments</strong></h5>
+                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Materials</strong></h5>
                         <h5 class="card-text" style="color: #515365">12</h5>
                     </div>
                 </div>
@@ -123,5 +128,5 @@
         });
 
         multiCheck(c3);
-    </script> -->
+    </script>
 <?= $this->endSection() ?>
