@@ -61,6 +61,8 @@ $routes->group('director', function($routes) {
     $routes->get('pr', 'PlanningController::pr');
     $routes->get('app', 'PlanningController::app');
     $routes->get('inventory', 'PlanningController::inventory');
+    $routes->get('file1', 'PlanningController::file1');
+    $routes->get('file2', 'PlanningController::file2');
 
 });
 
