@@ -101,6 +101,19 @@ class UserModel extends Model {
         return array_column($result, 'user_id');
     }
 
+    public function getUsersByRoleName(string $roleName): array
+    {
+        $builder = $this->db->table('users_tbl u');
+        $builder->select('u.user_id');
+        $builder->join('user_role_department_tbl urd', 'urd.user_id = u.user_id');
+        $builder->join('roles_tbl r', 'r.role_id = urd.role_id');
+        $builder->where('r.role_name', $roleName);
+        
+        $result = $builder->get()->getResultArray();
+
+        return array_column($result, 'user_id');
+    }
+
     public function getUserFullNameById(int $userId) {
         return $this->select('user_fullname')
                     ->where('user_id', $userId)

@@ -371,7 +371,7 @@
 
                         <div class="invoice-action-btn">
 
-                            <div class="row widget-content">
+                            <div class="row ">
                                 <div class="col-xl-12 col-md-4">
                                     <button type="submit" class="btn btn-submit w-100 warning save-and-submit" style="background-color: #C62742; color: #FFFFFF">Save & Submit</button>
                                 </div>

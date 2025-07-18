@@ -55,8 +55,8 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url('planning/app') ?>"
-                           class="<?= $current_path === 'planning/app' ? 'active text-primary fw-bold' : '' ?>">
+                        <a href="<?= base_url('/app/create') ?>"
+                           class="<?= $current_path === '/app/create' ? 'active text-primary fw-bold' : '' ?>">
                             Annual Procurement Plan
                         </a>
                     </li>
