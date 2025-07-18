@@ -28,7 +28,7 @@
                         </a>
                         <ul class="dropdown-menu submenu list-untyled" id="dashboard" data-bs-parent="#accordionExample" style="min-width: 20rem;">
                             <li class="">
-                                <a href="<?= base_url('unassigned/ppmp') ?>">Project Procurement Management Plan</a>
+                                <a href="<?= base_url('/ppmp/create') ?>">Project Procurement Management Plan</a>
                             </li>
                             <li>
                                 <a href="<?= base_url('unassigned/pr') ?>">Purchase Request</a>
