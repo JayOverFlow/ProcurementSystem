@@ -159,7 +159,15 @@ $routes->group('tasks', function($routes) {
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
 });
 
+
+// APP
+$routes->group('app', function($routes) {
+    $routes->get('create', 'AppController::index');
+    $routes->post('create', 'AppController::create');
+    $routes->get('preview/(:num)', 'AppController::preview/$1');
+
 // Material Requisition (MR)
 $routes->group('mr', function($routes) {
     $routes->get('', 'MrController::index');
+
 });
