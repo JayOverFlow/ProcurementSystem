@@ -61,6 +61,10 @@ $routes->group('director', function($routes) {
     $routes->get('pr', 'PlanningController::pr');
     $routes->get('app', 'PlanningController::app');
     $routes->get('inventory', 'PlanningController::inventory');
+    $routes->get('file1', 'PlanningController::file1');
+    $routes->get('file2', 'PlanningController::file2');
+    $routes->get('file1', 'PlanningController::file1');
+    $routes->get('file2', 'PlanningController::file2');
 
 });
 
@@ -114,6 +118,8 @@ $routes->group('supply', function($routes) {
     $routes->get('par', 'SupplyController::par');
     $routes->get('ics', 'SupplyController::ics');
     $routes->get('su', 'SupplyController::su');
+    $routes->get('inventory', 'SupplyController::inventory');
+    $routes->get('my-files', 'SupplyController::myFiles');
 });
 
 // @Emman Proposed routing convention from sir PJ's discussion
@@ -127,10 +133,15 @@ $routes->group('supply', function($routes) {
 
 // });
 
+// Unassigned
 $routes->group('unassigned', function($routes) {
-    $routes->get('mr', 'UnassignedController::mr');
-    $routes->get('ppmp', 'UnassignedController::ppmp');
-    $routes->get('pr', 'UnassignedController::pr');
+    $routes->get('dashboard', 'Unassigned\UnassignedDashboardController::index');
+    $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
+    $routes->get('pr', 'Unassigned\UnassignedPRController::index');
+    $routes->get('tasks', 'Unassigned\UnassignedTasksController::index');
+    $routes->get('mr', 'Unassigned\UnassignedMRController::index');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
 });
 
 
@@ -148,9 +159,15 @@ $routes->group('tasks', function($routes) {
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
 });
 
+
 // APP
 $routes->group('app', function($routes) {
     $routes->get('create', 'AppController::index');
     $routes->post('create', 'AppController::create');
     $routes->get('preview/(:num)', 'AppController::preview/$1');
+
+// Material Requisition (MR)
+$routes->group('mr', function($routes) {
+    $routes->get('', 'MrController::index');
+
 });

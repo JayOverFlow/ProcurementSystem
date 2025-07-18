@@ -54,7 +54,7 @@
                     </li>
 
                     <li class="menu">
-                        <a href="<?= base_url('director/mr') ?>" class="dropdown-toggle">
+                        <a href="<?= base_url('/mr') ?>" class="dropdown-toggle">
                             <div class="">
                                 <img src="<?= base_url('assets/images/icon-mr.svg') ?>" width="24" height="24" alt="Box">
                                 <span class="ms-2">MR</span>

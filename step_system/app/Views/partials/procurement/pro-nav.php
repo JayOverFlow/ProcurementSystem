@@ -43,8 +43,8 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                 </a>
                 <ul class="collapse submenu list-unstyled <?= $is_procurement_page ? 'show' : '' ?>" id="procurement" data-bs-parent="#accordionExample" style="min-width: 20rem;">
                     <li>
-                        <a href="<?= base_url('procurement/ppmp') ?>"
-                           class="<?= $current_path === 'procurement/ppmp' ? 'active text-primary fw-bold' : '' ?>">
+                        <a href="<?= base_url('/ppmp/create') ?>"
+                           class="<?= $current_path === '/ppmp/create' ? 'active text-primary fw-bold' : '' ?>">
                             Project Procurement Management Plan
                         </a>
                     </li>
@@ -54,7 +54,7 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                             Purchase Request
                         </a>
                     </li>
-                    <li>        
+                    <li>
                         <a href="<?= base_url('procurement/po') ?>"
                            class="<?= $current_path === 'procurement/po' ? 'active text-primary fw-bold' : '' ?>">
                             Purchase Order
@@ -70,8 +70,8 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
             </li>
 
             <li class="menu">
-                <a href="<?= base_url('procurement/tasks') ?>"
-                   class="dropdown-toggle <?= $current_path === 'procurement/tasks' ? 'active text-white fw-bold shadow-text' : '' ?>">
+                <a href="<?= base_url('/tasks') ?>"
+                   class="dropdown-toggle <?= $current_path === '/tasks' ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div>
                         <img src="<?= base_url('assets/images/icon-tasks.svg') ?>" width="24" height="24" alt="checklist">
                         <span class="ms-2 shadow-text">Tasks</span>

@@ -1,0 +1,6 @@
+.dark .treeview-container {
+    border-right-color: #1b2e4b;
+}
+.dark #treeviewFStructure .widget-header {
+    border-bottom-color: #1b2e4b;
+} 

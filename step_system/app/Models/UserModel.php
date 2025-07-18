@@ -101,6 +101,7 @@ class UserModel extends Model {
         return array_column($result, 'user_id');
     }
 
+
     public function getUsersByRoleName(string $roleName): array
     {
         $builder = $this->db->table('users_tbl u');
@@ -119,4 +120,25 @@ class UserModel extends Model {
                     ->where('user_id', $userId)
                     ->first()['user_fullname'];
     }
+
+
+    public function getFacultyCountByDepartment(int $departmentId): int
+    {
+        return $this->builder()
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->where('user_role_department_tbl.department_id', $departmentId)
+                    ->where('users_tbl.user_type', 'Faculty')
+                    ->countAllResults();
+    }
+
+
+    public function getStaffCountByDepartment(int $departmentId): int
+    {
+        return $this->builder()
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->where('user_role_department_tbl.department_id', $departmentId)
+                    ->where('users_tbl.user_type', 'Staff')
+                    ->countAllResults();
+    }
 }
+

@@ -21,7 +21,7 @@
 <link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
 <?= $this->endSection() ?>
 
-<?= $this->section('content') ?>
+<?= $this->section('content') ?>    
 <?= $this->include('tasks') ?>
 <?= $this->endSection() ?>
 

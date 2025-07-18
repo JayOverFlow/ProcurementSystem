@@ -51,7 +51,10 @@
 
                 <div class="middle-content container-xxl p-0">
                     <?= $this->renderSection('content'); ?>
+                    
                 </div>
+
+                
 
             </div>
             <!--  BEGIN FOOTER  -->
