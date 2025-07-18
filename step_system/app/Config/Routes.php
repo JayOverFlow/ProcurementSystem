@@ -61,6 +61,10 @@ $routes->group('director', function($routes) {
     $routes->get('pr', 'PlanningController::pr');
     $routes->get('app', 'PlanningController::app');
     $routes->get('inventory', 'PlanningController::inventory');
+    $routes->get('file1', 'PlanningController::file1');
+    $routes->get('file2', 'PlanningController::file2');
+    $routes->get('file1', 'PlanningController::file1');
+    $routes->get('file2', 'PlanningController::file2');
 
 });
 
@@ -107,13 +111,15 @@ $routes->group('procurement', function($routes) {
 
 // Supply
 $routes->group('supply', function($routes) {
-    $routes->get('dashboard', 'Supply\SupplyController::dashboard');
-    $routes->get('tasks', 'Supply\SupplyController::tasks');
-    $routes->get('mr', 'Supply\SupplyController::mr');
-    $routes->get('ppmp', 'Supply\SupplyController::ppmp');
-    $routes->get('par', 'Supply\SupplyController::par');
-    $routes->get('ics', 'Supply\SupplyController::ics');
-    $routes->get('su', 'Supply\SupplyController::su');
+    $routes->get('dashboard', 'SupplyController::dashboard');
+    $routes->get('tasks', 'SupplyController::tasks');
+    $routes->get('mr', 'SupplyController::mr');
+    $routes->get('ppmp', 'SupplyController::ppmp');
+    $routes->get('par', 'SupplyController::par');
+    $routes->get('ics', 'SupplyController::ics');
+    $routes->get('su', 'SupplyController::su');
+    $routes->get('inventory', 'SupplyController::inventory');
+    $routes->get('my-files', 'SupplyController::myFiles');
 });
 
 // @Emman Proposed routing convention from sir PJ's discussion
@@ -129,9 +135,13 @@ $routes->group('supply', function($routes) {
 
 // Unassigned
 $routes->group('unassigned', function($routes) {
-    $routes->get('mr', 'Unassigned\UnassignedController::mr');
-    $routes->get('ppmp', 'Unassigned\UnassignedController::ppmp');
-    $routes->get('pr', 'Unassigned\UnassignedController::pr');
+    $routes->get('dashboard', 'Unassigned\UnassignedDashboardController::index');
+    $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
+    $routes->get('pr', 'Unassigned\UnassignedPRController::index');
+    $routes->get('tasks', 'Unassigned\UnassignedTasksController::index');
+    $routes->get('mr', 'Unassigned\UnassignedMRController::index');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
 });
 
 

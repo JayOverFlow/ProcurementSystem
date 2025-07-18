@@ -43,8 +43,8 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                 </a>
                 <ul class="collapse submenu list-unstyled <?= $is_procurement_page ? 'show' : '' ?>" id="procurement" data-bs-parent="#accordionExample" style="min-width: 20rem;">
                     <li>
-                        <a href="<?= base_url('planning/ppmp') ?>"
-                           class="<?= $current_path === 'planning/ppmp' ? 'active text-primary fw-bold' : '' ?>">
+                        <a href="<?= base_url('/ppmp/create') ?>"
+                           class="<?= $current_path === '/ppmp/create' ? 'active text-primary fw-bold' : '' ?>">
                             Project Procurement Management Plan
                         </a>
                     </li>

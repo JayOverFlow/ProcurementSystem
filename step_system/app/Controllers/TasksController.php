@@ -34,7 +34,7 @@ class TasksController extends BaseController
             case 'Planning Officer':
                 return view('user-pages/planning/plan-tasks', $data);
             case 'Head':
-                return view('user-pages/department-head/dh-tasks', $data);
+                return view('user-pages/head/head-tasks', $data);
             case 'Faculty': // = Section Head
                 return view('user-pages/faculty/fac-tasks', $data);
             case 'Procurement':

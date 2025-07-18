@@ -422,7 +422,7 @@ class AuthController extends BaseController {
                     'Supply' => base_url('/supply/dashboard'),
                     'Faculty' => base_url('/faculty/dashboard'),
                     null => base_url('/unassigned/mr'),
-                    default => base_url('/landing') // Default fallback if gen_role is not matched
+                    default => base_url('/login') // Default fallback if gen_role is not matched
                 };
 
                 // Return success message and a redirect URL
