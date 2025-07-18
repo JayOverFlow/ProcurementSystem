@@ -1,0 +1,46 @@
+<?= $this->extend('layouts/dir-base-layout') ?>
+
+<?= $this->section('title') ?>
+<title>TUP STEP | Director Project Procurement Management Plan</title>
+<?= $this->endSection() ?>
+
+<?= $this->section('css') ?>
+<link href="<?= base_url('assets/src/assets/css/light/apps/ppmp.css') ?>" rel="stylesheet" type="text/css" />
+
+<link href="<?= base_url('assets/src/assets/css/dark/apps/invoice-add.css') ?>" rel="stylesheet" type="text/css" />
+
+<!-- For Sweet Alerts -->
+<link rel="stylesheet" href="<?= base_url('assets/src/plugins/src/sweetalerts2/step-sweetalert.css') ?>">
+<link href="<?= base_url('assets/src/plugins/css/light/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
+<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+<?= $this->include('forms/ppmp') ?>
+<?= $this->endSection() ?>
+
+<?= $this->section('js') ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- For Table -->
+<script src="<?= base_url('assets/src/assets/js/apps/ppmp.js') ?>"></script>
+<!-- For Sweet Alerts -->
+<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
+
+<script>
+    <?php if (session()->getFlashdata('success')) : ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'Saved & Submitted!',
+            text: '<?= session()->getFlashdata('success') ?>',
+        });
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('error')) : ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '<?= session()->getFlashdata('error') ?>',
+        });
+    <?php endif; ?>
+</script>
+<?= $this->endSection() ?>

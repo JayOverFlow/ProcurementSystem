@@ -7,6 +7,10 @@ class UserModel extends Model {
 
     protected $table = 'users_tbl';
     protected $primaryKey = 'user_id';
+    protected $useAutoIncrement = true;
+    protected $returnType = 'array';
+    protected $useSoftDeletes = false;
+    protected $protectFields = true;
 
     protected $allowedFields = [
         'user_firstname',
@@ -35,20 +39,23 @@ class UserModel extends Model {
         return $result;
     }
 
-    // Authenticate user from login
+    // Authenticate user from login and retrieve their role and department information
     public function authenticateUser(string $user_email, string $user_password) {
-        // Quesy to database to find the email
-        $user = $this->where('user_email', $user_email)->first();
+        $user = $this->select('users_tbl.*, roles_tbl.role_name, roles_tbl.gen_role, departments_tbl.dep_name, departments_tbl.dep_id')
+                     ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id AND user_role_department_tbl.role_id IS NOT NULL', 'left')
+                     ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id', 'left')
+                     ->join('departments_tbl', 'departments_tbl.dep_id = user_role_department_tbl.department_id', 'left')
+                     ->where('users_tbl.user_email', $user_email)
+                     ->first();
 
-        // If email dont exist
         if (!$user) {
             return false;
         }
 
-        // If password is correct
-        if(password_verify($user_password, $user['user_password'])) {
+        if (password_verify($user_password, $user['user_password'])) {
             unset($user['user_password']); // Remove for security
-            return $user; // Return the query result
+            log_message('debug', 'User data after authentication in UserModel: ' . print_r($user, true));
+            return $user; // Return the query result with role and department info
         } else {
             return false;
         }
@@ -58,5 +65,45 @@ class UserModel extends Model {
     public function countUsersByType(string $type)
     {
         return $this->where('user_type', $type)->countAllResults();
+    }
+
+    public function getAllFacultyCount()
+    {
+        return $this->where('user_type', 'Faculty')->countAllResults();
+    }
+
+    public function getAllStaffCount()
+    {
+        return $this->where('user_type', 'Staff')->countAllResults();
+    }
+
+    public function getAllUsers() {
+        return $this->orderBy('user_fullname', 'ASC')->findAll();
+    }
+
+    /**
+     * Finds users by their general role.
+     *
+     * @param string $role The general role to search for (e.g., 'Planning Officer').
+     * @return array An array of user IDs.
+     */
+    public function getUsersByGenRole(string $role): array
+    {
+        $builder = $this->db->table('users_tbl u');
+        $builder->select('u.user_id');
+        $builder->join('user_role_department_tbl urd', 'urd.user_id = u.user_id');
+        $builder->join('roles_tbl r', 'r.role_id = urd.role_id');
+        $builder->where('r.gen_role', $role);
+        
+        $result = $builder->get()->getResultArray();
+
+        // Return an array of user_ids
+        return array_column($result, 'user_id');
+    }
+
+    public function getUserFullNameById(int $userId) {
+        return $this->select('user_fullname')
+                    ->where('user_id', $userId)
+                    ->first()['user_fullname'];
     }
 }

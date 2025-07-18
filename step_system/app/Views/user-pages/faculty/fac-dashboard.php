@@ -187,7 +187,7 @@
                                         </div>
                     <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                         <div class="card-body text-end">
-                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Department Budget</strong></h5>
+                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Office Budget</strong></h5>
                             <h5 class="card-text" style="color: #515365">12</h5>
                         </div>
                     </div>

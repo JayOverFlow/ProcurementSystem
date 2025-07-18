@@ -27,26 +27,54 @@ $routes->group('auth', function($routes) {
 });
 
 // Login
-// Used helper('url') for route_to method
 $routes->group('', function($routes) {
-    $routes->get('login', 'AuthController::login', ['as' => 'login']);
-    $routes->post('login', 'AuthController::login', ['as' => 'login']);
+    $routes->get('login', 'AuthController::login');
+    $routes->post('login', 'AuthController::login');
 });
 
+$routes->get('logout', 'AuthController::logout');
+
+// Faculty
 $routes->group('faculty', function($routes) {
-    $routes->get('dashboard', 'FacultyController::dashboard');
-    $routes->get('tasks', 'FacultyController::tasks');
-    $routes->get('mr', 'FacultyController::mr');
-    $routes->get('ppmp', 'FacultyController::ppmp');
-    $routes->get('pr', 'FacultyController::pr');
+    $routes->get('dashboard', 'Faculty\FacultyDashboardController::index');
+    $routes->get('ppmp', 'Faculty\FacultyPPMPController::index');
+    $routes->get('pr', 'Faculty\FacultyPRController::index');
+    $routes->get('tasks', 'Faculty\FacultyTasksController::index');
+    $routes->get('mr', 'Faculty\FacultyMRController::index');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
+});
+
+// Director
+$routes->group('director', function($routes) {
+    $routes->get('dashboard', 'Director\DirectorDashboardController::index');
+    $routes->get('tasks', 'Director\DirectorTasksController::index');
+    $routes->get('mr', 'Director\DirectorMRController::index');
+    $routes->get('ppmp', 'Director\DirectorPPMPController::index');
+    $routes->get('pr', 'Director\DirectorPRController::index');
+});
+// Planning
+    $routes->group('planning', function($routes) {
+    $routes->get('dashboard', 'Planning\PlanningDashboardController::index');
+    $routes->get('mr', 'PlanningController::mr');
+    $routes->get('ppmp', 'PlanningController::ppmp');
+    $routes->get('pr', 'PlanningController::pr');
+    $routes->get('app', 'PlanningController::app');
+    $routes->get('inventory', 'PlanningController::inventory');
+    $routes->get('file1', 'PlanningController::file1');
+    $routes->get('file2', 'PlanningController::file2');
+
 });
 
 // Department Head
 $routes->group('head', function($routes) {
-    $routes->get('dashboard', 'DepartmentHead\DHDashboard::dashboard');
+    $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
     $routes->get('mr', 'DepartmentHead\DHDashboard::mr');
     $routes->get('ppmp', 'DepartmentHead\DHDashboard::ppmp');
     $routes->get('pr', 'DepartmentHead\DHDashboard::pr');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/debug-test', 'DebugController::testRoute'); // Temporary debug route
     $routes->get('tasks', 'DepartmentHead\DHDashboard::tasks');
 });
 // Master Admin
@@ -76,8 +104,10 @@ $routes->group('procurement', function($routes) {
     $routes->get('pr', 'ProcurementOffice\ProcurementController::pr');
     $routes->get('tasks', 'ProcurementOffice\ProcurementController::tasks');
     $routes->get('po', 'ProcurementOffice\ProcurementController::po');
+    $routes->get('inventory', 'ProcurementOffice\ProcurementController::inventory');
 });
 
+// Supply
 $routes->group('supply', function($routes) {
     $routes->get('dashboard', 'SupplyController::dashboard');
     $routes->get('tasks', 'SupplyController::tasks');
@@ -100,3 +130,29 @@ $routes->group('supply', function($routes) {
 //     // localhost:8080/dh-mr, it will be localhost:8080/dh/mr
 
 // });
+
+// Unassigned
+$routes->group('unassigned', function($routes) {
+    $routes->get('dashboard', 'Unassigned\UnassignedDashboardController::index');
+    $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
+    $routes->get('pr', 'Unassigned\UnassignedPRController::index');
+    $routes->get('tasks', 'Unassigned\UnassignedTasksController::index');
+    $routes->get('mr', 'Unassigned\UnassignedMRController::index');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
+});
+
+
+// PPMP
+$routes->group('ppmp', function($routes) {
+    $routes->get('create', 'PpmpController::index');
+    $routes->post('create', 'PpmpController::create');
+    $routes->get('preview/(:num)', 'PpmpController::preview/$1');
+});
+
+// Tasks
+$routes->group('tasks', function($routes) {
+    $routes->get('', 'TasksController::index');
+    $routes->get('details/(:num)', 'TasksController::getDetails/$1');
+    $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
+});

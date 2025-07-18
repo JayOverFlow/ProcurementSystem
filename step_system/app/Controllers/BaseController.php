@@ -42,6 +42,7 @@ abstract class BaseController extends Controller
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
     // protected $session;
+    protected $db;
 
     /**
      * @return void
@@ -54,8 +55,38 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = service('session');
+        $this->session = service('session');
 
         // Initialize database connection for all controllers
         $this->db = \Config\Database::connect();
+    }
+
+    /**
+     * Loads relevant user session data.
+     *
+     * @return array An associative array containing user session data, or an empty array if not logged in.
+     */
+    protected function loadUserSession(): array
+    {
+        // If user is not logged in
+        if (! $this->session->has('isLoggedIn') || ! $this->session->get('isLoggedIn')) {
+            return [];
+        }
+
+        return [
+            'user_id' => $this->session->get('user_id'),
+            'user_firstname' => $this->session->get('user_firstname'),
+            'user_middlename' => $this->session->get('user_middlename'),
+            'user_lastname' => $this->session->get('user_lastname'),
+            'user_fullname' => $this->session->get('user_fullname'),
+            'user_email' => $this->session->get('user_email'),
+            'user_type' => $this->session->get('user_type'),
+            'user_suffix' => $this->session->get('user_suffix'),
+            'user_tupid' => $this->session->get('user_tupid'),
+            'user_role_name' => $this->session->get('user_role_name'),
+            'gen_role' => $this->session->get('user_gen_role'),
+            'user_dep_name' => $this->session->get('user_dep_name'),
+            'user_dep_id' => $this->session->get('user_dep_id'),
+        ];
     }
 }

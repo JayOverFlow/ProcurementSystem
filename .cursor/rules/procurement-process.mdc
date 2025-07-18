@@ -1,0 +1,66 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Procurement Process
+
+1. PPMP Creation & Submission
+	1.1 User will create PPMP
+	1.2 User will submit PPMP to Planning Office
+
+2. PPMP review & APP Creation
+	2.1 Planning Office will review PPMP
+	2.2 If rejected, update PPMP review status to rejected
+	2.2 If approved, update PPMP review status to approved
+		2.3 Planning Office will create APP based on PPMP
+		2.4 Planning Officer will submit APP to Director
+
+3. APP review
+	3.1 Director will review APP
+	3.2 If rejected, update APP review status to rejected
+	3.2 If approved, update APP review status to approved
+		3.3 System will give access to Head to create & assign PR along with approved APP
+
+4. PR Creation, Assignment & Submission
+	4.1 Head will create PR based on APP or assign faculties and staffs to create PR
+	4.2 Faculties and Staffs will create PR based on APP
+	4.3 Faculty and Staffs will submit PR to Head
+	4.4 Head will submit the collection of PRs to Director
+
+5. PR review
+	5.1 Immediate Supervisor will review the PR
+	5.2 If rejected, update PR review status to rejected
+	5.2 If approved, update PR review status to approved
+		5.3 System will send approved PR & APP
+
+6. Bidding Status
+	8.1 Procurement Office will update the status of the bidding process based on PO
+	8.2 If unsuccessful, update bidding status to unsuccessful
+	8.2 If successful, update bidding status to successful
+
+7. PO creation & Submission
+	6.1 Procurement Office will create PO based on PR & APP
+	6.2 Procurement Office will submit the PO to Director
+
+8. PO review
+	7.1 Director will review PO
+	7.2 If rejected, update PO review status to rejected
+	7.2 If approved, update PO review status to approved
+		7.3 System will send approved PO to Supply Office
+
+9. Delivery Status
+	9.1 Supply Office will wait for delivery
+	9.2 If delivered, update delivery status to delivered
+
+10. PAR & ICS Creation & Submission
+	10.1 Supply Office will create PARs & ICS' for each faculty and staff
+	10.2 Supply Office will submit PARs & ICS' to corresponding faculties and staffs
+
+12. PARs & ICS' review
+	12.1 Faculties and Staffs will review the PARs ICS'
+	12.2 Faculties and Staffs will update the review status
+
+13. Procurement Completion
+	13.1 Wait for all PRs and ICS' to be completed
+	13.2 Procurement Transaction Completed

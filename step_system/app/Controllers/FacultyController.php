@@ -9,8 +9,8 @@ class FacultyController extends BaseController
 {
     public function dashboard()
     {
-        // We should return page with user data from database
-        return view('user-pages/faculty/fac-dashboard');
+        $userData = $this->loadUserSession();
+        return view('user-pages/faculty/fac-dashboard', $userData);
     }
 
     public function procurement()
