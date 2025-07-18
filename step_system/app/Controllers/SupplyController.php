@@ -47,4 +47,14 @@ class SupplyController extends BaseController
     {
         return view('user-pages/supply/su');
     }
+
+    public function inventory()
+    {
+        return view('user-pages/supply/sup-inventory');
+    }
+
+    public function myFiles()
+    {
+        return view('user-pages/supply/sup-myfiles');
+    }
 }

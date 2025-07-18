@@ -1,3 +1,16 @@
+<style>
+    .sidebar-wrapper .submenu {
+        /* Set a max-width to prevent the dropdown from becoming too wide,
+           while min-width ensures it's at least as wide as the parent. */
+        min-width: 100%;
+        max-width: 280px; /* Adjust this value as needed */
+    }
+    .sidebar-wrapper .submenu a {
+        /* Allow text to wrap, overriding any theme styles that prevent it. */
+        white-space: normal !important;
+        word-wrap: break-word;
+    }
+</style>
 <div class="sidebar-wrapper sidebar-theme">
 
     <nav id="sidebar">
@@ -34,7 +47,7 @@
                         <span class="ms-2">Procurement</span>
                     </div>
                 </a>
-                <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample">
+                <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample" style="min-width: 20rem;">
                     <li class="">
                         <a href="<?= base_url('supply/ppmp') ?>">Project Procurement Management Plan</a>
                     </li>
@@ -46,6 +59,9 @@
                     </li>
                     <li>
                         <a href="<?= base_url('supply/su') ?>">Status Update</a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('supply/inventory') ?>">Inventory</a>
                     </li>
                 </ul>
             </li>

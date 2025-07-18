@@ -86,6 +86,8 @@ $routes->group('supply', function($routes) {
     $routes->get('par', 'SupplyController::par');
     $routes->get('ics', 'SupplyController::ics');
     $routes->get('su', 'SupplyController::su');
+    $routes->get('inventory', 'SupplyController::inventory');
+    $routes->get('my-files', 'SupplyController::myFiles');
 });
 
 // @Emman Proposed routing convention from sir PJ's discussion

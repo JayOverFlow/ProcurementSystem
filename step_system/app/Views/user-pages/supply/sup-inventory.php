@@ -19,7 +19,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
         <div class="col">
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
@@ -103,9 +103,10 @@
                     <table id="style-3" class="table style-3 dt-table-hover">
                         <thead>
                         <tr>
-                            <th class="checkbox-column text-center"> MR-Id </th>
+                            <th class="checkbox-column text-center">MR-Id</th>
                             <th>Item Name</th>
-                            <th>Location</th>
+                            <th>Assigned</th>
+                            <th>Department/Office</th>
                             <th>Date Received</th>
                             <th class="dt-no-sorting">Action</th>
                         </tr>
@@ -114,7 +115,8 @@
                         <tr>
                             <td class="checkbox-column text-center"> 011111 </td>
                             <td>Stand Fan</td>
-                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>Ron Eric Legaspi</td>
+                            <td>Basic Arts and Sciences Department</td>
                             <td>May 1, 2024</td>
                             <td>
                                 <ul class="table-controls">
@@ -126,7 +128,8 @@
                         <tr>
                             <td class="checkbox-column text-center"> 011112 </td>
                             <td>Stand Fan</td>
-                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>Ron Eric Legaspi</td>
+                            <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
                             <td>
                                 <ul class="table-controls">
@@ -138,7 +141,8 @@
                         <tr>
                             <td class="checkbox-column text-center"> 0111113 </td>
                             <td>Stand Fan</td>
-                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>Ron Eric Legaspi</td>
+                            <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
                             <td>
                                 <ul class="table-controls">
@@ -150,7 +154,8 @@
                         <tr>
                             <td class="checkbox-column text-center"> 0111114 </td>
                             <td>Stand Fan</td>
-                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>Ron Eric Legaspi</td>
+                            <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
                             <td>
                                 <ul class="table-controls">
@@ -162,7 +167,8 @@
                         <tr>
                             <td class="checkbox-column text-center"> 011115 </td>
                             <td>Stand Fan</td>
-                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>Ron Eric Legaspi</td>
+                            <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
                             <td>
                                 <ul class="table-controls">
@@ -174,7 +180,8 @@
                         <tr>
                             <td class="checkbox-column text-center"> 011116 </td>
                             <td>Stand Fan</td>
-                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>Ron Eric Legaspi</td>
+                            <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
                             <td>
                                 <ul class="table-controls">
@@ -186,7 +193,8 @@
                         <tr>
                             <td class="checkbox-column text-center"> 011117 </td>
                             <td>Stand Fan</td>
-                            <td>Basic Arts and Sciences Building, Room 101</td>
+                            <td>Ron Eric Legaspi</td>
+                            <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
                             <td>
                                 <ul class="table-controls">
@@ -286,7 +294,7 @@
             "pageLength": 10
         });
 
-            $('#style-3_wrapper .title-container').html('<h4 style="font-weight: bold; color: #dc3545;">Material Requisition</h4>');
+            $('#style-3_wrapper .title-container').html('<h4 style="font-weight: bold; color: #dc3545;">Inventory</h4>');
 
         multiCheck(c3);
     </script>

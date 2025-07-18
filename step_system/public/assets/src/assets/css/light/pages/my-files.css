@@ -1,0 +1,35 @@
+.middle-content.container-xxl {
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+#treeviewFStructure .widget.box {
+    height: calc(100vh - 160px); /* Adjust this value based on header/nav height */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+#treeviewFStructure .widget-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0e6ed;
+}
+#treeviewFStructure .widget-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+#treeviewFStructure .widget-content-area {
+    flex-grow: 1;
+    display: flex;
+    padding: 0;
+}
+.treeview-container {
+    flex: 0 0 25%;
+    border-right: 1px solid #e0e6ed;
+    padding: 20px;
+    overflow-y: auto;
+}
+.content-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+} 
