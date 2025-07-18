@@ -129,10 +129,15 @@ $routes->group('supply', function($routes) {
 
 // });
 
+// Unassigned
 $routes->group('unassigned', function($routes) {
-    $routes->get('mr', 'UnassignedController::mr');
-    $routes->get('ppmp', 'UnassignedController::ppmp');
-    $routes->get('pr', 'UnassignedController::pr');
+    $routes->get('dashboard', 'Unassigned\UnassignedDashboardController::index');
+    $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
+    $routes->get('pr', 'Unassigned\UnassignedPRController::index');
+    $routes->get('tasks', 'Unassigned\UnassignedTasksController::index');
+    $routes->get('mr', 'Unassigned\UnassignedMRController::index');
+    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
+    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
 });
 
 

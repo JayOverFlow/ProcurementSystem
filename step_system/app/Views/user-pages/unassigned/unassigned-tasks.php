@@ -1,7 +1,7 @@
-<?= $this->extend('layouts/pro-base-layout') ?>
+<?= $this->extend('layouts/unassigned-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Procurement Officer Tasks</title>
+<title>TUP STEP | Unassigned Tasks</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>

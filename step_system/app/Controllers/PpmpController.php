@@ -39,7 +39,7 @@ class PpmpController extends BaseController
             case 'Planning Officer':
                 return view('user-pages/planning/plan-ppmp', $data);
             case 'Head':
-                return view('user-pages/department-head/dh-ppmp', $data);
+                return view('user-pages/head/head-ppmp', $data);
             case 'Faculty': // = Section Head
                 return view('user-pages/faculty/fac-ppmp', $data);
             case 'Procurement':
