@@ -146,26 +146,17 @@
                     <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                         <div class="user-profile-section">
                             <div class="media mx-auto">
-                                <div class="emoji me-2">
-                                    &#x1F44B;
-                                </div>
                                 <div class="media-body">
-                                    <h5>Shaun Park</h5>
-                                    <p>Project Leader</p>
+                                    <h5><?= esc($user_data['user_fullname']) ?></h5>
+                                    <p><?= esc($user_data['user_role_name'] ?? $user_data['user_type']) ?></p>
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="dropdown-item">
-                            <a href="<?= base_url('app-mailbox.html'); ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points=""></polyline><path d=""></path></svg> <span>My Files</span>
-                            </a>
+                            <a href="#">My Files</a>
                         </div>
-                        
                         <div class="dropdown-item">
-                            <a href="<?= base_url('/logout'); ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d=""></path><polyline points=""></polyline></svg> <span>Log Out</span>
-                            </a>
+                        <a href="<?= base_url('/logout') ?>">Log Out</a>
                         </div>
                     </div>
                     
