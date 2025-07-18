@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/plan-base-layout') ?>
+<?= $this->extend('layouts/preview-layout') ?>
 
 
 <?= $this->section('css') ?>
@@ -14,7 +14,7 @@
             <div class="doc-container">
 
                 <div class="row">
-                    <div class="col-xl-9" style="width: 90%">
+                    <div class="col-xl-9" style="width: 100%">
 
                         <div class="invoice-detail-body">
 
@@ -526,7 +526,7 @@
                                                     <td>Extraordinary/Misc Expenses</td>
                                                     <td class="text-center"></td>
                                                     <td class="text-center">₱        30,000.00</td>
-                                                    <td>
+                                                    <td >
                                                         <div class="form-check form-check-danger form-check-inline"></div>
                                                         <div class="form-check form-check-danger form-check-inline"></div>
                                                         <div class="form-check form-check-danger form-check-inline"></div>
@@ -576,7 +576,7 @@
                                                     <td>CCTV Camera set</td>
                                                     <td class="text-center">4</td>
                                                     <td class="text-center">₱        23,000.00</td>
-                                                    <td class="d-flex justify-content-between px-10  ">
+                                                    <td class="d-flex justify-content-between px-10">
                                                         <div class="form-check form-check-danger form-check-inline"></div>
                                                         <div class="form-check form-check-danger form-check-inline"></div>
                                                         <div class="form-check form-check-danger form-check-inline"></div>
