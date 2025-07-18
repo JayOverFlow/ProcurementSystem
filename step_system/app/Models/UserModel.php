@@ -128,3 +128,4 @@ class UserModel extends Model {
                     ->countAllResults();
     }
 }
+

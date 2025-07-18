@@ -43,19 +43,17 @@ class UserRoleDepartmentModel extends Model
         return false;
     }
 
-    /**
-     * Get all users within the Director's office, excluding the Director himself.
-     *
-     * @param int $directorId The user ID of the Director to exclude.
-     * @param int $departmentId The department ID of the Director's office.
-     * @return array An array of user data.
-     */
-    public function getUsersInDirectorsOffice(int $directorId, int $departmentId): array
+    // Show the users within the same department of the Office Head
+    public function getUsersInSameDepartment(int $currentUserId, int $departmentId): array
     {
         return $this->select('users_tbl.user_tupid, users_tbl.user_firstname, users_tbl.user_lastname, users_tbl.user_type')
                     ->join('users_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
                     ->where('user_role_department_tbl.department_id', $departmentId)
-                    ->where('users_tbl.user_id !=', $directorId) // Exclude the director himself
+                    ->where('users_tbl.user_id !=', $currentUserId) // Exclude the current user
                     ->findAll();
     }
+
+    // public funtion
+
+
 } 

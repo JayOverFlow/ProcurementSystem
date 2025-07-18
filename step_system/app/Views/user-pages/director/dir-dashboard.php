@@ -205,11 +205,15 @@
                                 <?php else: ?>
                                     <?php foreach ($dashboard_data['subordinates'] as $subordinate): ?>
                                         <tr>
-                                            <td class="checkbox-column text-center"><?= esc($subordinate['user_tupid'] ?? 'null') ?></td>
+                                            <td class="checkbox-column text-center"><?= esc($subordinate['user_tupid'] ?? 'Unknown') ?></td>
                                             <td class="text-center"><?= esc($subordinate['user_firstname']) ?></td>
                                             <td class="text-center"><?= esc($subordinate['user_lastname']) ?></td>
-                                            <td class="text-center">[Status]</td>
-                                            <td class="text-center">[Assign Button]</td>
+                                            <td class="text-center">
+                                                    <span class="badge outline-badge-dark mb-1 me-1">Not Assigned</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger mb-1 me-1">Assign</button>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>

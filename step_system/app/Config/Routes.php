@@ -148,3 +148,8 @@ $routes->group('tasks', function($routes) {
     $routes->get('details/(:num)', 'TasksController::getDetails/$1');
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
 });
+
+// Material Requisition (MR)
+$routes->group('mr', function($routes) {
+    $routes->get('', 'MrController::index');
+});

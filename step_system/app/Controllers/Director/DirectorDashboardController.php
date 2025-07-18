@@ -24,7 +24,7 @@ class DirectorDashboardController extends BaseController
     {
         // Get user data via user session using custom helper
         $userData = $this->loadUserSession();
-        $directorId = $userData['user_id'];
+        $currentUserId = $userData['user_id'];
         $departmentId = $userData['user_dep_id'];
 
         // Get dashboard data
@@ -33,7 +33,7 @@ class DirectorDashboardController extends BaseController
             'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
             'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
             'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-            'subordinates' => $this->userRoleDepartmentModel->getUsersInDirectorsOffice($directorId, $departmentId)
+            'subordinates' => $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId)
         ];
 
         // Store data
