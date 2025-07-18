@@ -23,57 +23,56 @@
 
 </head>
 <body class="layout-boxed enable-secondaryNav">
-<!-- BEGIN LOADER -->
-<div id="load_screen"> <div class="loader"> <div class="loader-content">
-            <div class="spinner-grow align-self-center"></div>
-        </div></div></div>
-<!--  END LOADER -->
+    <!-- BEGIN LOADER -->
+    <div id="load_screen"> <div class="loader"> <div class="loader-content">
+        <div class="spinner-grow align-self-center"></div>
+    </div></div></div>
+    <!--  END LOADER -->
 
-<!--  BEGIN HEADER  -->
-<div class="header-container container-xxl box-shadow-none">
-    <?= $this->include('partials/unassigned/unassigned-header'); ?>
-</div>
-<!--  END HEADER  -->
-
-
-<!--  BEGIN MAIN CONTAINER  -->
-<div class="main-container" id="container">
-
-    <div class="overlay"></div>
-    <div class="search-overlay"></div>
-
-    <!--  BEGIN NAV  -->
-    <?= $this->include('partials/unassigned/unassigned-nav'); ?>
-    <!--  END NAV  -->
-
-    <!--  BEGIN CONTENT AREA  -->
-    <div id="content" class="main-content mt-5">
-        <div class="layout-px-spacing pt-3">
-
-            <div class="middle-content container-xxl p-0">
-                <?= $this->renderSection('content'); ?>
-            </div>
-
-        </div>
-        <!--  BEGIN FOOTER  -->
-        <!--  END FOOTER  -->
+    <!--  BEGIN HEADER  -->
+    <div class="header-container container-xxl box-shadow-none">
+        <?= $this->include('partials/faculty/fac-header'); ?>
     </div>
-    <!--  END CONTENT AREA  -->
+    <!--  END HEADER  -->
 
-</div>
-<!-- END MAIN CONTAINER -->
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container" id="container">
 
-<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="<?= base_url('assets/src/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js'); ?>"></script>
-<script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js'); ?>"></script>
-<!-- END GLOBAL MANDATORY SCRIPTS -->
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
 
-<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<?= $this->renderSection('js') ?>
-<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+        <!--  BEGIN NAV  -->
+        <?= $this->include('partials/faculty/fac-nav'); ?>
+        <!--  END NAV  -->
+
+        <!--  BEGIN CONTENT AREA  -->
+        <div id="content" class="main-content mt-5">
+            <div class="layout-px-spacing pt-3">
+
+                <div class="middle-content container-xxl p-0">
+                    <?= $this->renderSection('content'); ?>
+                </div>
+
+            </div>
+            <!--  BEGIN FOOTER  -->
+            <!--  END FOOTER  -->
+        </div>
+        <!--  END CONTENT AREA  -->
+
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="<?= base_url('assets/src/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js'); ?>"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <?= $this->renderSection('js') ?>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 </body>
 </html>
