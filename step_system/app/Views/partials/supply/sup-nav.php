@@ -1,3 +1,4 @@
+
 <?php
 $current_path = uri_string();
 $procurement_pages = ['supply/ppmp', 'supply/ics', 'supply/par', 'supply/su'];
@@ -41,6 +42,7 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                         <span class="ms-2 shadow-text">Procurement</span>
                     </div>
                 </a>
+
                 <ul class="collapse submenu list-unstyled <?= $is_procurement_page ? 'show' : '' ?>" id="procurement" data-bs-parent="#accordionExample" style="min-width: 20rem;">
                     <li>
                         <a href="<?= base_url('/ppmp/create') ?>"
@@ -65,6 +67,9 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                            class="<?= $current_path === 'supply/su' ? 'active text-primary fw-bold' : '' ?>">
                            Status Update
                         </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('supply/inventory') ?>">Inventory</a>
                     </li>
                 </ul>
             </li>
