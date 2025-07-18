@@ -6,32 +6,26 @@ use CodeIgniter\Model;
 
 class MrItemModel extends Model
 {
-    protected $table            = 'mr_items_tbl';
+    protected $table            = 'view_user_mr_items';
     protected $primaryKey       = 'mr_item_id';
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false; // Views are generally not auto-incrementing
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'mr_id_fk',
+        'user_id',
+        'user_lastname',
+        'mr_id',
+        'mr_item_id',
+        'item_name',
         'mr_item_unit',
         'mr_item_quantity',
         'mr_location',
-        'mr_po_fk'
+        'mr_date_received'
     ];
-
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
-
-    protected array $casts = [];
-    protected array $castHandlers = [];
 
     // Dates
     protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];
@@ -49,4 +43,12 @@ class MrItemModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    // MR Items of a user
+    public function getMrItemsByUserId(int $userId)
+    {
+        return $this->select('mr_id, mr_item_id, item_name, mr_item_unit, mr_item_quantity, mr_location, mr_date_received')
+                    ->where('user_id', $userId)
+                    ->findAll();
+    }
 }

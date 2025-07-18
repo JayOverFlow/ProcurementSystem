@@ -4,41 +4,97 @@ namespace App\Controllers\ProcurementOffice;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\MrItemModel;
 
 class ProcurementController extends BaseController
 {
     public function dashboard()
     {
-        return view('user-pages/procurement/pro-dashboard');
+        // Get user data via user session using custom helper
+        $userData = $this->loadUserSession();
+
+        // Store data
+        $data = [
+            'user_data' => $userData
+        ];
+
+        return view('user-pages/procurement/pro-dashboard', $data);
     }
 
 
     public function tasks()
     {
-        return view('user-pages/procurement/pro-tasks');
+         // Get user data via user session using custom helper
+         $userData = $this->loadUserSession();
+
+         // Store data
+         $data = [
+             'user_data' => $userData
+         ];
+        return view('user-pages/procurement/pro-tasks', $data);
     }
 
     public function mr()
     {
-        return view('user-pages/procurement/pro-mr') ;
+       // Get user data via user session using custom helper
+       $userData = $this->loadUserSession();
+
+       $mrItemModel = new MrItemModel();
+       $mrItems = $mrItemModel->getMrItemsByUserId($userData['user_id']);
+
+       // Store data
+       $data = [
+           'user_data' => $userData,
+           'mr_items' => $mrItems
+       ];
+
+        return view('user-pages/procurement/pro-mr', $data);
     }
 
     public function ppmp()
     {
-        return view('user-pages/procurement/pro-ppmp');
+        // Get user data via user session using custom helper
+        $userData = $this->loadUserSession();
+
+        // Store data
+        $data = [
+            'user_data' => $userData
+        ];
+        return view('user-pages/procurement/pro-ppmp', $data);
     }
 
     public function pr()
     {
-        return view('user-pages/procurement/pro-pr');
+        // Get user data via user session using custom helper
+        $userData = $this->loadUserSession();
+
+        // Store data
+        $data = [
+            'user_data' => $userData
+        ];
+        return view('user-pages/procurement/pro-pr', $data);
     }
     public function po()
     {
-        return view('user-pages/procurement/pro-po');
+        // Get user data via user session using custom helper
+        $userData = $this->loadUserSession();
+
+        // Store data
+        $data = [
+            'user_data' => $userData
+        ];
+        return view('user-pages/procurement/pro-po', $data);
     }
     public function inventory()
     {
-        return view('user-pages/procurement/pro-inventory');
+        // Get user data via user session using custom helper
+        $userData = $this->loadUserSession();
+
+        // Store data
+        $data = [
+            'user_data' => $userData
+        ];
+        return view('user-pages/procurement/pro-inventory', $data);
     }
 
 }
