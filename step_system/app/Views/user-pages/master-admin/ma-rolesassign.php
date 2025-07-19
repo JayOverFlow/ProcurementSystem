@@ -19,6 +19,11 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/table/datatable/custom_dt_custom.css') ?>">
     <!-- END PAGE LEVEL CUSTOM STYLES -->
 
+    <!-- For Sweet Alerts -->
+    <link rel="stylesheet" href="<?= base_url('assets/src/plugins/src/sweetalerts2/step-sweetalert.css') ?>">
+    <link href="<?= base_url('assets/src/plugins/css/light/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
+
 <?= $this->endSection() ?>
   
 
@@ -138,12 +143,13 @@
 
 <?= $this->section('js') ?>
 
-
+<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
 <script src="<?= base_url('assets/src/assets/js/custom.js') ?>"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 <script>
     // var e;
     c1 = $('#style-1').DataTable({
@@ -505,58 +511,106 @@
             newDepartmentId = null;
         }
 
-        // If both are null, it means the user is being fully unassigned
-        // The backend logic is set up to handle deletion if both old values exist and new values are null
-        // If only department is chosen but role is none, it will still update that way.
-
-        // Special case: if both newRoleId and newDepartmentId are null, and there was an old assignment,
-        // we want to ensure the deletion happens without an insert.
-        if (newRoleId === null && newDepartmentId === null && (oldRoleId !== null || oldDepartmentId !== null)) {
-            if (!confirm("Are you sure you want to unassign this user from their role and department?")) {
-                return;
-            }
-        } else if (newRoleId === null && newDepartmentId !== null) {
-            // User is being assigned to a department but no role
-            if (!confirm("Are you sure you want to assign this user to a department without a specific role?")) {
-                return;
-            }
-        } else if (newDepartmentId === null && newRoleId !== null) {
-            alert("Cannot assign a role without a department. Please select a department.");
+        // Validation checks with SweetAlert
+        if (newDepartmentId === null && newRoleId !== null) {
+            Swal.fire({
+                title: 'Validation Error',
+                text: "Cannot assign a role without a department. Please select a department.",
+                icon: 'error',
+                confirmButtonColor: '#3085d6'
+            });
             return;
         } else if (!newRoleId && !newDepartmentId) {
-            // This case should ideally not happen if the UI requires a selection for department when editing
-            // But as a fallback, prevent saving if both are empty/null after user interaction for new assignment.
-            alert('Please select a Department and a Role (or None for Role).');
+            Swal.fire({
+                title: 'Validation Error',
+                text: 'Please select a Department and a Role (or None for Role).',
+                icon: 'error',
+                confirmButtonColor: '#3085d6'
+            });
             return;
         }
 
-        var postData = {
-            userId: userId,
-            oldRoleId: oldRoleId,
-            oldDepartmentId: oldDepartmentId,
-            newRoleId: newRoleId,
-            newDepartmentId: newDepartmentId
-        };
-        console.log(`[${performance.now().toFixed(2)}] Sending data for updateUserAssignment:`, postData);
+        // Prepare confirmation message based on the action
+        var confirmTitle = 'Confirm Assignment Update';
+        var confirmText = 'Are you sure you want to update this user assignment?';
+        var confirmIcon = 'question';
 
-        $.ajax({
-            url: '<?= base_url('admin/rolesassign/updateUserAssignment') ?>',
-            method: 'POST',
-            data: JSON.stringify(postData),
-            contentType: 'application/json',
-            success: function(response) {
-                if (response.status === 'success') {
-                    alert(response.message);
-                    // To ensure updated displayed text and IDs are correct, reload the page
-                    // A full reload simplifies state management given the complexity of updates.
-                    window.location.reload();
-                } else {
-                    alert('Error: ' + response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(`[${performance.now().toFixed(2)}] Error updating user assignment:`, xhr, status, error);
-                alert('Failed to update user assignment. Please try again.');
+        if (newRoleId === null && newDepartmentId === null && (oldRoleId !== null || oldDepartmentId !== null)) {
+            confirmTitle = 'Confirm Unassignment';
+            confirmText = "Are you sure you want to unassign this user from their role and department?";
+            confirmIcon = 'warning';
+        } else if (newRoleId === null && newDepartmentId !== null) {
+            confirmTitle = 'Confirm Department Assignment';
+            confirmText = "Are you sure you want to assign this user to a department without a specific role?";
+            confirmIcon = 'warning';
+        }
+
+        // Show SweetAlert confirmation
+        Swal.fire({
+            title: confirmTitle,
+            text: confirmText,
+            icon: confirmIcon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading state
+                Swal.fire({
+                    title: 'Saving...',
+                    text: 'Please wait while we update the assignment.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                var postData = {
+                    userId: userId,
+                    oldRoleId: oldRoleId,
+                    oldDepartmentId: oldDepartmentId,
+                    newRoleId: newRoleId,
+                    newDepartmentId: newDepartmentId
+                };
+                console.log(`[${performance.now().toFixed(2)}] Sending data for updateUserAssignment:`, postData);
+
+                $.ajax({
+                    url: '<?= base_url('admin/rolesassign/updateUserAssignment') ?>',
+                    method: 'POST',
+                    data: JSON.stringify(postData),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6'
+                            }).then(() => {
+                                // Reload the page after successful update
+                                window.location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonColor: '#3085d6'
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(`[${performance.now().toFixed(2)}] Error updating user assignment:`, xhr, status, error);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Failed to update user assignment. Please try again.',
+                            icon: 'error',
+                            confirmButtonColor: '#3085d6'
+                        });
+                    }
+                });
             }
         });
     });

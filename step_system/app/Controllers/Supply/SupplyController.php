@@ -74,6 +74,17 @@ class SupplyController extends BaseController
         ];
         return view('user-pages/supply/sup-ppmp', $data);
     }
+    public function pr()
+    {
+        // Get user data via user session using custom helper
+        $userData = $this->loadUserSession();
+
+        // Store data
+        $data = [
+            'user_data' => $userData
+        ];
+        return view('user-pages/supply/sup-pr', $data);
+    }
 
     public function par()
     {
