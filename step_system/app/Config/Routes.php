@@ -165,6 +165,7 @@ $routes->group('app', function($routes) {
     $routes->get('create', 'AppController::index');
     $routes->post('create', 'AppController::create');
     $routes->get('preview/(:num)', 'AppController::preview/$1');
+});
 
 // Material Requisition (MR)
 $routes->group('mr', function($routes) {
