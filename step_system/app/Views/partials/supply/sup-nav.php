@@ -51,6 +51,12 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                         </a>
                     </li>
                     <li>
+                        <a href="<?= base_url('supply/pr') ?>"
+                           class="<?= $current_path === 'supply/pr' ? 'active text-primary fw-bold' : '' ?>">
+                           Purchase Request
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= base_url('supply/ics') ?>"
                            class="<?= $current_path === 'supply/pr' ? 'active text-primary fw-bold' : '' ?>">
                            Inventory Custodian Slip

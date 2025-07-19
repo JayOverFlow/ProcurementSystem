@@ -116,6 +116,7 @@ $routes->group('supply', function($routes) {
     $routes->get('mr', 'SupplyController::mr');
     $routes->get('ppmp', 'SupplyController::ppmp');
     $routes->get('par', 'SupplyController::par');
+    $routes->get('pr', 'SupplyController::pr');
     $routes->get('ics', 'SupplyController::ics');
     $routes->get('su', 'SupplyController::su');
     $routes->get('inventory', 'SupplyController::inventory');
