@@ -2,35 +2,31 @@
     <div class="widget-content widget-content-area">
         <table id="style-2" class="table style-2 dt-table-hover">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th>Submitted By</th>
                     <th>Document Type</th>
                     <th>Date Submitted</th>
                     <th>Status</th>
-                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (!empty($tasks)): ?>
                     <?php foreach ($tasks as $task): ?>
-                        <tr>
+                        <tr class="text-center task-row" style="cursor: pointer;" data-task-id="<?= esc($task['task_id']) ?>">
                             <td><?= esc($task['submitted_by_name']) ?></td>
                             <td><?= esc($task['task_type']) ?></td>
                             <td><?= esc(date('F j, Y, g:i a', strtotime($task['created_at']))) ?></td>
                             <td>
                                 <?php
-                                    $status = esc($task['ppmp_status']);
-                                    $badge_class = 'badge-light-primary'; // Default for Pending
+                                    $status = $task['ppmp_status'] ?? $task['app_status'] ?? 'Pending';
+                                    $badge_class = 'badge-warning'; // Default for Pending
                                     if ($status === 'Approved') {
-                                        $badge_class = 'badge-light-success';
+                                        $badge_class = 'badge-success';
                                     } elseif ($status === 'Rejected') {
-                                        $badge_class = 'badge-light-danger';
+                                        $badge_class = 'badge-danger';
                                     }
                                 ?>
-                                <span class="badge <?= $badge_class ?>"><?= $status ?></span>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn danger btn-sm view-task-btn" style="background-color: #C62742; color: #FFFFFF" data-task-id="<?= esc($task['task_id']) ?>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Open</button>
+                                <span class="badge <?= $badge_class ?>"><?= esc($status) ?></span>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -71,7 +67,7 @@
             <div class="modal-footer d-flex justify-content-start border-top-0">
                 <a href="#" id="modal-preview-link" target="_blank" class="ms-3" style="display: none;">
                 <img src="<?= base_url('assets/images/red-file-icon.png'); ?>" class="border-0 rounded-0 me-2" alt="file" style="width: 24px; height: 24px;">
-                    <span class="text-primary ms-2">View submitted PPMP</span>
+                    <span class="text-primary ms-2" id="modal-preview-link-text">View submitted file</span>
                 </a>
             </div>
         </div>

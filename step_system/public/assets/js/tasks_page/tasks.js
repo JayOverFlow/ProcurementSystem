@@ -8,20 +8,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalDate = document.getElementById('modal-date');
     const modalDescription = document.getElementById('modal-description');
     const modalPreviewLink = document.getElementById('modal-preview-link');
+    const modalPreviewLinkText = document.getElementById('modal-preview-link-text');
     const approveBtn = document.getElementById('approve-btn');
     const rejectBtn = document.getElementById('reject-btn');
     const modalActionButtons = document.getElementById('modal-action-buttons');
     const modalStatusDisplay = document.getElementById('modal-status-display');
 
     document.querySelector('#style-2 tbody').addEventListener('click', function(event) {
-        const target = event.target;
-        if (target.classList.contains('view-task-btn')) {
-            const taskId = target.dataset.taskId;
+        const row = event.target.closest('.task-row');
+        if (row) {
+            const taskId = row.dataset.taskId;
             openTaskModal(taskId);
         }
     });
 
     function openTaskModal(taskId) {
+        taskModal.show();
         // Show loading state
         modalFullName.textContent = 'Loading...';
         modalEmail.textContent = '';
@@ -29,8 +31,10 @@ document.addEventListener('DOMContentLoaded', function () {
         modalDate.textContent = '';
         modalDescription.textContent = '';
         modalPreviewLink.style.display = 'none';
-        approveBtn.removeAttribute('data-ppmp-id');
-        rejectBtn.removeAttribute('data-ppmp-id');
+        approveBtn.removeAttribute('data-id');
+        approveBtn.removeAttribute('data-task-type');
+        rejectBtn.removeAttribute('data-id');
+        rejectBtn.removeAttribute('data-task-type');
         modalActionButtons.style.display = 'block';
         modalStatusDisplay.style.display = 'none';
 
@@ -53,16 +57,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.ppmp_id_fk) {
                     modalPreviewLink.href = `/ppmp/preview/${data.ppmp_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
-                    // Set ppmp id on buttons
-                    approveBtn.setAttribute('data-ppmp-id', data.ppmp_id_fk);
-                    rejectBtn.setAttribute('data-ppmp-id', data.ppmp_id_fk);
+                    modalPreviewLinkText.textContent = 'View submitted PPMP';
+                    approveBtn.setAttribute('data-task-type', 'ppmp');
+                    approveBtn.setAttribute('data-id', data.ppmp_id_fk);
+                    rejectBtn.setAttribute('data-task-type', 'ppmp');
+                    rejectBtn.setAttribute('data-id', data.ppmp_id_fk);
+                } else if (data.app_id_fk) {
+                    modalPreviewLink.href = `/app/preview/${data.app_id_fk}`;
+                    modalPreviewLink.style.display = 'inline-flex';
+                    modalPreviewLinkText.textContent = 'View submitted APP';
+                    approveBtn.setAttribute('data-task-type', 'app');
+                    approveBtn.setAttribute('data-id', data.app_id_fk);
+                    rejectBtn.setAttribute('data-task-type', 'app');
+                    rejectBtn.setAttribute('data-id', data.app_id_fk);
                 }
 
                 // Handle status display
-                if (data.ppmp_status === 'Approved' || data.ppmp_status === 'Rejected') {
+                const status = data.ppmp_status || data.app_status;
+                if (status === 'Approved' || status === 'Rejected') {
                     modalActionButtons.style.display = 'none';
-                    const badgeClass = data.ppmp_status === 'Approved' ? 'badge-light-success' : 'badge-light-danger';
-                    modalStatusDisplay.innerHTML = `<span class="fw-bold badge ${badgeClass}" style="font-size: 1.1rem;">${data.ppmp_status}</span>`;
+                    const badgeClass = status === 'Approved' ? 'badge-success' : 'badge-danger';
+                    modalStatusDisplay.innerHTML = `<span class="fw-bold badge ${badgeClass}" style="font-size: 1.1rem;">${status}</span>`;
                     modalStatusDisplay.style.display = 'block';
                 } else {
                     modalActionButtons.style.display = 'block';
@@ -76,15 +91,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleStatusUpdate(event) {
-        const ppmpId = this.dataset.ppmpId;
+        const id = this.dataset.id;
+        const taskType = this.dataset.taskType;
         const isApproved = this.id === 'approve-btn';
         const status = isApproved ? 'Approved' : 'Rejected';
         const confirmButtonColor = isApproved ? '#8ABB2F' : '#DC3545';
         const confirmButtonText = isApproved ? 'Approve' : 'Reject';
+        
+        const documentType = taskType === 'ppmp' ? 'Project Procurement Management Plan' : 'Annual Procurement Plan';
+        const endpoint = taskType === 'ppmp' ? '/tasks/update-ppmp-status' : '/tasks/update-app-status';
+        const payload = taskType === 'ppmp' ? { ppmp_id: id, status: status } : { app_id: id, status: status };
 
         Swal.fire({
             title: `Confirm ${status.toLowerCase()}?`,
-            text: `Do you want to ${status.toLowerCase()} this Project Procurement Management Plan?`,
+            text: `Do you want to ${status.toLowerCase()} this ${documentType}?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: confirmButtonColor,
@@ -101,13 +121,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-                fetch('/tasks/update-ppmp-status', {
+                fetch(endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest'
                     },
-                    body: JSON.stringify({ ppmp_id: ppmpId, status: status })
+                    body: JSON.stringify(payload)
                 })
                 .then(response => {
                     if (!response.ok) throw new Error('Server responded with an error.');
@@ -118,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         taskModal.hide();
                         Swal.fire(
                             `${status}!`,
-                            `The PPMP has been ${status.toLowerCase()}.`,
+                            `The ${documentType} has been ${status.toLowerCase()}.`,
                             'success'
                         ).then(() => location.reload()); // Reload page to see changes
                     } else {
