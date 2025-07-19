@@ -32,7 +32,7 @@ class MrController extends BaseController
             case 'Planning Officer':
                 return view('user-pages/planning/plan-mr', $data);
             case 'Head':
-                return view('user-pages/department-head/dh-mr', $data);
+                return view('user-pages/head/head-mr', $data);
             case 'Faculty': // = Section Head
                 return view('user-pages/faculty/fac-mr', $data);
             case 'Procurement':

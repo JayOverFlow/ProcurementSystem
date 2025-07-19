@@ -111,27 +111,16 @@ $routes->group('procurement', function($routes) {
 
 // Supply
 $routes->group('supply', function($routes) {
-    $routes->get('dashboard', 'SupplyController::dashboard');
-    $routes->get('tasks', 'SupplyController::tasks');
-    $routes->get('mr', 'SupplyController::mr');
-    $routes->get('ppmp', 'SupplyController::ppmp');
-    $routes->get('par', 'SupplyController::par');
-    $routes->get('ics', 'SupplyController::ics');
-    $routes->get('su', 'SupplyController::su');
-    $routes->get('inventory', 'SupplyController::inventory');
-    $routes->get('my-files', 'SupplyController::myFiles');
+    $routes->get('dashboard', 'Supply\SupplyController::dashboard');
+    $routes->get('tasks', 'Supply\SupplyController::tasks');
+    $routes->get('mr', 'Supply\SupplyController::mr');
+    $routes->get('ppmp', 'Supply\SupplyController::ppmp');
+    $routes->get('par', 'Supply\SupplyController::par');
+    $routes->get('ics', 'Supply\SupplyController::ics');
+    $routes->get('su', 'Supply\SupplyController::su');
+    $routes->get('inventory', 'Supply\SupplyController::inventory');
+    $routes->get('my-files', 'Supply\SupplyController::myFiles');
 });
-
-// @Emman Proposed routing convention from sir PJ's discussion
-// $routes->group('dh', function($routes) {
-//     $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
-//     $routes->get('mr', 'DepartmentHead\DHMr::index');
-
-//     // The browser's URL/URI difference:
-//     // localhost:8080/dh-dashboard, it will be localhost:8080/dh/dashboard
-//     // localhost:8080/dh-mr, it will be localhost:8080/dh/mr
-
-// });
 
 // Unassigned
 $routes->group('unassigned', function($routes) {
@@ -165,9 +154,11 @@ $routes->group('app', function($routes) {
     $routes->get('create', 'AppController::index');
     $routes->post('create', 'AppController::create');
     $routes->get('preview/(:num)', 'AppController::preview/$1');
+});
 
 // Material Requisition (MR)
 $routes->group('mr', function($routes) {
     $routes->get('', 'MrController::index');
 
 });
+

@@ -8,6 +8,10 @@ use App\Models\MrItemModel;
 
 class SupplyController extends BaseController
 {
+    protected $userModel;
+    protected $userRoleDepartmentModel;
+    protected $departmentBudgetModel;
+    
     public function dashboard()
     {
 

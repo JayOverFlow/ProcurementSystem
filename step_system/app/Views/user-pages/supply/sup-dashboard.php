@@ -143,121 +143,99 @@
         </div>
         <!-- Right Side Container: Cards (Row 1) + Data Table (Row 2) -->
         <div class="col-xxl-9 col-lg-9 col-md-12 col-sm-12 col-12 d-flex flex-column h-100">
-            <!-- Row 1: Three Cards -->
-            <div class="row flex-grow-1">
-                <!-- Faculty Members Card -->
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
-                        <div class="card-top-content">
-                            <div class="avatar avatar-lg">
-                                <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
-                            </div>
-                        </div>
-                        <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
-                            <div class="card-body text-end">
-                                <h5 class="card-title mb-2" style="color: #DC3545"><strong>Faculty Members</strong></h5>
-                                <h5 class="card-text" style="color: #515365">12</h5>
-                            </div>
+        <!-- Row 1: Three Cards -->
+        <div class="row flex-grow-1">
+            <!-- Faculty Members Card -->
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                    <div class="card-top-content">
+                        <div class="avatar avatar-lg">
+                            <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
                         </div>
                     </div>
-                </div>
-                <!-- Staff Card -->
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
-                        <div class="card-top-content">
-                            <div class="avatar avatar-lg">
-                                <img src="<?= base_url('assets/images/icon-staff.svg'); ?>" class="rounded-circle" alt="faculty icon">
-                            </div>
-                        </div>
-                        <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
-                            <div class="card-body text-end">
-                                <h5 class="card-title mb-2" style="color: #DC3545"><strong>Staff</strong></h5>
-                                <h5 class="card-text" style="color: #515365">12</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Department Budget Card -->
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
-                        <div class="card-top-content">
-                            <div class="avatar avatar-lg">
-                                <img src="<?= base_url('assets/images/icon-budget.svg'); ?>" class="rounded-circle" alt="faculty icon">
-                            </div>
-                        </div>
-                        <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
-                            <div class="card-body text-end">
-                                <h5 class="card-title mb-2" style="color: #DC3545"><strong>Office Budget</strong></h5>
-                                <h5 class="card-text" style="color: #515365">₱ 12,781,002.00</h5>
-                            </div>
+                    <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                        <div class="card-body text-end">
+                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Faculty Members</strong></h5>
+                            <h5 class="card-text" style="color: #515365"><?= esc($dashboard_data['faculty_count']) ?></h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Row 2: Data Table -->
-            <div class="row flex-grow-1 mt-4">
-                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="statbox widget box box-shadow h-100">
-                        <div class="widget-content widget-content-area h-100">
-                            <table id="style-3" class="table style-3 dt-table-hover">
-                                <thead>
-                                <tr>
-                                    <th class="checkbox-column">TUP-Id </th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th class="status-header">Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="checkbox-column"> 230190 </td>
-                                    <td>Donna</td>
-                                    <td>Rogers</td>
-                                    <td><span class="shadow-none badge badge-primary">Approved</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="checkbox-column"> 230191 </td>
-                                    <td>Andy</td>
-                                    <td>King</td>
-                                    <td><span class="shadow-none badge badge-warning">Suspended</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="checkbox-column"> 230192 </td>
-                                    <td>Alma</td>
-                                    <td>Clarke</td>
-                                    <td><span class="shadow-none badge badge-danger">Closed</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="checkbox-column"> 230193 </td>
-                                    <td>Vincent</td>
-                                    <td>Carpenter</td>
-                                    <td><span class="shadow-none badge badge-primary">Approved</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="checkbox-column"> 230194 </td>
-                                    <td>Kristen</td>
-                                    <td>Beck</td>
-                                    <td><span class="shadow-none badge badge-warning">Suspended</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="checkbox-column"> 230195 </td>
-                                    <td>Oscar</td>
-                                    <td>Garner</td>
-                                    <td><span class="shadow-none badge badge-danger">Closed</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="checkbox-column"> 230196 </td>
-                                    <td>Nia</td>
-                                    <td>Hillyer</td>
-                                    <td><span class="shadow-none badge badge-primary">Approved</span></td>
-                                </tr>
-                                </tbody>
-                            </table>
+            <!-- Staff Card -->
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                    <div class="card-top-content">
+                        <div class="avatar avatar-lg">
+                            <img src="<?= base_url('assets/images/icon-staff.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        </div>
+                    </div>
+                    <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                        <div class="card-body text-end">
+                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Staff</strong></h5>
+                            <h5 class="card-text" style="color: #515365"><?= esc($dashboard_data['staff_count']) ?></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Department Budget Card -->
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
+                    <div class="card-top-content">
+                        <div class="avatar avatar-lg">
+                            <img src="<?= base_url('assets/images/icon-budget.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        </div>
+                    </div>
+                    <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
+                        <div class="card-body text-end">
+                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Department Budget</strong></h5>
+                            <h5 class="card-text" style="color: #515365">₱<?= esc($dashboard_data['department_budget']['bud_total'] ?? '0.00') ?></h5>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Row 2: Data Table -->
+        <div class="row flex-grow-1 mt-4">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="statbox widget box box-shadow h-100">
+                    <div class="widget-content widget-content-area h-100">
+                        <table id="style-3" class="table style-3 dt-table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="checkbox-column text-center">TUP-T ID</th>
+                                    <th class="text-center">First Name</th>
+                                    <th class="text-center">Last Name</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center dt-no-sorting">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (empty($dashboard_data['subordinates'])): ?>
+                                    <tr>
+                                    <td colspan="5" class="text-center">Nothing to see here.</td>
+                                    </tr>
+                                <?php else: ?>
+                                    <?php foreach ($dashboard_data['subordinates'] as $subordinate): ?>
+                                        <tr>
+                                            <td class="checkbox-column text-center"><?= esc($subordinate['user_tupid'] ?? 'Unknown') ?></td>
+                                            <td class="text-center"><?= esc($subordinate['user_firstname']) ?></td>
+                                            <td class="text-center"><?= esc($subordinate['user_lastname']) ?></td>
+                                            <td class="text-center">
+                                                    <span class="badge outline-badge-dark mb-1 me-1">Not Assigned</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger mb-1 me-1">Assign</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 <?= $this->endSection() ?>
 

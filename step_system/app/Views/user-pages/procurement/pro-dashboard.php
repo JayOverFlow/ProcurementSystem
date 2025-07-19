@@ -175,208 +175,7 @@
                     </div>
                     <!-- Mail Section -->
                     <div class="col-xl-9 col-lg-6 col-md-6 col-sm-6">
-                        <!-- Mail Start -->
-                        <div class="row">
-                                <div class="col-xl-12  col-md-12">
-                                    <div class="mail-box-container">
-                                        <div class="mail-overlay"></div>
-                                        <div id="mailbox-inbox" class="accordion mailbox-inbox">
-                                            <div class="search">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu mail-menu d-lg-none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                                                <input type="text" class="form-control input-search" placeholder="Search Here...">
-                                            </div>
-                                            <!-- Mail Content -->
-                                            <div class="message-box">
-                                                <div class="message-box-scroll" id="ct">
-                                                    <div class="mail-item mailInbox important">
-                                                        <div class="animated animatedFadeInUp fadeInUp" id="mailHeadingFourteen">
-                                                            <div class="mb-0">
-                                                                <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#mailCollapseFourteen" aria-expanded="false">
-                                                                    <div class="mail-item-inner">
-    
-                                                                        <div class="d-flex">
-                                                                            <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                                                <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default14">
-                                                                            </div>
-                                                                            <div class="f-head">
-                                                                                <!-- <div class="avatar avatar-sm">
-                                                                                    <span class="avatar-title rounded-circle">E</span>
-                                                                                </div> -->
-                                                                            </div>
-                                                                            <div class="f-body">    
-                                                                                <div class="meta-mail-time">
-                                                                                    <p class="user-email" data-mailTo="reevesErnest@mail.com">Ernest Reeves</p>
-                                                                                </div>
-                                                                                <div class="meta-title-tag">
-                                                                                    <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Just uploaded new video Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'><span class="mail-title" data-mailTitle="Youtube">Youtube - </span>Just uploaded new video Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
-                                                                                    
-                                                                                    <p class="meta-time align-self-center">25 Dec</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="mail-item mailInbox spam">
-                                                        <div class="animated animatedFadeInUp fadeInUp" id="mailHeadingFifteen">
-                                                            <div class="mb-0">
-                                                                <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#mailCollapseFifteen" aria-expanded="false">
-                                                                    <div class="mail-item-inner">
-    
-                                                                        <div class="d-flex">
-                                                                            <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                                                <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default15">
-                                                                            </div>
-                                                                            <!-- <div class="f-head">
-                                                                                <img src="../src/assets/img/profile-15.jpeg" class="user-profile" alt="avatar">
-                                                                            </div> -->
-                                                                            <div class="f-body">
-                                                                                <div class="meta-mail-time">
-                                                                                    <p class="user-email" data-mailTo="infocompany@mail.com">Info Company</p>
-                                                                                </div>
-                                                                                <div class="meta-title-tag">
-                                                                                    <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'><span class="mail-title" data-mailTitle="50% Discount">50% Discount - </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
-                                                                                    
-                                                                                    <p class="meta-time align-self-center">15 Dec</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="mail-item mailInbox spam">
-                                                        <div class="animated animatedFadeInUp fadeInUp" id="mailHeadingTwenty">
-                                                            <div class="mb-0">
-                                                                <div class="mail-item-heading personal collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#mailCollapseTwenty" aria-expanded="false">
-                                                                    <div class="mail-item-inner">
-    
-                                                                        <div class="d-flex">
-                                                                            <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                                                <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default19">
-                                                                            </div>
-                                                                            <!-- <div class="f-head">
-                                                                                <img src="../src/assets/img/profile-32.jpeg" class="user-profile" alt="avatar">
-                                                                            </div> -->
-                                                                            <div class="f-body">
-                                                                                <div class="meta-mail-time">
-                                                                                    <p class="user-email" data-mailTo="bradleyGreer@mail.com">Bradley Greer</p>
-                                                                                </div>
-                                                                                <div class="meta-title-tag">
-                                                                                    <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'><span class="mail-title" data-mailTitle="Verficication Link">Verficication Link - </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
-                                                                                    
-                                                                                    <p class="meta-time align-self-center">25 Nov</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="composeMailModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title add-title" id="notesMailModalTitleeLabel">Compose</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                    </button>
-                                                </div>
-
-                                                <div class="modal-body">
-                                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
-                                                    <div class="compose-box">
-                                                        <div class="compose-content">
-                                                            <form>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <div class="mb-4 mail-form">
-                                                                            <p>From:</p>
-                                                                            <select class="form-control" id="m-form">
-                                                                                <option value="info@mail.com">Info &lt;info@mail.com&gt;</option>
-                                                                                <option value="shaun@mail.com">Shaun Park &lt;shaun@mail.com&gt;</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-4 mail-to">
-                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
-                                                                            <div class="">
-                                                                                <input type="email" id="m-to" class="form-control">
-                                                                                <span class="validation-text"></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-4 mail-cc">
-                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
-                                                                            <div>
-                                                                                <input type="text" id="m-cc" class="form-control">
-                                                                                <span class="validation-text"></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="mb-4 mail-subject">
-                                                                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Subject:</p>
-                                                                    <div class="w-100">
-                                                                        <input type="text" id="m-subject" class="form-control">
-                                                                        <span class="validation-text"></span>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="">
-                                                                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Upload Attachment:</p>
-                                                                    <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-                                                                    <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple">
-                                                                </div>
-    
-                                                                <div id="editor-container">
-    
-                                                                </div>
-    
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button id="btn-save" class="btn float-left btn-success"> Save</button>
-                                                    <button id="btn-reply-save" class="btn float-left btn-success"> Save Reply</button>
-                                                    <button id="btn-fwd-save" class="btn float-left btn-success"> Save Fwd</button>
-    
-                                                    <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> Discard</button>
-    
-                                                    <button id="btn-reply" class="btn btn-primary"> Reply</button>
-                                                    <button id="btn-fwd" class="btn btn-primary"> Forward</button>
-                                                    <button id="btn-send" class="btn btn-primary"> Send</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-    
-                                </div>
-    
-    
-                            </div>
-                        <!-- Style 3 Table Section End -->
+                    <?= $this->include('tasks') ?>
                     </div>
                 </div>
             </div>
@@ -390,6 +189,8 @@
 
 <?= $this->section('js') ?>
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/apex/apexcharts.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js') ?>"></script>
 
@@ -397,6 +198,8 @@
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/notification/snackbar/snackbar.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/apps/mailbox.js') ?>"></script>
+<script src="<?= base_url('assets/js/tasks_page/tasks.js') ?>"></script>
+
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 <?= $this->endSection() ?>
