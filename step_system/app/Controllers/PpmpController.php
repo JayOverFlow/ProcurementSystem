@@ -129,8 +129,8 @@ class PpmpController extends BaseController
                     'submitted_by' => $userId,
                     'submitted_to' => $officerId,
                     'ppmp_id_fk' => $ppmpId,
-                    'task_type' => 'PPMP',
-                    'task_description' => 'A new PPMP has been submitted for your review.'
+                    'task_type' => 'Project Procurement Management',
+                    'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
                 ]);
             }
 

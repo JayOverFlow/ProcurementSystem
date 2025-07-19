@@ -101,8 +101,8 @@ class AppController extends BaseController
                     'submitted_by' => $userId,
                     'submitted_to' => $directorId,
                     'app_id_fk' => $appId,
-                    'task_type' => 'APP',
-                    'task_description' => 'A new APP has been submitted for your review.'
+                    'task_type' => 'Annual Procurement Plan',
+                    'task_description' => 'A new Annual Procurement Plan has been submitted for your review.'
                 ]);
             }
             
@@ -117,5 +117,25 @@ class AppController extends BaseController
             log_message('error', 'APP Creation/Submission Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
+    }
+
+    public function preview($appId)
+    {
+        $appModel = new AppModel();
+        $appItemModel = new AppItemModel();
+
+        $app = $appModel->find($appId);
+        if (!$app) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('APP not found');
+        }
+
+        $items = $appItemModel->where('app_id_fk', $appId)->findAll();
+
+        $data = [
+            'app'   => $app,
+            'items' => $items,
+        ];
+        
+        return view('preview-pages/app-preview', $data);
     }
 }
