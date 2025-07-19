@@ -5,15 +5,21 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\TaskModel;
 use App\Models\PpmpModel;
+use App\Models\AppModel;
+use App\Models\UserModel;
 
 class TasksController extends BaseController
 {
     protected $taskModel;
     protected $ppmpModel;
+    protected $appModel;
+    protected $userModel;
 
     public function __construct() {
         $this->taskModel = new TaskModel();
         $this->ppmpModel = new PpmpModel();
+        $this->appModel = new AppModel();
+        $this->userModel = new UserModel();
     }
 
     public function index()
@@ -68,6 +74,23 @@ class TasksController extends BaseController
         }
 
         if ($this->ppmpModel->updateStatus($ppmpId, $status)) {
+            return $this->response->setJSON(['success' => true]);
+        }
+        
+        return $this->response->setStatusCode(500, 'Failed to update status.');
+    }
+
+    public function updateAppStatus()
+    {
+        $json = $this->request->getJSON();
+        $appId = $json->app_id ?? null;
+        $status = $json->status ?? null;
+
+        if (!$appId || !in_array($status, ['Approved', 'Rejected'])) {
+            return $this->response->setStatusCode(400, 'Invalid data provided.');
+        }
+
+        if ($this->appModel->update($appId, ['app_status' => $status])) {
             return $this->response->setJSON(['success' => true]);
         }
         

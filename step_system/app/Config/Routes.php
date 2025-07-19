@@ -146,6 +146,7 @@ $routes->group('tasks', function($routes) {
     $routes->get('', 'TasksController::index');
     $routes->get('details/(:num)', 'TasksController::getDetails/$1');
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
+    $routes->post('update-app-status', 'TasksController::updateAppStatus');
 });
 
 
@@ -162,3 +163,13 @@ $routes->group('mr', function($routes) {
 
 });
 
+// Preview
+$routes->group('', function($routes) {
+    $routes->get('ppmp/preview/(:num)', 'PpmpController::preview/$1');
+    $routes->get('app/preview/(:num)', 'AppController::preview/$1');
+});
+
+// Dasboard
+$routes->group('dashboard', function($routes) {
+    $routes->get('', 'DashboardController::index');
+});
