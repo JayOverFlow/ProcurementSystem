@@ -179,3 +179,8 @@ $routes->group('', function($routes) {
     $routes->get('ppmp/preview/(:num)', 'PpmpController::preview/$1');
     $routes->get('app/preview/(:num)', 'AppController::preview/$1');
 });
+
+// Dasboard
+$routes->group('dashboard', function($routes) {
+    $routes->get('', 'DashboardController::index');
+});
