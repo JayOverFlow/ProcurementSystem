@@ -41,138 +41,23 @@
         <!--  BEGIN CONTENT AREA  -->
 <?= $this->section('content') ?>
 <div class="row just-content-evenly h-100 align-items-stretch">
-                    <!-- Stepper Column -->
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
-                        <div class="widget widget-activity-five">
-                            <div class="widget-heading">
-                                <h5 class="">Procurement Status</h5>
-
-                                <div class="task-action">
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle" href="#" role="button" id="activitylog" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                        </a>
-
-                                        <div class="dropdown-menu left" aria-labelledby="activitylog" style="will-change: transform;">
-                                            <a class="dropdown-item" href="javascript:void(0);">View All</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Mark as Read</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="widget-content">
-                                <div class="w-shadow-top"></div>
-
-                                <div class="mt-container mx-auto">
-                                    <div class="timeline-line">
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Procurement Project Management Plan (PPMP) <span>Description</span></a></h5>
-                                                </div>
-                                                <p>07 May, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Annual Procurement Plan (APP) <br><span>Description</span></h5>
-                                                </div>
-                                                <p>06 May, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Purchase Request (PR) <br> <span>Description</span></h5>
-                                                </div>
-                                                <p>01 May, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                                <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Purchase Order (PR)<br> <span>Description</span></a></h5>
-                                                </div>
-                                                <p>30 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Bidding <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>25 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Delivery <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>10 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Inventory Custodian Slip (ICS) <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>10 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Property Acknowledgement Request (PAR) <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>10 Apr, 2024</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="w-shadow-bottom"></div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Stepper Column -->
+    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
+        <div class="widget widget-activity-five h-100 d-flex flex-column">
+            <div class="widget-heading ms-3 pb-0">
+                <h4 class="text-center fw-bold" style="color: #DC3545">Procurement Status</h4>
+            </div>
+            <div class="widget-content">
+                <div class="w-shadow-top"></div>
+                <div class="mt-container mx-auto h-100">
+                    <div class="timeline-line" id="stepper-timeline">
+                        <!-- Stepper items will be dynamically loaded here -->
+                    </div>                                    
+                </div>
+                <div class="w-shadow-bottom"></div>
+            </div>
+        </div>
+    </div>
                     <!-- Mail Section -->
                     <div class="col-xl-9 col-lg-6 col-md-6 col-sm-6">
                     <?= $this->include('tasks') ?>
@@ -201,5 +86,108 @@
 <script src="<?= base_url('assets/js/tasks_page/tasks.js') ?>"></script>
 
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+<script>
+
+    c3 = $('#style-3').DataTable({
+        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+    "<'table-responsive'tr>" +
+    "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        "oLanguage": {
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [5, 10, 20, 50],
+        "pageLength": 10
+    });
+
+    multiCheck(c3);
+
+    // Function to fetch and render stepper status
+    function fetchAndRenderStepper(departmentId) {
+        fetch(`<?= base_url('stepper/stepper-status/') ?>${departmentId}`)
+            .then(response => response.json())
+            .then(data => {
+                const timeline = document.getElementById('stepper-timeline');
+                timeline.innerHTML = ''; // Clear existing content
+
+                data.forEach(phase => {
+                    const itemTimeline = document.createElement('div');
+                    itemTimeline.classList.add('item-timeline', 'timeline-new');
+
+                    itemTimeline.innerHTML = `
+                        <div class="t-dot">
+                            <div class="${phase.icon_class}">${phase.icon}</div>
+                        </div>
+                        <div class="t-content">
+                            <div class="t-uppercontent">
+                                <h5>${phase.display_name} <a href="#" class="${phase.text_color} description-link" data-bs-toggle="modal" data-bs-target="#stepperDetailModal" data-phase="${phase.phase}" data-status="${phase.status}" data-remark="${phase.remark}" data-updated-at="${phase.updated_at}">Description</a></h5>
+                            </div>
+                            <p>${(phase.status === 'completed' || phase.status === 'rejected') && phase.updated_at ? new Date(phase.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
+                        </div>
+                    `;
+                    timeline.appendChild(itemTimeline);
+                });
+
+                // Attach event listeners to description links after rendering
+                document.querySelectorAll('.description-link').forEach(link => {
+                    link.addEventListener('click', function() {
+                        const phase = this.getAttribute('data-phase');
+                        const status = this.getAttribute('data-status');
+                        const remark = this.getAttribute('data-remark');
+                        const updatedAt = this.getAttribute('data-updated-at');
+
+                        document.getElementById('modalStepperPhase').textContent = phase;
+                        document.getElementById('modalStepperStatus').textContent = `Status: ${status}`;
+                        document.getElementById('modalStepperRemark').textContent = `Remark: ${remark}`;
+                        document.getElementById('modalStepperUpdatedAt').textContent = `Last Updated: ${updatedAt ? new Date(updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A'}`;
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching stepper status:', error));
+    }
+
+    // Call the function with a placeholder department ID (e.g., 1 for testing)
+    // You need to replace '1' with the actual department ID of the logged-in user.
+    // This ID should be passed from the backend PHP to the JavaScript.
+    // For example: fetchAndRenderStepper(<?= $user_department_id ?>);
+    // For now, using a static ID for demonstration purposes.
+
+    // Assuming you have the user's department ID available in a PHP variable, e.g., $user_department_id
+    // Replace `null` with the actual PHP variable that holds the department ID.
+    const userDepartmentId = <?php echo esc($user_department_id ?? 'null'); ?>;
+
+    if (userDepartmentId !== null) {
+        fetchAndRenderStepper(userDepartmentId);
+    } else {
+        console.error('User department ID is not available.');
+    }
+</script>
+
+<!-- Stepper Detail Modal -->
+<div class="modal fade" id="stepperDetailModal" tabindex="-1" role="dialog" aria-labelledby="stepperDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalStepperPhase"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalStepperStatus"></p>
+                <p id="modalStepperRemark"></p>
+                <p id="modalStepperUpdatedAt"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?= $this->endSection() ?>

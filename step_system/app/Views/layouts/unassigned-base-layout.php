@@ -31,7 +31,7 @@
 
     <!--  BEGIN HEADER  -->
     <div class="header-container container-xxl box-shadow-none">
-        <?= $this->include('partials/faculty/fac-header'); ?>
+        <?= $this->include('partials/unassigned/unassigned-header'); ?>
     </div>
     <!--  END HEADER  -->
 
@@ -42,7 +42,7 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN NAV  -->
-        <?= $this->include('partials/faculty/fac-nav'); ?>
+        <?= $this->include('partials/unassigned/unassigned-nav'); ?>
         <!--  END NAV  -->
 
         <!--  BEGIN CONTENT AREA  -->

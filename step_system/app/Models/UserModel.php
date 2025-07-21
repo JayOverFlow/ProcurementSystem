@@ -42,7 +42,7 @@ class UserModel extends Model {
     // Authenticate user from login and retrieve their role and department information
     public function authenticateUser(string $user_email, string $user_password) {
         $user = $this->select('users_tbl.*, roles_tbl.role_name, roles_tbl.gen_role, departments_tbl.dep_name, departments_tbl.dep_id')
-                     ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id AND user_role_department_tbl.role_id IS NOT NULL', 'left')
+                     ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id', 'left')
                      ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id', 'left')
                      ->join('departments_tbl', 'departments_tbl.dep_id = user_role_department_tbl.department_id', 'left')
                      ->where('users_tbl.user_email', $user_email)

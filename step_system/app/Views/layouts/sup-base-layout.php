@@ -64,11 +64,13 @@
 <!-- END MAIN CONTAINER -->
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="<?= base_url('assets/src/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js'); ?>"></script>
-<script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js'); ?>"></script>
+<script src="<?= base_url('assets/src/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
+<script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/global/vendors.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/custom.js') ?>"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
