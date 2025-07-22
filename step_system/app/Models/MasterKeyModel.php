@@ -6,44 +6,19 @@ use CodeIgniter\Model;
 
 class MasterKeyModel extends Model
 {
-    protected $table            = 'master_keys_tbl';
-    protected $primaryKey       = 'master_key_id';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
-        'master_key',
-        'master_key_is_used'
-    ];
+    protected $table = 'master_keys_tbl';
+    protected $primaryKey = 'master_key_id';
+    protected $allowedFields = ['master_key', 'master_key_is_used'];
 
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
+    // Method to get a master key by its value
+    public function getMasterKey(string $masterKey): ?array
+    {
+        return $this->where('master_key', $masterKey)->first();
+    }
 
-    protected array $casts = [];
-    protected array $castHandlers = [];
-
-    // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
-
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    // Method to mark a master key as used
+    public function markKeyAsUsed(int $masterKeyId): bool
+    {
+        return $this->update($masterKeyId, ['master_key_is_used' => 1]);
+    }
 }
