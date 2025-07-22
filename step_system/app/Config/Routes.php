@@ -185,6 +185,13 @@ $routes->group('app', function($routes) {
     $routes->get('preview/(:num)', 'AppController::preview/$1');
 });
 
+// PR
+$routes->group('pr', function($routes) {
+    $routes->get('create', 'PrController::index');
+    $routes->post('save', 'PrController::save');
+    $routes->get('preview/(:num)', 'AppController::preview/$1');
+});
+
 // Material Requisition (MR)
 $routes->group('mr', function($routes) {
     $routes->get('', 'MrController::index');
