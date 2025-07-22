@@ -37,6 +37,7 @@ $routes->get('logout', 'AuthController::logout');
 // Faculty
 $routes->group('faculty', function($routes) {
     $routes->get('dashboard', 'Faculty\FacultyDashboardController::index');
+    $routes->get('procurement', 'Faculty\FacultyProcurementController::index');
     $routes->get('ppmp', 'Faculty\FacultyPPMPController::index');
     $routes->get('pr', 'Faculty\FacultyPRController::index');
     $routes->get('tasks', 'Faculty\FacultyTasksController::index');
@@ -48,14 +49,16 @@ $routes->group('faculty', function($routes) {
 // Director
 $routes->group('director', function($routes) {
     $routes->get('dashboard', 'Director\DirectorDashboardController::index');
+    $routes->get('procurement', 'Director\DirectorProcurementController::index');
     $routes->get('tasks', 'Director\DirectorTasksController::index');
-    $routes->get('mr', 'Director\DirectorMRController::index');
+    $routes->get('mr', 'Director\DirectorMRController::index'); 
     $routes->get('ppmp', 'Director\DirectorPPMPController::index');
     $routes->get('pr', 'Director\DirectorPRController::index');
 });
 // Planning
     $routes->group('planning', function($routes) {
     $routes->get('dashboard', 'Planning\PlanningDashboardController::index');
+    $routes->get('procurement', 'Planning\PlanningProcurementController::index');
     $routes->get('mr', 'PlanningController::mr');
     $routes->get('ppmp', 'PlanningController::ppmp');
     $routes->get('pr', 'PlanningController::pr');
@@ -71,6 +74,7 @@ $routes->group('director', function($routes) {
 // Department Head
 $routes->group('head', function($routes) {
     $routes->get('dashboard', 'DepartmentHead\DHDashboard::index');
+    $routes->get('procurement', 'DepartmentHead\DHProcurementController::index');
     $routes->get('mr', 'DepartmentHead\DHDashboard::mr');
     $routes->get('ppmp', 'DepartmentHead\DHDashboard::ppmp');
     $routes->get('pr', 'DepartmentHead\DHDashboard::pr');
@@ -101,6 +105,7 @@ $routes->group('admin', function($routes){
 // Procurement Officer
 $routes->group('procurement', function($routes) {
     $routes->get('dashboard', 'ProcurementOffice\ProcurementController::dashboard');
+    $routes->get('procurement', 'ProcurementOffice\ProcurementController::index');
     $routes->get('mr', 'ProcurementOffice\ProcurementController::mr');
     $routes->get('ppmp', 'ProcurementOffice\ProcurementController::ppmp');
     $routes->get('pr', 'ProcurementOffice\ProcurementController::pr');
@@ -111,16 +116,17 @@ $routes->group('procurement', function($routes) {
 
 // Supply
 $routes->group('supply', function($routes) {
-    $routes->get('dashboard', 'SupplyController::dashboard');
-    $routes->get('tasks', 'SupplyController::tasks');
-    $routes->get('mr', 'SupplyController::mr');
-    $routes->get('ppmp', 'SupplyController::ppmp');
-    $routes->get('par', 'SupplyController::par');
-    $routes->get('pr', 'SupplyController::pr');
-    $routes->get('ics', 'SupplyController::ics');
-    $routes->get('su', 'SupplyController::su');
-    $routes->get('inventory', 'SupplyController::inventory');
-    $routes->get('my-files', 'SupplyController::myFiles');
+    $routes->get('dashboard', 'Supply\SupplyController::dashboard');
+    $routes->get('procurement', 'Supply\SupplyController::procurement');
+    $routes->get('tasks', 'Supply\SupplyController::tasks');
+    $routes->get('mr', 'Supply\SupplyController::mr');
+    $routes->get('ppmp', 'Supply\SupplyController::ppmp');
+    $routes->get('par', 'Supply\SupplyController::par');
+    $routes->get('pr', 'Supply\SupplyController::pr');
+    $routes->get('ics', 'Supply\SupplyController::ics');
+    $routes->get('su', 'Supply\SupplyController::su');
+    $routes->get('inventory', 'Supply\SupplyController::inventory');
+    $routes->get('my-files', 'Supply\SupplyController::myFiles');
 });
 
 // @Emman Proposed routing convention from sir PJ's discussion
@@ -137,6 +143,7 @@ $routes->group('supply', function($routes) {
 // Unassigned
 $routes->group('unassigned', function($routes) {
     $routes->get('dashboard', 'Unassigned\UnassignedDashboardController::index');
+    $routes->get('procurement', 'Unassigned\UnassignedProcurementController::index');
     $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
     $routes->get('pr', 'Unassigned\UnassignedPRController::index');
     $routes->get('tasks', 'Unassigned\UnassignedTasksController::index');

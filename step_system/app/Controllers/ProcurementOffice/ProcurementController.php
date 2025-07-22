@@ -21,6 +21,15 @@ class ProcurementController extends BaseController
         return view('user-pages/procurement/pro-dashboard', $data);
     }
 
+    public function index()
+    {
+        $userData = $this->loadUserSession();
+        $data = [
+            'user_data' => $userData
+        ];
+        return view('user-pages/procurement/pro-procurement', $data);
+    }
+
 
     public function tasks()
     {
