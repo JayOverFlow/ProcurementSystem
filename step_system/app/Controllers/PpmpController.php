@@ -15,12 +15,14 @@ class PpmpController extends BaseController
     protected $userModel;
     protected $ppmpModel;
     protected $PpmpItemModel;
+    protected $taskModel;
 
     public function __construct() {
         $this->departmentModel = new DepartmentModel();
         $this->userModel = new UserModel();
         $this->ppmpModel = new PpmpModel();
         $this->ppmpItemModel = new PpmpItemModel();
+        $this->taskModel = new TaskModel();
     }
 
     public function index()
@@ -128,17 +130,25 @@ class PpmpController extends BaseController
                 $this->ppmpItemModel->insertBatch($allItems);
             }
             
-            // // 3. Create tasks for Planning Officers
+            // 3. Create tasks for Planning Officers
             // $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
             // foreach ($planningOfficers as $officerId) {
-            //     $taskModel->insert([
-            //         'submitted_by' => $userId,
-            //         'submitted_to' => $officerId,
+            //     $this->taskModel->insert([
+            //         'submitted_by' => $userData['user_id'],
+            //         'submitted_to' => null,
             //         'ppmp_id_fk' => $ppmpId,
             //         'task_type' => 'Project Procurement Management',
             //         'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
             //     ]);
             // }
+
+            $this->taskModel->insert([
+                'submitted_by' => $userData['user_id'],
+                'submitted_to' => null,
+                'ppmp_id_fk' => $ppmpId,
+                'task_type' => 'Project Procurement Management',
+                'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
+            ]);
 
 
             $db->transComplete();
