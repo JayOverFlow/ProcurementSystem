@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers\Director;
+namespace App\Controllers\Faculty;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class DirectorProcurementController extends BaseController
+class FacultyProcurementController extends BaseController
 {
     /**
-     * Display the procurement tracking page for Director.
+     * Display the procurement tracking page for Faculty.
      *
      * @return ResponseInterface|string
      */
@@ -20,6 +20,6 @@ class DirectorProcurementController extends BaseController
         $data = [
             'user_data' => $userData
         ];
-        return view('user-pages/director/dir-procurement', $data);
+        return view('user-pages/faculty/fac-procurement', $data);
     }
 } 
