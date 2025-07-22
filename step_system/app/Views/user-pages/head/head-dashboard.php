@@ -189,7 +189,7 @@
 
                     itemTimeline.innerHTML = `
                         <div class="t-dot">
-                            <div class="${phase.icon_class}">${phase.icon}</div>
+                            <div class="${phase.icon_class}" style="background-color: ${phase.icon_class === 't-secondary' ? '#6c757d' : (phase.icon_class === 't-warning' ? '#ffc107' : '')}; box-shadow: 0 10px 20px -8px ${phase.icon_class === 't-secondary' ? '#6c757d' : (phase.icon_class === 't-warning' ? '#ffc107' : '')};">${phase.icon}</div>
                         </div>
                         <div class="t-content">
                             <div class="t-uppercontent">

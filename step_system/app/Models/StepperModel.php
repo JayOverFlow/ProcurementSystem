@@ -19,7 +19,7 @@ class StepperModel extends Model
     protected $allowedFields    = [
         'stepper_dep_id_fk',  // Foreign key linking to the departments_tbl (identifies the department)
         'stepper_phase',      // The name of the procurement phase (e.g., 'PPMP', 'APP', 'PR')
-        'stepper_status',     // The current status of the phase: 'pending', 'in_progress', 'completed', 'rejected'
+        'stepper_status',     // The current status of the phase: 'pending', 'in_progress', 'completed'
         'stepper_remark',     // A descriptive remark about the current status of the phase
         'stepper_updated_at'  // Timestamp when the status was last updated
     ];
@@ -443,8 +443,8 @@ class StepperModel extends Model
                 $status = 'completed'; // Procurement document is approved/completed
                 $remark = 'Phase ' . $phaseName . ' has been approved/completed.';
             } elseif (strcasecmp($dbStatus, 'Rejected') === 0) {
-                $status = 'rejected'; // Procurement document has been rejected
-                $remark = 'Phase ' . $phaseName . ' has been rejected. Remark: ' . ($dbRemark ?? 'N/A');
+                $status = 'in_progress'; // When a form is rejected, it goes back to pending/in-progress for revision
+                $remark = 'Phase ' . $phaseName . ' was rejected and is pending revision.' . ($remarkKey ? ' Reason: ' . ($dbRemark ?? 'N/A') : '');
             } elseif (strcasecmp($dbStatus, 'Pending') === 0) {
                 $status = 'in_progress'; // Procurement document is pending review
                 $remark = 'Phase ' . $phaseName . ' is currently pending review.';

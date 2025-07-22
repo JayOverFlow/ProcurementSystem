@@ -93,21 +93,15 @@ class StepperController extends BaseController
                     $iconClass = 't-success';   // Green background for success
                     $textColor = 'text-success'; // Green text
                     break;
-                case 'in_progress':
-                    // Clock icon for phases that are currently being processed/reviewed
+                case 'in_progress': // This now covers both 'in_progress' and 'rejected' states from the model
+                    // Clock icon for phases that are currently being processed/reviewed or rejected (pending revision)
                     $icon = '<img src="' . base_url('assets/images/clock.svg') . '" alt="clock">';
                     $iconClass = 't-warning';   // Amber background for warning/in-progress
                     $textColor = 'text-warning'; // Amber text
                     break;
-                case 'rejected':
-                    // 'X' icon for rejected phases
-                    $icon = '<img src="' . base_url('assets/images/x.svg') . '" alt="x">';
-                    $iconClass = 't-danger';    // Red background for danger
-                    $textColor = 'text-danger';  // Red text
-                    break;
-                case 'pending':
+                case 'pending': // This explicitly means 'Not Started'
                 default:
-                    // Default to clock icon for pending phases (not yet started or awaiting prerequisite)
+                    // Default to clock icon for pending phases (not yet started)
                     $icon = '<img src="' . base_url('assets/images/clock.svg') . '" alt="pending">';
                     $iconClass = 't-secondary'; // Grey background for pending/secondary status
                     $textColor = 'text-secondary';// Grey text
