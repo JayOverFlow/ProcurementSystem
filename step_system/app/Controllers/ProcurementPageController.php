@@ -13,7 +13,7 @@ use App\Models\PrModel;
 use App\Models\TaskModel;
 use App\Models\UserModel;
 
-class ProcurementBaseController extends BaseController
+class ProcurementPageController extends BaseController
 {
     protected $ppmpModel;
     protected $appModel;
