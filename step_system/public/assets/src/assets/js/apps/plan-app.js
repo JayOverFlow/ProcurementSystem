@@ -55,19 +55,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Save & Submit confirmation
-    const saveSubmitButton = document.querySelector('.warning.save-and-submit');
+    const saveSubmitButton = document.querySelector('.warning.save');
     if(saveSubmitButton) {
         saveSubmitButton.addEventListener('click', function(e) {
             e.preventDefault(); // Prevent the form from submitting immediately
     
             Swal.fire({
-                title: 'Confirm Save & Submit?',
-                text: "Do you want to save this APP and submit it to the Director?",
+                title: 'Confirm Save?',
+                text: "Do you want to save this Annual Procurement Plan?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#8ABB2F',
                 cancelButtonColor: '#7B7B7B',
-                confirmButtonText: 'Save & Submit'
+                confirmButtonText: 'Save'
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('app-form').submit();
