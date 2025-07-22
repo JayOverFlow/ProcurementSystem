@@ -2,11 +2,11 @@
 
 namespace App\Controllers\Supply;
 
-use App\Controllers\BaseController;
+use App\Controllers\ProcurementBaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\MrItemModel;
 
-class SupplyController extends BaseController
+class SupplyController extends ProcurementPageController
 {
     public function dashboard()
     {
@@ -26,10 +26,14 @@ class SupplyController extends BaseController
     {
         // Get user data via user session using custom helper
         $userData = $this->loadUserSession();
+        $userId = $userData['user_id'];
+
+        $forms = $this->getUsersForms($userId);
 
         // Store data
         $data = [
-            'user_data' => $userData
+            'user_data' => $userData,
+            'forms' => $forms
         ];
         return view('user-pages/supply/sup-procurement', $data);
     }

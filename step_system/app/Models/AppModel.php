@@ -15,12 +15,14 @@ class AppModel extends Model
     protected $allowedFields    = [
         'app_ppmp_items_id_fk',
         'app_status',
+        'saved_by_user_id_fk',
         'app_prepared_by_name',
         'app_prepared_by_designation',
         'app_recommending_by_name',
         'app_recommending_by_designation',
         'app_approved_by_name',
         'app_approved_by_designation',
+        'app_dep_id_fk',
     ];
 
     // Dates

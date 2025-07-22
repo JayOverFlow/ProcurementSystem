@@ -1,3 +1,9 @@
+<?php
+$current_path = uri_string();
+$procurement_pages = ['director/ppmp', 'director/pr'];
+$is_procurement_page = in_array($current_path, $procurement_pages);
+?>
+
 <div class="sidebar-wrapper sidebar-theme">
 
             <nav id="sidebar">

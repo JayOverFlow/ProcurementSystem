@@ -71,7 +71,7 @@ abstract class BaseController extends Controller
         // If user is not logged in as a regular user
         if ($this->session->has('isLoggedIn') && $this->session->get('isLoggedIn')) {
             return [
-                'user_id' => $this->session->get('user_id'),
+                'user_id' => (int)$this->session->get('user_id'),
                 'user_firstname' => $this->session->get('user_firstname'),
                 'user_middlename' => $this->session->get('user_middlename'),
                 'user_lastname' => $this->session->get('user_lastname'),

@@ -68,62 +68,21 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Emmanuel Ferrer</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Project Procurement Management Plan</td>
-									<td>000-000-01</td>
-									<td>Leo Stanton</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>James Botosh</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Erin Vaccaro</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Craig Rhiel Madsen</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Kaylynn Culhane</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Livia Baptista</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Project Procurement Management Plan</td>
-									<td>000-000-01</td>
-									<td>Wilson Vetrovs</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
+								<?php if (!empty($forms)): ?>
+									<?php foreach ($forms as $form): ?>
+										<tr>
+											<td><input class="form-check-input" type="checkbox"></td>
+											<td><?= esc($form['type']) ?></td>
+											<td><?= esc($form['document_id']) ?></td>
+											<td><?= esc($form['sent_to']) ?></td>
+											<td><?= esc($form['created_at']) ?></td>
+										</tr>
+									<?php endforeach; ?>
+								<?php else: ?>
+									<tr>
+										<td colspan="5" class="text-center">No forms found.</td>
+									</tr>
+								<?php endif; ?>
 							</tbody>
 						</table>
 					</div>

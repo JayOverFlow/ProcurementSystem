@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PropAckModel extends Model
+class ParModel extends Model
 {
-    protected $table            = 'prop_ack_tbl';
+    protected $table            = 'par_tbl';
     protected $primaryKey       = 'prop_ack_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -22,7 +22,8 @@ class PropAckModel extends Model
         'prop_ack_issued_by_fk',
         'prop_ack_issued_date',
         'prop_ack_deli_stats',
-        'prop_ack_bid_stats'
+        'prop_ack_bid_stats',
+        'saved_by_user_id_fk',
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -54,4 +55,4 @@ class PropAckModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-}
+} 

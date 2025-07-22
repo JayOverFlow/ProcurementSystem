@@ -15,12 +15,15 @@ class PrModel extends Model
     protected $allowedFields    = [
         'pr_app_item_id_fk',
         'pr_section',
-        'pr_status1',
-        'pr_status2',
-        'pr_total',
-        'pr_prdate',
-        'pr_saidate',
-        'pr_remarks'
+        'pr_status',
+        'pr_department',
+        'pr_no_date',
+        'pr_sai_no_date',
+        'pr_requested_by_name',
+        'pr_requested_by_designation',
+        'pr_approved_by_name',
+        'pr_approved_by_designation',
+        'saved_by_user_id_fk',
     ];
 
     protected bool $allowEmptyInserts = false;
