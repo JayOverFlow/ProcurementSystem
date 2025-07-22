@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/head-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Procurement Officer Procurement</title>
+<title>TUP STEP | Department Head Procurement</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
@@ -55,7 +55,7 @@
 						<table id="procurement-table" class="table table-hover text-nowrap">
 							<thead>
 								<tr>
-									<th style="min-width: 40px; width: 40px;"><input class="form-check-input" type="checkbox" id="select-all"></th>
+									<th style="min-width: 40px; width: 40px;" class="no-sort"></th>
 									<th>Form</th>
 									<th>Document-Id</th>
 									<th>Sent To</th>
@@ -63,62 +63,21 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Emmanuel Ferrer</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Project Procurement Management Plan</td>
-									<td>000-000-01</td>
-									<td>Leo Stanton</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>James Botosh</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Erin Vaccaro</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Craig Rhiel Madsen</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Kaylynn Culhane</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Purchase Request</td>
-									<td>000-000-01</td>
-									<td>Livia Baptista</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
-								<tr>
-									<td><input class="form-check-input" type="checkbox"></td>
-									<td>Project Procurement Management Plan</td>
-									<td>000-000-01</td>
-									<td>Wilson Vetrovs</td>
-									<td>12/21/25 4:03 AM</td>
-								</tr>
+								<?php if (!empty($forms)): ?>
+									<?php foreach ($forms as $form): ?>
+										<tr>
+											<td><input class="form-check-input" type="checkbox"></td>
+											<td><?= esc($form['type']) ?></td>
+											<td><?= esc($form['document_id']) ?></td>
+											<td><?= esc($form['sent_to']) ?></td>
+											<td><?= esc($form['created_at']) ?></td>
+										</tr>
+									<?php endforeach; ?>
+								<?php else: ?>
+									<tr>
+										<td colspan="5" class="text-center">No forms found.</td>
+									</tr>
+								<?php endif; ?>
 							</tbody>
 						</table>
 					</div>
@@ -143,8 +102,8 @@
         </button>
       </div>
       <div class="modal-body d-flex flex-column gap-2">
-        <button class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</button>
-        <button class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</button>
+        <a href="<?= base_url('ppmp/create') ?>" class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</a>
+        <a href="<?= base_url('pr/create') ?>" class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</a>
       </div>
     </div>
   </div>
@@ -170,7 +129,6 @@
             },
             "lengthMenu": [5, 10, 20, 50],
             "pageLength": 10,
-            "order": [],
             "columnDefs": [
                 { "orderable": false, "targets": 0 }
             ]
