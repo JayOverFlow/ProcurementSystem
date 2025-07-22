@@ -31,7 +31,7 @@
     <?php if (session()->getFlashdata('success')) : ?>
         Swal.fire({
             icon: 'success',
-            title: 'Saved & Submitted!',
+            title: 'Saved!',
             text: '<?= session()->getFlashdata('success') ?>',
         });
     <?php endif; ?>

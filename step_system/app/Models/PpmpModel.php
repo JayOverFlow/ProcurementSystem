@@ -14,6 +14,7 @@ class PpmpModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'ppmp_status',
+        'saved_by_user_id_fk',
         'ppmp_office_fk',
         'ppmp_total_proposed_budget',
         'ppmp_total_budget_allocated',
