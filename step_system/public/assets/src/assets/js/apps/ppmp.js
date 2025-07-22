@@ -178,17 +178,17 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-document.querySelector('.widget-content .warning.save-and-submit').addEventListener('click', function(e) {
+document.querySelector('.widget-content .warning.save').addEventListener('click', function(e) {
     e.preventDefault(); // Prevent the form from submitting immediately
 
     Swal.fire({
-        title: 'Confirm Save & Submit?',
-        text: "Do you want to save this Project Procurement Management Plan and submit to Planning Officer?",
+        title: 'Confirm Save?',
+        text: "Do you want to save this Project Procurement Management Plan?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#8ABB2F',
         cancelButtonColor: '#7B7B7B',
-        confirmButtonText: 'Save & Submit'
+        confirmButtonText: 'Save'
     }).then((result) => {
         if (result.isConfirmed) {
             // If confirmed, submit the form

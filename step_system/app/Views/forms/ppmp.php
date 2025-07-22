@@ -2,7 +2,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         
         <div class="doc-container">
-            <form id="ppmp-form" action="<?= base_url('ppmp/create') ?>" method="POST">
+            <form id="ppmp-form" action="<?= base_url('ppmp/save') ?>" method="POST">
             <div class="row">
                 <div class="col-xl-9">
 
@@ -371,9 +371,9 @@
 
                         <div class="invoice-action-btn">
 
-                            <div class="row ">
+                            <div class="row widget-content">
                                 <div class="col-xl-12 col-md-4">
-                                    <button type="submit" class="btn btn-submit w-100 warning save-and-submit" style="background-color: #C62742; color: #FFFFFF">Save & Submit</button>
+                                    <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
                                     <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
