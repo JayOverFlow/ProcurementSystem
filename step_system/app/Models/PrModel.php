@@ -16,14 +16,14 @@ class PrModel extends Model
         'pr_app_item_id_fk',
         'pr_section',
         'pr_status',
+        'saved_by_user_id_fk',
         'pr_department',
         'pr_no_date',
         'pr_sai_no_date',
         'pr_requested_by_name',
         'pr_requested_by_designation',
         'pr_approved_by_name',
-        'pr_approved_by_designation',
-        'saved_by_user_id_fk',
+        'pr_approved_by_designation'
     ];
 
     protected bool $allowEmptyInserts = false;
