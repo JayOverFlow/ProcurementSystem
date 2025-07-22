@@ -19,9 +19,6 @@
 <link href="<?= base_url('assets/src/plugins/css/light/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
 
 <link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="<?= base_url('assets/src/assets/css/light/custom.css') ?>">
-<link rel="stylesheet" href="<?= base_url('assets/src/assets/css/dark/custom.css') ?>">
-
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -106,7 +103,7 @@
       </div>
       <div class="modal-body d-flex flex-column gap-2">
         <a href="<?= base_url('ppmp/create') ?>" class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</a>
-        <a href="<?= base_url('pr/create') ?>" class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</a>       
+        <a href="<?= base_url('pr/create') ?>" class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</a>
       </div>
     </div>
   </div>
@@ -140,10 +137,25 @@
         $('#custom-search').on('keyup', function() {
             table.search(this.value).draw();
         });
+
+        // Handle "select all" checkbox
+        $('#select-all').on('click', function() {
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        });
+
+        // Handle individual checkbox clicks
+        $('#procurement-table tbody').on('change', 'input[type="checkbox"]', function() {
+            if (!this.checked) {
+                var el = $('#select-all').get(0);
+                if (el && el.checked && ('indeterminate' in el)) {
+                    el.indeterminate = true;
+                }
+            }
+        });
     });
 </script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
 <script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <?= $this->endSection() ?>

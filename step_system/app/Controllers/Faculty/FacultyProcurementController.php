@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers\Director;
+namespace App\Controllers\Faculty;
 
 use App\Controllers\ProcurementPageController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class DirectorProcurementController extends ProcurementPageController
+class FacultyProcurementController extends ProcurementPageController
 {
     /**
-     * Display the procurement tracking page for Director.
+     * Display the procurement tracking page for Faculty.
      *
      * @return ResponseInterface|string
      */
