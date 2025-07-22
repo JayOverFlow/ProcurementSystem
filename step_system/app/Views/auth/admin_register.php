@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>TUP STEP | Login</title>
+    <title>TUP STEP | Admin Register</title>
     <link rel="icon" type="image/x-xicon" href="<?= base_url('assets/src/assets/img/favicon.ico'); ?>"/>
     <link href="<?= base_url('assets/layouts/horizontal-light-menu/css/light/loader.css'); ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/layouts/horizontal-light-menu/css/dark/loader.css'); ?>" rel="stylesheet" type="text/css" />
@@ -59,20 +59,16 @@
     
                             <div class="row">
                                 <div class="col-md-12 mb-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h2>Login</h2>
-                                            <p>Enter your email and password to login</p>
-                                        </div>
-                                
-                                    </div>
+                                    
+                                    <h2>Admin Registration</h2>
+                                    <p>Enter your details to register</p>
+                                    
                                 </div>
                                 <div class="col-md-12">
                                     
                                     <!-- Display general error/success messages -->
-                                    <div id="loginMessage" class="alert d-none" role="alert"></div>
+                                    <div id="registrationMessage" class="alert d-none" role="alert"></div>
 
-                                    <!-- CodeIgniter server-side validation errors (for non-AJAX fallback if needed) -->
                                     <?php if (isset($validation)): ?>
                                         <div class="alert alert-danger" role="alert">
                                             <?= $validation->listErrors() ?>
@@ -84,17 +80,31 @@
                                         </div>
                                     <?php endif; ?>
 
-                                    <form id="loginForm" method="POST" action="<?= base_url('/login'); ?>">
+                                    <form id="adminRegisterForm" method="POST" action="<?= base_url('/admin/register'); ?>">
                                         <div class="mb-3">
-                                            <label for="user_email" class="form-label">TUP Email</label>
-                                            <input type="email" class="form-control" id="user_email" name="user_email" value="<?= esc($data['user_email'] ?? '') ?>">
-                                            <div class="invalid-feedback" id="user_email_error"></div>
+                                            <label for="admin_username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="admin_username" name="admin_username" value="<?= esc($data['admin_username'] ?? '') ?>">
+                                            <div class="invalid-feedback" id="admin_username_error"></div>
                                         </div>
                                         <div class="col-12">
                                             <div class="mb-4">
-                                                <label for="user_password" class="form-label">Password</label>
-                                                <input type="password" class="form-control" id="user_password" name="user_password" value="<?= esc($data['user_password'] ?? '') ?>">
-                                                <div class="invalid-feedback" id="user_password_error"></div>
+                                                <label for="admin_password" class="form-label">Password</label>
+                                                <input type="password" class="form-control" id="admin_password" name="admin_password" value="<?= esc($data['admin_password'] ?? '') ?>">
+                                                <div class="invalid-feedback" id="admin_password_error"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mb-4">
+                                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="<?= esc($data['confirm_password'] ?? '') ?>">
+                                                <div class="invalid-feedback" id="confirm_password_error"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mb-4">
+                                                <label for="master_key" class="form-label">Master Key</label>
+                                                <input type="text" class="form-control" id="master_key" name="master_key" value="<?= esc($data['master_key'] ?? '') ?>">
+                                                <div class="invalid-feedback" id="master_key_error"></div>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -108,16 +118,14 @@
                                         
                                         <div class="col-12">
                                             <div class="mb-4">
-                                                <button type="submit" id="loginButton" class="btn w-100" style="background-color: #C62742; color: #FFFFFF">LOGIN</button>
+                                                <button type="submit" id="adminRegisterButton" class="btn w-100" style="background-color: #C62742; color: #FFFFFF">REGISTER</button>
                                             </div>
                                         </div>
                                     </form>
 
                                     <div class="col-12">
                                         <div class="text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="<?= base_url('register'); ?>" style="color: #C62742">Register</a></p>
-                                            <p class="mb-0">Are you an admin? <a href="<?= base_url('admin/login'); ?>" style="color: #C62742;">Login Here</a></p>
-
+                                            <p class="mb-0">Already have an admin account? <a href="<?= base_url('admin/login'); ?>" style="color: #C62742">Login Here</a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -139,9 +147,9 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- START PAGE SCRIPTS -->
-    <script src="<?= base_url('assets/js/login_page/login.js'); ?>"></script> <!-- Your custom login JavaScript -->
+    <script src="<?= base_url('assets/js/admin_registration_page/admin_register.js'); ?>"></script> <!-- Your custom admin registration JavaScript -->
     <!-- END PAGE SCRIPTS -->
 
 
 </body>
-</html>
+</html> 

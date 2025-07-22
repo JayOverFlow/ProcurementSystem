@@ -32,6 +32,15 @@ $routes->group('', function($routes) {
     $routes->post('login', 'AuthController::login');
 });
 
+// Admin Login
+$routes->group('admin', function($routes) {
+    $routes->get('login', 'AuthController::adminLogin');
+    $routes->post('login', 'AuthController::adminLogin');
+    $routes->get('register', 'AuthController::adminRegister');
+    $routes->post('register', 'AuthController::adminRegister');
+    $routes->get('logout', 'AuthController::adminLogout');
+});
+
 $routes->get('logout', 'AuthController::logout');
 
 // Faculty
