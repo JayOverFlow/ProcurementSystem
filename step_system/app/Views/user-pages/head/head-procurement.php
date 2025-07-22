@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/head-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Department Head Procurement</title>
+<title>TUP STEP | Procurement Officer Procurement</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
@@ -19,9 +19,6 @@
 <link href="<?= base_url('assets/src/plugins/css/light/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
 
 <link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="<?= base_url('assets/src/assets/css/light/custom.css') ?>">
-<link rel="stylesheet" href="<?= base_url('assets/src/assets/css/dark/custom.css') ?>">
-
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -58,7 +55,7 @@
 						<table id="procurement-table" class="table table-hover text-nowrap">
 							<thead>
 								<tr>
-									<th style="min-width: 40px; width: 40px;" class="no-sort"></th>
+									<th style="min-width: 40px; width: 40px;"><input class="form-check-input" type="checkbox" id="select-all"></th>
 									<th>Form</th>
 									<th>Document-Id</th>
 									<th>Sent To</th>
@@ -147,7 +144,7 @@
       </div>
       <div class="modal-body d-flex flex-column gap-2">
         <button class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</button>
-        <button class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</button>       
+        <button class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</button>
       </div>
     </div>
   </div>
@@ -173,6 +170,7 @@
             },
             "lengthMenu": [5, 10, 20, 50],
             "pageLength": 10,
+            "order": [],
             "columnDefs": [
                 { "orderable": false, "targets": 0 }
             ]
@@ -181,10 +179,25 @@
         $('#custom-search').on('keyup', function() {
             table.search(this.value).draw();
         });
+
+        // Handle "select all" checkbox
+        $('#select-all').on('click', function() {
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        });
+
+        // Handle individual checkbox clicks
+        $('#procurement-table tbody').on('change', 'input[type="checkbox"]', function() {
+            if (!this.checked) {
+                var el = $('#select-all').get(0);
+                if (el && el.checked && ('indeterminate' in el)) {
+                    el.indeterminate = true;
+                }
+            }
+        });
     });
 </script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
 <script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <?= $this->endSection() ?>
