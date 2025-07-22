@@ -1,6 +1,6 @@
 <?php
 $current_path = uri_string();
-$procurement_pages = ['/ppmp/create', 'head/pr'];
+$procurement_pages = ['/ppmp/create', 'head/pr', 'head/procurement'];
 $is_procurement_page = in_array($current_path, $procurement_pages);
 ?>
 <div class="sidebar-wrapper sidebar-theme">
@@ -30,31 +30,16 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                     </div>
                 </a>
             </li>
+            
 
             <li class="menu">
-                <a href="#procurement"
-                   data-bs-toggle="collapse"
-                   aria-expanded="<?= $is_procurement_page ? 'true' : 'false' ?>"
-                   class="dropdown-toggle <?= $is_procurement_page ? 'active text-white fw-bold shadow-text ' : '' ?>">
+                <a href="<?= base_url('head/procurement') ?>"
+                   class="dropdown-toggle <?= $current_path === 'head/procurement' ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div>
-                        <img src="<?= base_url('assets/images/icon-procurement.svg'); ?>" width="24" height="24" alt="Box">
+                        <img src="<?= base_url('assets/images/icon-procurement.svg') ?>" width="24" height="24" alt="checklist">
                         <span class="ms-2 shadow-text">Procurement</span>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled <?= $is_procurement_page ? 'show' : '' ?>" id="procurement" data-bs-parent="#accordionExample" style="min-width: 20rem;">
-                    <li>
-                        <a href="<?= base_url('/ppmp/create') ?>"
-                           class="<?= $current_path === '/ppmp/create' ? 'active text-primary fw-bold' : '' ?>">
-                            Project Procurement Management Plan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= base_url('head/pr') ?>"
-                           class="<?= $current_path === 'head/pr' ? 'active text-primary fw-bold' : '' ?>">
-                            Purchase Request
-                        </a>
-                    </li>
-                </ul>
             </li>
 
             <li class="menu">

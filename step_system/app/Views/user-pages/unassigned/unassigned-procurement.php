@@ -1,7 +1,7 @@
-<?= $this->extend('layouts/sup-base-layout') ?>
+<?= $this->extend('layouts/unassigned-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Supply Officer Procurement</title>
+<title>TUP STEP | Unassigned Procurement</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
@@ -35,10 +35,8 @@
 							<input class="form-check-input" type="checkbox" id="filterCheckbox" style="width: 1.1em; height: 1.1em;">
 							<label for="filter-form-type" class="form-label mb-0 me-1" style="font-weight: 500;">Filter:</label>
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
-								<option value="PPMP" selected>PPMP</option>
-								<option value="PR">PR</option>
-                                <option value="ICS">ICS</option>
-                                <option value="PAR">PAR</option>
+								<option value="PR" selected>PR</option>
+								<option value="PPMP">PPMP</option>
 								<option value="">All</option>
 							</select>
 						</div>
@@ -150,8 +148,6 @@
       <div class="modal-body d-flex flex-column gap-2">
         <button class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</button>
         <button class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</button>
-        <button class="btn" style="background:#2d0006; color:white;">INVENTORY CUSTODIAN SLIP</button>
-        <button class="btn" style="background:#2d0006; color:white;">PROPERTY ACKNOWLEDGEMENT RECEIPT</button>
       </div>
     </div>
   </div>
