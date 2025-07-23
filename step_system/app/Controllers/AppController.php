@@ -39,7 +39,7 @@ class AppController extends BaseController
         
         // If the user is not a Planning Officer
         if (($userData['gen_role'] ?? null) !== 'Planning Officer') {
-            return redirect()->back()->with('error', 'This page is restricted to Planning Officers.');
+            return redirect()->back()->with('error', 'This page is restricted.');
         }
 
         return view('user-pages/planning/plan-app', $data);
