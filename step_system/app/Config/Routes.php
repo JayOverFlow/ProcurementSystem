@@ -183,7 +183,14 @@ $routes->group('app', function($routes) {
 $routes->group('pr', function($routes) {
     $routes->get('create', 'PrController::index');
     $routes->post('save', 'PrController::save');
-    $routes->get('preview/(:num)', 'AppController::preview/$1');
+    // $routes->get('preview/(:num)', 'AppController::preview/$1');
+});
+
+// PO
+$routes->group('po', function($routes) {
+    $routes->get('create', 'PoController::index');
+    $routes->post('save', 'PoController::save');
+    // $routes->get('preview/(:num)', 'AppController::preview/$1');
 });
 
 // Material Requisition (MR)

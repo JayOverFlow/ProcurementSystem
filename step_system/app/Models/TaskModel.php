@@ -15,11 +15,15 @@ class TaskModel extends Model
     protected $allowedFields    = [
         'submitted_by',
         'submitted_to',
+        'task_description',
+        'created_at',
         'ppmp_id_fk',
         'app_id_fk',
         'task_type',
         'task_description',
         'is_deleted',
+        'pr_id_fk',
+        'po_id_fk',
     ];
 
     protected bool $allowEmptyInserts = false;
