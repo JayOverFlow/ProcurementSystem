@@ -2,11 +2,11 @@
 
 namespace App\Controllers\ProcurementOffice;
 
-use App\Controllers\BaseController;
+use App\Controllers\ProcurementPageController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\MrItemModel;
 
-class ProcurementController extends BaseController
+class ProcurementController extends ProcurementPageController
 {
     public function dashboard()
     {
@@ -19,6 +19,20 @@ class ProcurementController extends BaseController
         ];
 
         return view('user-pages/procurement/pro-dashboard', $data);
+    }
+
+    public function index()
+    {
+        $userData = $this->loadUserSession();
+        $userId = $userData['user_id'];
+
+        $forms = $this->getUsersForms($userId);
+
+        $data = [
+            'user_data' => $userData,
+            'forms' => $forms
+        ];
+        return view('user-pages/procurement/pro-procurement', $data);
     }
 
 

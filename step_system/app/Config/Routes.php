@@ -32,11 +32,21 @@ $routes->group('', function($routes) {
     $routes->post('login', 'AuthController::login');
 });
 
+// Admin Login
+$routes->group('admin', function($routes) {
+    $routes->get('login', 'AuthController::adminLogin');
+    $routes->post('login', 'AuthController::adminLogin');
+    $routes->get('register', 'AuthController::adminRegister');
+    $routes->post('register', 'AuthController::adminRegister');
+    $routes->get('logout', 'AuthController::adminLogout');
+});
+
 $routes->get('logout', 'AuthController::logout');
 
 // Faculty or Section Head
 $routes->group('faculty', function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('procurement', 'Faculty\FacultyProcurementController::index');
     // $routes->get('ppmp', 'Faculty\FacultyPPMPController::index');
     $routes->get('pr', 'Faculty\FacultyPRController::index');
     // $routes->get('tasks', 'Faculty\FacultyTasksController::index');
@@ -48,6 +58,7 @@ $routes->group('faculty', function($routes) {
 // Director
 $routes->group('director', function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('procurement', 'Director\DirectorProcurementController::index');
     // $routes->get('tasks', 'Director\DirectorTasksController::index');
     // $routes->get('mr', 'Director\DirectorMRController::index');
     // $routes->get('ppmp', 'Director\DirectorPPMPController::index');
@@ -56,6 +67,7 @@ $routes->group('director', function($routes) {
 // Planning
     $routes->group('planning', function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+        $routes->get('procurement', 'Planning\PlanningProcurementController::index');
     // $routes->get('mr', 'PlanningController::mr');
     // $routes->get('ppmp', 'PlanningController::ppmp');
     $routes->get('pr', 'PlanningController::pr');
@@ -71,6 +83,7 @@ $routes->group('director', function($routes) {
 // Department Head
 $routes->group('head', function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('procurement', 'DepartmentHead\DHProcurementController::index');
     $routes->get('mr', 'DepartmentHead\DHDashboard::mr');
     // $routes->get('ppmp', 'DepartmentHead\DHDashboard::ppmp');
     $routes->get('pr', 'DepartmentHead\DHDashboard::pr');
@@ -101,6 +114,7 @@ $routes->group('admin', function($routes){
 // Procurement Officer
 $routes->group('procurement', function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('procurement', 'ProcurementOffice\ProcurementController::index');
     // $routes->get('mr', 'ProcurementOffice\ProcurementController::mr');
     // $routes->get('ppmp', 'ProcurementOffice\ProcurementController::ppmp');
     $routes->get('pr', 'ProcurementOffice\ProcurementController::pr');
@@ -112,6 +126,7 @@ $routes->group('procurement', function($routes) {
 // Supply
 $routes->group('supply', function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('procurement', 'Supply\SupplyController::procurement');
     $routes->get('tasks', 'Supply\SupplyController::tasks');
     $routes->get('mr', 'Supply\SupplyController::mr');
     // $routes->get('ppmp', 'Supply\SupplyController::ppmp');
@@ -125,6 +140,7 @@ $routes->group('supply', function($routes) {
 // Unassigned
 $routes->group('unassigned', function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('procurement', 'Unassigned\UnassignedProcurementController::index');
     $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
     $routes->get('pr', 'Unassigned\UnassignedPRController::index');
     $routes->get('tasks', 'Unassigned\UnassignedTasksController::index');
@@ -137,7 +153,7 @@ $routes->group('unassigned', function($routes) {
 // PPMP
 $routes->group('ppmp', function($routes) {
     $routes->get('create', 'PpmpController::index');
-    $routes->post('create', 'PpmpController::create');
+    $routes->post('save', 'PpmpController::save');
     $routes->get('preview/(:num)', 'PpmpController::preview/$1');
 });
 
@@ -154,6 +170,13 @@ $routes->group('tasks', function($routes) {
 $routes->group('app', function($routes) {
     $routes->get('create', 'AppController::index');
     $routes->post('create', 'AppController::create');
+    $routes->get('preview/(:num)', 'AppController::preview/$1');
+});
+
+// PR
+$routes->group('pr', function($routes) {
+    $routes->get('create', 'PrController::index');
+    $routes->post('save', 'PrController::save');
     $routes->get('preview/(:num)', 'AppController::preview/$1');
 });
 

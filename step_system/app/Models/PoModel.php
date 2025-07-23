@@ -33,7 +33,8 @@ class PoModel extends Model
         'po_orsburs',
         'po_date_orsburs',
         'po_amount',
-        'po_remarks'
+        'po_remarks',
+        'saved_by_user_id_fk',
     ];
 
     protected bool $allowEmptyInserts = false;

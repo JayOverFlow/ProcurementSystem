@@ -2,11 +2,11 @@
 
 namespace App\Controllers\Supply;
 
-use App\Controllers\BaseController;
+use App\Controllers\ProcurementBaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\MrItemModel;
 
-class SupplyController extends BaseController
+class SupplyController extends ProcurementPageController
 {
     protected $userModel;
     protected $userRoleDepartmentModel;
@@ -30,10 +30,14 @@ class SupplyController extends BaseController
     {
         // Get user data via user session using custom helper
         $userData = $this->loadUserSession();
+        $userId = $userData['user_id'];
+
+        $forms = $this->getUsersForms($userId);
 
         // Store data
         $data = [
-            'user_data' => $userData
+            'user_data' => $userData,
+            'forms' => $forms
         ];
         return view('user-pages/supply/sup-procurement', $data);
     }
@@ -77,6 +81,17 @@ class SupplyController extends BaseController
             'user_data' => $userData
         ];
         return view('user-pages/supply/sup-ppmp', $data);
+    }
+    public function pr()
+    {
+        // Get user data via user session using custom helper
+        $userData = $this->loadUserSession();
+
+        // Store data
+        $data = [
+            'user_data' => $userData
+        ];
+        return view('user-pages/supply/sup-pr', $data);
     }
 
     public function par()

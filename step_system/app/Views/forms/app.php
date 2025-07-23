@@ -90,6 +90,21 @@
                             <div class="invoice-detail-note border-top-0">
                                 <div class="row prepared-by-section">
                                     <div class="col-xl-5 invoice-address-client">
+                                        <div class="form-group row mb-3">
+                                            <label for="app-dep-id-fk" class="col-sm-1 col-form-label col-form-label-sm me-4">Department</label>
+                                            <div class="col-sm-9 ms-5">
+                                                <select class="form-control form-control-sm" id="app-dep-id-fk" name="app_dep_id_fk">
+                                                    <option>Select</option>
+                                                    <?php if(empty($departments)): ?>
+                                                        <option value="null">No Offices</option>
+                                                    <?php else: ?>
+                                                        <?php foreach($departments as $department): ?>
+                                                            <option value="<?= esc($department['dep_id']) ?>"><?= esc($department['dep_name']) ?></option>
+                                                        <?php endforeach; ?>
+                                                    <?php endif;?>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <h4>Prepared By:</h4>
                                         <div class="invoice-address-client-fields custom-signature-fields">
                                             <div class="form-group">
@@ -191,7 +206,7 @@
 
                             <div class="row widget-content">
                                 <div class="col-xl-12 col-md-4">
-                                    <button type="submit" class="btn btn-submit w-100 warning save-and-submit" style="background-color: #C62742; color: #FFFFFF">Save & Submit</button>
+                                    <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
                                     <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
