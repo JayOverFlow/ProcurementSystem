@@ -4,9 +4,7 @@
         <div class="doc-container">
             <form id="ppmp-form" action="<?= base_url('ppmp/save') ?>" method="POST">
             <?= csrf_field() ?>
-            <?php if (isset($ppmp['ppmp_id'])): ?>
-                <input type="hidden" name="ppmp_id" value="<?= esc($ppmp['ppmp_id']) ?>">
-            <?php endif; ?>
+            <input type="hidden" name="ppmp_id" value="<?= esc($ppmp['ppmp_id'] ?? '') ?>">
             <div class="row">
                 <div class="col-xl-9">
 
@@ -42,7 +40,7 @@
                                                         <?php if(empty($departments)): ?>
                                                             <option value="null">No Offices</option>
                                                         <?php else: ?>
-                                                            <?php foreach($departments as $department): ?>
+                                                            <?php foreach($departments as $department): /* Pre-populate selected department if editing */?>
                                                                 <option value="<?= esc($department['dep_id']) ?>" <?= (isset($ppmp['ppmp_office_fk']) && $ppmp['ppmp_office_fk'] == $department['dep_id']) ? 'selected' : '' ?>><?= esc($department['dep_name']) ?></option>
                                                             <?php endforeach; ?>
                                                         <?php endif;?>
@@ -55,7 +53,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position1" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position" value="<?= esc($ppmp['ppmp_prepared_by_position'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position" value="<?= esc($ppmp['ppmp_prepared_by_position'] ?? '') /* Pre-populate position */?>">
                                                     </div>
                                                 </div>    
                                                 
@@ -66,8 +64,8 @@
                                                             <option>Select</option>
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
-                                                            <?php else: ?>
-                                                                <?php foreach($users as $user): ?>
+                                                        <?php else: ?>
+                                                                <?php foreach($users as $user): /* Pre-populate selected user */?>
                                                                     <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_prepared_by_name']) && $ppmp['ppmp_prepared_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
@@ -79,7 +77,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position2" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position" value="<?= esc($ppmp['ppmp_recommended_by_position'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position" value="<?= esc($ppmp['ppmp_recommended_by_position'] ?? '') /* Pre-populate position */?>">
                                                     </div>
                                                 </div>    
                                                 
@@ -91,7 +89,7 @@
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
                                                             <?php else: ?>
-                                                                <?php foreach($users as $user): ?>
+                                                                <?php foreach($users as $user): /* Pre-populate selected user */?>
                                                                     <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_recommended_by_name']) && $ppmp['ppmp_recommended_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
@@ -103,7 +101,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position3" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position" value="<?= esc($ppmp['ppmp_evaluated_by_position'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position" value="<?= esc($ppmp['ppmp_evaluated_by_position'] ?? '') /* Pre-populate position */?>">
                                                     </div>
                                                 </div>    
                                                 
@@ -115,7 +113,7 @@
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
                                                             <?php else: ?>
-                                                                <?php foreach($users as $user): ?>
+                                                                <?php foreach($users as $user): /* Pre-populate selected user */?>
                                                                     <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_evaluated_by_name']) && $ppmp['ppmp_evaluated_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
@@ -136,28 +134,28 @@
                                             <div class="form-group row">
                                                 <label for="period-covered" class="col-sm-3 col-form-label col-form-label-sm">Period Covered</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY" value="<?= esc($ppmp['ppmp_period_covered'] ?? '') ?>">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY" value="<?= esc($ppmp['ppmp_period_covered'] ?? '') /* Pre-populate period covered */?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="date-approved" class="col-sm-3 col-form-label col-form-label-sm">Date Approved</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc($ppmp['ppmp_date_approved'] ?? '') ?>">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc($ppmp['ppmp_date_approved'] ?? '') /* Pre-populate date approved */?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-budget-allocated" class="col-sm-3 col-form-label col-form-label-sm">Total Budget Allocated</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated" value="<?= esc($ppmp['ppmp_total_budget_allocated'] ?? '') ?>">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated" value="<?= esc($ppmp['ppmp_total_budget_allocated'] ?? '') /* Pre-populate total budget allocated */?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-proposed-budget" class="col-sm-3 col-form-label col-form-label-sm">Total Proposed Budget</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget" value="<?= esc($ppmp['ppmp_total_proposed_budget'] ?? '') ?>">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget" value="<?= esc($ppmp['ppmp_total_proposed_budget'] ?? '') /* Pre-populate total proposed budget */?>">
                                                 </div>
                                             </div>
                                             
@@ -207,16 +205,17 @@
 
                             
                                         <tbody>
-                                            <?php $mooeIndex = 0; ?>
-                                            <?php if (!empty($ppmp_items)): ?>
+                                            <?php $mooeIndex = 0; /* Initialize index for MOOE items */?>
+                                            <?php if (!empty($ppmp_items)): /* Loop through existing items if available */?>
                                                 <?php foreach ($ppmp_items as $item): ?>
-                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) < 50000): ?>
+                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) < 50000): /* Display only MOOE items */?>
                                                         <tr>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') ?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') ?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') ?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') /* Pre-populate estimated budget */?>">
                                                             <td class="d-flex justify-content-between px-0 ps-1 py-2">
+                                                                <?php /* Pre-populate monthly checkboxes */?>
                                                                 <div class="form-check form-check-danger form-check-inline">
                                                                     <input class="form-check-input" type="checkbox" value="1" id="jan_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?>>
                                                                 </div>
@@ -263,7 +262,7 @@
                                                         <?php $mooeIndex++; ?>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
-                                            <?php else: ?>
+                                            <?php else: /* Display an empty row if no items are pre-populated */?>
                                                 <tr>
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="code" name="items[0][code]">
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="items[0][gen_desc]">
@@ -361,16 +360,17 @@
 
                             
                                         <tbody>
-                                            <?php $coIndex = 0; ?>
-                                            <?php if (!empty($ppmp_items)): ?>
+                                            <?php $coIndex = 0; /* Initialize index for CO items */?>
+                                            <?php if (!empty($ppmp_items)): /* Loop through existing CO items if available */?>
                                                 <?php foreach ($ppmp_items as $item): ?>
-                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) >= 50000): ?>
+                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) >= 50000): /* Display only CO items */?>
                                                         <tr>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') ?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') ?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') ?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') /* Pre-populate estimated budget */?>">
                                                             <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                                <?php /* Pre-populate monthly checkboxes */?>
                                                                 <div class="form-check form-check-danger form-check-inline">
                                                                     <input class="form-check-input" type="checkbox" value="1" id="jan_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?>>
                                                                 </div>
@@ -417,7 +417,7 @@
                                                         <?php $coIndex++; ?>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
-                                            <?php else: ?>
+                                            <?php else: /* Display an empty row if no items are pre-populated */?>
                                                 <tr>
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co" name="items_co[0][code]">
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co" name="items_co[0][gen_desc]">
