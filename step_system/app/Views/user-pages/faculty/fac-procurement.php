@@ -68,7 +68,7 @@
 										<tr>
 											<td><input class="form-check-input" type="checkbox"></td>
 											<td><?= esc($form['type']) ?></td>
-											<td><?= esc($form['document_id']) ?></td>
+											<td><a href="<?= base_url(strtolower($form['type']) . '/edit/' . esc($form['document_id'])) ?>"><?= esc($form['document_id']) ?></a></td>
 											<td><?= esc($form['sent_to']) ?></td>
 											<td><?= esc($form['created_at']) ?></td>
 										</tr>

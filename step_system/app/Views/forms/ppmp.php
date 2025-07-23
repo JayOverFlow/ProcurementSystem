@@ -3,6 +3,10 @@
         
         <div class="doc-container">
             <form id="ppmp-form" action="<?= base_url('ppmp/save') ?>" method="POST">
+            <?= csrf_field() ?>
+            <?php if (isset($ppmp['ppmp_id'])): ?>
+                <input type="hidden" name="ppmp_id" value="<?= esc($ppmp['ppmp_id']) ?>">
+            <?php endif; ?>
             <div class="row">
                 <div class="col-xl-9">
 
@@ -39,7 +43,7 @@
                                                             <option value="null">No Offices</option>
                                                         <?php else: ?>
                                                             <?php foreach($departments as $department): ?>
-                                                                <option value="<?= esc($department['dep_id']) ?>"><?= esc($department['dep_name']) ?></option>
+                                                                <option value="<?= esc($department['dep_id']) ?>" <?= (isset($ppmp['ppmp_office_fk']) && $ppmp['ppmp_office_fk'] == $department['dep_id']) ? 'selected' : '' ?>><?= esc($department['dep_name']) ?></option>
                                                             <?php endforeach; ?>
                                                         <?php endif;?>
                                                     </select>
@@ -51,7 +55,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position1" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position" value="<?= esc($ppmp['ppmp_prepared_by_position'] ?? '') ?>">
                                                     </div>
                                                 </div>    
                                                 
@@ -64,7 +68,7 @@
                                                                 <option value="null">No Users</option>
                                                             <?php else: ?>
                                                                 <?php foreach($users as $user): ?>
-                                                                    <option value="<?= esc($user['user_id']) ?>"><?= esc($user['user_fullname']) ?></option>
+                                                                    <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_prepared_by_name']) && $ppmp['ppmp_prepared_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
                                                         </select>
@@ -75,7 +79,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position2" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position" value="<?= esc($ppmp['ppmp_recommended_by_position'] ?? '') ?>">
                                                     </div>
                                                 </div>    
                                                 
@@ -88,7 +92,7 @@
                                                                 <option value="null">No Users</option>
                                                             <?php else: ?>
                                                                 <?php foreach($users as $user): ?>
-                                                                    <option value="<?= esc($user['user_id']) ?>"><?= esc($user['user_fullname']) ?></option>
+                                                                    <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_recommended_by_name']) && $ppmp['ppmp_recommended_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
                                                         </select>
@@ -99,7 +103,7 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position3" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position" value="<?= esc($ppmp['ppmp_evaluated_by_position'] ?? '') ?>">
                                                     </div>
                                                 </div>    
                                                 
@@ -112,7 +116,7 @@
                                                                 <option value="null">No Users</option>
                                                             <?php else: ?>
                                                                 <?php foreach($users as $user): ?>
-                                                                    <option value="<?= esc($user['user_id']) ?>"><?= esc($user['user_fullname']) ?></option>
+                                                                    <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_evaluated_by_name']) && $ppmp['ppmp_evaluated_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
                                                         </select>
@@ -132,28 +136,28 @@
                                             <div class="form-group row">
                                                 <label for="period-covered" class="col-sm-3 col-form-label col-form-label-sm">Period Covered</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY" value="<?= esc($ppmp['ppmp_period_covered'] ?? '') ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="date-approved" class="col-sm-3 col-form-label col-form-label-sm">Date Approved</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc($ppmp['ppmp_date_approved'] ?? '') ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-budget-allocated" class="col-sm-3 col-form-label col-form-label-sm">Total Budget Allocated</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated" value="<?= esc($ppmp['ppmp_total_budget_allocated'] ?? '') ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-proposed-budget" class="col-sm-3 col-form-label col-form-label-sm">Total Proposed Budget</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget" value="<?= esc($ppmp['ppmp_total_proposed_budget'] ?? '') ?>">
                                                 </div>
                                             </div>
                                             
@@ -203,55 +207,113 @@
 
                             
                                         <tbody>
-                                            <tr>
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="code" name="items[0][code]">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="items[0][gen_desc]">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size" name="items[0][qty_size]">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget" name="items[0][est_budget]">
-                                                <td class="d-flex justify-content-between px-0 ps-1 py-2">
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="jan" name="items[0][month][jan]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="feb" name="items[0][month][feb]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="mar" name="items[0][month][mar]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="par" name="items[0][month][apr]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="may" name="items[0][month][may]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="jun" name="items[0][month][jun]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="jul" name="items[0][month][jul]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="aug" name="items[0][month][aug]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="sep" name="items[0][month][sep]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="oct" name="items[0][month][oct]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="nov" name="items[0][month][nov]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="dec" name="items[0][month][dec]">
-                                                    </div>
-                                                </td>
-                                                <td class="delete-item-row text-center">
-                                                    <ul class="table-controls">
-                                                        <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
+                                            <?php $mooeIndex = 0; ?>
+                                            <?php if (!empty($ppmp_items)): ?>
+                                                <?php foreach ($ppmp_items as $item): ?>
+                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) < 50000): ?>
+                                                        <tr>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') ?>">
+                                                            <td class="d-flex justify-content-between px-0 ps-1 py-2">
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jan_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="feb_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][feb]" <?= ($item['ppmp_sched_feb'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="mar_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][mar]" <?= ($item['ppmp_sched_mar'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="apr_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][apr]" <?= ($item['ppmp_sched_apr'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="may_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][may]" <?= ($item['ppmp_sched_may'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jun_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jun]" <?= ($item['ppmp_sched_jun'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jul_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jul]" <?= ($item['ppmp_sched_jul'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="aug_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][aug]" <?= ($item['ppmp_sched_aug'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="sep_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][sep]" <?= ($item['ppmp_sched_sep'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="oct_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][oct]" <?= ($item['ppmp_sched_oct'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="nov_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][nov]" <?= ($item['ppmp_sched_nov'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="dec_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                            </td>
+                                                            <td class="delete-item-row text-center">
+                                                                <ul class="table-controls">
+                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <?php $mooeIndex++; ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="code" name="items[0][code]">
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="items[0][gen_desc]">
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size" name="items[0][qty_size]">
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget" name="items[0][est_budget]">
+                                                    <td class="d-flex justify-content-between px-0 ps-1 py-2">
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="jan" name="items[0][month][jan]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="feb" name="items[0][month][feb]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="mar" name="items[0][month][mar]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="par" name="items[0][month][apr]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="may" name="items[0][month][may]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="jun" name="items[0][month][jun]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="jul" name="items[0][month][jul]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="aug" name="items[0][month][aug]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="sep" name="items[0][month][sep]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="oct" name="items[0][month][oct]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="nov" name="items[0][month][nov]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="dec" name="items[0][month][dec]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="delete-item-row text-center">
+                                                        <ul class="table-controls">
+                                                            <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -299,55 +361,113 @@
 
                             
                                         <tbody>
-                                            <tr>
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co" name="items_co[0][code]">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co" name="items_co[0][gen_desc]">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co" name="items_co[0][qty_size]">
-                                                <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co" name="items_co[0][est_budget]">
-                                                <td class="d-flex justify-content-between px-0 ps-1 py-3">
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="jan_co" name="items_co[0][month][jan]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="feb_co" name="items_co[0][month][feb]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="mar_co" name="items_co[0][month][mar]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="par_co" name="items_co[0][month][apr]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="may_co" name="items_co[0][month][may]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="jun_co" name="items_co[0][month][jun]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="jul_co" name="items_co[0][month][jul]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="aug_co" name="items_co[0][month][aug]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="sep_co" name="items_co[0][month][sep]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="oct_co" name="items_co[0][month][oct]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="nov_co" name="items_co[0][month][nov]">
-                                                    </div>
-                                                    <div class="form-check form-check-danger form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="1" id="dec_co" name="items_co[0][month][dec]">
-                                                    </div>
-                                                </td>
-                                                <td class="delete-item-row-co text-center">
-                                                    <ul class="table-controls">
-                                                        <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
+                                            <?php $coIndex = 0; ?>
+                                            <?php if (!empty($ppmp_items)): ?>
+                                                <?php foreach ($ppmp_items as $item): ?>
+                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) >= 50000): ?>
+                                                        <tr>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') ?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') ?>">
+                                                            <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jan_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="feb_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][feb]" <?= ($item['ppmp_sched_feb'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="mar_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][mar]" <?= ($item['ppmp_sched_mar'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="apr_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][apr]" <?= ($item['ppmp_sched_apr'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="may_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][may]" <?= ($item['ppmp_sched_may'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jun_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jun]" <?= ($item['ppmp_sched_jun'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jul_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jul]" <?= ($item['ppmp_sched_jul'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="aug_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][aug]" <?= ($item['ppmp_sched_aug'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="sep_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][sep]" <?= ($item['ppmp_sched_sep'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="oct_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][oct]" <?= ($item['ppmp_sched_oct'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="nov_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][nov]" <?= ($item['ppmp_sched_nov'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="dec_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?>>
+                                                                </div>
+                                                            </td>
+                                                            <td class="delete-item-row-co text-center">
+                                                                <ul class="table-controls">
+                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <?php $coIndex++; ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co" name="items_co[0][code]">
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co" name="items_co[0][gen_desc]">
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co" name="items_co[0][qty_size]">
+                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co" name="items_co[0][est_budget]">
+                                                    <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="jan_co" name="items_co[0][month][jan]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="feb_co" name="items_co[0][month][feb]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="mar_co" name="items_co[0][month][mar]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="par_co" name="items_co[0][month][apr]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="may_co" name="items_co[0][month][may]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="jun_co" name="items_co[0][month][jun]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="jul_co" name="items_co[0][month][jul]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="aug_co" name="items_co[0][month][aug]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="sep_co" name="items_co[0][month][sep]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="oct_co" name="items_co[0][month][oct]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="nov_co" name="items_co[0][month][nov]">
+                                                        </div>
+                                                        <div class="form-check form-check-danger form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" value="1" id="dec_co" name="items_co[0][month][dec]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="delete-item-row-co text-center">
+                                                        <ul class="table-controls">
+                                                            <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>

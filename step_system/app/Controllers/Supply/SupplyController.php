@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Supply;
 
-use App\Controllers\ProcurementBaseController;
+use App\Controllers\ProcurementPageController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\MrItemModel;
 

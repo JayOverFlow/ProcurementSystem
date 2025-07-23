@@ -153,6 +153,7 @@ $routes->group('unassigned', function($routes) {
 // PPMP
 $routes->group('ppmp', function($routes) {
     $routes->get('create', 'PpmpController::index');
+    $routes->get('edit/(:num)', 'PpmpController::edit/$1');
     $routes->post('save', 'PpmpController::save');
     $routes->get('preview/(:num)', 'PpmpController::preview/$1');
 });

@@ -192,4 +192,26 @@ class PpmpController extends BaseController
         
         return view('preview-pages/ppmp-preview', $data);
     }
+
+    public function edit($ppmpId)
+    {
+        $ppmp = $this->ppmpModel->find($ppmpId);
+        if (!$ppmp) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('PPMP not found for editing.');
+        }
+
+        $ppmpItems = $this->ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
+        $departments = $this->departmentModel->getAllDepartments();
+        $users = $this->userModel->getAllUsers();
+
+        $data = [
+            'ppmp' => $ppmp,
+            'ppmp_items' => $ppmpItems,
+            'departments' => $departments,
+            'users' => $users,
+            'user_data' => $this->loadUserSession()
+        ];
+        
+        return view('forms/ppmp', $data);
+    }
 } 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Unassigned;
 
-use App\Controllers\ProcurementBaseController;
+use App\Controllers\ProcurementPageController;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class UnassignedProcurementController extends ProcurementPageController
