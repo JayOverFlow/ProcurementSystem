@@ -8,107 +8,83 @@ use App\Models\UserModel;
 use App\Models\UserRoleDepartmentModel;
 use App\Models\DepartmentBudgetModel;
 
-class DHDashboard extends BaseController {
+// class DHDashboard extends BaseController {
 
 
-    protected $userModel;
-    protected $userRoleDepartmentModel;
-    protected $departmentBudgetModel;
+//     protected $userModel;
+//     protected $userRoleDepartmentModel;
+//     protected $departmentBudgetModel;
 
-    public function __construct () 
-    { 
-        $this->userModel = new UserModel();
-        $this->userRoleDepartmentModel = new UserRoleDepartmentModel();
-        $this->departmentBudgetModel = new DepartmentBudgetModel();
+//     public function __construct () 
+//     { 
+//         $this->userModel = new UserModel();
+//         $this->userRoleDepartmentModel = new UserRoleDepartmentModel();
+//         $this->departmentBudgetModel = new DepartmentBudgetModel();
 
-    }
+//     }
 
-    public function index()
-    {
+//     public function index()
+//     {
 
-        // Get user data via user session using custom helper
-        $userData = $this->loadUserSession();
-        $currentUserId = $userData['user_id'];
-        $departmentId = $userData['user_dep_id'];
+//         // Get user data via user session using custom helper
+//         $userData = $this->loadUserSession();
+//         $currentUserId = $userData['user_id'];
+//         $departmentId = $userData['user_dep_id'];
 
-        // Get dashboard data
-        $dashboardData = [
-            'procurement_status' => null,
-            'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
-            'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
-            'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-            'subordinates' => $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId)
-        ];
+//         // Get dashboard data
+//         $dashboardData = [
+//             'procurement_status' => null,
+//             'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
+//             'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
+//             'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
+//             'subordinates' => $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId)
+//         ];
 
-        // Store data
-        $data = [
-            'user_data' => $userData,
-            'dashboard_data' => $dashboardData
-        ];
+//         // Store data
+//         $data = [
+//             'user_data' => $userData,
+//             'dashboard_data' => $dashboardData
+//         ];
 
-        // Return page with user data
-        return view('user-pages/head/head-dashboard', $data);
-    }
+//         // Return page with user data
+//         return view('user-pages/head/head-dashboard', $data);
+//     }
 
 
-    public function tasks()
-    {
-        // Get user data via user session using custom helper
-        $userData = $this->loadUserSession();
+    // public function ppmp()
+    // {
+    //     // Get user data via user session using custom helper
+    //     $userData = $this->loadUserSession();
 
-        // Store data
-        $data = [
-            'user_data' => $userData
-        ];
-        return view('user-pages/head/head-tasks', $data);
-    }
+    //     // Store data
+    //     $data = [
+    //         'user_data' => $userData
+    //     ];
+    //     return view('user-pages/head/head-ppmp', $data);
+    // }
 
-    public function mr()
-    {
-        // Get user data via user session using custom helper
-        $userData = $this->loadUserSession();
+    // public function pr()
+    // {
+    //     // Get user data via user session using custom helper
+    //     $userData = $this->loadUserSession();
 
-        // Store data
-        $data = [
-            'user_data' => $userData
-        ];
-        return view('user-pages/head/head-mr', $data);
-    }
+    //     // Store data
+    //     $data = [
+    //         'user_data' => $userData
+    //     ];
+    //     return view('user-pages/head/head-pr', $data);
+    // }
+    // public function app()
+    // {
+    //     // Get user data via user session using custom helper
+    //     $userData = $this->loadUserSession();
 
-    public function ppmp()
-    {
-        // Get user data via user session using custom helper
-        $userData = $this->loadUserSession();
-
-        // Store data
-        $data = [
-            'user_data' => $userData
-        ];
-        return view('user-pages/head/head-ppmp', $data);
-    }
-
-    public function pr()
-    {
-        // Get user data via user session using custom helper
-        $userData = $this->loadUserSession();
-
-        // Store data
-        $data = [
-            'user_data' => $userData
-        ];
-        return view('user-pages/head/head-pr', $data);
-    }
-    public function app()
-    {
-        // Get user data via user session using custom helper
-        $userData = $this->loadUserSession();
-
-        // Store data
-        $data = [
-            'user_data' => $userData
-        ];
-        return view('user-pages/head/head-app', $data);
-    }
+    //     // Store data
+    //     $data = [
+    //         'user_data' => $userData
+    //     ];
+    //     return view('user-pages/head/head-app', $data);
+    // }
 
     // public function createPpmp()
     // {
@@ -165,4 +141,4 @@ class DHDashboard extends BaseController {
     //         return redirect()->to('head/ppmp')->with('status', 'Failed to create PPMP');
     //     }
     // }
-}
+// }

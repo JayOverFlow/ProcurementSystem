@@ -52,7 +52,7 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
             </li>
 
             <li class="menu">
-                <a href="<?= base_url('procurement/mr') ?>"
+                <a href="<?= base_url('/mr') ?>"
                    class="dropdown-toggle <?= $current_path === 'procurement/mr' ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div>
                         <img src="<?= base_url('assets/images/icon-mr.svg') ?>" width="24" height="24" alt="Box">
