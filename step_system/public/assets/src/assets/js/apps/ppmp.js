@@ -94,7 +94,7 @@ document.getElementsByClassName('additem-co')[0].addEventListener('click', funct
     '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co" name="items_co[' + currentIndex + '][code]">' +
     '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co" name="items_co[' + currentIndex + '][gen_desc]">' +
     '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co" name="items_co[' + currentIndex + '][qty_size]">' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co" name="items_co[' + currentIndex + '][est_budget]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co" name="items_co[' + currentIndex + '][est_budget]" value="50000">' +
     '  <td class="d-flex justify-content-between px-0 ps-1 py-3">' +
     '      <div class="form-check form-check-danger form-check-inline">' +
     '          <input class="form-check-input" type="checkbox" value="1" id="jan_co" name="items_co[' + currentIndex + '][month][jan]">' +

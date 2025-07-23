@@ -40,20 +40,7 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                         <span class="ms-2 shadow-text">Procurement</span>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled <?= $is_procurement_page ? 'show' : '' ?>" id="procurement" data-bs-parent="#accordionExample" style="min-width: 20rem;">
-                    <li>
-                        <a href="<?= base_url('/ppmp/create') ?>"
-                           class="<?= $current_path === '/ppmp/create' ? 'active text-primary fw-bold' : '' ?>">
-                            Project Procurement Management Plan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= base_url('/pr/create') ?>"
-                           class="<?= $current_path === '/pr/create' ? 'active text-primary fw-bold' : '' ?>">
-                            Purchase Request
-                        </a>
-                    </li>
-                </ul>
+                
             </li>
 
             <li class="menu">

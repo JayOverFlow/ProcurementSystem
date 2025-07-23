@@ -25,7 +25,7 @@ class PpmpController extends BaseController
         $this->taskModel = new TaskModel();
     }
 
-    public function index()
+    public function index($ppmpId = null)
     {
         $userData = $this->loadUserSession();
         $departments = $this->departmentModel->getAllDepartments();
@@ -34,8 +34,22 @@ class PpmpController extends BaseController
         $data = [
             'user_data' => $userData,
             'departments' => $departments,
-            'users' => $users
+            'users' => $users,
+            'ppmp' => null, // Will hold the PPMP main data if editing an existing form
+            'ppmp_items' => [] // Will hold the PPMP items data if editing an existing form
         ];
+
+        // If a ppmpId is provided in the URL, fetch the existing PPMP data
+        if ($ppmpId) {
+            $ppmp = $this->ppmpModel->find($ppmpId);
+            if ($ppmp) {
+                // If PPMP found, fetch its associated items
+                $ppmpItems = $this->ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
+                // Populate the data array with existing PPMP and its items
+                $data['ppmp'] = $ppmp;
+                $data['ppmp_items'] = $ppmpItems;
+            }
+        }
 
         $role = $userData['gen_role'] ?? null;
 
@@ -60,12 +74,9 @@ class PpmpController extends BaseController
     public function save()
     {
         $userData = $this->loadUserSession();
-        // $ppmpModel = new PpmpModel();
-        // $ppmpItemModel = new PpmpItemModel();
-        // $taskModel = new TaskModel();
-        // $userModel = new UserModel();
         $db = \Config\Database::connect();
-        // $userId = session()->get('user_id'); 
+
+        $ppmpId = $this->request->getPost('ppmp_id'); // Get ppmp_id from hidden input
 
         $db->transStart();
 
@@ -88,10 +99,19 @@ class PpmpController extends BaseController
                 'ppmp_remarks' => 'PPMP remark'
             ];
 
-            $this->ppmpModel->insert($ppmpData);
-            $ppmpId = $this->ppmpModel->getInsertID();
+            if ($ppmpId) {
+                // Update existing PPMP
+                $this->ppmpModel->update($ppmpId, $ppmpData);
 
-            // 2. Prepare and insert into ppmp_items_tbl
+                // Delete existing items for this PPMP before inserting new ones
+                $this->ppmpItemModel->where('ppmp_id_fk', $ppmpId)->delete();
+            } else {
+                // Insert new PPMP
+                $this->ppmpModel->insert($ppmpData);
+                $ppmpId = $this->ppmpModel->getInsertID();
+            }
+
+            // 2. Prepare and insert/update into ppmp_items_tbl
             $allItems = [];
             $mooeItems = $this->request->getPost('items') ?? [];
             $coItems = $this->request->getPost('items_co') ?? [];
@@ -99,10 +119,6 @@ class PpmpController extends BaseController
             $items = array_merge($mooeItems, $coItems);
 
             foreach ($items as $item) {
-                // if (empty($item['gen_desc']) && empty($item['code'])) {
-                //     continue;
-                // }
-                
                 $months = $item['month'] ?? [];
 
                 $allItems[] = [
@@ -130,26 +146,23 @@ class PpmpController extends BaseController
                 $this->ppmpItemModel->insertBatch($allItems);
             }
             
-            // 3. Create tasks for Planning Officers
-            // $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
-            // foreach ($planningOfficers as $officerId) {
-            //     $this->taskModel->insert([
-            //         'submitted_by' => $userData['user_id'],
-            //         'submitted_to' => null,
-            //         'ppmp_id_fk' => $ppmpId,
-            //         'task_type' => 'Project Procurement Management',
-            //         'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
-            //     ]);
-            // }
-
-            $this->taskModel->insert([
+            // Create/Update task for Planning Officers
+            $taskData = [
                 'submitted_by' => $userData['user_id'],
                 'submitted_to' => null,
                 'ppmp_id_fk' => $ppmpId,
                 'task_type' => 'Project Procurement Management',
-                'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
-            ]);
+                'task_description' => 'Project Procurement Management Plan has been ' . ($ppmpId ? 'updated' : 'submitted') . ' for your review.'
+            ];
 
+            // Check if a task for this PPMP already exists
+            $existingTask = $this->taskModel->where('ppmp_id_fk', $ppmpId)->first();
+
+            if ($existingTask) {
+                $this->taskModel->update($existingTask['task_id'], $taskData);
+            } else {
+                $this->taskModel->insert($taskData);
+            }
 
             $db->transComplete();
 
@@ -172,8 +185,6 @@ class PpmpController extends BaseController
         $departmentModel = new DepartmentModel;
         $userModel = new UserModel();
 
-        // $data['ppmp'] = $ppmpModel->find($ppmpId);
-        // $data['ppmp_items'] = $ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
         $ppmp = $ppmpModel->find($ppmpId);
         $ppmpItems = $ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
 
@@ -192,4 +203,51 @@ class PpmpController extends BaseController
         
         return view('preview-pages/ppmp-preview', $data);
     }
-} 
+
+    public function delete()
+    {
+        if ($this->request->isAJAX()) {
+            $taskIds = $this->request->getPost('task_ids');
+            if (empty($taskIds)) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'No forms selected.']);
+            }
+
+            $db = \Config\Database::connect();
+            $db->transStart();
+
+            try {
+                $taskModel = new TaskModel();
+                $ppmpModel = new PpmpModel();
+                $ppmpItemModel = new PpmpItemModel();
+
+                foreach ($taskIds as $taskId) {
+                    $task = $taskModel->find($taskId);
+                    if ($task && $task['ppmp_id_fk']) {
+                        $ppmpId = $task['ppmp_id_fk'];
+                        
+                        // Delete from child table first
+                        $ppmpItemModel->where('ppmp_id_fk', $ppmpId)->delete();
+                        
+                        // Then delete from parent table
+                        $ppmpModel->delete($ppmpId);
+
+                        // Finally, delete the task
+                        $taskModel->delete($taskId);
+                    }
+                }
+
+                $db->transComplete();
+
+                if ($db->transStatus() === false) {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'An error occurred during deletion.']);
+                }
+
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Selected forms have been deleted.']);
+            } catch (\Exception $e) {
+                log_message('error', 'Deletion Error: ' . $e->getMessage());
+                return $this->response->setJSON(['status' => 'error', 'message' => 'An unexpected error occurred.']);
+            }
+        }
+        return $this->response->setStatusCode(400, 'Invalid request.');
+    }
+}

@@ -29,12 +29,12 @@
 				<div id="ecommerce-list_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 					<div class="row pt-4 pb-0 align-items-center justify-content-center">
 						<div class="col-auto d-flex align-items-center ms-3" style="gap: 0.5rem;">
-							<input class="form-check-input" type="checkbox" id="filterCheckbox" style="width: 1.1em; height: 1.1em;">
+							<input class="form-check-input" type="checkbox" id="filterCheckbox" style="width: 1.1em; height: 1.1em;" checked>
 							<label for="filter-form-type" class="form-label mb-0 me-1" style="font-weight: 500;">Filter:</label>
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
-								<option value="PR" selected>PR</option>
+								<option value="PR">PR</option>
 								<option value="PPMP">PPMP</option>
-								<option value="">All</option>
+								<option value="" selected>All</option>
 							</select>
 						</div>
 						<div class="col d-flex justify-content-end align-items-center">
@@ -65,8 +65,9 @@
 							<tbody>
 								<?php if (!empty($forms)): ?>
 									<?php foreach ($forms as $form): ?>
-										<tr>
-											<td><input class="form-check-input" type="checkbox"></td>
+										<?php /* Make the entire row clickable to view/edit the form */ ?>
+										<tr data-href="<?= base_url(strtolower($form['type']) . '/create/' . esc($form['document_id'])) ?>" style="cursor: pointer;">
+											<td><input class="form-check-input" type="checkbox" onclick="event.stopPropagation();"></td>
 											<td><?= esc($form['type']) ?></td>
 											<td><?= esc($form['document_id']) ?></td>
 											<td><?= esc($form['sent_to']) ?></td>
@@ -75,7 +76,7 @@
 									<?php endforeach; ?>
 								<?php else: ?>
 									<tr>
-										<td colspan="5" class="text-center">No forms found.</td>
+										<td colspan="5" class="text-center">You haven't created any forms yet.</td>
 									</tr>
 								<?php endif; ?>
 							</tbody>
@@ -102,8 +103,8 @@
         </button>
       </div>
       <div class="modal-body d-flex flex-column gap-2">
-        <button class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</button>
-        <button class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</button>
+        <a href="<?= base_url('ppmp/create') ?>" class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</a>
+        <a href="<?= base_url('pr/create') ?>" class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</a>
       </div>
     </div>
   </div>
@@ -122,7 +123,7 @@
                     "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
                     "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
                 },
-                "sInfo": "	Showing page _PAGE_ of _PAGES_",
+                "sInfo": "\tShowing page _PAGE_ of _PAGES_",
                 "sSearch": "",
                 "sSearchPlaceholder": "",
                 // No length menu
@@ -152,6 +153,14 @@
                 if (el && el.checked && ('indeterminate' in el)) {
                     el.indeterminate = true;
                 }
+            }
+        });
+
+        // Handle row click to navigate
+        $('#procurement-table tbody').on('click', 'tr[data-href]', function(event) {
+            // Prevent navigation if the click was on a checkbox
+            if (!$(event.target).is('input[type="checkbox"]')) {
+                window.location.href = $(this).data('href');
             }
         });
     });

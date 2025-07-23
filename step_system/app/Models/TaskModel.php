@@ -10,7 +10,7 @@ class TaskModel extends Model
     protected $primaryKey       = 'task_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
         'submitted_by',
@@ -20,6 +20,8 @@ class TaskModel extends Model
         'ppmp_id_fk',
         'app_id_fk',
         'task_type',
+        'task_description',
+        'is_deleted',
         'pr_id_fk',
         'po_id_fk',
     ];
@@ -31,7 +33,7 @@ class TaskModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $deletedField  = 'is_deleted';
 
     // Validation
     protected $validationRules      = [];
@@ -41,7 +43,7 @@ class TaskModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
+    protected $beforeInsert   = ['addCreatedBy'];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
