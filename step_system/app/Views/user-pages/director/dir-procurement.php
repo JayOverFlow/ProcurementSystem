@@ -42,7 +42,7 @@
 								<input id="custom-search" type="text" class="form-control" placeholder="Search...">
 							</div>
 							<button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#createFormModal">CREATE</button>
-							<button class="btn btn-dark d-flex align-items-center justify-content-center p-0" id="deleteSelectedButton" style="height:38px; width:38px; min-width:0;" disabled>
+							<button class="btn btn-dark d-flex align-items-center justify-content-center p-0" style="height:38px; width:38px; min-width:0;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
 									<polyline points="3 6 5 6 21 6"></polyline>
 									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -67,7 +67,7 @@
 									<?php foreach ($forms as $form): ?>
 										<?php /* Make the entire row clickable to view/edit the form */ ?>
 										<tr data-href="<?= base_url(strtolower($form['type']) . '/create/' . esc($form['document_id'])) ?>" style="cursor: pointer;">
-											<td><input class="form-check-input" type="checkbox" data-task-id="<?= esc($form['task_id']) ?>" onclick="event.stopPropagation();"></td>
+											<td><input class="form-check-input" type="checkbox" onclick="event.stopPropagation();"></td>
 											<td><?= esc($form['type']) ?></td>
 											<td><?= esc($form['document_id']) ?></td>
 											<td><?= esc($form['sent_to']) ?></td>
@@ -115,11 +115,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script>
-    // Define global JavaScript variables for base_url and CSRF token
-    const BASE_URL = '<?= base_url() ?>';
-    const CSRF_TOKEN = '<?= csrf_hash() ?>';
-    const csrf_token_name = '<?= csrf_token() ?>';
-
     $(document).ready(function() {
         var table = $('#procurement-table').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'>>><'table-responsive'tr><'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
@@ -138,33 +133,7 @@
             "order": [],
             "columnDefs": [
                 { "orderable": false, "targets": 0 }
-            ],
-            "initComplete": function() {
-                // Delete button logic
-                function toggleDeleteButton() {
-                    const checkedCheckboxes = $('#procurement-table tbody input[type="checkbox"]:checked');
-                    if (checkedCheckboxes.length > 0) {
-                        $('#deleteSelectedButton').prop('disabled', false);
-                    } else {
-                        $('#deleteSelectedButton').prop('disabled', true);
-                    }
-                }
-
-                // Initial check for delete button state
-                toggleDeleteButton();
-
-                // Listen for changes on individual checkboxes
-                $('#procurement-table tbody').on('change', 'input[type="checkbox"]', function() {
-                    toggleDeleteButton();
-                });
-
-                // Listen for changes on select-all checkbox
-                $('#select-all').on('change', function() {
-                    // Toggle individual checkboxes based on select-all
-                    $('#procurement-table tbody input[type="checkbox"]').prop('checked', this.checked);
-                    toggleDeleteButton();
-                });
-            }
+            ]
         });
         // Custom search input
         $('#custom-search').on('keyup', function() {

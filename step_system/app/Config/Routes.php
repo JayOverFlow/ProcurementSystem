@@ -166,11 +166,6 @@ $routes->group('tasks', function($routes) {
     $routes->post('update-app-status', 'TasksController::updateAppStatus');
 });
 
-// Procurement General Routes (for actions common to all procurement pages)
-$routes->group('procurement', function($routes) {
-    $routes->post('deleteForms', 'ProcurementPageController::deleteForms');
-});
-
 
 // APP
 $routes->group('app', function($routes) {
