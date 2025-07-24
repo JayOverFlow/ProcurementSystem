@@ -60,7 +60,7 @@ class AppController extends BaseController
         try {
             // 1. Insert into app_tbl
             $appData = [
-                'app_status' => 'Pending',
+                'app_status' => 'Draft',
                 'saved_by_user_id_fk' => $userData['user_id'],
                 'app_prepared_by_name' => $this->request->getPost('app_prepared_by_name'),
                 'app_prepared_by_designation' => $this->request->getPost('prepared_by_designation'),

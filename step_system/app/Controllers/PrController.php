@@ -68,7 +68,7 @@ class PrController extends BaseController
             // 1. Insert into pr_tbl
             $prData = [
                 'pr_section' => $this->request->getPost('pr_section'),
-                'pr_status' => 'Pending',
+                'pr_status' => 'Draft',
                 'pr_department' => $this->request->getPost('pr_department'),
                 'pr_no_date' => $this->request->getPost('pr_no_date'),
                 'pr_sai_no_date' => $this->request->getPost('pr_sai_no_date'),

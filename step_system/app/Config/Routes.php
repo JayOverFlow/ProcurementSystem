@@ -206,6 +206,11 @@ $routes->group('dashboard', function($routes) {
     $routes->get('', 'DashboardController::index');
 });
 
+// Procurement
+$routes->group('procurement', function($routes) {
+    $routes->get('', 'ProcurementController::index');
+});
+
 // Stepper
 $routes->group('stepper', function($routes) {
     $routes->get('stepper-status/(:num)', 'StepperController::getStepperStatus/$1');
