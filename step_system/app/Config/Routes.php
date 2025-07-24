@@ -155,6 +155,7 @@ $routes->group('ppmp', function($routes) {
     $routes->get('create', 'PpmpController::index');
     $routes->get('create/(:num)', 'PpmpController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PpmpController::save');
+    $routes->post('submit', 'PpmpController::submit');
     $routes->get('preview/(:num)', 'PpmpController::preview/$1');
 });
 
@@ -164,11 +165,6 @@ $routes->group('tasks', function($routes) {
     $routes->get('details/(:num)', 'TasksController::getDetails/$1');
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
     $routes->post('update-app-status', 'TasksController::updateAppStatus');
-});
-
-// Procurement General Routes (for actions common to all procurement pages)
-$routes->group('procurement', function($routes) {
-    $routes->post('deleteForms', 'ProcurementPageController::deleteForms');
 });
 
 

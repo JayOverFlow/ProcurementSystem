@@ -63,8 +63,7 @@ class ProcurementPageController extends BaseController
                 'type' => 'PPMP',
                 'document_id' => $form['ppmp_id'],
                 'sent_to' => $sentTo,
-                'created_at' => $createdAt,
-                'task_id' => $task['task_id'] ?? null // Add task_id
+                'created_at' => $createdAt
             ];
         }
 
@@ -85,8 +84,7 @@ class ProcurementPageController extends BaseController
                 'type' => 'APP',
                 'document_id' => $form['app_id'],
                 'sent_to' => $sentTo,
-                'created_at' => $createdAt,
-                'task_id' => $task['task_id'] ?? null // Add task_id
+                'created_at' => $createdAt
             ];
         }
 
@@ -107,8 +105,7 @@ class ProcurementPageController extends BaseController
                 'type' => 'PR',
                 'document_id' => $form['pr_id'],
                 'sent_to' => $sentTo,
-                'created_at' => $createdAt,
-                'task_id' => $task['task_id'] ?? null // Add task_id
+                'created_at' => $createdAt
             ];
         }
 
@@ -129,8 +126,7 @@ class ProcurementPageController extends BaseController
                 'type' => 'PO',
                 'document_id' => $form['po_id'],
                 'sent_to' => $sentTo,
-                'created_at' => $createdAt,
-                'task_id' => $task['task_id'] ?? null // Add task_id
+                'created_at' => $createdAt
             ];
         }
 
@@ -151,8 +147,7 @@ class ProcurementPageController extends BaseController
                 'type' => 'PAR',
                 'document_id' => $form['prop_ack_id'],
                 'sent_to' => $sentTo,
-                'created_at' => $createdAt,
-                'task_id' => $task['task_id'] ?? null // Add task_id
+                'created_at' => $createdAt
             ];
         }
 
@@ -173,8 +168,7 @@ class ProcurementPageController extends BaseController
                 'type' => 'ICS',
                 'document_id' => $form['invent_custo_id'],
                 'sent_to' => $sentTo,
-                'created_at' => $createdAt,
-                'task_id' => $task['task_id'] ?? null // Add task_id
+                'created_at' => $createdAt
             ];
         }
 
@@ -184,44 +178,5 @@ class ProcurementPageController extends BaseController
         });
 
         return $forms;
-    }
-
-    public function deleteForms()
-    {
-        $this->response->setHeader('Content-Type', 'application/json');
-        if ($this->request->isAJAX() && $this->request->getMethod() === 'post') {
-            $taskIds = $this->request->getPost('task_ids');
-
-            if (empty($taskIds)) {
-                return $this->response->setJSON([
-                    'status' => 'error',
-                    'message' => 'No tasks selected for deletion.'
-                ]);
-            }
-
-            $deletedCount = 0;
-            foreach ($taskIds as $taskId) {
-                if ($this->taskModel->delete((int)$taskId)) {
-                    $deletedCount++;
-                }
-            }
-
-            if ($deletedCount > 0) {
-                return $this->response->setJSON([
-                    'status' => 'success',
-                    'message' => $deletedCount . ' form(s) soft deleted successfully.'
-                ]);
-            } else {
-                return $this->response->setJSON([
-                    'status' => 'error',
-                    'message' => 'No forms were deleted. They might already be deleted or do not exist.'
-                ]);
-            }
-        } else {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Invalid request.'
-            ]);
-        }
     }
 } 

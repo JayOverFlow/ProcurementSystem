@@ -493,7 +493,10 @@
 
                             <div class="row widget-content">
                                 <div class="col-xl-12 col-md-4">
-                                    <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
+                                    <button type="submit" formaction="<?= base_url('ppmp/save') ?>" class="btn btn-submit w-100 save-ppmp" style="background-color: #7B7B7B; color: #FFFFFF">Save</button>
+                                </div>
+                                <div class="col-xl-12 col-md-4">
+                                    <button type="submit" formaction="<?= base_url('ppmp/submit') ?>" class="btn btn-submit w-100 warning submit-ppmp" style="background-color: #C62742; color: #FFFFFF" <?= !isset($ppmp['ppmp_id']) || empty($ppmp['ppmp_id']) ? 'disabled' : '' ?>>Submit</button>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
                                     <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
