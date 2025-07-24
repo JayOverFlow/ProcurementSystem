@@ -160,4 +160,53 @@ class AppController extends BaseController
         
         return view('preview-pages/app-preview', $data);
     }
+
+    public function submit() {
+        $db = \Config\Database::connect(); // Database connection
+        $appId = $this->request->getPost('app_id'); // Get the app_id from hidden input field
+
+        // If the document already submitted
+        $app = $this->appModel->find($appId);
+        if ($app && $app['app_status'] !== 'Draft') {
+            return redirect()->to('app/create/' . $appId)->with('error', 'This Annual Procurement Plan has already been submitted.');
+        }
+
+        $director = $this->userModel->getDirector(); // Get Director
+        // If there's no Director
+        if (empty($director)) {
+            return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
+        }
+
+        $db->transStart(); // Start db transaction
+
+        try {
+            $task = $this->getTaskByAppId($appId); // Get task corresponds to appId
+            // If task found
+            if ($task) {
+                // Update task to submit to director
+                $this->taskModel->update($task['task_id'],[
+                    'submitted_to' => $director,
+                    'task_description' => 'A new Annual Procurement Plan has been submitted for your review.',
+                ]);
+            } else { // If task not found
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+            }
+
+            $this->appModel->update($appId, ['app_status' => 'Pending']); // Update the app_status to Pending
+
+            $db->transComplete(); // Complete the database transaction
+
+            // If transaction failed
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
+            }
+
+            // Redirect back with succesful message
+            return redirect()->to('app/create' . $appId)->with('success', 'Annual Procurement Plan successfully submitted to Campus Director for review.');
+
+        } catch (\Exception $e) {
+            log_message('error', 'APP Submission Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
+        }
+    }
 }
