@@ -19,7 +19,7 @@ class PoItemModel extends Model
         'po_items_descrip',
         'po_items_quantity',
         'po_items_cost',
-        'po_items_total_cost'
+        'po_items_amount'
     ];
 
     protected bool $allowEmptyInserts = false;
