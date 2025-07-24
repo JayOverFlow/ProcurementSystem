@@ -55,11 +55,13 @@ class TaskModel extends Model
 
     public function getTasksForUser(int $userId)
     {
-        return $this->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status, app_tbl.app_status')
+        return $this->withDeleted()
+                    ->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status, app_tbl.app_status')
                     ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_by')
                     ->join('ppmp_tbl', 'ppmp_tbl.ppmp_id = tasks_tbl.ppmp_id_fk', 'left')
                     ->join('app_tbl', 'app_tbl.app_id = tasks_tbl.app_id_fk', 'left')
                     ->where('tasks_tbl.submitted_to', $userId)
+                    ->where('is_deleted', 0)
                     ->orderBy('tasks_tbl.created_at', 'DESC')
                     ->findAll();
     }
