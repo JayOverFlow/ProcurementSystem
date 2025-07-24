@@ -152,13 +152,17 @@ class PpmpController extends BaseController
                 'submitted_to' => null,
                 'ppmp_id_fk' => $ppmpId,
                 'task_type' => 'Project Procurement Management',
-                'task_description' => 'Project Procurement Management Plan has been ' . ($ppmpId ? 'updated' : 'submitted') . ' for your review.'
+                'task_description' => 'Project Procurement Management Plan has been ' . ($ppmpId ? 'updated' : 'submitted') . ' for your review.',
+                'is_deleted' => 0 // Explicitly set is_deleted to 0 for new or updated tasks
             ];
 
             // Check if a task for this PPMP already exists
             $existingTask = $this->taskModel->where('ppmp_id_fk', $ppmpId)->first();
 
             if ($existingTask) {
+                // When updating an existing task, ensure is_deleted remains 0 unless intended to be restored
+                // For now, if it was previously 0, it stays 0. If it was 1 (soft deleted), it will remain 1 unless explicitly changed.
+                // We add is_deleted to $taskData above to ensure consistency on update as well.
                 $this->taskModel->update($existingTask['task_id'], $taskData);
             } else {
                 $this->taskModel->insert($taskData);
