@@ -10,7 +10,7 @@ class TaskModel extends Model
     protected $primaryKey       = 'task_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true; // Enable soft deletes for this model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'submitted_by',
@@ -21,19 +21,21 @@ class TaskModel extends Model
         'app_id_fk',
         'task_type',
         'task_description',
-        'is_deleted',
+        'is_deleted', // Re-added 'is_deleted' to $allowedFields for explicit update by soft delete
         'pr_id_fk',
         'po_id_fk',
+        'par_id_fk', // Added to allowed fields to ensure it can be assigned
+        'ics_id_fk', // Added to allowed fields to ensure it can be assigned
     ];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = false; // Changed to false as 'tasks_tbl' does not have 'updated_at' or 'deleted_at' columns
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $updatedField  = ''; // Removed 'updated_at' reference
+    protected $deletedField  = 'is_deleted'; // Correctly specifies the soft delete column
 
     // Validation
     protected $validationRules      = [];
