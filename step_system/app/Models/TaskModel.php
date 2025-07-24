@@ -84,4 +84,11 @@ class TaskModel extends Model
                     ->where('is_deleted', 0)
                     ->first();
     }
+
+    public function getTaskByPrId($prId) {
+        return $this->withDeleted()
+                    ->where('pr_id_fk', $prId)
+                    ->where('is_deleted', 0)
+                    ->first();
+    }
 }

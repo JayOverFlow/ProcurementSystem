@@ -148,5 +148,19 @@ class UserModel extends Model {
                     ->where('roles_tbl.role_name', 'Campus Director')
                     ->first();
     }
+
+    public function getHeadByDepId($depId)
+    {
+        return $this->select('users_tbl.user_id')
+            ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+            ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id')
+            ->where('user_role_department_tbl.department_id', $depId)
+            ->groupStart()
+                ->like('roles_tbl.role_name', 'Head', 'after')
+                ->orLike('roles_tbl.role_name', 'Department Head', 'after')
+                ->orLike('roles_tbl.role_name', 'Planning Officer', 'after')
+            ->groupEnd()
+            ->first();
+    }
 }
 
