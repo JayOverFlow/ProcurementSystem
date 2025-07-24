@@ -95,7 +95,7 @@ class PpmpController extends BaseController
                 'ppmp_recommended_by_name' => $this->request->getPost('ppmp_recommended_by_name'),
                 'ppmp_evaluated_by_position' => $this->request->getPost('ppmp_evaluated_by_position'),
                 'ppmp_evaluated_by_name' => $this->request->getPost('ppmp_evaluated_by_name'),
-                'ppmp_status' => 'Pending', // Default status
+                'ppmp_status' => 'Draft', // Default status
                 'ppmp_remarks' => 'PPMP remark'
             ];
 
@@ -214,6 +214,12 @@ class PpmpController extends BaseController
         if (empty($ppmpId)) {
             return redirect()->back()->with('error', 'Invalid Project Procurement Management Plan ID for submission.');
         }
+        
+        // Check if PPMP has already been submitted
+        $ppmp = $this->ppmpModel->find($ppmpId);
+        if ($ppmp && $ppmp['ppmp_status'] !== 'Draft') {
+            return redirect()->to('ppmp/create/' . $ppmpId)->with('error', 'This Project Procurement Management Plan has already been submitted.');
+        }
 
         $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
 
@@ -249,13 +255,16 @@ class PpmpController extends BaseController
                 ]);
             }
 
+            // Finally, update the PPMP status
+            $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'Pending']);
+
             $db->transComplete();
 
             if ($db->transStatus() === false) {
                 return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
             }
 
-            return redirect()->to('/procurement')->with('success', 'PPMP successfully submitted to Planning Office for review.');
+            return redirect()->to('ppmp/create/' . $ppmpId)->with('success', 'Project Procurement Management Plan successfully submitted to Planning Office for review.');
 
         } catch (\Exception $e) {
             log_message('error', 'PPMP Submission Error: ' . $e->getMessage());

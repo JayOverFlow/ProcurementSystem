@@ -1,6 +1,41 @@
 <div class="row invoice layout-top-spacing layout-spacing">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        
+        <?php
+            $isReadOnly = isset($ppmp['ppmp_status']) && $ppmp['ppmp_status'] !== 'Draft';
+        ?>
+        <?php if (session()->getFlashdata('success')): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: '<?= session()->getFlashdata('success') ?>',
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            </script>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('error')): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: '<?= session()->getFlashdata('error') ?>',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            </script>
+        <?php endif; ?>
+
+        <?php if ($isReadOnly): ?>
+            <div class="alert alert-light-info bg-primary" role="alert">
+                This document is already submitted and cannot be edited.
+            </div>
+        <?php endif; ?>
+
         <div class="doc-container">
             <form id="ppmp-form" action="<?= base_url('ppmp/save') ?>" method="POST">
             <?= csrf_field() ?>
@@ -35,7 +70,7 @@
                                             <div class="form-group row">
                                                 <label for="office" class="col-sm-1 col-form-label col-form-label-sm">Office</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-control-sm" id="ppmp-office-fk" name="ppmp_office_fk">
+                                                    <select class="form-control form-control-sm" id="ppmp-office-fk" name="ppmp_office_fk" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                         <option>Select</option>
                                                         <?php if(empty($departments)): ?>
                                                             <option value="null">No Offices</option>
@@ -53,14 +88,14 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position1" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position" value="<?= esc($ppmp['ppmp_prepared_by_position'] ?? '') /* Pre-populate position */?>">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position" value="<?= esc($ppmp['ppmp_prepared_by_position'] ?? '') /* Pre-populate position */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel1" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-control-sm" id="ppmp-prepared-by-name" name="ppmp_prepared_by_name">
+                                                        <select class="form-control form-control-sm" id="ppmp-prepared-by-name" name="ppmp_prepared_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
@@ -77,14 +112,14 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position2" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position" value="<?= esc($ppmp['ppmp_recommended_by_position'] ?? '') /* Pre-populate position */?>">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position" value="<?= esc($ppmp['ppmp_recommended_by_position'] ?? '') /* Pre-populate position */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel2" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-control-sm" id="ppmp-recommended-by-name" name="ppmp_recommended_by_name">
+                                                        <select class="form-control form-control-sm" id="ppmp-recommended-by-name" name="ppmp_recommended_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
@@ -101,14 +136,14 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position3" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position" value="<?= esc($ppmp['ppmp_evaluated_by_position'] ?? '') /* Pre-populate position */?>">
+                                                        <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position" value="<?= esc($ppmp['ppmp_evaluated_by_position'] ?? '') /* Pre-populate position */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel3" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-control-sm" id="ppmp-evaluated-by-name" name="ppmp_evaluated_by_name">
+                                                        <select class="form-control form-control-sm" id="ppmp-evaluated-by-name" name="ppmp_evaluated_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
@@ -134,28 +169,28 @@
                                             <div class="form-group row">
                                                 <label for="period-covered" class="col-sm-3 col-form-label col-form-label-sm">Period Covered</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY" value="<?= esc($ppmp['ppmp_period_covered'] ?? '') /* Pre-populate period covered */?>">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY" value="<?= esc($ppmp['ppmp_period_covered'] ?? '') /* Pre-populate period covered */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="date-approved" class="col-sm-3 col-form-label col-form-label-sm">Date Approved</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc($ppmp['ppmp_date_approved'] ?? '') /* Pre-populate date approved */?>">
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc($ppmp['ppmp_date_approved'] ?? '') /* Pre-populate date approved */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-budget-allocated" class="col-sm-3 col-form-label col-form-label-sm">Total Budget Allocated</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated" value="<?= esc($ppmp['ppmp_total_budget_allocated'] ?? '') /* Pre-populate total budget allocated */?>">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated" value="<?= esc($ppmp['ppmp_total_budget_allocated'] ?? '') /* Pre-populate total budget allocated */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-proposed-budget" class="col-sm-3 col-form-label col-form-label-sm">Total Proposed Budget</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget" value="<?= esc($ppmp['ppmp_total_proposed_budget'] ?? '') /* Pre-populate total proposed budget */?>">
+                                                    <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget" value="<?= esc($ppmp['ppmp_total_proposed_budget'] ?? '') /* Pre-populate total proposed budget */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                 </div>
                                             </div>
                                             
@@ -210,52 +245,52 @@
                                                 <?php foreach ($ppmp_items as $item): ?>
                                                     <?php if (($item['ppmp_item_estimated_budget'] ?? 0) < 50000): /* Display only MOOE items */?>
                                                         <tr>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') /* Pre-populate estimated budget */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') /* Pre-populate estimated budget */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <td class="d-flex justify-content-between px-0 ps-1 py-2">
                                                                 <?php /* Pre-populate monthly checkboxes */?>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="jan_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jan_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="feb_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][feb]" <?= ($item['ppmp_sched_feb'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="feb_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][feb]" <?= ($item['ppmp_sched_feb'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="mar_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][mar]" <?= ($item['ppmp_sched_mar'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="mar_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][mar]" <?= ($item['ppmp_sched_mar'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="apr_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][apr]" <?= ($item['ppmp_sched_apr'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="apr_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][apr]" <?= ($item['ppmp_sched_apr'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="may_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][may]" <?= ($item['ppmp_sched_may'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="may_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][may]" <?= ($item['ppmp_sched_may'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="jun_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jun]" <?= ($item['ppmp_sched_jun'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jun_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jun]" <?= ($item['ppmp_sched_jun'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="jul_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jul]" <?= ($item['ppmp_sched_jul'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jul_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][jul]" <?= ($item['ppmp_sched_jul'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="aug_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][aug]" <?= ($item['ppmp_sched_aug'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="aug_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][aug]" <?= ($item['ppmp_sched_aug'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="sep_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][sep]" <?= ($item['ppmp_sched_sep'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="sep_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][sep]" <?= ($item['ppmp_sched_sep'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="oct_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][oct]" <?= ($item['ppmp_sched_oct'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="oct_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][oct]" <?= ($item['ppmp_sched_oct'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="nov_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][nov]" <?= ($item['ppmp_sched_nov'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="nov_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][nov]" <?= ($item['ppmp_sched_nov'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="dec_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="dec_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                             </td>
                                                             <td class="delete-item-row text-center">
                                                                 <ul class="table-controls">
-                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete" <?= $isReadOnly ? 'style="pointer-events: none; color: grey;"' : '' ?>><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                                 </ul>
                                                             </td>
                                                         </tr>
@@ -308,7 +343,7 @@
                                                     </td>
                                                     <td class="delete-item-row text-center">
                                                         <ul class="table-controls">
-                                                            <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                            <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete" <?= $isReadOnly ? 'style="pointer-events: none; color: grey;"' : '' ?>><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                         </ul>
                                                     </td>
                                                 </tr>
@@ -318,7 +353,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF">Add Item</button>
+                                    <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add Item</button>
                                     <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span id="total-amount-mooe">1,000</span></p>
                                 </div>
                             </div>
@@ -365,57 +400,57 @@
                                                 <?php foreach ($ppmp_items as $item): ?>
                                                     <?php if (($item['ppmp_item_estimated_budget'] ?? 0) >= 50000): /* Display only CO items */?>
                                                         <tr>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>">
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') /* Pre-populate estimated budget */?>">
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][est_budget]" value="<?= esc($item['ppmp_item_estimated_budget'] ?? '') /* Pre-populate estimated budget */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <td class="d-flex justify-content-between px-0 ps-1 py-3">
                                                                 <?php /* Pre-populate monthly checkboxes */?>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="jan_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jan_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jan]" <?= ($item['ppmp_sched_jan'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="feb_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][feb]" <?= ($item['ppmp_sched_feb'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="feb_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][feb]" <?= ($item['ppmp_sched_feb'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="mar_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][mar]" <?= ($item['ppmp_sched_mar'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="mar_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][mar]" <?= ($item['ppmp_sched_mar'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="apr_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][apr]" <?= ($item['ppmp_sched_apr'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="apr_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][apr]" <?= ($item['ppmp_sched_apr'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="may_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][may]" <?= ($item['ppmp_sched_may'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="may_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][may]" <?= ($item['ppmp_sched_may'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="jun_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jun]" <?= ($item['ppmp_sched_jun'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jun_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jun]" <?= ($item['ppmp_sched_jun'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="jul_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jul]" <?= ($item['ppmp_sched_jul'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="jul_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][jul]" <?= ($item['ppmp_sched_jul'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="aug_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][aug]" <?= ($item['ppmp_sched_aug'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="aug_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][aug]" <?= ($item['ppmp_sched_aug'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="sep_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][sep]" <?= ($item['ppmp_sched_sep'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="sep_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][sep]" <?= ($item['ppmp_sched_sep'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="oct_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][oct]" <?= ($item['ppmp_sched_oct'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="oct_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][oct]" <?= ($item['ppmp_sched_oct'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="nov_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][nov]" <?= ($item['ppmp_sched_nov'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="nov_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][nov]" <?= ($item['ppmp_sched_nov'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" value="1" id="dec_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?>>
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="dec_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                             </td>
                                                             <td class="delete-item-row-co text-center">
                                                                 <ul class="table-controls">
-                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="Delete" <?= $isReadOnly ? 'style="pointer-events: none; color: grey;"' : '' ?>><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                                 </ul>
                                                             </td>
-                                                        </tr>
-                                                        <?php $coIndex++; ?>
-                                                    <?php endif; ?>
+                                                         </tr>
+                                                         <?php $coIndex++; ?>
+                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
                                             <?php else: /* Display an empty row if no items are pre-populated */?>
                                                 <tr>
@@ -463,7 +498,7 @@
                                                     </td>
                                                     <td class="delete-item-row-co text-center">
                                                         <ul class="table-controls">
-                                                            <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                            <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="Delete" <?= $isReadOnly ? 'style="pointer-events: none; color: grey;"' : '' ?>><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                         </ul>
                                                     </td>
                                                 </tr>
@@ -473,7 +508,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-md additem-co" style="background-color: #C62742; color: #FFFFFF">Add Item</button>
+                                    <button type="button" class="btn btn-md additem-co" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add Item</button>
                                     <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span id="total-amount-co">1,000</span></p>
                                 </div>
                             </div>
@@ -493,11 +528,10 @@
 
                             <div class="row widget-content">
                                 <div class="col-xl-12 col-md-4">
-                                    <button type="submit" formaction="<?= base_url('ppmp/save') ?>" class="btn btn-submit w-100 save-ppmp" style="background-color: #7B7B7B; color: #FFFFFF">Save</button>
+                                    <button type="submit" formaction="<?= base_url('ppmp/save') ?>" class="btn btn-submit w-100 save-ppmp" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Save</button>
                                 </div>
                                 <div class="col-xl-12 col-md-4">
-                                    <button type="submit" formaction="<?= base_url('ppmp/submit') ?>" class="btn btn-submit w-100 warning submit-ppmp" style="background-color: #C62742; color: #FFFFFF" <?= !isset($ppmp['ppmp_id']) || empty($ppmp['ppmp_id']) ? 'disabled' : '' ?>>Submit</button>
-                                </div>
+                                    <button type="submit" formaction="<?= base_url('ppmp/submit') ?>" class="btn btn-submit w-100 warning submit-ppmp" style="background-color: #C62742; color: #FFFFFF" <?= (!isset($ppmp['ppmp_id']) || empty($ppmp['ppmp_id']) || $isReadOnly) ? 'disabled' : '' ?>>Submit</button>
                                 <div class="col-xl-12 col-md-4">
                                     <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
                                 </div>

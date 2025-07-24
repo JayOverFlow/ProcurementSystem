@@ -14,7 +14,7 @@ class ProcurementController extends ProcurementPageController
 
         $data = [
             'user_data' => $userData,
-            'user_forms' => $userForms,
+            'forms' => $userForms,
         ];
 
         switch ($userData['gen_role']) {
