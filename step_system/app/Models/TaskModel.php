@@ -20,7 +20,6 @@ class TaskModel extends Model
         'ppmp_id_fk',
         'app_id_fk',
         'task_type',
-        'task_description',
         'is_deleted', // Re-added 'is_deleted' to $allowedFields for explicit update by soft delete
         'pr_id_fk',
         'po_id_fk',

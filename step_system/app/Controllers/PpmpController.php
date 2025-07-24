@@ -173,7 +173,8 @@ class PpmpController extends BaseController
             if ($db->transStatus() === false) {
                 return redirect()->back()->with('error', 'An error occurred while saving the Project Procurement Management Plan.');
             } else {
-                return redirect()->back()->with('success', 'Your Project Procurement Management Plan has been saved.');
+                // return redirect()->back()->with('success', 'Your Project Procurement Management Plan has been saved.');
+                return redirect()->to('ppmp/create/' . $ppmpId)->with('success', 'Your Project Procurement Management Plan has been saved.');
             }
 
         } catch (\Exception $e) {
@@ -236,7 +237,7 @@ class PpmpController extends BaseController
         try {
             // Update the original task
             $firstOfficerId = array_shift($planningOfficers);
-            $originalTask = $taskModel->where('ppmp_id_fk', $ppmpId)->first();
+            $originalTask = $taskModel->withDeleted()->where('ppmp_id_fk', $ppmpId)->where('is_deleted', 0)->first();
 
             if ($originalTask) {
                 $taskModel->update($originalTask['task_id'], [
