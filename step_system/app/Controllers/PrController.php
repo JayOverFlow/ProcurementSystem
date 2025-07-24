@@ -81,7 +81,7 @@ class PrController extends BaseController
             $this->prModel->insert($prData);
             $prId = $this->prModel->getInsertID();
 
-            // 2. Insert into pr_app_tbl
+            // 2. Insert into pr_items_tbl
             $items = $this->request->getPost('items') ?? [];
             $itemData = [];
             foreach ($items as $item) {
@@ -118,6 +118,57 @@ class PrController extends BaseController
         } catch (\Exception $e) {
             log_message('error', 'Pr Creation/Submission Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
+        }
+    }
+
+    public function submit() {
+        $userData = $this->loadUserSession();
+        $db = \Config\Database::connect(); // Database connection
+        $prId = $this->request->getPost('pr'); // Get the pr_id from hidden input field
+
+        // If the document already submitted
+        $pr = $this->prModel->find($prId);
+        if ($pr && $pr['pr_status'] !== 'Draft') {
+            return redirect()->to('pr/create/' . $prId)->with('error', 'This Purchase Request has already been submitted.');
+        }
+
+        // NOTE: Saved PRs should be submitted to Head by user's department
+        $head = $this->userModel->getHeadByDepId(userData['user_dep_id']); // Get Head of department / Office
+        // If there's no Head
+        if (empty($head)) {
+            return redirect()->back()->with('error', 'Cannot submit: No Head found in the system.');
+        }
+
+        $db->transStart(); // Start db transaction
+
+        try {
+            $task = $this->getTaskByprId($prId); // Get task corresponds to prId
+            // If task found
+            if ($task) {
+                // Update task to submit to director
+                $this->taskModel->update($task['task_id'],[
+                    'submitted_to' => $head,
+                    'task_description' => 'A new Purchase Request has been submitted for your review.',
+                ]);
+            } else { // If task not found
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+            }
+
+            $this->prModel->update($prId, ['pr_status' => 'Pending']); // Update the pr_status to Pending
+
+            $db->transComplete(); // Complete the database transaction
+
+            // If transaction failed
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
+            }
+
+            // Redirect back with succesful message
+            return redirect()->to('pr/create' . $prId)->with('success', 'Purchase Request successfully submitted to Campus Director for review.');
+
+        } catch (\Exception $e) {
+            log_message('error', 'PR Submission Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
         }
     }
 }
