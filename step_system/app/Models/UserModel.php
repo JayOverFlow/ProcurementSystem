@@ -140,5 +140,13 @@ class UserModel extends Model {
                     ->where('users_tbl.user_type', 'Staff')
                     ->countAllResults();
     }
+
+    public function getDirector() {
+        return $this->select('users_tbl.user_id')
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id')
+                    ->where('roles_tbl.role_name', 'Campus Director')
+                    ->first();
+    }
 }
 

@@ -77,4 +77,11 @@ class TaskModel extends Model
                     ->where('tasks_tbl.task_id', $taskId)
                     ->first();
     }
+
+    public function getTaskByAppId($appId) {
+        return $this->withDeleted()
+                    ->where('app_id_fk', $appId)
+                    ->where('is_deleted', 0)
+                    ->first();
+    }
 }
