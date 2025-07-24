@@ -16,53 +16,52 @@ function deleteItemRow() {
 }
 
 document.getElementsByClassName('additem')[0].addEventListener('click', function() {
-  console.log('dfdf')
 
   getTableElement = document.querySelector('.item-table');
   currentIndex = getTableElement.rows.length;
 
   $html =
     '<tr>' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="code" name="items[' + currentIndex + '][code]">' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="items[' + currentIndex + '][gen_desc]">' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size" name="items[' + currentIndex + '][qty_size]">' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget" name="items[' + currentIndex + '][est_budget]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[' + currentIndex + '][code]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[' + currentIndex + '][gen_desc]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[' + currentIndex + '][qty_size]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[' + currentIndex + '][est_budget]">' +
     '  <td class="d-flex justify-content-between px-0 ps-1 py-2">' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="jan" name="items[' + currentIndex + '][month][jan]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][jan]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="feb" name="items[' + currentIndex + '][month][feb]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][feb]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="mar" name="items[' + currentIndex + '][month][mar]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][mar]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="par" name="items[' + currentIndex + '][month][apr]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][apr]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="may" name="items[' + currentIndex + '][month][may]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][may]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="jun" name="items[' + currentIndex + '][month][jun]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][jun]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="jul" name="items[' + currentIndex + '][month][jul]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][jul]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="aug" name="items[' + currentIndex + '][month][aug]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][aug]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="sep" name="items[' + currentIndex + '][month][sep]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][sep]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="oct" name="items[' + currentIndex + '][month][oct]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][oct]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="nov" name="items[' + currentIndex + '][month][nov]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][nov]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="dec" name="items[' + currentIndex + '][month][dec]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items[' + currentIndex + '][month][dec]">' +
     '      </div>' +
     '  </td>' +
     '  <td class="delete-item-row text-center">' +
@@ -91,46 +90,46 @@ document.getElementsByClassName('additem-co')[0].addEventListener('click', funct
 
   $html =
     '<tr>' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co" name="items_co[' + currentIndex + '][code]">' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co" name="items_co[' + currentIndex + '][gen_desc]">' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co" name="items_co[' + currentIndex + '][qty_size]">' +
-    '  <td class="px-1"><input type="text" class="form-control form-control-sm" id="est-budget_co" name="items_co[' + currentIndex + '][est_budget]" value="50000">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items_co[' + currentIndex + '][code]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items_co[' + currentIndex + '][gen_desc]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items_co[' + currentIndex + '][qty_size]">' +
+    '  <td class="px-1"><input type="text" class="form-control form-control-sm" name="items_co[' + currentIndex + '][est_budget]" value="50000">' +
     '  <td class="d-flex justify-content-between px-0 ps-1 py-3">' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="jan_co" name="items_co[' + currentIndex + '][month][jan]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][jan]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="feb_co" name="items_co[' + currentIndex + '][month][feb]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][feb]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="mar_co" name="items_co[' + currentIndex + '][month][mar]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][mar]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="par_co" name="items_co[' + currentIndex + '][month][apr]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][apr]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="may_co" name="items_co[' + currentIndex + '][month][may]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][may]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="jun_co" name="items_co[' + currentIndex + '][month][jun]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][jun]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="jul_co" name="items_co[' + currentIndex + '][month][jul]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][jul]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="aug_co" name="items_co[' + currentIndex + '][month][aug]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][aug]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="sep_co" name="items_co[' + currentIndex + '][month][sep]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][sep]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="oct_co" name="items_co[' + currentIndex + '][month][oct]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][oct]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="nov_co" name="items_co[' + currentIndex + '][month][nov]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][nov]">' +
     '      </div>' +
     '      <div class="form-check form-check-danger form-check-inline">' +
-    '          <input class="form-check-input" type="checkbox" value="1" id="dec_co" name="items_co[' + currentIndex + '][month][dec]">' +
+    '          <input class="form-check-input" type="checkbox" value="1" name="items_co[' + currentIndex + '][month][dec]">' +
     '      </div>' +
     '  </td>' +
     '  <td class="delete-item-row-co text-center">' +
@@ -148,51 +147,85 @@ deleteItemRow();
 deleteItemRowCO();
 
 document.addEventListener('DOMContentLoaded', function() {
-  const calculateTotal = (tableName, totalElementId) => {
-      let total = 0;
-      document.querySelectorAll(`.${tableName} tbody tr`).forEach(row => {
-          const estBudgetInput = row.querySelector('input[name*="[est_budget]"]');
-          if (estBudgetInput) {
-              total += parseFloat(estBudgetInput.value) || 0;
-          }
-      });
-      document.getElementById(totalElementId).textContent = total.toFixed(2);
-  };
-
-  // Initial calculation
-  calculateTotal('item-table', 'total-amount-mooe');
-  calculateTotal('item-table-co', 'total-amount-co');
-
-  // Recalculate on input change for MOOE table
-  document.querySelector('.item-table').addEventListener('input', (event) => {
-      if (event.target.name.includes('[est_budget]')) {
-          calculateTotal('item-table', 'total-amount-mooe');
-      }
-  });
-
-  // Recalculate on input change for CO table
-  document.querySelector('.item-table-co').addEventListener('input', (event) => {
-      if (event.target.name.includes('[est_budget]')) {
-          calculateTotal('item-table-co', 'total-amount-co');
-      }
-  });
-});
-
-document.querySelector('.widget-content .warning.save').addEventListener('click', function(e) {
-    e.preventDefault(); // Prevent the form from submitting immediately
-
-    Swal.fire({
-        title: 'Confirm Save?',
-        text: "Do you want to save this Project Procurement Management Plan?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#8ABB2F',
-        cancelButtonColor: '#7B7B7B',
-        confirmButtonText: 'Save'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // If confirmed, submit the form
-            document.getElementById('ppmp-form').submit();
+    const calculateTotal = (tableName, totalElementId) => {
+        let total = 0;
+        document.querySelectorAll(`.${tableName} tbody tr`).forEach(row => {
+            const estBudgetInput = row.querySelector('input[name*="[est_budget]"]');
+            if (estBudgetInput) {
+                total += parseFloat(estBudgetInput.value) || 0;
+            }
+        });
+        const totalElement = document.getElementById(totalElementId);
+        if (totalElement) {
+          totalElement.textContent = total.toFixed(2);
         }
-    })
-})
+    };
+
+    const setupTableListeners = (tableName, totalElementId) => {
+        const table = document.querySelector(`.${tableName}`);
+        if (table) {
+            calculateTotal(tableName, totalElementId); // Initial calculation
+            table.addEventListener('input', (event) => {
+                if (event.target.name.includes('[est_budget]')) {
+                    calculateTotal(tableName, totalElementId);
+                }
+            });
+            const addBtn = table.closest('.invoice-detail-items').querySelector('.additem, .additem-co');
+            if (addBtn) {
+                addBtn.addEventListener('click', () => {
+                     // Recalculate after a brief delay to allow the new row to be added
+                    setTimeout(() => calculateTotal(tableName, totalElementId), 100);
+                });
+            }
+        }
+    };
+
+    setupTableListeners('item-table', 'total-amount-mooe');
+    setupTableListeners('item-table-co', 'total-amount-co');
+
+    const ppmpForm = document.getElementById('ppmp-form');
+    const saveBtn = document.querySelector('.save-ppmp');
+    const submitBtn = document.querySelector('.submit-ppmp');
+
+    if (ppmpForm && saveBtn) {
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Confirm Save?',
+                text: "Do you want to save this Project Procurement Management Plan?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    ppmpForm.action = this.getAttribute('formaction');
+                    ppmpForm.submit();
+                }
+            });
+        });
+    }
+
+    if (ppmpForm && submitBtn) {
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Confirm Submission?',
+                text: "Are you sure you want to submit this for review? You will not be able to edit it after submission.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, submit it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    ppmpForm.action = this.getAttribute('formaction');
+                    ppmpForm.submit();
+                }
+            });
+        });
+    }
+});

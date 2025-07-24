@@ -155,6 +155,7 @@ $routes->group('ppmp', function($routes) {
     $routes->get('create', 'PpmpController::index');
     $routes->get('create/(:num)', 'PpmpController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PpmpController::save');
+    $routes->post('submit', 'PpmpController::submit');
     $routes->get('preview/(:num)', 'PpmpController::preview/$1');
 });
 

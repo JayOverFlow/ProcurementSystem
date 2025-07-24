@@ -115,7 +115,7 @@ class UserModel extends Model {
         return array_column($result, 'user_id');
     }
 
-    public function getUserFullNameById(int $userId) {
+    public function getUserFullNameById($userId) {
         return $this->select('user_fullname')
                     ->where('user_id', $userId)
                     ->first()['user_fullname'];

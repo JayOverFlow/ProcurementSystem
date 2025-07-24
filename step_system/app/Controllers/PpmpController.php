@@ -203,4 +203,63 @@ class PpmpController extends BaseController
         
         return view('preview-pages/ppmp-preview', $data);
     }
+
+    public function submit()
+    {
+        $db = \Config\Database::connect();
+        $ppmpId = $this->request->getPost('ppmp_id');
+        $userModel = new UserModel();
+        $taskModel = new TaskModel();
+
+        if (empty($ppmpId)) {
+            return redirect()->back()->with('error', 'Invalid Project Procurement Management Plan ID for submission.');
+        }
+
+        $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
+
+        if (empty($planningOfficers)) {
+            return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
+        }
+
+        $db->transStart();
+
+        try {
+            // Update the original task
+            $firstOfficerId = array_shift($planningOfficers);
+            $originalTask = $taskModel->where('ppmp_id_fk', $ppmpId)->first();
+
+            if ($originalTask) {
+                $taskModel->update($originalTask['task_id'], [
+                    'submitted_to' => $firstOfficerId,
+                    'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
+                ]);
+            } else {
+                 // This case should ideally not happen in a normal workflow
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+            }
+
+            // Create new tasks for other planning officers
+            foreach ($planningOfficers as $officerId) {
+                $taskModel->insert([
+                    'submitted_by' => session()->get('user_id'),
+                    'submitted_to' => $officerId,
+                    'ppmp_id_fk' => $ppmpId,
+                    'task_type' => 'PPMP',
+                    'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
+                ]);
+            }
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
+            }
+
+            return redirect()->to('/procurement')->with('success', 'PPMP successfully submitted to Planning Office for review.');
+
+        } catch (\Exception $e) {
+            log_message('error', 'PPMP Submission Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
+        }
+    }
 } 
