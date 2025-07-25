@@ -191,9 +191,19 @@ class ProcurementPageController extends BaseController
                 // Log the task type and determined URL slug for debugging
                 log_message('debug', 'getUsersForms: Task Type: ' . $task['task_type'] . ', Determined URL Slug: ' . $urlSlug);
 
+                $formAbbreviations = [
+                    'Project Procurement Management' => 'PPMP',
+                    'Annual Procurement Plan' => 'APP',
+                    'Purchase Request' => 'PR',
+                    'Purchase Order' => 'PO',
+                    'Property Acknowledgement Receipt' => 'PAR',
+                    'Inventory Custodian Slip' => 'ICS',
+                ];
+
                 $forms[] = [
                     'task_id' => $task['task_id'], // Crucial for deletion
-                    'type' => $task['task_type'],
+                    'type' => $task['task_type'], // Full name for display
+                    'form_type' => $formAbbreviations[$task['task_type']] ?? '', // Abbreviated type for filtering
                     'document_id' => $documentId,
                     'sent_to' => $sentTo,
                     'created_at' => $task['created_at'],
