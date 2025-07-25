@@ -109,10 +109,10 @@
                                                 <?php if (!empty($pr_items)): ?>
                                                     <?php foreach ($pr_items as $index => $item): ?>
                                                         <tr>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_quantity]" value="<?= esc($item['pr_items_quantity']) ?>"></td>
+                                                            <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_quantity]" value="<?= esc($item['pr_items_quantity']) ?>"></td>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_unit]" value="<?= esc($item['pr_items_unit']) ?>"></td>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_descrip]" value="<?= esc($item['pr_items_descrip']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm unit-cost" name="items[<?= $index ?>][pr_items_cost]" value="<?= esc($item['pr_items_cost']) ?>"></td>
+                                                            <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm unit-cost" name="items[<?= $index ?>][pr_items_cost]" value="<?= esc($item['pr_items_cost']) ?>"></td>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm total-cost" name="items[<?= $index ?>][pr_items_total_cost]" value="<?= esc($item['pr_items_total_cost']) ?>" readonly></td>
                                                             <td class="delete-item-row text-center">
                                                                 <ul class="table-controls">
@@ -123,10 +123,10 @@
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
                                                     <tr>
-                                                        <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[0][pr_items_quantity]"></td>
+                                                        <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[0][pr_items_quantity]"></td>
                                                         <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[0][pr_items_unit]"></td>
                                                         <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[0][pr_items_descrip]"></td>
-                                                        <td class="px-1"><input type="text" class="form-control form-control-sm unit-cost" name="items[0][pr_items_cost]"></td>
+                                                        <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm unit-cost" name="items[0][pr_items_cost]"></td>
                                                         <td class="px-1"><input type="text" class="form-control form-control-sm total-cost" name="items[0][pr_items_total_cost]" readonly></td>
                                                         <td class="delete-item-row text-center">
                                                             <ul class="table-controls">
