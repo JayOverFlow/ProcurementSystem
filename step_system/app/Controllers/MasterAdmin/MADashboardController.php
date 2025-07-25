@@ -11,7 +11,7 @@ use App\Models\RoleModel;
 use App\Models\UserRoleDepartmentModel;
 
 
-class MADashboardController extends BaseController // Controller for Users table
+class MADashboardController extends BaseController //
 {
     public function dashboardIndex(): string // Table 1
     {
@@ -239,7 +239,6 @@ class MADashboardController extends BaseController // Controller for Users table
         $userRoleDepartmentModel = new UserRoleDepartmentModel();
 
         // Get current user details to find old department_id and current role_id
-        // This is crucial because user_role_department_tbl has a composite primary key.
         $db = \Config\Database::connect();
         $builder = $db->table('user_role_department_tbl');
         $currentUserAssignment = $builder->where('user_id', $userId)->get()->getRowArray();
@@ -351,13 +350,13 @@ class MADashboardController extends BaseController // Controller for Users table
         $newDepartmentId = $input->newDepartmentId;
 
         // --- Debugging Output Start ---
-        log_message('debug', 'Create User Assignment Request:');
-        log_message('debug', 'User ID: ' . $userId);
-        log_message('debug', 'New Role ID: ' . ($newRoleId ?? 'NULL'));
-        log_message('debug', 'New Department ID: ' . ($newDepartmentId ?? 'NULL'));
+        // log_message('debug', 'Create User Assignment Request:');
+        // log_message('debug', 'User ID: ' . $userId);
+        // log_message('debug', 'New Role ID: ' . ($newRoleId ?? 'NULL'));
+        // log_message('debug', 'New Department ID: ' . ($newDepartmentId ?? 'NULL'));
         // --- Debugging Output End ---
 
-        // Basic validation
+        // Validation
         if (empty($userId) || empty($newDepartmentId)) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'User and Department are required.']);
         }
@@ -372,7 +371,7 @@ class MADashboardController extends BaseController // Controller for Users table
 
         try {
             // Check for existing assignment for this user in this department
-            // This is important because a user can only have ONE role per department (even if it's NULL)
+            // This is important because a user can only have 1 role per department (even if it's Nul)
             $userRoleDepartmentModel = new UserRoleDepartmentModel();
             $existingAssignment = $userRoleDepartmentModel->where('user_id', $userId)
                                                           ->where('department_id', $newDepartmentId)

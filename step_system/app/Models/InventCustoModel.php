@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class InventCustoModel extends Model
 {
-    protected $table            = 'invent_custo_tbl';
+    protected $table            = 'ics_tbl';
     protected $primaryKey       = 'invent_custo_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -25,7 +25,8 @@ class InventCustoModel extends Model
         'invent_custo_received_from_date',
         'invent_custo_received_by_fk',
         'invent_custo_received_by_date',
-        'invent_custo_tbl_remarks'
+        'invent_custo_tbl_remarks',
+        'saved_by_user_id_fk',
     ];
 
     protected bool $allowEmptyInserts = false;

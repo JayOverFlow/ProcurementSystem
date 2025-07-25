@@ -33,7 +33,7 @@
     <!--  END LOADER -->
 
     <!--  BEGIN HEADER  -->
-      <div class="header-container container-xxl">
+      <div class="header-container container-xxl box-shadow-none">
         <?= $this->include('partials/head/h-header') ?>
       </div>
     <!--  END HEADER  -->

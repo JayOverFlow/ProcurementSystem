@@ -10,25 +10,31 @@ class TaskModel extends Model
     protected $primaryKey       = 'task_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true; // Enable soft deletes for this model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'submitted_by',
         'submitted_to',
+        'task_description',
+        'created_at',
         'ppmp_id_fk',
         'app_id_fk',
         'task_type',
-        'task_description',
+        'is_deleted', // Re-added 'is_deleted' to $allowedFields for explicit update by soft delete
+        'pr_id_fk',
+        'po_id_fk',
+        'par_id_fk', // Added to allowed fields to ensure it can be assigned
+        'ics_id_fk', // Added to allowed fields to ensure it can be assigned
     ];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = false; // Changed to false as 'tasks_tbl' does not have 'updated_at' or 'deleted_at' columns
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $updatedField  = ''; // Removed 'updated_at' reference
+    protected $deletedField  = 'is_deleted'; // Correctly specifies the soft delete column
 
     // Validation
     protected $validationRules      = [];
@@ -49,22 +55,55 @@ class TaskModel extends Model
 
     public function getTasksForUser(int $userId)
     {
-        return $this->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status')
+        return $this->withDeleted()
+                    ->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status')
                     ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_by')
                     ->join('ppmp_tbl', 'ppmp_tbl.ppmp_id = tasks_tbl.ppmp_id_fk', 'left')
+                    ->join('app_tbl', 'app_tbl.app_id = tasks_tbl.app_id_fk', 'left')
+                    ->join('pr_tbl', 'pr_tbl.pr_id = tasks_tbl.pr_id_fk', 'left')
+                    ->join('po_tbl', 'po_tbl.po_id = tasks_tbl.po_id_fk', 'left')
                     ->where('tasks_tbl.submitted_to', $userId)
+                    ->where('tasks_tbl.is_deleted', 0)
                     ->orderBy('tasks_tbl.created_at', 'DESC')
                     ->findAll();
     }
 
     public function getTaskDetails(int $taskId)
     {
-        return $this->select('tasks_tbl.created_at, tasks_tbl.task_description, tasks_tbl.ppmp_id_fk, users_tbl.user_fullname, users_tbl.user_email, roles_tbl.role_name, ppmp_tbl.ppmp_status')
+        return $this->withDeleted()
+                    ->select("tasks_tbl.created_at, tasks_tbl.task_description, tasks_tbl.ppmp_id_fk, tasks_tbl.app_id_fk, tasks_tbl.pr_id_fk, tasks_tbl.po_id_fk, users_tbl.user_fullname, users_tbl.user_email, GROUP_CONCAT(roles_tbl.role_name SEPARATOR ', ') as role_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status")
                     ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_by')
-                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id', 'left')
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = tasks_tbl.submitted_by', 'left')
                     ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id', 'left')
                     ->join('ppmp_tbl', 'ppmp_tbl.ppmp_id = tasks_tbl.ppmp_id_fk', 'left')
+                    ->join('app_tbl', 'app_tbl.app_id = tasks_tbl.app_id_fk', 'left')
+                    ->join('pr_tbl', 'pr_tbl.pr_id = tasks_tbl.pr_id_fk', 'left')
+                    ->join('po_tbl', 'po_tbl.po_id = tasks_tbl.po_id_fk', 'left')
                     ->where('tasks_tbl.task_id', $taskId)
+                    ->where('tasks_tbl.is_deleted', 0)
+                    ->groupBy([
+                       'tasks_tbl.task_id',
+                       'users_tbl.user_fullname',
+                       'users_tbl.user_email',
+                       'ppmp_tbl.ppmp_status',
+                       'app_tbl.app_status',
+                       'pr_tbl.pr_status',
+                       'po_tbl.po_status'
+                    ])
+                    ->first();
+    }
+
+    public function getTaskByAppId($appId) {
+        return $this->withDeleted()
+                    ->where('app_id_fk', $appId)
+                    ->where('is_deleted', 0)
+                    ->first();
+    }
+
+    public function getTaskByPrId($prId) {
+        return $this->withDeleted()
+                    ->where('pr_id_fk', $prId)
+                    ->where('is_deleted', 0)
                     ->first();
     }
 }

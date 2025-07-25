@@ -13,13 +13,19 @@ class PpmpController extends BaseController
 {
     protected $departmentModel;
     protected $userModel;
+    protected $ppmpModel;
+    protected $PpmpItemModel;
+    protected $taskModel;
 
     public function __construct() {
         $this->departmentModel = new DepartmentModel();
         $this->userModel = new UserModel();
+        $this->ppmpModel = new PpmpModel();
+        $this->ppmpItemModel = new PpmpItemModel();
+        $this->taskModel = new TaskModel();
     }
 
-    public function index()
+    public function index($ppmpId = null)
     {
         $userData = $this->loadUserSession();
         $departments = $this->departmentModel->getAllDepartments();
@@ -28,8 +34,22 @@ class PpmpController extends BaseController
         $data = [
             'user_data' => $userData,
             'departments' => $departments,
-            'users' => $users
+            'users' => $users,
+            'ppmp' => null, // Will hold the PPMP main data if editing an existing form
+            'ppmp_items' => [] // Will hold the PPMP items data if editing an existing form
         ];
+
+        // If a ppmpId is provided in the URL, fetch the existing PPMP data
+        if ($ppmpId) {
+            $ppmp = $this->ppmpModel->find($ppmpId);
+            if ($ppmp) {
+                // If PPMP found, fetch its associated items
+                $ppmpItems = $this->ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
+                // Populate the data array with existing PPMP and its items
+                $data['ppmp'] = $ppmp;
+                $data['ppmp_items'] = $ppmpItems;
+            }
+        }
 
         $role = $userData['gen_role'] ?? null;
 
@@ -51,14 +71,12 @@ class PpmpController extends BaseController
         }
     }
 
-    public function create()
+    public function save()
     {
-        $ppmpModel = new PpmpModel();
-        $ppmpItemModel = new PpmpItemModel();
-        $taskModel = new TaskModel();
-        $userModel = new UserModel();
+        $userData = $this->loadUserSession();
         $db = \Config\Database::connect();
-        $userId = session()->get('user_id'); 
+
+        $ppmpId = $this->request->getPost('ppmp_id'); // Get ppmp_id from hidden input
 
         $db->transStart();
 
@@ -66,6 +84,7 @@ class PpmpController extends BaseController
             // 1. Insert into ppmp_tbl
             $ppmpData = [
                 'ppmp_office_fk' => $this->request->getPost('ppmp_office_fk'),
+                'saved_by_user_id_fk' => $userData['user_id'],
                 'ppmp_period_covered' => $this->request->getPost('ppmp_period_covered'),
                 'ppmp_date_approved' => $this->request->getPost('ppmp_date_approved'),
                 'ppmp_total_budget_allocated' => $this->request->getPost('ppmp_total_budget_allocated'),
@@ -76,14 +95,23 @@ class PpmpController extends BaseController
                 'ppmp_recommended_by_name' => $this->request->getPost('ppmp_recommended_by_name'),
                 'ppmp_evaluated_by_position' => $this->request->getPost('ppmp_evaluated_by_position'),
                 'ppmp_evaluated_by_name' => $this->request->getPost('ppmp_evaluated_by_name'),
-                'ppmp_status' => 'Pending', // Default status
-                'ppmp_remarks' => 'PPMP submitted'
+                'ppmp_status' => 'Draft', // Default status
+                'ppmp_remarks' => 'PPMP remark'
             ];
 
-            $ppmpModel->insert($ppmpData);
-            $ppmpId = $ppmpModel->getInsertID();
+            if ($ppmpId) {
+                // Update existing PPMP
+                $this->ppmpModel->update($ppmpId, $ppmpData);
 
-            // 2. Prepare and insert into ppmp_items_tbl
+                // Delete existing items for this PPMP before inserting new ones
+                $this->ppmpItemModel->where('ppmp_id_fk', $ppmpId)->delete();
+            } else {
+                // Insert new PPMP
+                $this->ppmpModel->insert($ppmpData);
+                $ppmpId = $this->ppmpModel->getInsertID();
+            }
+
+            // 2. Prepare and insert/update into ppmp_items_tbl
             $allItems = [];
             $mooeItems = $this->request->getPost('items') ?? [];
             $coItems = $this->request->getPost('items_co') ?? [];
@@ -91,10 +119,6 @@ class PpmpController extends BaseController
             $items = array_merge($mooeItems, $coItems);
 
             foreach ($items as $item) {
-                if (empty($item['gen_desc']) && empty($item['code'])) {
-                    continue;
-                }
-                
                 $months = $item['month'] ?? [];
 
                 $allItems[] = [
@@ -119,32 +143,42 @@ class PpmpController extends BaseController
             }
 
             if (!empty($allItems)) {
-                $ppmpItemModel->insertBatch($allItems);
+                $this->ppmpItemModel->insertBatch($allItems);
             }
             
-            // 3. Create tasks for Planning Officers
-            $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
-            foreach ($planningOfficers as $officerId) {
-                $taskModel->insert([
-                    'submitted_by' => $userId,
-                    'submitted_to' => $officerId,
-                    'ppmp_id_fk' => $ppmpId,
-                    'task_type' => 'PPMP',
-                    'task_description' => 'A new PPMP has been submitted for your review.'
-                ]);
-            }
+            // Create/Update task for Planning Officers
+            $taskData = [
+                'submitted_by' => $userData['user_id'],
+                'submitted_to' => null,
+                'ppmp_id_fk' => $ppmpId,
+                'task_type' => 'Project Procurement Management',
+                'task_description' => 'Project Procurement Management Plan has been ' . ($ppmpId ? 'updated' : 'submitted') . ' for your review.',
+                'is_deleted' => 0 // Explicitly set is_deleted to 0 for new or updated tasks
+            ];
 
+            // Check if a task for this PPMP already exists
+            $existingTask = $this->taskModel->where('ppmp_id_fk', $ppmpId)->first();
+
+            if ($existingTask) {
+                // When updating an existing task, ensure is_deleted remains 0 unless intended to be restored
+                // For now, if it was previously 0, it stays 0. If it was 1 (soft deleted), it will remain 1 unless explicitly changed.
+                // We add is_deleted to $taskData above to ensure consistency on update as well.
+                $this->taskModel->update($existingTask['task_id'], $taskData);
+            } else {
+                $this->taskModel->insert($taskData);
+            }
 
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'An error occurred while saving & submitting the Project Procurement Management Plan.');
+                return redirect()->back()->with('error', 'An error occurred while saving the Project Procurement Management Plan.');
             } else {
-                return redirect()->back()->with('success', 'Your Project Procurement Management Plan has been saved & submitted.');
+                // return redirect()->back()->with('success', 'Your Project Procurement Management Plan has been saved.');
+                return redirect()->to('ppmp/create/' . $ppmpId)->with('success', 'Your Project Procurement Management Plan has been saved.');
             }
 
         } catch (\Exception $e) {
-            log_message('error', 'PPMP Creation/Submission Error: ' . $e->getMessage());
+            log_message('error', 'PPMP Saving/Submission Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }
@@ -156,8 +190,6 @@ class PpmpController extends BaseController
         $departmentModel = new DepartmentModel;
         $userModel = new UserModel();
 
-        // $data['ppmp'] = $ppmpModel->find($ppmpId);
-        // $data['ppmp_items'] = $ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
         $ppmp = $ppmpModel->find($ppmpId);
         $ppmpItems = $ppmpItemModel->where('ppmp_id_fk', $ppmpId)->findAll();
 
@@ -175,5 +207,73 @@ class PpmpController extends BaseController
         }
         
         return view('preview-pages/ppmp-preview', $data);
+    }
+
+    public function submit()
+    {
+        $db = \Config\Database::connect();
+        $ppmpId = $this->request->getPost('ppmp_id');
+        $userModel = new UserModel();
+        $taskModel = new TaskModel();
+
+        if (empty($ppmpId)) {
+            return redirect()->back()->with('error', 'Invalid Project Procurement Management Plan ID for submission.');
+        }
+        
+        // Check if PPMP has already been submitted
+        $ppmp = $this->ppmpModel->find($ppmpId);
+        if ($ppmp && $ppmp['ppmp_status'] !== 'Draft') {
+            return redirect()->to('ppmp/create/' . $ppmpId)->with('error', 'This Project Procurement Management Plan has already been submitted.');
+        }
+
+        $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
+
+        if (empty($planningOfficers)) {
+            return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
+        }
+
+        $db->transStart();
+
+        try {
+            // Update the original task
+            $firstOfficerId = array_shift($planningOfficers);
+            $originalTask = $taskModel->withDeleted()->where('ppmp_id_fk', $ppmpId)->where('is_deleted', 0)->first();
+
+            if ($originalTask) {
+                $taskModel->update($originalTask['task_id'], [
+                    'submitted_to' => $firstOfficerId,
+                    'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
+                ]);
+            } else {
+                 // This case should ideally not happen in a normal workflow
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+            }
+
+            // Create new tasks for other planning officers
+            foreach ($planningOfficers as $officerId) {
+                $taskModel->insert([
+                    'submitted_by' => session()->get('user_id'),
+                    'submitted_to' => $officerId,
+                    'ppmp_id_fk' => $ppmpId,
+                    'task_type' => 'PPMP',
+                    'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
+                ]);
+            }
+
+            // Finally, update the PPMP status
+            $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'Pending']);
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
+            }
+
+            return redirect()->to('ppmp/create/' . $ppmpId)->with('success', 'Project Procurement Management Plan successfully submitted to Planning Office for review.');
+
+        } catch (\Exception $e) {
+            log_message('error', 'PPMP Submission Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
+        }
     }
 } 

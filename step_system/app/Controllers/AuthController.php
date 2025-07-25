@@ -5,12 +5,16 @@ use App\Models\UserModel;
 use App\Models\DepartmentModel;
 use App\Models\OtpModel;
 use App\Models\UserRoleDepartmentModel;
+use App\Models\AdminModel;
+use App\Models\MasterKeyModel;
 
 class AuthController extends BaseController {
     protected $userModel;
     protected $departmentModel;
     protected $otpModel;
     protected $userRoleDepartmentModel;
+    protected $adminModel;
+    protected $masterKeyModel;
     protected $validation;
     protected $session;
 
@@ -19,6 +23,8 @@ class AuthController extends BaseController {
         $this->departmentModel = new DepartmentModel();
         $this->otpModel = new OtpModel();
         $this->userRoleDepartmentModel = new UserRoleDepartmentModel();
+        $this->adminModel = new AdminModel();
+        $this->masterKeyModel = new MasterKeyModel();
         $this->validation = service('validation');
         $this->session = service('session');
         helper(['form', 'url']);
@@ -421,7 +427,7 @@ class AuthController extends BaseController {
                     'Procurement' => base_url('/procurement/dashboard'),
                     'Supply' => base_url('/supply/dashboard'),
                     'Faculty' => base_url('/faculty/dashboard'),
-                    null => base_url('/unassigned/mr'),
+                    null => base_url('/unassigned/dashboard'),
                     default => base_url('/login') // Default fallback if gen_role is not matched
                 };
 
@@ -447,9 +453,192 @@ class AuthController extends BaseController {
         }
     }
 
+    public function adminLogin() {
+        if ($this->request->is('post')) {
+            $requestData = $this->request->getJSON(true); // Get JSON data as associative array
+
+            $data = [
+                'admin_username' => $requestData['admin_username'] ?? null,
+                'admin_password' => $requestData['admin_password'] ?? null
+            ];
+
+            // Define rules for admin login validation (add these rules)
+            $rules = [
+                'admin_username' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Username is required. Duh!'
+                    ]
+                ],
+                'admin_password' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Password is required. Duh!'
+                    ]
+                ]
+            ];
+
+            if (!$this->validate($rules)) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Fill out the fields to login. Duh!',
+                    'validation' => $this->validator->getErrors()
+                ]);
+            }
+
+            // Authenticate admin user
+            $admin = $this->adminModel->authenticateAdmin($data['admin_username'], $data['admin_password']);
+
+            if ($admin) {
+                // Set admin data in session
+                $this->session->set([
+                    'admin_id' => $admin['admin_id'] ?? null,
+                    'admin_username' => $admin['admin_username'] ?? null,
+                    'isAdminLoggedIn' => true
+                ]);
+
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Admin Login successful!',
+                    'redirect' => base_url('/admin/dashboard')
+                ]);
+            } else {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Invalid username or password.'
+                ]);
+            }
+        } else {
+            $data = [
+                'admin_username' => '',
+                'admin_password' => '',
+            ];
+            return view('auth/admin_login', ['data' => $data]);
+        }
+    }
+
     public function logout()
     {
         $this->session->destroy();
         return redirect()->to('/login');
+    }
+
+    public function adminLogout()
+    {
+        $this->session->remove('admin_id');
+        $this->session->remove('admin_username');
+        $this->session->remove('isAdminLoggedIn');
+        $this->session->destroy();
+        return redirect()->to('/admin/login');
+    }
+
+    public function adminRegister() {
+        if ($this->request->is('post')) {
+            $requestData = $this->request->getJSON(true); // Get JSON data as associative array
+
+            $data = [
+                'admin_username' => $requestData['admin_username'] ?? null,
+                'admin_password' => $requestData['admin_password'] ?? null,
+                'confirm_password' => $requestData['confirm_password'] ?? null,
+                'master_key' => $requestData['master_key'] ?? null,
+            ];
+
+            $rules = [
+                'admin_username' => [
+                    'rules' => 'required|min_length[5]|max_length[100]|is_unique[admins_tbl.admin_username]',
+                    'errors' => [
+                        'required' => 'Username is required.',
+                        'min_length' => 'Username must be at least 5 characters long.',
+                        'max_length' => 'Username cannot exceed 100 characters.',
+                        'is_unique' => 'This username is already taken.'
+                    ]
+                ],
+                'admin_password' => [
+                    'rules' => 'required|min_length[8]|max_length[70]',
+                    'errors' => [
+                        'required' => 'Password is required.',
+                        'min_length' => 'Password must be at least 8 characters long.',
+                        'max_length' => 'Password cannot exceed 70 characters.'
+                    ]
+                ],
+                'confirm_password' => [
+                    'rules' => 'required|matches[admin_password]',
+                    'errors' => [
+                        'required' => 'Please confirm your password.',
+                        'matches' => 'Passwords do not match.'
+                    ]
+                ],
+                'master_key' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Master Key is required.'
+                    ]
+                ],
+            ];
+
+            if (!$this->validate($rules)) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Validation failed. Please check your inputs.',
+                    'validation' => $this->validator->getErrors()
+                ]);
+            }
+
+            // Validate Master Key
+            $masterKey = $this->masterKeyModel->getMasterKey($data['master_key']);
+            if (!$masterKey || $masterKey['master_key_is_used'] == 1) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Invalid or already used Master Key.'
+                ]);
+            }
+
+            // Register admin and mark master key as used within a transaction
+            $db = \Config\Database::connect();
+            $db->transBegin();
+
+            try {
+                $adminData = [
+                    'admin_username' => $data['admin_username'],
+                    'admin_password' => $data['admin_password'],
+                    'admin_key' => $masterKey['master_key_id'],
+                ];
+
+                if ($this->adminModel->insertAdmin($adminData)) {
+                    $this->masterKeyModel->markKeyAsUsed($masterKey['master_key_id']);
+                    $db->transCommit();
+
+                    // Set flashdata message for the next request (admin login page)
+                    session()->setFlashdata('success', 'Admin registration successful! You can now login.');
+                    return $this->response->setJSON([
+                        'status' => 'success',
+                        'message' => 'Admin registration successful! Redirecting...',
+                        'redirect' => base_url('/admin/login') // Tell frontend to redirect
+                    ]);
+                } else {
+                    $db->transRollback();
+                    return $this->response->setJSON([
+                        'status' => 'error',
+                        'message' => 'Failed to register admin. Please try again.'
+                    ]);
+                }
+            } catch (\Exception $e) {
+                $db->transRollback();
+                log_message('error', 'Admin registration transaction failed: ' . $e->getMessage());
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'An unexpected error occurred during registration. Please try again.'
+                ]);
+            }
+
+        } else {
+            $data = [
+                'admin_username' => '',
+                'admin_password' => '',
+                'confirm_password' => '',
+                'master_key' => '',
+            ];
+            return view('auth/admin_register', ['data' => $data]);
+        }
     }
 }

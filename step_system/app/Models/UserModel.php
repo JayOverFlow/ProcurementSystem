@@ -42,7 +42,7 @@ class UserModel extends Model {
     // Authenticate user from login and retrieve their role and department information
     public function authenticateUser(string $user_email, string $user_password) {
         $user = $this->select('users_tbl.*, roles_tbl.role_name, roles_tbl.gen_role, departments_tbl.dep_name, departments_tbl.dep_id')
-                     ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id AND user_role_department_tbl.role_id IS NOT NULL', 'left')
+                     ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id', 'left')
                      ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id', 'left')
                      ->join('departments_tbl', 'departments_tbl.dep_id = user_role_department_tbl.department_id', 'left')
                      ->where('users_tbl.user_email', $user_email)
@@ -101,9 +101,66 @@ class UserModel extends Model {
         return array_column($result, 'user_id');
     }
 
-    public function getUserFullNameById(int $userId) {
+
+    public function getUsersByRoleName(string $roleName): array
+    {
+        $builder = $this->db->table('users_tbl u');
+        $builder->select('u.user_id');
+        $builder->join('user_role_department_tbl urd', 'urd.user_id = u.user_id');
+        $builder->join('roles_tbl r', 'r.role_id = urd.role_id');
+        $builder->where('r.role_name', $roleName);
+        
+        $result = $builder->get()->getResultArray();
+
+        return array_column($result, 'user_id');
+    }
+
+    public function getUserFullNameById($userId) {
         return $this->select('user_fullname')
                     ->where('user_id', $userId)
                     ->first()['user_fullname'];
     }
+
+
+    public function getFacultyCountByDepartment(int $departmentId): int
+    {
+        return $this->builder()
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->where('user_role_department_tbl.department_id', $departmentId)
+                    ->where('users_tbl.user_type', 'Faculty')
+                    ->countAllResults();
+    }
+
+
+    public function getStaffCountByDepartment(int $departmentId): int
+    {
+        return $this->builder()
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->where('user_role_department_tbl.department_id', $departmentId)
+                    ->where('users_tbl.user_type', 'Staff')
+                    ->countAllResults();
+    }
+
+    public function getDirector() {
+        return $this->select('users_tbl.user_id')
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id')
+                    ->where('roles_tbl.role_name', 'Campus Director')
+                    ->first();
+    }
+
+    public function getHeadByDepId($depId)
+    {
+        return $this->select('users_tbl.user_id')
+            ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+            ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id')
+            ->where('user_role_department_tbl.department_id', $depId)
+            ->groupStart()
+                ->like('roles_tbl.role_name', 'Head', 'after')
+                ->orLike('roles_tbl.role_name', 'Department Head', 'after')
+                ->orLike('roles_tbl.role_name', 'Planning Officer', 'after')
+            ->groupEnd()
+            ->first();
+    }
 }
+

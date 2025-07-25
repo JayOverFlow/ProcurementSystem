@@ -59,10 +59,13 @@
     
                             <div class="row">
                                 <div class="col-md-12 mb-3">
-                                    
-                                    <h2>Login</h2>
-                                    <p>Enter your email and password to login</p>
-                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h2>Login</h2>
+                                            <p>Enter your email and password to login</p>
+                                        </div>
+                                
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     
@@ -113,6 +116,8 @@
                                     <div class="col-12">
                                         <div class="text-center">
                                             <p class="mb-0">Don't have an account ? <a href="<?= base_url('register'); ?>" style="color: #C62742">Register</a></p>
+                                            <p class="mb-0">Are you an admin? <a href="<?= base_url('admin/login'); ?>" style="color: #C62742;">Login Here</a></p>
+
                                         </div>
                                     </div>
                                 </div>

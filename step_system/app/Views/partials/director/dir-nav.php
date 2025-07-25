@@ -1,3 +1,8 @@
+<?php
+$current_path = uri_string();
+$procurement_pages = ['director/ppmp', 'director/pr'];
+$is_procurement_page = in_array($current_path, $procurement_pages);
+?>
 <div class="sidebar-wrapper sidebar-theme">
 
             <nav id="sidebar">
@@ -17,32 +22,26 @@
                     </div>
                 </div>
                 <div class="shadow-bottom"></div>
-                <ul class="list-unstyled menu-categories" id="accordionExample">
-                    <li class="menu">
-                        <a href="<?= base_url('director/dashboard') ?>" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                                <span>Dashboard</span>
-                            </div>
-                        </a>
-                    </li>
+        <ul class="list-unstyled menu-categories" id="accordionExample">
+            <li class="menu">
+                <a href="<?= base_url('director/dashboard') ?>"
+                   class="dropdown-toggle <?= ($current_path === 'director/dashboard' || $current_path === 'dashboard') ? 'active text-white fw-bold shadow-text' : '' ?>">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span class="shadow-text">Dashboard</span>
+                    </div>
+                </a>
+            </li>
 
                     <li class="menu">
-                        <a href="" data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">
-                            <div class="">
-                                <img src="<?= base_url('assets/images/icon-procurement.svg'); ?>" width="24" height="24" alt="Box">
-                                <span class="ms-2">Procurement</span>
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample" style="min-width: 20rem;">
-                            <li class="">
-                                <a href="<?= base_url('/ppmp/create') ?>">Project Procurement Management Plan</a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('director/pr') ?>">Purchase Request</a>
-                            </li>
-                        </ul>
-                    </li>
+                <a href="<?= base_url('/procurement') ?>"
+                   class="dropdown-toggle <?= $current_path === '/procurement' ? 'active text-white fw-bold shadow-text' : '' ?>">
+                    <div>
+                        <img src="<?= base_url('assets/images/icon-procurement.svg') ?>" width="24" height="24" alt="checklist">
+                        <span class="ms-2 shadow-text">Procurement</span>
+                    </div>
+                </a>
+            </li>
 
                     <li class="menu">
                         <a href="<?= base_url('/tasks') ?>" class="dropdown-toggle">
@@ -54,7 +53,7 @@
                     </li>
 
                     <li class="menu">
-                        <a href="<?= base_url('director/mr') ?>" class="dropdown-toggle">
+                        <a href="<?= base_url('/mr') ?>" class="dropdown-toggle">
                             <div class="">
                                 <img src="<?= base_url('assets/images/icon-mr.svg') ?>" width="24" height="24" alt="Box">
                                 <span class="ms-2">MR</span>

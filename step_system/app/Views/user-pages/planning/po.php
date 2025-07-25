@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/plan-base-layout') ?>
+<?= $this->extend('layouts/preview-layout') ?>
 
 
 <?= $this->section('css') ?>
@@ -8,13 +8,13 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <div class="row invoice layout-top-spacing layout-spacing">
+    <div class="row invoice layout-spacing">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
-            <div class="doc-container">
+            <div class="doc-container container">
 
-                <div class="row">
-                    <div class="col-xl-9" style="width: 90%">
+
+                    <div class="col-xl-9" style="width: 100%">
 
                         <div class="invoice-content">
 
@@ -313,7 +313,6 @@
 
                     </div>
 
-                </div>
 
             </div>
 
@@ -329,4 +328,6 @@
     <script src="<?= base_url('assets/src/assets/js/apps/invoice-add.js') ?>"></script>
 
     <!-- For Table -->
-    <script src="https://code.jquery.com/jquerg
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="<?= base_url('assets/src/assets/js/apps/fac-ppmp.js') ?>"></script>
+<?= $this->endSection() ?>

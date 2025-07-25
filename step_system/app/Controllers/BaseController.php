@@ -68,25 +68,34 @@ abstract class BaseController extends Controller
      */
     protected function loadUserSession(): array
     {
-        // If user is not logged in
-        if (! $this->session->has('isLoggedIn') || ! $this->session->get('isLoggedIn')) {
-            return [];
+        // If user is not logged in as a regular user
+        if ($this->session->has('isLoggedIn') && $this->session->get('isLoggedIn')) {
+            return [
+                'user_id' => (int)$this->session->get('user_id'),
+                'user_firstname' => $this->session->get('user_firstname'),
+                'user_middlename' => $this->session->get('user_middlename'),
+                'user_lastname' => $this->session->get('user_lastname'),
+                'user_fullname' => $this->session->get('user_fullname'),
+                'user_email' => $this->session->get('user_email'),
+                'user_type' => $this->session->get('user_type'),
+                'user_suffix' => $this->session->get('user_suffix'),
+                'user_tupid' => $this->session->get('user_tupid'),
+                'user_role_name' => $this->session->get('user_role_name'),
+                'gen_role' => $this->session->get('user_gen_role'),
+                'user_dep_name' => $this->session->get('user_dep_name'),
+                'user_dep_id' => $this->session->get('user_dep_id'),
+            ];
         }
 
-        return [
-            'user_id' => $this->session->get('user_id'),
-            'user_firstname' => $this->session->get('user_firstname'),
-            'user_middlename' => $this->session->get('user_middlename'),
-            'user_lastname' => $this->session->get('user_lastname'),
-            'user_fullname' => $this->session->get('user_fullname'),
-            'user_email' => $this->session->get('user_email'),
-            'user_type' => $this->session->get('user_type'),
-            'user_suffix' => $this->session->get('user_suffix'),
-            'user_tupid' => $this->session->get('user_tupid'),
-            'user_role_name' => $this->session->get('user_role_name'),
-            'gen_role' => $this->session->get('user_gen_role'),
-            'user_dep_name' => $this->session->get('user_dep_name'),
-            'user_dep_id' => $this->session->get('user_dep_id'),
-        ];
+        // If user is logged in as an admin
+        if ($this->session->has('isAdminLoggedIn') && $this->session->get('isAdminLoggedIn')) {
+            return [
+                'admin_id' => $this->session->get('admin_id'),
+                'admin_username' => $this->session->get('admin_username'),
+                'is_admin' => true, // Indicate that this is an admin session
+            ];
+        }
+
+        return [];
     }
 }

@@ -41,342 +41,26 @@
         <!--  BEGIN CONTENT AREA  -->
 <?= $this->section('content') ?>
 <div class="row just-content-evenly h-100 align-items-stretch">
-                    <!-- Stepper Column -->
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
-                        <div class="widget widget-activity-five">
-                            <div class="widget-heading">
-                                <h5 class="">Procurement Status</h5>
-
-                                <div class="task-action">
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle" href="#" role="button" id="activitylog" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                        </a>
-
-                                        <div class="dropdown-menu left" aria-labelledby="activitylog" style="will-change: transform;">
-                                            <a class="dropdown-item" href="javascript:void(0);">View All</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Mark as Read</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="widget-content">
-                                <div class="w-shadow-top"></div>
-
-                                <div class="mt-container mx-auto">
-                                    <div class="timeline-line">
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Procurement Project Management Plan (PPMP) <span>Description</span></a></h5>
-                                                </div>
-                                                <p>07 May, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Annual Procurement Plan (APP) <br><span>Description</span></h5>
-                                                </div>
-                                                <p>06 May, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Purchase Request (PR) <br> <span>Description</span></h5>
-                                                </div>
-                                                <p>01 May, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                                <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Purchase Order (PR)<br> <span>Description</span></a></h5>
-                                                </div>
-                                                <p>30 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Bidding <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>25 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Delivery <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>10 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Inventory Custodian Slip (ICS) <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>10 Apr, 2024</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="item-timeline timeline-new">
-                                            <div class="t-dot">
-                                            <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                            </div>
-                                            <div class="t-content">
-                                                <div class="t-uppercontent">
-                                                    <h5>Property Acknowledgement Request (PAR) <br> <span>Description</span></h5>
-                                                    <span class=""></span>
-                                                </div>
-                                                <p>10 Apr, 2024</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="w-shadow-bottom"></div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Stepper Column -->
+    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
+        <div class="widget widget-activity-five h-100 d-flex flex-column">
+            <div class="widget-heading ms-3 pb-0">
+                <h4 class="text-center fw-bold" style="color: #DC3545">Procurement Status</h4>
+            </div>
+            <div class="widget-content">
+                <div class="w-shadow-top"></div>
+                <div class="mt-container mx-auto h-100">
+                    <div class="timeline-line" id="stepper-timeline">
+                        <!-- Stepper items will be dynamically loaded here -->
+                    </div>                                    
+                </div>
+                <div class="w-shadow-bottom"></div>
+            </div>
+        </div>
+    </div>
                     <!-- Mail Section -->
                     <div class="col-xl-9 col-lg-6 col-md-6 col-sm-6">
-                        <!-- Mail Start -->
-                        <div class="row">
-                                <div class="col-xl-12  col-md-12">
-                                    <div class="mail-box-container">
-                                        <div class="mail-overlay"></div>
-                                        <div id="mailbox-inbox" class="accordion mailbox-inbox">
-                                            <div class="search">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu mail-menu d-lg-none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                                                <input type="text" class="form-control input-search" placeholder="Search Here...">
-                                            </div>
-                                            <!-- Mail Content -->
-                                            <div class="message-box">
-                                                <div class="message-box-scroll" id="ct">
-                                                    <div class="mail-item mailInbox important">
-                                                        <div class="animated animatedFadeInUp fadeInUp" id="mailHeadingFourteen">
-                                                            <div class="mb-0">
-                                                                <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#mailCollapseFourteen" aria-expanded="false">
-                                                                    <div class="mail-item-inner">
-    
-                                                                        <div class="d-flex">
-                                                                            <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                                                <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default14">
-                                                                            </div>
-                                                                            <div class="f-head">
-                                                                                <!-- <div class="avatar avatar-sm">
-                                                                                    <span class="avatar-title rounded-circle">E</span>
-                                                                                </div> -->
-                                                                            </div>
-                                                                            <div class="f-body">    
-                                                                                <div class="meta-mail-time">
-                                                                                    <p class="user-email" data-mailTo="reevesErnest@mail.com">Ernest Reeves</p>
-                                                                                </div>
-                                                                                <div class="meta-title-tag">
-                                                                                    <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Just uploaded new video Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'><span class="mail-title" data-mailTitle="Youtube">Youtube - </span>Just uploaded new video Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
-                                                                                    
-                                                                                    <p class="meta-time align-self-center">25 Dec</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="mail-item mailInbox spam">
-                                                        <div class="animated animatedFadeInUp fadeInUp" id="mailHeadingFifteen">
-                                                            <div class="mb-0">
-                                                                <div class="mail-item-heading work collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#mailCollapseFifteen" aria-expanded="false">
-                                                                    <div class="mail-item-inner">
-    
-                                                                        <div class="d-flex">
-                                                                            <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                                                <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default15">
-                                                                            </div>
-                                                                            <!-- <div class="f-head">
-                                                                                <img src="../src/assets/img/profile-15.jpeg" class="user-profile" alt="avatar">
-                                                                            </div> -->
-                                                                            <div class="f-body">
-                                                                                <div class="meta-mail-time">
-                                                                                    <p class="user-email" data-mailTo="infocompany@mail.com">Info Company</p>
-                                                                                </div>
-                                                                                <div class="meta-title-tag">
-                                                                                    <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'><span class="mail-title" data-mailTitle="50% Discount">50% Discount - </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
-                                                                                    
-                                                                                    <p class="meta-time align-self-center">15 Dec</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="mail-item mailInbox spam">
-                                                        <div class="animated animatedFadeInUp fadeInUp" id="mailHeadingTwenty">
-                                                            <div class="mb-0">
-                                                                <div class="mail-item-heading personal collapsed"  data-bs-toggle="collapse" role="navigation" data-bs-target="#mailCollapseTwenty" aria-expanded="false">
-                                                                    <div class="mail-item-inner">
-    
-                                                                        <div class="d-flex">
-                                                                            <div class="form-check form-check-primary form-check-inline mt-1" data-bs-toggle="collapse" data-bs-target>
-                                                                                <input class="form-check-input inbox-chkbox" type="checkbox" id="form-check-default19">
-                                                                            </div>
-                                                                            <!-- <div class="f-head">
-                                                                                <img src="../src/assets/img/profile-32.jpeg" class="user-profile" alt="avatar">
-                                                                            </div> -->
-                                                                            <div class="f-body">
-                                                                                <div class="meta-mail-time">
-                                                                                    <p class="user-email" data-mailTo="bradleyGreer@mail.com">Bradley Greer</p>
-                                                                                </div>
-                                                                                <div class="meta-title-tag">
-                                                                                    <p class="mail-content-excerpt" data-mailDescription='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'><span class="mail-title" data-mailTitle="Verficication Link">Verficication Link - </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
-                                                                                    
-                                                                                    <p class="meta-time align-self-center">25 Nov</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="composeMailModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title add-title" id="notesMailModalTitleeLabel">Compose</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                    </button>
-                                                </div>
-
-                                                <div class="modal-body">
-                                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
-                                                    <div class="compose-box">
-                                                        <div class="compose-content">
-                                                            <form>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <div class="mb-4 mail-form">
-                                                                            <p>From:</p>
-                                                                            <select class="form-control" id="m-form">
-                                                                                <option value="info@mail.com">Info &lt;info@mail.com&gt;</option>
-                                                                                <option value="shaun@mail.com">Shaun Park &lt;shaun@mail.com&gt;</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-4 mail-to">
-                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> To:</p>
-                                                                            <div class="">
-                                                                                <input type="email" id="m-to" class="form-control">
-                                                                                <span class="validation-text"></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-4 mail-cc">
-                                                                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg> CC:</p>
-                                                                            <div>
-                                                                                <input type="text" id="m-cc" class="form-control">
-                                                                                <span class="validation-text"></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="mb-4 mail-subject">
-                                                                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Subject:</p>
-                                                                    <div class="w-100">
-                                                                        <input type="text" id="m-subject" class="form-control">
-                                                                        <span class="validation-text"></span>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class="">
-                                                                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Upload Attachment:</p>
-                                                                    <!-- <input type="file" class="form-control-file" id="mail_File_attachment" multiple="multiple"> -->
-                                                                    <input class="form-control file-upload-input" type="file" id="formFile" multiple="multiple">
-                                                                </div>
-    
-                                                                <div id="editor-container">
-    
-                                                                </div>
-    
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button id="btn-save" class="btn float-left btn-success"> Save</button>
-                                                    <button id="btn-reply-save" class="btn float-left btn-success"> Save Reply</button>
-                                                    <button id="btn-fwd-save" class="btn float-left btn-success"> Save Fwd</button>
-    
-                                                    <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> Discard</button>
-    
-                                                    <button id="btn-reply" class="btn btn-primary"> Reply</button>
-                                                    <button id="btn-fwd" class="btn btn-primary"> Forward</button>
-                                                    <button id="btn-send" class="btn btn-primary"> Send</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-    
-                                </div>
-    
-    
-                            </div>
-                        <!-- Style 3 Table Section End -->
+                    <?= $this->include('tasks') ?>
                     </div>
                 </div>
             </div>
@@ -390,6 +74,8 @@
 
 <?= $this->section('js') ?>
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/apex/apexcharts.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js') ?>"></script>
 
@@ -397,6 +83,111 @@
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/notification/snackbar/snackbar.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/apps/mailbox.js') ?>"></script>
+<script src="<?= base_url('assets/js/tasks_page/tasks.js') ?>"></script>
+
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+<script>
+
+    c3 = $('#style-3').DataTable({
+        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+    "<'table-responsive'tr>" +
+    "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        "oLanguage": {
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [5, 10, 20, 50],
+        "pageLength": 10
+    });
+
+    multiCheck(c3);
+
+    // Function to fetch and render stepper status
+    function fetchAndRenderStepper(departmentId) {
+        fetch(`<?= base_url('stepper/stepper-status/') ?>${departmentId}`)
+            .then(response => response.json())
+            .then(data => {
+                const timeline = document.getElementById('stepper-timeline');
+                timeline.innerHTML = ''; // Clear existing content
+
+                data.forEach(phase => {
+                    const itemTimeline = document.createElement('div');
+                    itemTimeline.classList.add('item-timeline', 'timeline-new');
+
+                    itemTimeline.innerHTML = `
+                        <div class="t-dot">
+                            <div class="${phase.icon_class}">${phase.icon}</div>
+                        </div>
+                        <div class="t-content">
+                            <div class="t-uppercontent">
+                                <h5>${phase.display_name} <a href="#" class="${phase.text_color} description-link" data-bs-toggle="modal" data-bs-target="#stepperDetailModal" data-phase="${phase.phase}" data-status="${phase.status}" data-remark="${phase.remark}" data-updated-at="${phase.updated_at}">Description</a></h5>
+                            </div>
+                            <p>${(phase.status === 'completed' || phase.status === 'rejected') && phase.updated_at ? new Date(phase.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
+                        </div>
+                    `;
+                    timeline.appendChild(itemTimeline);
+                });
+
+                // Attach event listeners to description links after rendering
+                document.querySelectorAll('.description-link').forEach(link => {
+                    link.addEventListener('click', function() {
+                        const phase = this.getAttribute('data-phase');
+                        const status = this.getAttribute('data-status');
+                        const remark = this.getAttribute('data-remark');
+                        const updatedAt = this.getAttribute('data-updated-at');
+
+                        document.getElementById('modalStepperPhase').textContent = phase;
+                        document.getElementById('modalStepperStatus').textContent = `Status: ${status}`;
+                        document.getElementById('modalStepperRemark').textContent = `Remark: ${remark}`;
+                        document.getElementById('modalStepperUpdatedAt').textContent = `Last Updated: ${updatedAt ? new Date(updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A'}`;
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching stepper status:', error));
+    }
+
+    // Call the function with a placeholder department ID (e.g., 1 for testing)
+    // You need to replace '1' with the actual department ID of the logged-in user.
+    // This ID should be passed from the backend PHP to the JavaScript.
+    // For example: fetchAndRenderStepper(<?= $user_department_id ?>);
+    // For now, using a static ID for demonstration purposes.
+
+    // Assuming you have the user's department ID available in a PHP variable, e.g., $user_department_id
+    // Replace `null` with the actual PHP variable that holds the department ID.
+    const userDepartmentId = <?php echo esc($user_department_id ?? 'null'); ?>;
+
+    if (userDepartmentId !== null) {
+        fetchAndRenderStepper(userDepartmentId);
+    } else {
+        console.error('User department ID is not available.');
+    }
+</script>
+
+<!-- Stepper Detail Modal -->
+<div class="modal fade" id="stepperDetailModal" tabindex="-1" role="dialog" aria-labelledby="stepperDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalStepperPhase"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalStepperStatus"></p>
+                <p id="modalStepperRemark"></p>
+                <p id="modalStepperUpdatedAt"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?= $this->endSection() ?>

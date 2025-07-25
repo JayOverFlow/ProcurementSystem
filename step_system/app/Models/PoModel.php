@@ -27,13 +27,21 @@ class PoModel extends Model
         'po_delivery_term',
         'po_date_delivery',
         'po_payment_term',
-        'po_signed_by_fk',
         'po_fund_cluster',
         'po_fund_available',
         'po_orsburs',
         'po_date_orsburs',
         'po_amount',
-        'po_remarks'
+        'po_description',
+        'po_amount_in_words',
+        'conforme_name_of_supplier',
+        'conforme_date',
+        'conforme_campus_director',
+        'po_accountant',
+        'po_total_amount',
+        'po_remarks',
+        'saved_by_user_id_fk',
+        'po_signed_by_fk',
     ];
 
     protected bool $allowEmptyInserts = false;

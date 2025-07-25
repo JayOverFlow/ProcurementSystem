@@ -24,15 +24,8 @@ class UserRoleDepartmentModel extends Model
     }
 
     // Method to update department for a specific user and role
-    // NOTE: This method is NOT currently used by the MARolesAssignmentController.
-    // The controller directly uses CodeIgniter's Query Builder and Model's update/insert methods.
-    // If you plan to use this method, its logic would need to be re-evaluated based on the single 'id' primary key.
     public function updateUserDepartment($userId, $oldDepartmentId, $newDepartmentId)
     {
-        // This method is not used in the controller. The controller directly uses
-        // $this->db->table()->where()->delete() and Model->update().
-        // If it were to be used, its logic would need to be re-evaluated
-        // based on the single 'id' primary key.
         $currentAssignment = $this->where(['user_id' => $userId, 'department_id' => $oldDepartmentId])->first();
 
         if ($currentAssignment) {
@@ -50,10 +43,17 @@ class UserRoleDepartmentModel extends Model
         return false;
     }
 
-    public function getUsersInDirectorsOffice() {
-        return $this->select('users_tbl.*')
-                    ->join('users_tbl', 'users_tbl.user_id = user_role_department_tbl.user_id')
-                    ->where('user_role_department_tbl.department_id', 35)
+    // Show the users within the same department of the Office Head
+    public function getUsersInSameDepartment(int $currentUserId, int $departmentId): array
+    {
+        return $this->select('users_tbl.user_tupid, users_tbl.user_firstname, users_tbl.user_lastname, users_tbl.user_type')
+                    ->join('users_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->where('user_role_department_tbl.department_id', $departmentId)
+                    ->where('users_tbl.user_id !=', $currentUserId) // Exclude the current user
                     ->findAll();
     }
+
+    // public funtion
+
+
 } 

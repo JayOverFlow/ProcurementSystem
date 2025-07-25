@@ -40,7 +40,7 @@
                             <td>Paityn Vetrovs</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -50,7 +50,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -70,7 +70,7 @@
                             <td>Ruben Herwitz</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -80,7 +80,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -100,7 +100,7 @@
                             <td>Phillip Baptista</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -110,7 +110,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -130,7 +130,7 @@
                             <td>Omar Carder</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -140,7 +140,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -160,7 +160,7 @@
                             <td>Roger Rhiel Madsen</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -170,7 +170,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -190,7 +190,7 @@
                             <td>Cristofer Geidt</td>
                             <td>
                                 <div class="btn-group px-10  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -200,7 +200,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -220,7 +220,7 @@
                             <td>Madelyn Culhane</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -230,7 +230,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -250,7 +250,7 @@
                             <td>Kaylynn Dorwart</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -260,7 +260,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
@@ -280,7 +280,7 @@
                             <td>Angel Phillips</td>
                             <td>
                                 <div class="btn-group  mb-2 me-4 " role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle " style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1 "></i>For Bidding</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1 "></i>Bid</a>
@@ -290,7 +290,7 @@
                             </td>
                             <td>
                                 <div class="btn-group  mb-2 me-4" role="group">
-                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle d-flex justify-content-between align-items-center" style="width: 220px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                                    <button id="outlineDropdown7" type="button" class="btn btn-outline-dark dropdown-toggle" style="padding-left:100px ; padding-right: 100px " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                                     <div class="dropdown-menu" aria-labelledby="outlineDropdown7">
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-home-fill-1 mr-1"></i>For Delivery</a>
                                         <a href="javascript:void(0);" class="dropdown-item" style="padding-left:20px ; padding-right: 160px "><i class="flaticon-gear-fill mr-1"></i>Delivered</a>
