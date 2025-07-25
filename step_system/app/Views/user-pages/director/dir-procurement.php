@@ -29,7 +29,6 @@
 				<div id="ecommerce-list_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 					<div class="row pt-4 pb-0 align-items-center justify-content-center">
 						<div class="col-auto d-flex align-items-center ms-3" style="gap: 0.5rem;">
-							<input class="form-check-input" type="checkbox" id="filterCheckbox" style="width: 1.1em; height: 1.1em;" checked>
 							<label for="filter-form-type" class="form-label mb-0 me-1" style="font-weight: 500;">Filter:</label>
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
 								<option value="PR">PR</option>
@@ -72,7 +71,7 @@
 										<?php /* Make the entire row clickable to view/edit the form, and include task_id for deletion */ ?>
 										<tr data-href="<?= base_url($form['url_slug'] . '/create/' . esc($form['document_id'])) ?>" data-task-id="<?= esc($form['task_id']) ?>" style="cursor: pointer;">
 											<td><input class="form-check-input" type="checkbox" onclick="event.stopPropagation();" value="<?= esc($form['task_id']) ?>"></td>
-											<td><?= esc($form['type']) ?></td>
+											<td data-search="<?= esc($form['form_type']) ?>"><?= esc($form['type']) ?></td>
 											<td><?= esc($form['document_id']) ?></td>
 											<td><?= esc($form['sent_to']) ?></td>
 											<td><?= esc($form['created_at']) ?></td>

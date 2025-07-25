@@ -41,6 +41,28 @@ $(document).ready(function() {
         }
     });
 
+    // --- Filter functionality ---
+    if ($('#filter-form-type').length) {
+        const filterDropdown = $('#filter-form-type');
+
+        function applyFilter() {
+            const selectedValue = filterDropdown.val();
+            // The second column (index 1) contains the form type.
+            // Use a regex that specifically targets the content of the hidden span.
+            // This ensures an exact match on the abbreviation (e.g., 'PR') without incorrectly matching parts of the full name.
+            const searchRegex = selectedValue ? '^' + selectedValue + '$' : '';
+            table.column(1).search(searchRegex, true, false).draw();
+        }
+
+        // Apply the filter on page load based on the default 'All' selection.
+        applyFilter();
+
+        // Add an event listener to the dropdown.
+        filterDropdown.on('change', function() {
+            applyFilter();
+        });
+    }
+
     // --- Delete and Selection Feature ---
 
     // Only enable delete functionality if the delete button and deleteUrl are present.
