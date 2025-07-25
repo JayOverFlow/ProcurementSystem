@@ -25,7 +25,7 @@ class PrController extends BaseController
         $this->prItemModel = new PrItemModel();
         $this->taskModel = new TaskModel();
     }
-    public function index()
+    public function index($prId = null)
     {
         $userData = $this->loadUserSession();
         $departments = $this->departmentModel->getAllDepartments();
@@ -35,7 +35,18 @@ class PrController extends BaseController
             'user_data' => $userData,
             'departments' => $departments,
             'users' => $users,
+            'pr' => null,
+            'pr_items' => [],
         ];
+
+        if ($prId) {
+            $pr = $this->prModel->find($prId);
+            if ($pr) {
+                $prItems = $this->prItemModel->where('pr_id_fk', $prId)->findAll();
+                $data['pr'] = $pr;
+                $data['pr_items'] = $prItems;
+            }
+        }
 
         $role = $userData['gen_role'] ?? null;
 
@@ -61,6 +72,7 @@ class PrController extends BaseController
     {
         $userData = $this->loadUserSession();
         $db = \Config\Database::connect();
+        $prId = $this->request->getPost('pr_id');
 
         $db->transStart();
 
@@ -78,10 +90,31 @@ class PrController extends BaseController
                 'pr_approved_by_designation' => $this->request->getPost('pr_approved_by_designation'),
                 'saved_by_user_id_fk' => $userData['user_id']
             ];
-            $this->prModel->insert($prData);
-            $prId = $this->prModel->getInsertID();
 
-            // 2. Insert into pr_items_tbl
+            if (empty($prId)) {
+                // Create new PR
+                $this->prModel->insert($prData);
+                $prId = $this->prModel->getInsertID();
+                
+                // 2. Insert into pr_items_tbl
+                $this->taskModel->insert([
+                    'submitted_by' => $userData['user_id'],
+                    'submitted_to' => null,
+                    'pr_id_fk' => $prId,
+                    'task_type' => 'Purchase Request',
+                    'task_description' => 'A new Purchase Request has been submitted for your review.'
+                ]);
+
+                $message = 'Your Purchase Request has been saved.';
+            } else {
+                // Update existing PR
+                $this->prModel->update($prId, $prData);
+                $this->prItemModel->where('pr_id_fk', $prId)->delete();
+
+                $message = 'Your Purchase Request has been updated.';
+            }
+
+            // Insert PR items
             $items = $this->request->getPost('items') ?? [];
             $itemData = [];
             foreach ($items as $item) {
@@ -111,12 +144,10 @@ class PrController extends BaseController
             if ($db->transStatus() === false) {
                 return redirect()->back()->with('error', 'An error occurred while saving the Purchase Request.');
             } else {
-                return redirect()->back()->with('success', 'Your Purchase Request has been saved.');
+                return redirect()->to('pr/create/' . $prId)->with('success', $message);
             }
-
-
         } catch (\Exception $e) {
-            log_message('error', 'Pr Creation/Submission Error: ' . $e->getMessage());
+            log_message('error', 'PR Save Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }

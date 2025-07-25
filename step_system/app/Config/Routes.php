@@ -180,8 +180,8 @@ $routes->group('app', function($routes) {
 // PR
 $routes->group('pr', function($routes) {
     $routes->get('create', 'PrController::index');
+    $routes->get('create/(:num)', 'PrController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PrController::save');
-    // $routes->get('preview/(:num)', 'AppController::preview/$1');
 });
 
 // PO
