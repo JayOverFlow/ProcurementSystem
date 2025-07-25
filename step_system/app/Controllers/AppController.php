@@ -25,7 +25,7 @@ class AppController extends BaseController
         $this->departmentModel = new DepartmentModel();
     }
 
-    public function index()
+    public function index($appId = null)
     {
         $userData = $this->loadUserSession();
         $users = $this->userModel->getAllUsers();
@@ -34,8 +34,22 @@ class AppController extends BaseController
         $data = [
             'user_data' => $userData,
             'users' => $users,
-            'departments' => $departments
+            'departments' => $departments,
+            'app' => null, // Will hold the APP main data if editing an existing form
+            'app_items' => [] // Will hold the APP items data if editing an existing form
         ];
+
+        // If an appId is provided in the URL, fetch the existing APP data
+        if ($appId) {
+            $app = $this->appModel->find($appId);
+            if ($app) {
+                // If APP found, fetch its associated items
+                $appItems = $this->appItemModel->where('app_id_fk', $appId)->findAll();
+                // Populate the data array with existing APP and its items
+                $data['app'] = $app;
+                $data['app_items'] = $appItems;
+            }
+        }
         
         // If the user is not a Planning Officer
         if (($userData['gen_role'] ?? null) !== 'Planning Officer') {
@@ -45,7 +59,7 @@ class AppController extends BaseController
         return view('user-pages/planning/plan-app', $data);
     }
 
-    public function create()
+    public function save()
     {
         $userData = $this->loadUserSession();
         // $appModel = new AppModel();
@@ -53,12 +67,12 @@ class AppController extends BaseController
         // $taskModel = new TaskModel();
         // $userModel = new UserModel();
         $db = \Config\Database::connect();
-        // $userId = session()->get('user_id');
+        $appId = $this->request->getPost('app_id'); // Get app_id from hidden input
 
         $db->transStart();
 
         try {
-            // 1. Insert into app_tbl
+            // 1. Insert or Update app_tbl
             $appData = [
                 'app_status' => 'Draft',
                 'saved_by_user_id_fk' => $userData['user_id'],
@@ -70,8 +84,20 @@ class AppController extends BaseController
                 'app_approved_by_designation' => $this->request->getPost('approved_by_designation'),
                 'app_dep_id_fk' => $this->request->getPost('app_dep_id_fk'),
             ];
-            $this->appModel->insert($appData);
-            $appId = $this->appModel->getInsertID();
+
+            if ($appId) {
+                // Update existing APP
+                $this->appModel->update($appId, $appData);
+            } else {
+                // Insert new APP
+                $this->appModel->insert($appData);
+                $appId = $this->appModel->getInsertID();
+            }
+
+            // Clear existing items before inserting new ones to prevent duplicates
+            if ($appId) {
+                $this->appItemModel->where('app_id_fk', $appId)->delete();
+            }
 
             // 2. Prepare and insert into app_items_tbl
             $items = $this->request->getPost('items') ?? [];
@@ -131,9 +157,9 @@ class AppController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'An error occurred while saving the Annual Procurement Plan.');
+                return redirect()->to('app/create/' . $appId)->with('error', 'An error occurred while saving the Annual Procurement Plan.');
             }
-            return redirect()->back()->with('success', 'Annual Procurement Plan has been saved.');
+            return redirect()->to('app/create/' . $appId)->with('success', 'Annual Procurement Plan has been saved.');
 
         } catch (\Exception $e) {
             log_message('error', 'APP Creation/Submission Error: ' . $e->getMessage());

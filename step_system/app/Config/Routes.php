@@ -171,8 +171,10 @@ $routes->group('tasks', function($routes) {
 // APP
 $routes->group('app', function($routes) {
     $routes->get('create', 'AppController::index');
-    $routes->post('create', 'AppController::create');
+    $routes->get('create/(:num)', 'AppController::index/$1'); // For loading the form with the data
+    $routes->post('save', 'AppController::save');
     $routes->get('preview/(:num)', 'AppController::preview/$1');
+    $routes->get('view/(:num)', 'AppController::view/$1');
 });
 
 // PR
