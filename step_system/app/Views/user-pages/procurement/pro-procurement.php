@@ -34,6 +34,7 @@
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
 								<option value="PR">PR</option>
 								<option value="PPMP">PPMP</option>
+                                <option value="PO">PO</option>
 								<option value="" selected>All</option>
 							</select>
 						</div>
