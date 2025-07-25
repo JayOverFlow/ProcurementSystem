@@ -70,16 +70,26 @@
                                             <div class="form-group row">
                                                 <label for="office" class="col-sm-1 col-form-label col-form-label-sm">Office</label>
                                                 <div class="col-sm-9">
+
+                                                    <select class="form-control form-control-sm <?= (session('errors.ppmp_office_fk')) ? 'is-invalid' : '' ?>" id="ppmp-office-fk" name="ppmp_office_fk">
+                                                        <option value="0">Select</option>
+
                                                     <select class="form-control form-control-sm" id="ppmp-office-fk" name="ppmp_office_fk" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                         <option>Select</option>
+
                                                         <?php if(empty($departments)): ?>
                                                             <option value="null">No Offices</option>
                                                         <?php else: ?>
                                                             <?php foreach($departments as $department): /* Pre-populate selected department if editing */?>
-                                                                <option value="<?= esc($department['dep_id']) ?>" <?= (isset($ppmp['ppmp_office_fk']) && $ppmp['ppmp_office_fk'] == $department['dep_id']) ? 'selected' : '' ?>><?= esc($department['dep_name']) ?></option>
+                                                                <option value="<?= esc($department['dep_id']) ?>" <?= old('ppmp_office_fk', $ppmp['ppmp_office_fk'] ?? '') == $department['dep_id'] ? 'selected' : '' ?>><?= esc($department['dep_name']) ?></option>
                                                             <?php endforeach; ?>
                                                         <?php endif;?>
                                                     </select>
+                                                    <?php if(session('errors.ppmp_office_fk')): ?>
+                                                        <div class="invalid-feedback">
+                                                            <?= session('errors.ppmp_office_fk') ?>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
 
@@ -88,23 +98,42 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position1" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
+
+                                                        <input type="text" class="form-control form-control-sm <?= (session('errors.ppmp_prepared_by_position')) ? 'is-invalid' : '' ?>" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position" value="<?= old('ppmp_prepared_by_position', esc($ppmp['ppmp_prepared_by_position'] ?? '')) ?>">
+                                                        <?php if(session('errors.ppmp_prepared_by_position')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.ppmp_prepared_by_position') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+
                                                         <input type="text" class="form-control form-control-sm" id="ppmp-prepared-by-position" name="ppmp_prepared_by_position" value="<?= esc($ppmp['ppmp_prepared_by_position'] ?? '') /* Pre-populate position */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel1" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
+
+                                                        <select class="form-control form-control-sm <?= (session('errors.ppmp_prepared_by_name')) ? 'is-invalid' : '' ?>" id="ppmp-prepared-by-name" name="ppmp_prepared_by_name">
+                                                            <option value="0">Select</option>
+
                                                         <select class="form-control form-control-sm" id="ppmp-prepared-by-name" name="ppmp_prepared_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
+
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
                                                         <?php else: ?>
                                                                 <?php foreach($users as $user): /* Pre-populate selected user */?>
-                                                                    <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_prepared_by_name']) && $ppmp['ppmp_prepared_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
+                                                                    <option value="<?= esc($user['user_id']) ?>" <?= old('ppmp_prepared_by_name', $ppmp['ppmp_prepared_by_name'] ?? '') == $user['user_id'] ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
                                                         </select>
+                                                        <?php if(session('errors.ppmp_prepared_by_name')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.ppmp_prepared_by_name') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
 
@@ -112,23 +141,42 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position2" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
+
+                                                        <input type="text" class="form-control form-control-sm <?= (session('errors.ppmp_recommended_by_position')) ? 'is-invalid' : '' ?>" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position" value="<?= old('ppmp_recommended_by_position', esc($ppmp['ppmp_recommended_by_position'] ?? '')) ?>">
+                                                        <?php if(session('errors.ppmp_recommended_by_position')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.ppmp_recommended_by_position') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+
                                                         <input type="text" class="form-control form-control-sm" id="ppmp-recommended-by-position" name="ppmp_recommended_by_position" value="<?= esc($ppmp['ppmp_recommended_by_position'] ?? '') /* Pre-populate position */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel2" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
+
+                                                        <select class="form-control form-control-sm <?= (session('errors.ppmp_recommended_by_name')) ? 'is-invalid' : '' ?>" id="ppmp-recommended-by-name" name="ppmp_recommended_by_name">
+                                                            <option value="0">Select</option>
+
                                                         <select class="form-control form-control-sm" id="ppmp-recommended-by-name" name="ppmp_recommended_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
+
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
                                                             <?php else: ?>
                                                                 <?php foreach($users as $user): /* Pre-populate selected user */?>
-                                                                    <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_recommended_by_name']) && $ppmp['ppmp_recommended_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
+                                                                    <option value="<?= esc($user['user_id']) ?>" <?= old('ppmp_recommended_by_name', $ppmp['ppmp_recommended_by_name'] ?? '') == $user['user_id'] ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
                                                         </select>
+                                                        <?php if(session('errors.ppmp_recommended_by_name')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.ppmp_recommended_by_name') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
                                                 
@@ -136,23 +184,42 @@
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="position3" class="col-sm-3 col-form-label col-form-label-sm">Position</label>
                                                     <div class="col-sm-9">
+
+                                                        <input type="text" class="form-control form-control-sm <?= (session('errors.ppmp_evaluated_by_position')) ? 'is-invalid' : '' ?>" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position" value="<?= old('ppmp_evaluated_by_position', esc($ppmp['ppmp_evaluated_by_position'] ?? '')) ?>">
+                                                        <?php if(session('errors.ppmp_evaluated_by_position')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.ppmp_evaluated_by_position') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+
                                                         <input type="text" class="form-control form-control-sm" id="ppmp-evaluated-by-position" name="ppmp_evaluated_by_position" value="<?= esc($ppmp['ppmp_evaluated_by_position'] ?? '') /* Pre-populate position */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                     </div>
                                                 </div>    
                                                 
                                                 <div class="form-group row mt-4 ms-1">
                                                     <label for="personel3" class="col-sm-3 col-form-label col-form-label-sm">Personel</label>
                                                     <div class="col-sm-9">
+
+                                                        <select class="form-control form-control-sm <?= (session('errors.ppmp_evaluated_by_name')) ? 'is-invalid' : '' ?>" id="ppmp-evaluated-by-name" name="ppmp_evaluated_by_name">
+                                                            <option value="0">Select</option>
+
                                                         <select class="form-control form-control-sm" id="ppmp-evaluated-by-name" name="ppmp_evaluated_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
+
                                                             <?php if(empty($users)): ?>
                                                                 <option value="null">No Users</option>
                                                             <?php else: ?>
                                                                 <?php foreach($users as $user): /* Pre-populate selected user */?>
-                                                                    <option value="<?= esc($user['user_id']) ?>" <?= (isset($ppmp['ppmp_evaluated_by_name']) && $ppmp['ppmp_evaluated_by_name'] == $user['user_id']) ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
+                                                                    <option value="<?= esc($user['user_id']) ?>" <?= old('ppmp_evaluated_by_name', $ppmp['ppmp_evaluated_by_name'] ?? '') == $user['user_id'] ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                 <?php endforeach; ?>
                                                             <?php endif;?>
                                                         </select>
+                                                        <?php if(session('errors.ppmp_evaluated_by_name')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.ppmp_evaluated_by_name') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </div> 
@@ -169,28 +236,58 @@
                                             <div class="form-group row">
                                                 <label for="period-covered" class="col-sm-3 col-form-label col-form-label-sm">Period Covered</label>
                                                 <div class="col-sm-9">
+
+                                                    <input type="text" class="form-control form-control-sm <?= (session('errors.ppmp_period_covered')) ? 'is-invalid' : '' ?>" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY" value="<?= old('ppmp_period_covered', esc($ppmp['ppmp_period_covered'] ?? '')) ?>">
+                                                    <?php if(session('errors.ppmp_period_covered')): ?>
+                                                        <div class="invalid-feedback">
+                                                            <?= session('errors.ppmp_period_covered') ?>
+                                                        </div>
+                                                    <?php endif; ?>
+
                                                     <input type="text" class="form-control form-control-sm" id="ppmp-period-covered" name="ppmp_period_covered" placeholder="YYYY" value="<?= esc($ppmp['ppmp_period_covered'] ?? '') /* Pre-populate period covered */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="date-approved" class="col-sm-3 col-form-label col-form-label-sm">Date Approved</label>
                                                 <div class="col-sm-9">
+
+                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= old('ppmp_date_approved', esc($ppmp['ppmp_date_approved'] ?? '')) ?>">
                                                     <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc($ppmp['ppmp_date_approved'] ?? '') /* Pre-populate date approved */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-budget-allocated" class="col-sm-3 col-form-label col-form-label-sm">Total Budget Allocated</label>
                                                 <div class="col-sm-9">
+
+                                                    <input type="number" class="form-control form-control-sm <?= (session('errors.ppmp_total_budget_allocated')) ? 'is-invalid' : '' ?>" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated" value="<?= old('ppmp_total_budget_allocated', esc($ppmp['ppmp_total_budget_allocated'] ?? '')) ?>">
+                                                    <?php if(session('errors.ppmp_total_budget_allocated')): ?>
+                                                        <div class="invalid-feedback">
+                                                            <?= session('errors.ppmp_total_budget_allocated') ?>
+                                                        </div>
+                                                    <?php endif; ?>
+
                                                     <input type="number" class="form-control form-control-sm" id="ppmp-total-budget-allocated" name="ppmp_total_budget_allocated" value="<?= esc($ppmp['ppmp_total_budget_allocated'] ?? '') /* Pre-populate total budget allocated */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                 </div>
                                             </div>
 
                                             <div class="form-group row mt-4">
                                                 <label for="ttl-proposed-budget" class="col-sm-3 col-form-label col-form-label-sm">Total Proposed Budget</label>
                                                 <div class="col-sm-9">
+
+                                                    <input type="number" class="form-control form-control-sm <?= (session('errors.ppmp_total_proposed_budget')) ? 'is-invalid' : '' ?>" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget" value="<?= old('ppmp_total_proposed_budget', esc($ppmp['ppmp_total_proposed_budget'] ?? '')) ?>">
+                                                    <?php if(session('errors.ppmp_total_proposed_budget')): ?>
+                                                        <div class="invalid-feedback">
+                                                            <?= session('errors.ppmp_total_proposed_budget') ?>
+                                                        </div>
+                                                    <?php endif; ?>
+
                                                     <input type="number" class="form-control form-control-sm" id="ppmp-total-proposed-budget" name="ppmp_total_proposed_budget" value="<?= esc($ppmp['ppmp_total_proposed_budget'] ?? '') /* Pre-populate total proposed budget */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                 </div>
                                             </div>
                                             
@@ -209,6 +306,9 @@
 
                             <div class="invoice-detail-items pt-0">
                                 <div class="table-responsive">
+                                    <?php if(session('errors.items')): ?>
+                                        <div class="alert alert-danger"><?= session('errors.items') ?></div>
+                                    <?php endif; ?>
                                     <table class="table item-table">
                                         <thead>
                                             <tr>
@@ -240,11 +340,74 @@
 
                             
                                         <tbody>
-                                            <?php $mooeIndex = 0; /* Initialize index for MOOE items */?>
-                                            <?php if (!empty($ppmp_items)): /* Loop through existing items if available */?>
+                                            <?php $mooeIndex = 0; ?>
+                                            <?php if (!empty(old('items'))): ?>
+                                                <?php foreach (old('items') as $index => $item): ?>
+                                                    <tr>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$index.'.code')) ? 'is-invalid' : '' ?>" name="items[<?= $index ?>][code]" value="<?= esc($item['code']) ?>">
+                                                            <?php if(session('errors.items.'.$index.'.code')): ?><div class="invalid-feedback"><?= session('errors.items.'.$index.'.code') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$index.'.gen_desc')) ? 'is-invalid' : '' ?>" name="items[<?= $index ?>][gen_desc]" value="<?= esc($item['gen_desc']) ?>">
+                                                            <?php if(session('errors.items.'.$index.'.gen_desc')): ?><div class="invalid-feedback"><?= session('errors.items.'.$index.'.gen_desc') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$index.'.qty_size')) ? 'is-invalid' : '' ?>" name="items[<?= $index ?>][qty_size]" value="<?= esc($item['qty_size']) ?>">
+                                                            <?php if(session('errors.items.'.$index.'.qty_size')): ?><div class="invalid-feedback"><?= session('errors.items.'.$index.'.qty_size') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$index.'.est_budget')) ? 'is-invalid' : '' ?>" name="items[<?= $index ?>][est_budget]" value="<?= esc($item['est_budget']) ?>">
+                                                            <?php if(session('errors.items.'.$index.'.est_budget')): ?><div class="invalid-feedback"><?= session('errors.items.'.$index.'.est_budget') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="d-flex justify-content-between px-0 ps-1 py-2">
+                                                            <?php $months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']; ?>
+                                                            <?php foreach($months as $month): ?>
+                                                            <div class="form-check form-check-danger form-check-inline">
+                                                                <input class="form-check-input" type="checkbox" value="1" name="items[<?= $index ?>][month][<?= $month ?>]" <?= isset($item['month'][$month]) ? 'checked' : '' ?>>
+                                                            </div>
+                                                            <?php endforeach; ?>
+                                                        </td>
+                                                        <td class="delete-item-row text-center">
+                                                            <ul class="table-controls">
+                                                                <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                <?php $mooeIndex = $index + 1; ?>
+                                                <?php endforeach; ?>
+                                            <?php elseif (!empty($ppmp_items)): ?>
                                                 <?php foreach ($ppmp_items as $item): ?>
-                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) < 50000): /* Display only MOOE items */?>
+                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) < 50000): ?>
                                                         <tr>
+
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$mooeIndex.'.code')) ? 'is-invalid' : '' ?>" id="code_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][code]" value="<?= esc(old('items.'.$mooeIndex.'.code', $item['ppmp_item_code'] ?? '')) ?>">
+                                                                <?php if(session('errors.items.'.$mooeIndex.'.code')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items.'.$mooeIndex.'.code') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$mooeIndex.'.gen_desc')) ? 'is-invalid' : '' ?>" id="gen-desc_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][gen_desc]" value="<?= esc(old('items.'.$mooeIndex.'.gen_desc', $item['ppmp_item_name'] ?? '')) ?>">
+                                                                <?php if(session('errors.items.'.$mooeIndex.'.gen_desc')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items.'.$mooeIndex.'.gen_desc') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$mooeIndex.'.qty_size')) ? 'is-invalid' : '' ?>" id="qty-size_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][qty_size]" value="<?= esc(old('items.'.$mooeIndex.'.qty_size', $item['ppmp_item_quantity'] ?? '')) ?>">
+                                                                <?php if(session('errors.items.'.$mooeIndex.'.qty_size')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items.'.$mooeIndex.'.qty_size') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items.'.$mooeIndex.'.est_budget')) ? 'is-invalid' : '' ?>" id="est-budget_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][est_budget]" value="<?= esc(old('items.'.$mooeIndex.'.est_budget', $item['ppmp_item_estimated_budget'] ?? '')) ?>">
+                                                                <?php if(session('errors.items.'.$mooeIndex.'.est_budget')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items.'.$mooeIndex.'.est_budget') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="d-flex justify-content-between px-0 ps-1 py-2">
+                                                                <?php $months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']; ?>
+                                                                <?php
+                                                                    $itemMonths = [];
+                                                                    foreach($months as $month) {
+                                                                        $itemMonths[$month] = old('items.'.$mooeIndex.'.month.'.$month, $item['ppmp_sched_'.$month] ?? 0);
+                                                                    }
+                                                                ?>
+                                                                <?php foreach($months as $month): ?>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="<?= $month ?>_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][<?= $month ?>]" <?= ($itemMonths[$month] ?? 0) ? 'checked' : '' ?>>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
@@ -286,7 +449,9 @@
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
                                                                     <input class="form-check-input" type="checkbox" value="1" id="dec_<?= $mooeIndex ?>" name="items[<?= $mooeIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                                 </div>
+                                                                <?php endforeach; ?>
                                                             </td>
                                                             <td class="delete-item-row text-center">
                                                                 <ul class="table-controls">
@@ -297,7 +462,7 @@
                                                         <?php $mooeIndex++; ?>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
-                                            <?php else: /* Display an empty row if no items are pre-populated */?>
+                                            <?php else: ?>
                                                 <tr>
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="code" name="items[0][code]">
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc" name="items[0][gen_desc]">
@@ -364,6 +529,9 @@
 
                             <div class="invoice-detail-items pt-0">
                                 <div class="table-responsive">
+                                    <?php if(session('errors.items_co')): ?>
+                                        <div class="alert alert-danger"><?= session('errors.items_co') ?></div>
+                                    <?php endif; ?>
                                     <table class="table item-table-co">
                                         <thead>
                                             <tr>
@@ -395,11 +563,75 @@
 
                             
                                         <tbody>
-                                            <?php $coIndex = 0; /* Initialize index for CO items */?>
-                                            <?php if (!empty($ppmp_items)): /* Loop through existing CO items if available */?>
+                                            <?php $coIndex = 0; ?>
+                                            <?php if (!empty(old('items_co'))): ?>
+                                                <?php foreach (old('items_co') as $index => $item): ?>
+                                                    <tr>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$index.'.code')) ? 'is-invalid' : '' ?>" name="items_co[<?= $index ?>][code]" value="<?= esc($item['code']) ?>">
+                                                            <?php if(session('errors.items_co.'.$index.'.code')): ?><div class="invalid-feedback"><?= session('errors.items_co.'.$index.'.code') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$index.'.gen_desc')) ? 'is-invalid' : '' ?>" name="items_co[<?= $index ?>][gen_desc]" value="<?= esc($item['gen_desc']) ?>">
+                                                            <?php if(session('errors.items_co.'.$index.'.gen_desc')): ?><div class="invalid-feedback"><?= session('errors.items_co.'.$index.'.gen_desc') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$index.'.qty_size')) ? 'is-invalid' : '' ?>" name="items_co[<?= $index ?>][qty_size]" value="<?= esc($item['qty_size']) ?>">
+                                                            <?php if(session('errors.items_co.'.$index.'.qty_size')): ?><div class="invalid-feedback"><?= session('errors.items_co.'.$index.'.qty_size') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$index.'.est_budget')) ? 'is-invalid' : '' ?>" name="items_co[<?= $index ?>][est_budget]" value="<?= esc($item['est_budget']) ?>">
+                                                            <?php if(session('errors.items_co.'.$index.'.est_budget')): ?><div class="invalid-feedback"><?= session('errors.items_co.'.$index.'.est_budget') ?></div><?php endif; ?>
+                                                        </td>
+                                                        <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                            <?php $months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']; ?>
+                                                            <?php foreach($months as $month): ?>
+                                                            <div class="form-check form-check-danger form-check-inline">
+                                                                <input class="form-check-input" type="checkbox" value="1" name="items_co[<?= $index ?>][month][<?= $month ?>]" <?= isset($item['month'][$month]) ? 'checked' : '' ?>>
+                                                            </div>
+                                                            <?php endforeach; ?>
+                                                        </td>
+                                                        <td class="delete-item-row-co text-center">
+                                                            <ul class="table-controls">
+                                                                <li class="p-2"><a href="javascript:void(0);" class="delete-item-co" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                <?php $coIndex = $index + 1; ?>
+                                                <?php endforeach; ?>
+                                            <?php elseif (!empty($ppmp_items)): ?>
                                                 <?php foreach ($ppmp_items as $item): ?>
-                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) >= 50000): /* Display only CO items */?>
+                                                    <?php if (($item['ppmp_item_estimated_budget'] ?? 0) >= 50000): ?>
                                                         <tr>
+
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$coIndex.'.code')) ? 'is-invalid' : '' ?>" id="code_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][code]" value="<?= esc(old('items_co.'.$coIndex.'.code', $item['ppmp_item_code'] ?? '')) ?>">
+                                                                <?php if(session('errors.items_co.'.$coIndex.'.code')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items_co.'.$coIndex.'.code') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$coIndex.'.gen_desc')) ? 'is-invalid' : '' ?>" id="gen-desc_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][gen_desc]" value="<?= esc(old('items_co.'.$coIndex.'.gen_desc', $item['ppmp_item_name'] ?? '')) ?>">
+                                                                <?php if(session('errors.items_co.'.$coIndex.'.gen_desc')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items_co.'.$coIndex.'.gen_desc') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$coIndex.'.qty_size')) ? 'is-invalid' : '' ?>" id="qty-size_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][qty_size]" value="<?= esc(old('items_co.'.$coIndex.'.qty_size', $item['ppmp_item_quantity'] ?? '')) ?>">
+                                                                <?php if(session('errors.items_co.'.$coIndex.'.qty_size')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items_co.'.$coIndex.'.qty_size') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm <?= (session('errors.items_co.'.$coIndex.'.est_budget')) ? 'is-invalid' : '' ?>" id="est-budget_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][est_budget]" value="<?= esc(old('items_co.'.$coIndex.'.est_budget', $item['ppmp_item_estimated_budget'] ?? '')) ?>">
+                                                                <?php if(session('errors.items_co.'.$coIndex.'.est_budget')): ?>
+                                                                    <div class="invalid-feedback"><?= session('errors.items_co.'.$coIndex.'.est_budget') ?></div>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="d-flex justify-content-between px-0 ps-1 py-3">
+                                                                <?php $months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']; ?>
+                                                                <?php
+                                                                    $itemMonths = [];
+                                                                    foreach($months as $month) {
+                                                                        $itemMonths[$month] = old('items_co.'.$coIndex.'.month.'.$month, $item['ppmp_sched_'.$month] ?? 0);
+                                                                    }
+                                                                ?>
+                                                                <?php foreach($months as $month): ?>
+                                                                <div class="form-check form-check-danger form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" value="1" id="<?= $month ?>_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][<?= $month ?>]" <?= ($itemMonths[$month] ?? 0) ? 'checked' : '' ?>>
+
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][code]" value="<?= esc($item['ppmp_item_code'] ?? '') /* Pre-populate code */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][gen_desc]" value="<?= esc($item['ppmp_item_name'] ?? '') /* Pre-populate general description */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm" id="qty-size_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][qty_size]" value="<?= esc($item['ppmp_item_quantity'] ?? '') /* Pre-populate quantity/size */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
@@ -441,7 +673,9 @@
                                                                 </div>
                                                                 <div class="form-check form-check-danger form-check-inline">
                                                                     <input class="form-check-input" type="checkbox" value="1" id="dec_co_<?= $coIndex ?>" name="items_co[<?= $coIndex ?>][month][dec]" <?= ($item['ppmp_sched_dec'] ?? 0) ? 'checked' : '' ?> <?= $isReadOnly ? 'disabled' : '' ?>>
+
                                                                 </div>
+                                                                <?php endforeach; ?>
                                                             </td>
                                                             <td class="delete-item-row-co text-center">
                                                                 <ul class="table-controls">
@@ -452,7 +686,7 @@
                                                          <?php $coIndex++; ?>
                                                      <?php endif; ?>
                                                 <?php endforeach; ?>
-                                            <?php else: /* Display an empty row if no items are pre-populated */?>
+                                            <?php else: ?>
                                                 <tr>
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="code_co" name="items_co[0][code]">
                                                     <td class="px-1"><input type="text" class="form-control form-control-sm" id="gen-desc_co" name="items_co[0][gen_desc]">

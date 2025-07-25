@@ -78,6 +78,114 @@ class PpmpController extends BaseController
 
         $ppmpId = $this->request->getPost('ppmp_id'); // Get ppmp_id from hidden input
 
+        // Validation rules
+        $rules = [
+            'ppmp_office_fk' => 'required|greater_than[0]',
+            'ppmp_prepared_by_position' => 'required',
+            'ppmp_prepared_by_name' => 'required|greater_than[0]',
+            'ppmp_recommended_by_position' => 'required',
+            'ppmp_recommended_by_name' => 'required|greater_than[0]',
+            'ppmp_evaluated_by_position' => 'required',
+            'ppmp_evaluated_by_name' => 'required|greater_than[0]',
+            'ppmp_period_covered' => 'required|numeric|exact_length[4]',
+            'ppmp_total_budget_allocated' => 'required|numeric',
+            'ppmp_total_proposed_budget' => 'required|numeric',
+        ];
+
+        $messages = [
+            'ppmp_office_fk' => [
+                'required' => 'Please select an Office.',
+                'greater_than' => 'Please select an Office.'
+            ],
+            'ppmp_prepared_by_position' => ['required' => 'The Position field is required.'],
+            'ppmp_prepared_by_name' => [
+                'required' => 'Please select a Personel.',
+                'greater_than' => 'Please select a Personel.'
+            ],
+            'ppmp_recommended_by_position' => ['required' => 'The Position field is required.'],
+            'ppmp_recommended_by_name' => [
+                'required' => 'Please select a Personel.',
+                'greater_than' => 'Please select a Personel.'
+            ],
+            'ppmp_evaluated_by_position' => ['required' => 'The Position field is required.'],
+            'ppmp_evaluated_by_name' => [
+                'required' => 'Please select a Personel.',
+                'greater_than' => 'Please select a Personel.'
+            ],
+            'ppmp_period_covered' => [
+                'required' => 'The Period Covered field is required.',
+                'numeric' => 'The Period Covered must be a number.',
+                'exact_length' => 'The Period Covered must be a 4-digit year.'
+            ],
+            'ppmp_total_budget_allocated' => [
+                'required' => 'The Total Budget Allocated field is required.',
+                'numeric' => 'The Total Budget Allocated must be a number.'
+            ],
+            'ppmp_total_proposed_budget' => [
+                'required' => 'The Total Proposed Budget field is required.',
+                'numeric' => 'The Total Proposed Budget must be a number.'
+            ],
+        ];
+
+        if (!$this->validate($rules, $messages)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // Custom validation for items
+        $mooeItems = $this->request->getPost('items') ?? [];
+        $coItems = $this->request->getPost('items_co') ?? [];
+        $itemErrors = [];
+
+        $isItemRowFilled = function($item) {
+            return !empty($item['code']) || !empty($item['gen_desc']) || !empty($item['qty_size']) || !empty($item['est_budget']);
+        };
+
+        $hasFilledRow = false;
+
+        foreach ($mooeItems as $key => $item) {
+            if ($isItemRowFilled($item)) {
+                $hasFilledRow = true;
+                if (empty($item['code'])) { $itemErrors["items.{$key}.code"] = 'Code is required.'; }
+                if (empty($item['gen_desc'])) { $itemErrors["items.{$key}.gen_desc"] = 'General Description is required.'; }
+                if (empty($item['qty_size'])) {
+                    $itemErrors["items.{$key}.qty_size"] = 'Quantity/Size is required.';
+                } elseif (!is_numeric($item['qty_size'])) {
+                    $itemErrors["items.{$key}.qty_size"] = 'Quantity/Size must be a number.';
+                }
+                if (empty($item['est_budget'])) {
+                    $itemErrors["items.{$key}.est_budget"] = 'Estimated Budget is required.';
+                } elseif (!is_numeric($item['est_budget'])) {
+                    $itemErrors["items.{$key}.est_budget"] = 'Estimated Budget must be a number.';
+                }
+            }
+        }
+
+        foreach ($coItems as $key => $item) {
+            if ($isItemRowFilled($item)) {
+                $hasFilledRow = true;
+                if (empty($item['code'])) { $itemErrors["items_co.{$key}.code"] = 'Code is required.'; }
+                if (empty($item['gen_desc'])) { $itemErrors["items_co.{$key}.gen_desc"] = 'General Description is required.'; }
+                if (empty($item['qty_size'])) {
+                    $itemErrors["items_co.{$key}.qty_size"] = 'Quantity/Size is required.';
+                } elseif (!is_numeric($item['qty_size'])) {
+                    $itemErrors["items_co.{$key}.qty_size"] = 'Quantity/Size must be a number.';
+                }
+                if (empty($item['est_budget'])) {
+                    $itemErrors["items_co.{$key}.est_budget"] = 'Estimated Budget is required.';
+                } elseif (!is_numeric($item['est_budget'])) {
+                    $itemErrors["items_co.{$key}.est_budget"] = 'Estimated Budget must be a number.';
+                }
+            }
+        }
+        
+        if (!$hasFilledRow) {
+            $itemErrors['items'] = 'At least one item in the MOOE or CO table must be filled out.';
+        }
+
+        if (!empty($itemErrors)) {
+            return redirect()->back()->withInput()->with('errors', $itemErrors);
+        }
+
         $db->transStart();
 
         try {
@@ -115,8 +223,12 @@ class PpmpController extends BaseController
             $allItems = [];
             $mooeItems = $this->request->getPost('items') ?? [];
             $coItems = $this->request->getPost('items_co') ?? [];
+
+            $isItemRowFilled = function($item) {
+                return !empty($item['code']) || !empty($item['gen_desc']) || !empty($item['qty_size']) || !empty($item['est_budget']);
+            };
             
-            $items = array_merge($mooeItems, $coItems);
+            $items = array_merge(array_filter($mooeItems, $isItemRowFilled), array_filter($coItems, $isItemRowFilled));
 
             foreach ($items as $item) {
                 $months = $item['month'] ?? [];

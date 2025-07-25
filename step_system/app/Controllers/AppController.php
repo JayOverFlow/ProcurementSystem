@@ -62,12 +62,87 @@ class AppController extends BaseController
     public function save()
     {
         $userData = $this->loadUserSession();
-        // $appModel = new AppModel();
-        // $appItemModel = new AppItemModel();
-        // $taskModel = new TaskModel();
-        // $userModel = new UserModel();
         $db = \Config\Database::connect();
+
+
+        // Validation rules
+        $rules = [
+            'app_dep_id_fk' => [
+                'label' => 'Department',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select a department.'
+                ]
+            ],
+            'app_prepared_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select who prepared this document.'
+                ]
+            ],
+            'prepared_by_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Designation is a required field.'
+                ]
+            ],
+            'app_approved_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select the approver.'
+                ]
+            ],
+            'approved_by_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Approver designation is a required field.'
+                ]
+            ],
+            'app_recommending_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select who is recommending approval.'
+                ]
+            ],
+            'recommending_approval_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Recommender designation is a required field.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // Custom validation for at least one item
+        $items = $this->request->getPost('items') ?? [];
+        $hasAtLeastOneItem = false;
+        if (!empty($items)) {
+            foreach ($items as $item) {
+                // If any value in the item row is not empty, we consider it a valid item.
+                // array_filter without a callback removes falsy values (empty string, null, 0, false).
+                if (count(array_filter($item)) > 0) {
+                    $hasAtLeastOneItem = true;
+                    break;
+                }
+            }
+        }
+
+        if (!$hasAtLeastOneItem) {
+            // Since the main validation passed, we create a new errors array for our custom item validation.
+            return redirect()->back()->withInput()->with('errors', ['items' => 'No data was entered.']);
+        }
+
         $appId = $this->request->getPost('app_id'); // Get app_id from hidden input
+
 
         $db->transStart();
 
