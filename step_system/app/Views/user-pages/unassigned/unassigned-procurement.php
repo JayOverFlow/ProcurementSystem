@@ -29,6 +29,7 @@
 				<div id="ecommerce-list_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 					<div class="row pt-4 pb-0 align-items-center justify-content-center">
 						<div class="col-auto d-flex align-items-center ms-3" style="gap: 0.5rem;">
+							<input class="form-check-input" type="checkbox" id="filterCheckbox" style="width: 1.1em; height: 1.1em;" checked>
 							<label for="filter-form-type" class="form-label mb-0 me-1" style="font-weight: 500;">Filter:</label>
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
 								<option value="PR">PR</option>
@@ -41,7 +42,7 @@
 								<input id="custom-search" type="text" class="form-control" placeholder="Search...">
 							</div>
 							<button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#createFormModal">CREATE</button>
-							<button id="delete-button" class="btn btn-dark d-flex align-items-center justify-content-center p-0" style="height:38px; width:38px; min-width:0;" disabled>
+							<button class="btn btn-dark d-flex align-items-center justify-content-center p-0" style="height:38px; width:38px; min-width:0;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
 									<polyline points="3 6 5 6 21 6"></polyline>
 									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -64,10 +65,10 @@
 							<tbody>
 								<?php if (!empty($forms)): ?>
 									<?php foreach ($forms as $form): ?>
-										<?php /* Make the entire row clickable to view/edit the form, and include task_id for deletion */ ?>
-										<tr data-href="<?= base_url($form['url_slug'] . '/create/' . esc($form['document_id'])) ?>" data-task-id="<?= esc($form['task_id']) ?>" style="cursor: pointer;">
-											<td><input class="form-check-input" type="checkbox" onclick="event.stopPropagation();" value="<?= esc($form['task_id']) ?>"></td>
-											<td data-search="<?= esc($form['form_type']) ?>"><?= esc($form['type']) ?></td>
+										<?php /* Make the entire row clickable to view/edit the form */ ?>
+										<tr data-href="<?= base_url(strtolower($form['type']) . '/create/' . esc($form['document_id'])) ?>" style="cursor: pointer;">
+											<td><input class="form-check-input" type="checkbox" onclick="event.stopPropagation();"></td>
+											<td><?= esc($form['type']) ?></td>
 											<td><?= esc($form['document_id']) ?></td>
 											<td><?= esc($form['sent_to']) ?></td>
 											<td><?= esc($form['created_at']) ?></td>
@@ -113,16 +114,58 @@
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
-
-<!-- Centralized Procurement Logic -->
 <script>
-    // Define page-specific variables for the centralized script
-    const table_id = '#procurement-table';
-    const deleteUrl = '<?= base_url('procurement/delete') ?>';
+    $(document).ready(function() {
+        var table = $('#procurement-table').DataTable({
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'>>><'table-responsive'tr><'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                    "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                },
+                "sInfo": "\tShowing page _PAGE_ of _PAGES_",
+                "sSearch": "",
+                "sSearchPlaceholder": "",
+                // No length menu
+            },
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 10,
+            "order": [],
+            "columnDefs": [
+                { "orderable": false, "targets": 0 }
+            ]
+        });
+        // Custom search input
+        $('#custom-search').on('keyup', function() {
+            table.search(this.value).draw();
+        });
+
+        // Handle "select all" checkbox
+        $('#select-all').on('click', function() {
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        });
+
+        // Handle individual checkbox clicks
+        $('#procurement-table tbody').on('change', 'input[type="checkbox"]', function() {
+            if (!this.checked) {
+                var el = $('#select-all').get(0);
+                if (el && el.checked && ('indeterminate' in el)) {
+                    el.indeterminate = true;
+                }
+            }
+        });
+
+        // Handle row click to navigate
+        $('#procurement-table tbody').on('click', 'tr[data-href]', function(event) {
+            // Prevent navigation if the click was on a checkbox
+            if (!$(event.target).is('input[type="checkbox"]')) {
+                window.location.href = $(this).data('href');
+            }
+        });
+    });
 </script>
-<script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
-
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
-
+<script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 <?= $this->endSection() ?>

@@ -135,7 +135,7 @@ class PoController extends BaseController
                 'po_date_orsburs' => $this->request->getPost('po_date_orsburs'),
                 'po_amount' => $this->request->getPost('po_amount'),
                 'saved_by_user_id_fk' => $userData['user_id'],
-                'po_status' => 'Draft',
+                'po_status' => 'Pending',
             ];
             $this->poModel->insert($poData);
             $poId = $this->poModel->getInsertID();
