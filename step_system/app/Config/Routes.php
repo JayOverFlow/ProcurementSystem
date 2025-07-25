@@ -155,6 +155,7 @@ $routes->group('ppmp', function($routes) {
     $routes->get('create', 'PpmpController::index');
     $routes->get('create/(:num)', 'PpmpController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PpmpController::save');
+    $routes->post('submit', 'PpmpController::submit');
     $routes->get('preview/(:num)', 'PpmpController::preview/$1');
 });
 
@@ -170,8 +171,10 @@ $routes->group('tasks', function($routes) {
 // APP
 $routes->group('app', function($routes) {
     $routes->get('create', 'AppController::index');
-    $routes->post('create', 'AppController::create');
+    $routes->get('create/(:num)', 'AppController::index/$1'); // For loading the form with the data
+    $routes->post('save', 'AppController::save');
     $routes->get('preview/(:num)', 'AppController::preview/$1');
+    $routes->get('view/(:num)', 'AppController::view/$1');
 });
 
 // PR
@@ -205,7 +208,17 @@ $routes->group('dashboard', function($routes) {
     $routes->get('', 'DashboardController::index');
 });
 
+// Procurement
+$routes->group('procurement', function($routes) {
+    $routes->get('', 'ProcurementController::index');
+});
+
 // Stepper
 $routes->group('stepper', function($routes) {
     $routes->get('stepper-status/(:num)', 'StepperController::getStepperStatus/$1');
 });
+
+
+
+// Procurement Feature Routes
+$routes->post('procurement/delete', 'ProcurementPageController::deleteForms'); // Route to handle soft deletion of forms

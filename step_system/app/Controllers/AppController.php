@@ -25,7 +25,7 @@ class AppController extends BaseController
         $this->departmentModel = new DepartmentModel();
     }
 
-    public function index()
+    public function index($appId = null)
     {
         $userData = $this->loadUserSession();
         $users = $this->userModel->getAllUsers();
@@ -34,8 +34,22 @@ class AppController extends BaseController
         $data = [
             'user_data' => $userData,
             'users' => $users,
-            'departments' => $departments
+            'departments' => $departments,
+            'app' => null, // Will hold the APP main data if editing an existing form
+            'app_items' => [] // Will hold the APP items data if editing an existing form
         ];
+
+        // If an appId is provided in the URL, fetch the existing APP data
+        if ($appId) {
+            $app = $this->appModel->find($appId);
+            if ($app) {
+                // If APP found, fetch its associated items
+                $appItems = $this->appItemModel->where('app_id_fk', $appId)->findAll();
+                // Populate the data array with existing APP and its items
+                $data['app'] = $app;
+                $data['app_items'] = $appItems;
+            }
+        }
         
         // If the user is not a Planning Officer
         if (($userData['gen_role'] ?? null) !== 'Planning Officer') {
@@ -45,10 +59,11 @@ class AppController extends BaseController
         return view('user-pages/planning/plan-app', $data);
     }
 
-    public function create()
+    public function save()
     {
         $userData = $this->loadUserSession();
         $db = \Config\Database::connect();
+
 
         // Validation rules
         $rules = [
@@ -126,12 +141,15 @@ class AppController extends BaseController
             return redirect()->back()->withInput()->with('errors', ['items' => 'No data was entered.']);
         }
 
+        $appId = $this->request->getPost('app_id'); // Get app_id from hidden input
+
+
         $db->transStart();
 
         try {
-            // 1. Insert into app_tbl
+            // 1. Insert or Update app_tbl
             $appData = [
-                'app_status' => 'Pending',
+                'app_status' => 'Draft',
                 'saved_by_user_id_fk' => $userData['user_id'],
                 'app_prepared_by_name' => $this->request->getPost('app_prepared_by_name'),
                 'app_prepared_by_designation' => $this->request->getPost('prepared_by_designation'),
@@ -141,8 +159,20 @@ class AppController extends BaseController
                 'app_approved_by_designation' => $this->request->getPost('approved_by_designation'),
                 'app_dep_id_fk' => $this->request->getPost('app_dep_id_fk'),
             ];
-            $this->appModel->insert($appData);
-            $appId = $this->appModel->getInsertID();
+
+            if ($appId) {
+                // Update existing APP
+                $this->appModel->update($appId, $appData);
+            } else {
+                // Insert new APP
+                $this->appModel->insert($appData);
+                $appId = $this->appModel->getInsertID();
+            }
+
+            // Clear existing items before inserting new ones to prevent duplicates
+            if ($appId) {
+                $this->appItemModel->where('app_id_fk', $appId)->delete();
+            }
 
             // 2. Prepare and insert into app_items_tbl
             $items = $this->request->getPost('items') ?? [];
@@ -202,9 +232,9 @@ class AppController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'An error occurred while saving the Annual Procurement Plan.');
+                return redirect()->to('app/create/' . $appId)->with('error', 'An error occurred while saving the Annual Procurement Plan.');
             }
-            return redirect()->back()->with('success', 'Annual Procurement Plan has been saved.');
+            return redirect()->to('app/create/' . $appId)->with('success', 'Annual Procurement Plan has been saved.');
 
         } catch (\Exception $e) {
             log_message('error', 'APP Creation/Submission Error: ' . $e->getMessage());
@@ -230,5 +260,54 @@ class AppController extends BaseController
         ];
         
         return view('preview-pages/app-preview', $data);
+    }
+
+    public function submit() {
+        $db = \Config\Database::connect(); // Database connection
+        $appId = $this->request->getPost('app_id'); // Get the app_id from hidden input field
+
+        // If the document already submitted
+        $app = $this->appModel->find($appId);
+        if ($app && $app['app_status'] !== 'Draft') {
+            return redirect()->to('app/create/' . $appId)->with('error', 'This Annual Procurement Plan has already been submitted.');
+        }
+
+        $director = $this->userModel->getDirector(); // Get Director
+        // If there's no Director
+        if (empty($director)) {
+            return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
+        }
+
+        $db->transStart(); // Start db transaction
+
+        try {
+            $task = $this->getTaskByAppId($appId); // Get task corresponds to appId
+            // If task found
+            if ($task) {
+                // Update task to submit to director
+                $this->taskModel->update($task['task_id'],[
+                    'submitted_to' => $director,
+                    'task_description' => 'A new Annual Procurement Plan has been submitted for your review.',
+                ]);
+            } else { // If task not found
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+            }
+
+            $this->appModel->update($appId, ['app_status' => 'Pending']); // Update the app_status to Pending
+
+            $db->transComplete(); // Complete the database transaction
+
+            // If transaction failed
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
+            }
+
+            // Redirect back with succesful message
+            return redirect()->to('app/create' . $appId)->with('success', 'Annual Procurement Plan successfully submitted to Campus Director for review.');
+
+        } catch (\Exception $e) {
+            log_message('error', 'APP Submission Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
+        }
     }
 }

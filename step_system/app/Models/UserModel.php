@@ -115,7 +115,7 @@ class UserModel extends Model {
         return array_column($result, 'user_id');
     }
 
-    public function getUserFullNameById(int $userId) {
+    public function getUserFullNameById($userId) {
         return $this->select('user_fullname')
                     ->where('user_id', $userId)
                     ->first()['user_fullname'];
@@ -139,6 +139,28 @@ class UserModel extends Model {
                     ->where('user_role_department_tbl.department_id', $departmentId)
                     ->where('users_tbl.user_type', 'Staff')
                     ->countAllResults();
+    }
+
+    public function getDirector() {
+        return $this->select('users_tbl.user_id')
+                    ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+                    ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id')
+                    ->where('roles_tbl.role_name', 'Campus Director')
+                    ->first();
+    }
+
+    public function getHeadByDepId($depId)
+    {
+        return $this->select('users_tbl.user_id')
+            ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+            ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id')
+            ->where('user_role_department_tbl.department_id', $depId)
+            ->groupStart()
+                ->like('roles_tbl.role_name', 'Head', 'after')
+                ->orLike('roles_tbl.role_name', 'Department Head', 'after')
+                ->orLike('roles_tbl.role_name', 'Planning Officer', 'after')
+            ->groupEnd()
+            ->first();
     }
 }
 

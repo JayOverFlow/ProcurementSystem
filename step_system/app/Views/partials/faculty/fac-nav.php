@@ -32,8 +32,8 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
             </li>
 
             <li class="menu">
-                <a href="<?= base_url('faculty/procurement') ?>"
-                   class="dropdown-toggle <?= $current_path === 'faculty/procurement' ? 'active text-white fw-bold shadow-text' : '' ?>">
+                <a href="<?= base_url('/procurement') ?>"
+                   class="dropdown-toggle <?= $current_path === '/procurement' ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div>
                         <img src="<?= base_url('assets/images/icon-procurement.svg') ?>" width="24" height="24" alt="checklist">
                         <span class="ms-2 shadow-text">Procurement</span>
