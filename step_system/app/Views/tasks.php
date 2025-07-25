@@ -18,7 +18,7 @@
                             <td><?= esc(date('F j, Y, g:i a', strtotime($task['created_at']))) ?></td>
                             <td>
                                 <?php
-                                    $status = $task['ppmp_status'] ?? $task['app_status'] ?? 'Pending';
+                                    $status = $task['ppmp_status'] ?? $task['app_status'] ?? $task['pr_status'] ?? $task['po_status'] ?? 'Pending';
                                     $badge_class = 'badge-warning'; // Default for Pending
                                     if ($status === 'Approved') {
                                         $badge_class = 'badge-success';
