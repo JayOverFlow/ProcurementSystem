@@ -1,5 +1,41 @@
 <div class="row invoice layout-top-spacing layout-spacing">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <?php
+            $isReadOnly = isset($app['app_status']) && $app['app_status'] !== 'Draft';
+        ?>
+        <?php if (session()->getFlashdata('success')): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: '<?= session()->getFlashdata('success') ?>',
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            </script>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('error')): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: '<?= session()->getFlashdata('error') ?>',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            </script>
+        <?php endif; ?>
+
+        <?php if ($isReadOnly): ?>
+            <div class="alert alert-light-info bg-primary" role="alert">
+                This document is already submitted and cannot be edited.
+            </div>
+        <?php endif; ?>
+
         <div class="doc-container">
             <form id="app-form" action="<?= base_url('app/save') ?>" method="POST">
                 <input type="hidden" name="app_id" value="<?= esc($app['app_id'] ?? '') ?>">
@@ -50,25 +86,25 @@
                                                 <?php if (!empty($app_items)): ?>
                                                     <?php foreach ($app_items as $index => $item): ?>
                                                         <tr>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][app_item_code]" value="<?= esc($item['app_item_code']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][procurement_project]" value="<?= esc($item['app_item_name']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pmo_end_user]" value="<?= esc($item['app_item_pmo']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][mode_of_procurement]" value="<?= esc($item['app_item_mode']) ?>"></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][app_item_code]" value="<?= esc($item['app_item_code']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][procurement_project]" value="<?= esc($item['app_item_name']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pmo_end_user]" value="<?= esc($item['app_item_pmo']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][mode_of_procurement]" value="<?= esc($item['app_item_mode']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
                                                             <td class="px-1">
                                                                 <div class="d-flex justify-content-between">
-                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][ads_post]" value="<?= esc($item['app_item_adspost']) ?>">
-                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][sub_open]" value="<?= esc($item['app_item_subopen']) ?>">
-                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][notice_award]" value="<?= esc($item['app_item_notice']) ?>">
-                                                                    <input type="text" class="form-control form-control-sm me-1" name="items[<?= $index ?>][contract_signing]" value="<?= esc($item['app_item_contract']) ?>">
+                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][ads_post]" value="<?= esc($item['app_item_adspost']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][sub_open]" value="<?= esc($item['app_item_subopen']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][notice_award]" value="<?= esc($item['app_item_notice']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                                    <input type="text" class="form-control form-control-sm me-1" name="items[<?= $index ?>][contract_signing]" value="<?= esc($item['app_item_contract']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                                 </div>
                                                             </td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][source_of_funds]" value="<?= esc($item['app_item_source_fund']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][total]" value="<?= esc($item['app_item_estimated_total']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][mooe]" value="<?= esc($item['app_item_estimated_mooe']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][co]" value="<?= esc($item['app_item_estimated_co']) ?>"></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][source_of_funds]" value="<?= esc($item['app_item_source_fund']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][total]" value="<?= esc($item['app_item_estimated_total']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][mooe]" value="<?= esc($item['app_item_estimated_mooe']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][co]" value="<?= esc($item['app_item_estimated_co']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
                                                             <td class="delete-item-row px-1 pt-2">
                                                                 <ul class="table-controls">
-                                                                    <li><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                    <li><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete" <?= $isReadOnly ? 'style="pointer-events: none; color: grey;"' : '' ?>><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                                 </ul>
                                                             </td>
                                                         </tr>
@@ -102,7 +138,7 @@
                                         </table>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF">Add item</button>
+                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add item</button>
                                         <p class="mt-2 text-end"><span class="fw-bold">TOTAL AMOUNT</span> <span class="ms-2">₱</span><span class="ms-2" id="total-amount-app">0.00</span></p>
                                     </div>
                                 </div>
@@ -115,7 +151,7 @@
                                             <div class="form-group row mb-3">
                                                 <label for="app-dep-id-fk" class="col-sm-1 col-form-label col-form-label-sm me-4">Department</label>
                                                 <div class="col-sm-9 ms-5">
-                                                    <select class="form-control form-control-sm" id="app-dep-id-fk" name="app_dep_id_fk">
+                                                    <select class="form-control form-control-sm" id="app-dep-id-fk" name="app_dep_id_fk" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                         <option>Select</option>
                                                         <?php if(!empty($departments)): ?>
                                                             <?php foreach($departments as $department): ?>
@@ -130,7 +166,7 @@
                                                 <div class="form-group">
                                                     <label for="app-prepared-by-name">Printed Name</label>
                                                     <div>
-                                                        <select class="form-control form-control-sm" id="app-prepared-by-name" name="app_prepared_by_name">
+                                                        <select class="form-control form-control-sm" id="app-prepared-by-name" name="app_prepared_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
@@ -144,7 +180,7 @@
                                                 <div class="form-group">
                                                     <label for="prepared-by-designation">Designation</label>
                                                     <div>
-                                                        <input type="text" class="form-control form-control-sm" id="prepared-by-designation" name="prepared_by_designation" value="<?= esc($app['app_prepared_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="prepared-by-designation" name="prepared_by_designation" value="<?= esc($app['app_prepared_by_designation'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,7 +194,7 @@
                                                 <div class="form-group">
                                                     <label for="app-approved-by-name">Printed Name</label>
                                                     <div>
-                                                        <select class="form-control form-control-sm" id="app-approved-by-name" name="app_approved_by_name">
+                                                        <select class="form-control form-control-sm" id="app-approved-by-name" name="app_approved_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
@@ -172,7 +208,7 @@
                                                 <div class="form-group">
                                                     <label for="approved-by-designation">Designation</label>
                                                     <div>
-                                                        <input type="text" class="form-control form-control-sm" id="approved-by-designation" name="approved_by_designation" value="<?= esc($app['app_approved_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="approved-by-designation" name="approved_by_designation" value="<?= esc($app['app_approved_by_designation'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,7 +220,7 @@
                                                 <div class="form-group">
                                                     <label for="app-recommending-by-name">Printed Name</label>
                                                     <div>
-                                                        <select class="form-control form-control-sm" id="app-recommending-by-name" name="app_recommending_by_name">
+                                                        <select class="form-control form-control-sm" id="app-recommending-by-name" name="app_recommending_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
@@ -198,7 +234,7 @@
                                                 <div class="form-group">
                                                     <label for="recommending_approval_designation">Designation</label>
                                                     <div>
-                                                        <input type="text" class="form-control form-control-sm" id="recommending_approval_designation" name="recommending_approval_designation" value="<?= esc($app['app_recommending_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="recommending_approval_designation" name="recommending_approval_designation" value="<?= esc($app['app_recommending_by_designation'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,7 +250,10 @@
                             <div class="invoice-action-btn">
                                 <div class="row widget-content">
                                     <div class="col-xl-12 col-md-4">
-                                        <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
+                                        <button type="submit" formaction="<?= base_url('app/save') ?>" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Save</button>
+                                    </div>
+                                    <div class="col-xl-12 col-md-4">
+                                        <button type="submit" formaction="<?= base_url('app/submit') ?>" class="btn btn-submit w-100 warning submit" style="background-color: #C62742; color: #FFFFFF" <?= (!isset($app['app_id']) || empty($app['app_id']) || $isReadOnly) ? 'disabled' : '' ?>>Submit</button>
                                     </div>
                                     <div class="col-xl-12 col-md-4">
                                         <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>

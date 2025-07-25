@@ -200,18 +200,18 @@ class AppController extends BaseController
         $director = $this->userModel->getDirector(); // Get Director
         // If there's no Director
         if (empty($director)) {
-            return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
+            return redirect()->back()->with('error', 'Cannot submit: No Campus Director found in the system.');
         }
 
         $db->transStart(); // Start db transaction
 
         try {
-            $task = $this->getTaskByAppId($appId); // Get task corresponds to appId
+            $task = $this->taskModel->getTaskByAppId($appId); // Get task corresponds to appId
             // If task found
             if ($task) {
                 // Update task to submit to director
                 $this->taskModel->update($task['task_id'],[
-                    'submitted_to' => $director,
+                    'submitted_to' => $director['user_id'],
                     'task_description' => 'A new Annual Procurement Plan has been submitted for your review.',
                 ]);
             } else { // If task not found
@@ -228,7 +228,7 @@ class AppController extends BaseController
             }
 
             // Redirect back with succesful message
-            return redirect()->to('app/create' . $appId)->with('success', 'Annual Procurement Plan successfully submitted to Campus Director for review.');
+            return redirect()->to('app/create/' . $appId)->with('success', 'Annual Procurement Plan successfully submitted to Campus Director for review.');
 
         } catch (\Exception $e) {
             log_message('error', 'APP Submission Error: ' . $e->getMessage());

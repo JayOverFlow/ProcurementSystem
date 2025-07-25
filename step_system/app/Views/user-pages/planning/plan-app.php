@@ -19,6 +19,7 @@
 
 <?= $this->section('js') ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
     <script src="<?= base_url('assets/src/assets/js/apps/plan-app.js') ?>"></script>
     <!-- For Sweet Alerts -->
     <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
