@@ -37,21 +37,23 @@
         <?php endif; ?>
 
         <div class="doc-container">
-            <form id="app-form" action="<?= base_url('app/save') ?>" method="POST">
-                <input type="hidden" name="app_id" value="<?= esc($app['app_id'] ?? '') ?>">
-                <div class="row">
-                    <div class="col-xl-9">
-                        <div class="invoice-content">
-                            <div class="invoice-detail-body">
-                                <div class="invoice-detail-title d-flex flex-column text-start mb-0">
-                                    <div>
-                                        <h2 class="fw-bold" style="color: #C62742">ANNUAL PROCUREMENT PLAN</h2>
-                                    </div>
-                                    <div class="d-flex justify-content-start gap-3">
-                                        <p class="col-auto text-start mb-0">FM-SUP-001</p>
-                                        <p class="col-auto text-start mb-0">REV 0</p>
-                                        <p class="col-auto text-start mb-0">09NOV2016</p>
-                                    </div>
+            <form id="app-form" action="<?= base_url('app/create') ?>" method="POST">
+            <?php $errors = session('errors') ?? []; ?>
+            <div class="row">
+                <div class="col-xl-9">
+
+                    <div class="invoice-content">
+
+                        <div class="invoice-detail-body">
+
+                            <div class="invoice-detail-title d-flex flex-column text-start mb-0">
+                                <div>
+                                    <h2 class="fw-bold" style="color: #C62742">ANNUAL PROCUREMENT PLAN</h2>
+                                </div>
+                                <div class="d-flex justify-content-start gap-3">
+                                    <p class="col-auto text-start mb-0">FM-SUP-001</p>
+                                    <p class="col-auto text-start mb-0">REV 0</p>
+                                    <p class="col-auto text-start mb-0">09NOV2016</p>
                                 </div>
 
                                 <hr class="my-5 mb-0">
@@ -139,8 +141,8 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add item</button>
+
                                         <p class="mt-2 text-end"><span class="fw-bold">TOTAL AMOUNT</span> <span class="ms-2">₱</span><span class="ms-2" id="total-amount-app">0.00</span></p>
-                                    </div>
                                 </div>
 
                                 <hr class="my-5">
@@ -159,6 +161,11 @@
                                                             <?php endforeach; ?>
                                                         <?php endif;?>
                                                     </select>
+                                                    <?php if (isset($errors['app_prepared_by_name'])): ?>
+                                                        <div class="invalid-feedback">
+                                                            <?= $errors['app_prepared_by_name'] ?>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                             <h4>Prepared By:</h4>
@@ -186,6 +193,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
                                     <div class="row justify-content-between signature-row-halves mt-4">
                                         <div class="col-xl-5 invoice-address-client">
@@ -213,6 +221,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
                                         <div class="col-xl-5 invoice-address-client">
                                             <h4>Recommending Approval:</h4>
@@ -240,9 +249,13 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
+
+
                         </div>
+
                     </div>
 
                     <div class="col-xl-3">
@@ -261,9 +274,13 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
+            </div>
             </form>
         </div>
+
     </div>
 </div>

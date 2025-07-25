@@ -25,27 +25,47 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="po-supplier" class="col-sm-3 col-form-label col-form-label-sm">Supplier</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-supplier" name="po_supplier">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_supplier') ? 'is-invalid' : '' ?>" id="po-supplier" name="po_supplier" value="<?= old('po_supplier') ?>">
+                                                        <?php if(session('errors.po_supplier')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_supplier') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row mt-4">
                                                     <label for="po-address" class="col-sm-3 col-form-label col-form-label-sm">Address</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-address" name="po_address">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_address') ? 'is-invalid' : '' ?>" id="po-address" name="po_address" value="<?= old('po_address') ?>">
+                                                        <?php if(session('errors.po_address')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_address') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
 
                                                 <div class="form-group row mt-4">
                                                     <label for="po-tele" class="col-sm-3 col-form-label col-form-label-sm">Tel No.</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-tele" name="po_tele">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_tele') ? 'is-invalid' : '' ?>" id="po-tele" name="po_tele" value="<?= old('po_tele') ?>">
+                                                        <?php if(session('errors.po_tele')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_tele') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
 
                                                 <div class="form-group row mt-4">
                                                     <label for="po-tin" class="col-sm-3 col-form-label col-form-label-sm">TIN</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-tin" name="po_tin">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_tin') ? 'is-invalid' : '' ?>" id="po-tin" name="po_tin" value="<?= old('po_tin') ?>">
+                                                        <?php if(session('errors.po_tin')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_tin') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
                                                 
@@ -58,25 +78,45 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="po-ponumber" class="col-sm-3 col-form-label col-form-label-sm">P.O. No.</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-ponumber" name="po_ponumber">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_ponumber') ? 'is-invalid' : '' ?>" id="po-ponumber" name="po_ponumber" value="<?= old('po_ponumber') ?>">
+                                                        <?php if(session('errors.po_ponumber')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_ponumber') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row mt-4">
                                                     <label for="po-date" class="col-sm-3 col-form-label col-form-label-sm">Date</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-date" name="po_date">
+                                                        <input type="date" class="form-control form-control-sm <?= session('errors.po_date') ? 'is-invalid' : '' ?>" id="po-date" name="po_date" value="<?= old('po_date') ?>">
+                                                        <?php if(session('errors.po_date')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_date') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
                                                 <div class="form-group row mt-4">
                                                     <label for="po-mode" class="col-sm-3 col-form-label col-form-label-sm">Mode of Procurement</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-mode" name="po_mode">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_mode') ? 'is-invalid' : '' ?>" id="po-mode" name="po_mode" value="<?= old('po_mode') ?>">
+                                                        <?php if(session('errors.po_mode')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_mode') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
                                                 <div class="form-group row mt-4">
                                                     <label for="po-tuptin" class="col-sm-3 col-form-label col-form-label-sm">TUP-Taguig TIN</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-tuptin" name="po_tuptin">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_tuptin') ? 'is-invalid' : '' ?>" id="po-tuptin" name="po_tuptin" value="<?= old('po_tuptin') ?>">
+                                                        <?php if(session('errors.po_tuptin')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_tuptin') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
                                             </div>
@@ -99,13 +139,23 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="po-place-delivery" class="col-sm-3 col-form-label col-form-label-sm">Place of Delivery</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-place-delivery" name="po_place_delivery">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_place_delivery') ? 'is-invalid' : '' ?>" id="po-place-delivery" name="po_place_delivery" value="<?= old('po_place_delivery') ?>">
+                                                        <?php if(session('errors.po_place_delivery')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_place_delivery') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row mt-4">
                                                     <label for="po-date-delivery" class="col-sm-3 col-form-label col-form-label-sm">Date of Delivery</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-date-delivery" name="po_date_delivery">
+                                                        <input type="date" class="form-control form-control-sm <?= session('errors.po_date_delivery') ? 'is-invalid' : '' ?>" id="po-date-delivery" name="po_date_delivery" value="<?= old('po_date_delivery') ?>">
+                                                        <?php if(session('errors.po_date_delivery')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_date_delivery') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
                                             </div>
@@ -117,13 +167,23 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="po-delivery-term" class="col-sm-3 col-form-label col-form-label-sm">Delivery Term</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-delivery-term" name="po_delivery_term">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_delivery_term') ? 'is-invalid' : '' ?>" id="po-delivery-term" name="po_delivery_term" value="<?= old('po_delivery_term') ?>">
+                                                        <?php if(session('errors.po_delivery_term')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_delivery_term') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
                                                 <div class="form-group row mt-4">
                                                     <label for="po-payment-term" class="col-sm-3 col-form-label col-form-label-sm">Payment Term</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-payment-term" name="po_payment_term">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_payment_term') ? 'is-invalid' : '' ?>" id="po-payment-term" name="po_payment_term" value="<?= old('po_payment_term') ?>">
+                                                        <?php if(session('errors.po_payment_term')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_payment_term') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>  
                                             </div>
@@ -150,21 +210,61 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[0][po_items_stockno]">
-                                                    <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[0][po_items_unit]">
                                                     <td class="px-1">
-                                                    <div class="description-container">
-                                                        <div class="input-group mb-1">
-                                                        <input type="text" class="form-control form-control-sm description-input" name="items[0][po_items_descrip]">
-                                                        <button class="description-btn add-description" type="button" tabindex="-1" style="border-radius: 0 .25rem .25rem 0;">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                                                        </button>
-                                                        </div>
-                                                    </div>
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.items.0.po_items_stockno') ? 'is-invalid' : '' ?>" name="items[0][po_items_stockno]" value="<?= old('items.0.po_items_stockno') ?>">
+                                                        <?php if(session('errors.items.0.po_items_stockno')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.items.0.po_items_stockno') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </td>
-                                                    <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[0][po_items_quantity]">
-                                                    <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[0][po_items_cost]">
-                                                    <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[0][po_items_amount]" readonly>
+                                                    <td class="px-1">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.items.0.po_items_unit') ? 'is-invalid' : '' ?>" name="items[0][po_items_unit]" value="<?= old('items.0.po_items_unit') ?>">
+                                                        <?php if(session('errors.items.0.po_items_unit')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.items.0.po_items_unit') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="px-1">
+                                                        <div class="description-container">
+                                                            <div class="input-group mb-1">
+                                                                <input type="text" class="form-control form-control-sm description-input <?= session('errors.items.0.po_items_descrip') ? 'is-invalid' : '' ?>" name="items[0][po_items_descrip]" value="<?= old('items.0.po_items_descrip') ?>">
+                                                                <button class="description-btn add-description" type="button" tabindex="-1" style="border-radius: 0 .25rem .25rem 0;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                                                </button>
+                                                            </div>
+                                                            <?php if(session('errors.items.0.po_items_descrip')): ?>
+                                                                <div class="invalid-feedback d-block">
+                                                                    <?= session('errors.items.0.po_items_descrip') ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-1">
+                                                        <input type="number" class="form-control form-control-sm <?= session('errors.items.0.po_items_quantity') ? 'is-invalid' : '' ?>" name="items[0][po_items_quantity]" value="<?= old('items.0.po_items_quantity') ?>">
+                                                        <?php if(session('errors.items.0.po_items_quantity')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.items.0.po_items_quantity') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="px-1">
+                                                        <input type="number" class="form-control form-control-sm <?= session('errors.items.0.po_items_cost') ? 'is-invalid' : '' ?>" name="items[0][po_items_cost]" value="<?= old('items.0.po_items_cost') ?>">
+                                                        <?php if(session('errors.items.0.po_items_cost')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.items.0.po_items_cost') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="px-1">
+                                                        <input type="number" class="form-control form-control-sm <?= session('errors.items.0.po_items_amount') ? 'is-invalid' : '' ?>" name="items[0][po_items_amount]" value="<?= old('items.0.po_items_amount') ?>" readonly>
+                                                        <?php if(session('errors.items.0.po_items_amount')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.items.0.po_items_amount') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </td>
                                                     <td class="delete-item-row text-center">
                                                         <ul class="table-controls">
                                                             <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
@@ -190,13 +290,23 @@
                                                     <div class="form-group row mt-4">
                                                         <label for="po-description" class="col-sm-3 col-form-label col-form-label-sm">Description</label>
                                                         <div class="col-9">
-                                                            <input type="text" class="form-control form-control-sm" id="po-description" name="po_description">
+                                                            <input type="text" class="form-control form-control-sm <?= session('errors.po_description') ? 'is-invalid' : '' ?>" id="po-description" name="po_description" value="<?= old('po_description') ?>">
+                                                            <?php if(session('errors.po_description')): ?>
+                                                                <div class="invalid-feedback">
+                                                                    <?= session('errors.po_description') ?>
+                                                                </div>
+                                                            <?php endif; ?>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row mt-4">
                                                         <label for="po-amount-in-words" class="col-sm-3 col-form-label col-form-label-sm">Amount in Words</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control form-control-sm" id="po-amount-in-words" name="po_amount_in_words">
+                                                            <input type="text" class="form-control form-control-sm <?= session('errors.po_amount_in_words') ? 'is-invalid' : '' ?>" id="po-amount-in-words" name="po_amount_in_words" value="<?= old('po_amount_in_words') ?>">
+                                                            <?php if(session('errors.po_amount_in_words')): ?>
+                                                                <div class="invalid-feedback">
+                                                                    <?= session('errors.po_amount_in_words') ?>
+                                                                </div>
+                                                            <?php endif; ?>
                                                         </div>
                                                     </div>  
                                                 </div>
@@ -208,7 +318,12 @@
                                                     <div class="form-group row mt-4">
                                                         <label for="po-total-amount" class="col-sm-3 col-form-label col-form-label-sm">Total Amount</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control form-control-sm" id="po-total-amount" name="po_total_amount">
+                                                            <input type="text" class="form-control form-control-sm <?= session('errors.po_total_amount') ? 'is-invalid' : '' ?>" id="po-total-amount" name="po_total_amount" value="<?= old('po_total_amount') ?>">
+                                                            <?php if(session('errors.po_total_amount')): ?>
+                                                                <div class="invalid-feedback">
+                                                                    <?= session('errors.po_total_amount') ?>
+                                                                </div>
+                                                            <?php endif; ?>
                                                         </div>
                                                     </div>  
                                                     
@@ -235,14 +350,24 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="conforme-name-of-supplier" class="col-sm-3 col-form-label col-form-label-sm">Name of Supplier</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="conforme-name-of-supplier" name="conforme_name_of_supplier">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.conforme_name_of_supplier') ? 'is-invalid' : '' ?>" id="conforme-name-of-supplier" name="conforme_name_of_supplier" value="<?= old('conforme_name_of_supplier') ?>">
+                                                        <?php if(session('errors.conforme_name_of_supplier')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.conforme_name_of_supplier') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
 
                                                 <div class="form-group row">
                                                     <label for="conforme-date" class="col-sm-3 col-form-label col-form-label-sm">Date</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="conforme-date" name="conforme_date">
+                                                        <input type="date" class="form-control form-control-sm <?= session('errors.conforme_date') ? 'is-invalid' : '' ?>" id="conforme-date" name="conforme_date" value="<?= old('conforme_date') ?>">
+                                                        <?php if(session('errors.conforme_date')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.conforme_date') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
                                                 
@@ -256,7 +381,12 @@
                                                 <div class="form-group row mt-5">
                                                     <label for="conforme-campus-director" class="col-sm-3 col-form-label col-form-label-sm">Campus Director</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="conforme-campus-director" name="conforme_campus_director">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.conforme_campus_director') ? 'is-invalid' : '' ?>" id="conforme-campus-director" name="conforme_campus_director" value="<?= old('conforme_campus_director') ?>">
+                                                        <?php if(session('errors.conforme_campus_director')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.conforme_campus_director') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 
@@ -274,21 +404,36 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="po-fund-cluster" class="col-sm-3 col-form-label col-form-label-sm">Funds Cluster</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-fund-cluster" name="po_fund_cluster">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_fund_cluster') ? 'is-invalid' : '' ?>" id="po-fund-cluster" name="po_fund_cluster" value="<?= old('po_fund_cluster') ?>">
+                                                        <?php if(session('errors.po_fund_cluster')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_fund_cluster') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
 
                                                 <div class="form-group row mt-2">
                                                     <label for="po-fund-available" class="col-sm-3 col-form-label col-form-label-sm">Funds Available</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-fund-available" name="po_fund_available">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_fund_available') ? 'is-invalid' : '' ?>" id="po-fund-available" name="po_fund_available" value="<?= old('po_fund_available') ?>">
+                                                        <?php if(session('errors.po_fund_available')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_fund_available') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
 
                                                 <div class="form-group row mt-2">
                                                     <label for="po-accountant" class="col-sm-3 col-form-label col-form-label-sm">Accountant</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-accountant" name="po_accountant">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_accountant') ? 'is-invalid' : '' ?>" id="po-accountant" name="po_accountant" value="<?= old('po_accountant') ?>">
+                                                        <?php if(session('errors.po_accountant')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_accountant') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
 
@@ -301,21 +446,36 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="po-orsburs" class="col-sm-3 col-form-label col-form-label-sm">ORS / BURS NO.</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-orsburs" name="po_orsburs">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_orsburs') ? 'is-invalid' : '' ?>" id="po-orsburs" name="po_orsburs" value="<?= old('po_orsburs') ?>">
+                                                        <?php if(session('errors.po_orsburs')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_orsburs') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
 
                                                 <div class="form-group row mt-2">
                                                     <label for="po-date-orsburs" class="col-sm-3 col-form-label col-form-label-sm">Date of the ORS / BURS</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-date-orsburs" name="po_date_orsburs">
+                                                        <input type="date" class="form-control form-control-sm <?= session('errors.po_date_orsburs') ? 'is-invalid' : '' ?>" id="po-date-orsburs" name="po_date_orsburs" value="<?= old('po_date_orsburs') ?>">
+                                                        <?php if(session('errors.po_date_orsburs')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_date_orsburs') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
 
                                                 <div class="form-group row mt-2">
                                                     <label for="po-amount" class="col-sm-3 col-form-label col-form-label-sm">Amount</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="po-amount" name="po_amount">
+                                                        <input type="text" class="form-control form-control-sm <?= session('errors.po_amount') ? 'is-invalid' : '' ?>" id="po-amount" name="po_amount" value="<?= old('po_amount') ?>">
+                                                        <?php if(session('errors.po_amount')): ?>
+                                                            <div class="invalid-feedback">
+                                                                <?= session('errors.po_amount') ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div> 
 

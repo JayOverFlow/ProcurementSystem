@@ -42,6 +42,68 @@ class PoController extends BaseController
     public function save()
     {
         $userData = $this->loadUserSession();
+        
+        $rules = [
+            'po_supplier' => ['label' => 'Supplier', 'rules' => 'required'],
+            'po_address' => ['label' => 'Address', 'rules' => 'required'],
+            'po_tele' => [
+                'label' => 'Telephone Number',
+                'rules' => 'required|regex_match[/^\d{4}-\d{4}(\s+to\s+\d{2})?$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} must be numbers only in the format "xxxx-xxxx" or "xxxx-xxxx to xx".'
+                ]
+            ],
+            'po_tin' => [
+                'label' => 'TIN',
+                'rules' => 'required|regex_match[/^\d{3}-\d{3}-\d{3}-\d{3}$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} must be numbers only in the format "xxx-xxx-xxx-xxx".'
+                ]
+            ],
+            'po_ponumber' => [
+                'label' => 'P.O. Number',
+                'rules' => 'required|regex_match[/^(?=.*-)[\d-]+$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} field must contain only numbers and hyphen (-) "xxxx-xx-xx".'
+                ]
+            ],
+            'po_date' => ['label' => 'Date', 'rules' => 'required'],
+            'po_mode' => ['label' => 'Mode of Procurement', 'rules' => 'required'],
+            'po_tuptin' => [
+                'label' => 'TUP-Taguig TIN',
+                'rules' => 'required|regex_match[/^\d{3}-\d{3}-\d{3}-\d{3}$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} must be numbers only in the format "xxx-xxx-xxx-xxx".'
+                ]
+            ],
+            'po_place_delivery' => ['label' => 'Place of Delivery', 'rules' => 'required'],
+            'po_date_delivery' => ['label' => 'Date of Delivery', 'rules' => 'required'],
+            'po_delivery_term' => ['label' => 'Delivery Term', 'rules' => 'required'],
+            'po_payment_term' => ['label' => 'Payment Term', 'rules' => 'required'],
+            'po_description' => ['label' => 'Description', 'rules' => 'required'],
+            'po_amount_in_words' => ['label' => 'Amount in Words', 'rules' => 'required'],
+            'po_total_amount' => ['label' => 'Total Amount', 'rules' => 'required|numeric'],
+            'conforme_name_of_supplier' => ['label' => 'Conforme Name of Supplier', 'rules' => 'required'],
+            'conforme_date' => ['label' => 'Conforme Date', 'rules' => 'required'],
+            'conforme_campus_director' => ['label' => 'Campus Director', 'rules' => 'required'],
+            'po_fund_cluster' => ['label' => 'Funds Cluster', 'rules' => 'required'],
+            'po_fund_available' => ['label' => 'Funds Available', 'rules' => 'required'],
+            'po_accountant' => ['label' => 'Accountant', 'rules' => 'required'],
+            'po_orsburs' => ['label' => 'ORS/BURS No.', 'rules' => 'required'],
+            'po_date_orsburs' => ['label' => 'Date of the ORS/BURS', 'rules' => 'required'],
+            'po_amount' => ['label' => 'Amount', 'rules' => 'required|numeric'],
+            'items.*.po_items_stockno' => ['label' => 'Stock No.', 'rules' => 'required'],
+            'items.*.po_items_unit' => ['label' => 'Unit', 'rules' => 'required'],
+            'items.*.po_items_descrip' => ['label' => 'Item Description', 'rules' => 'required'],
+            'items.*.po_items_quantity' => ['label' => 'Quantity', 'rules' => 'required|numeric'],
+            'items.*.po_items_cost' => ['label' => 'Unit Cost', 'rules' => 'required|numeric'],
+            'items.*.po_items_amount' => ['label' => 'Amount', 'rules' => 'required|numeric']
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
         $db = \Config\Database::connect();
         
         $db->transStart();
@@ -73,7 +135,7 @@ class PoController extends BaseController
                 'po_date_orsburs' => $this->request->getPost('po_date_orsburs'),
                 'po_amount' => $this->request->getPost('po_amount'),
                 'saved_by_user_id_fk' => $userData['user_id'],
-                'po_status' => 'Draft',
+                'po_status' => 'Pending',
             ];
             $this->poModel->insert($poData);
             $poId = $this->poModel->getInsertID();

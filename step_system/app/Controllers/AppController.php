@@ -25,7 +25,7 @@ class AppController extends BaseController
         $this->departmentModel = new DepartmentModel();
     }
 
-    public function index($appId = null)
+    public function index()
     {
         $userData = $this->loadUserSession();
         $users = $this->userModel->getAllUsers();
@@ -34,22 +34,8 @@ class AppController extends BaseController
         $data = [
             'user_data' => $userData,
             'users' => $users,
-            'departments' => $departments,
-            'app' => null, // Will hold the APP main data if editing an existing form
-            'app_items' => [] // Will hold the APP items data if editing an existing form
+            'departments' => $departments
         ];
-
-        // If an appId is provided in the URL, fetch the existing APP data
-        if ($appId) {
-            $app = $this->appModel->find($appId);
-            if ($app) {
-                // If APP found, fetch its associated items
-                $appItems = $this->appItemModel->where('app_id_fk', $appId)->findAll();
-                // Populate the data array with existing APP and its items
-                $data['app'] = $app;
-                $data['app_items'] = $appItems;
-            }
-        }
         
         // If the user is not a Planning Officer
         if (($userData['gen_role'] ?? null) !== 'Planning Officer') {
@@ -59,22 +45,93 @@ class AppController extends BaseController
         return view('user-pages/planning/plan-app', $data);
     }
 
-    public function save()
+    public function create()
     {
         $userData = $this->loadUserSession();
-        // $appModel = new AppModel();
-        // $appItemModel = new AppItemModel();
-        // $taskModel = new TaskModel();
-        // $userModel = new UserModel();
         $db = \Config\Database::connect();
-        $appId = $this->request->getPost('app_id'); // Get app_id from hidden input
+
+        // Validation rules
+        $rules = [
+            'app_dep_id_fk' => [
+                'label' => 'Department',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select a department.'
+                ]
+            ],
+            'app_prepared_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select who prepared this document.'
+                ]
+            ],
+            'prepared_by_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Designation is a required field.'
+                ]
+            ],
+            'app_approved_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select the approver.'
+                ]
+            ],
+            'approved_by_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Approver designation is a required field.'
+                ]
+            ],
+            'app_recommending_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Please select who is recommending approval.'
+                ]
+            ],
+            'recommending_approval_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Recommender designation is a required field.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // Custom validation for at least one item
+        $items = $this->request->getPost('items') ?? [];
+        $hasAtLeastOneItem = false;
+        if (!empty($items)) {
+            foreach ($items as $item) {
+                // If any value in the item row is not empty, we consider it a valid item.
+                // array_filter without a callback removes falsy values (empty string, null, 0, false).
+                if (count(array_filter($item)) > 0) {
+                    $hasAtLeastOneItem = true;
+                    break;
+                }
+            }
+        }
+
+        if (!$hasAtLeastOneItem) {
+            // Since the main validation passed, we create a new errors array for our custom item validation.
+            return redirect()->back()->withInput()->with('errors', ['items' => 'No data was entered.']);
+        }
 
         $db->transStart();
 
         try {
-            // 1. Insert or Update app_tbl
+            // 1. Insert into app_tbl
             $appData = [
-                'app_status' => 'Draft',
+                'app_status' => 'Pending',
                 'saved_by_user_id_fk' => $userData['user_id'],
                 'app_prepared_by_name' => $this->request->getPost('app_prepared_by_name'),
                 'app_prepared_by_designation' => $this->request->getPost('prepared_by_designation'),
@@ -84,20 +141,8 @@ class AppController extends BaseController
                 'app_approved_by_designation' => $this->request->getPost('approved_by_designation'),
                 'app_dep_id_fk' => $this->request->getPost('app_dep_id_fk'),
             ];
-
-            if ($appId) {
-                // Update existing APP
-                $this->appModel->update($appId, $appData);
-            } else {
-                // Insert new APP
-                $this->appModel->insert($appData);
-                $appId = $this->appModel->getInsertID();
-            }
-
-            // Clear existing items before inserting new ones to prevent duplicates
-            if ($appId) {
-                $this->appItemModel->where('app_id_fk', $appId)->delete();
-            }
+            $this->appModel->insert($appData);
+            $appId = $this->appModel->getInsertID();
 
             // 2. Prepare and insert into app_items_tbl
             $items = $this->request->getPost('items') ?? [];
@@ -157,9 +202,9 @@ class AppController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->to('app/create/' . $appId)->with('error', 'An error occurred while saving the Annual Procurement Plan.');
+                return redirect()->back()->with('error', 'An error occurred while saving the Annual Procurement Plan.');
             }
-            return redirect()->to('app/create/' . $appId)->with('success', 'Annual Procurement Plan has been saved.');
+            return redirect()->back()->with('success', 'Annual Procurement Plan has been saved.');
 
         } catch (\Exception $e) {
             log_message('error', 'APP Creation/Submission Error: ' . $e->getMessage());

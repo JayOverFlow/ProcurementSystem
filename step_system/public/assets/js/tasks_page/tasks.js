@@ -70,27 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     approveBtn.setAttribute('data-id', data.app_id_fk);
                     rejectBtn.setAttribute('data-task-type', 'app');
                     rejectBtn.setAttribute('data-id', data.app_id_fk);
-                } else if (data.pr_id_fk) {
-                    modalPreviewLink.href = `/pr/preview/${data.pr_id_fk}`;
-                    modalPreviewLink.style.display = 'inline-flex';
-                    modalPreviewLinkText.textContent = 'View submitted Purchase Request';
-                    approveBtn.setAttribute('data-task-type', 'pr');
-                    approveBtn.setAttribute('data-id', data.pr_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'pr');
-                    rejectBtn.setAttribute('data-id', data.pr_id_fk);
-                } else if (data.po_id_fk) {
-                    modalPreviewLink.href = `/po/preview/${data.po_id_fk}`;
-                    modalPreviewLink.style.display = 'inline-flex';
-                    modalPreviewLinkText.textContent = 'View submitted Purchase Order';
-                    approveBtn.setAttribute('data-task-type', 'po');
-                    approveBtn.setAttribute('data-id', data.po_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'po');
-                    rejectBtn.setAttribute('data-id', data.po_id_fk);
                 }
 
-
                 // Handle status display
-                const status = data.ppmp_status || data.app_status || data.pr_status || data.po_status;
+                const status = data.ppmp_status || data.app_status;
                 if (status === 'Approved' || status === 'Rejected') {
                     modalActionButtons.style.display = 'none';
                     const badgeClass = status === 'Approved' ? 'badge-success' : 'badge-danger';
@@ -115,33 +98,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const confirmButtonColor = isApproved ? '#8ABB2F' : '#DC3545';
         const confirmButtonText = isApproved ? 'Approve' : 'Reject';
         
-        let documentType, endpoint, payload;
-
-        switch (taskType) {
-            case 'ppmp':
-                documentType = 'Project Procurement Management Plan';
-                endpoint = '/tasks/update-ppmp-status';
-                payload = { ppmp_id: id, status: status };
-                break;
-            case 'app':
-                documentType = 'Annual Procurement Plan';
-                endpoint = '/tasks/update-app-status';
-                payload = { app_id: id, status: status };
-                break;
-            case 'pr':
-                documentType = 'Purchase Request';
-                endpoint = '/tasks/update-pr-status';
-                payload = { pr_id: id, status: status };
-                break;
-            case 'po':
-                documentType = 'Purchase Order';
-                endpoint = '/tasks/update-po-status';
-                payload = { po_id: id, status: status };
-                break;
-            default:
-                console.error('Unknown task type:', taskType);
-                return;
-        }
+        const documentType = taskType === 'ppmp' ? 'Project Procurement Management Plan' : 'Annual Procurement Plan';
+        const endpoint = taskType === 'ppmp' ? '/tasks/update-ppmp-status' : '/tasks/update-app-status';
+        const payload = taskType === 'ppmp' ? { ppmp_id: id, status: status } : { app_id: id, status: status };
 
         Swal.fire({
             title: `Confirm ${status.toLowerCase()}?`,
