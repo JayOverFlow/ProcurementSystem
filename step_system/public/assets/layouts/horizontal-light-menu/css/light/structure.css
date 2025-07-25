@@ -17,7 +17,7 @@ body {
   color: #888ea8;
   height: 100%;
   font-size: 0.875rem;
-  background: #f1f2f3;
+  background: #f3e9e1;
   overflow-x: hidden;
   overflow-y: auto;
   letter-spacing: 0.0312rem;
@@ -232,12 +232,12 @@ body.enable-secondaryNav .layout-top-spacing {
 =====================
 */
 .header-container {
-  background: #f1f2f3;
+  background: #630418;
   z-index: 1032;
   position: fixed;
   top: 0;
   padding: 4px 0 4px 0;
-  padding: 11px 0 11px 0;
+  padding: 15px 0 11px 0;
   width: 100%;
   box-shadow: 0px 0px 5px 0px;
 }
@@ -321,8 +321,8 @@ body.enable-secondaryNav .layout-top-spacing {
 
 body .navbar .light-mode, body:not(.dark) .navbar .light-mode {
   display: inline-block;
-  color: #8C0404;
-  fill: #8C0404;
+  color: #ffffff;
+  fill: #ffffff;
 }
 body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
   display: none;
@@ -402,7 +402,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
   display: none;
 }
 .navbar .navbar-item .nav-item.notification-dropdown .nav-link svg {
-  color: #8C0404;
+  color: #ffffff;
   stroke-width: 1.5;
 }
 .navbar .navbar-item .nav-item.notification-dropdown .nav-link span.badge {
@@ -790,7 +790,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
 .sidebar-wrapper #sidebar {
   width: 100%;
   border-radius: 8px;
-  background: #c62742;
+  background: #8c0404;
   min-height: 51px;
 }
 

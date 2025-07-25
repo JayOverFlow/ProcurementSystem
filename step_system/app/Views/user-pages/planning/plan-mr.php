@@ -24,13 +24,13 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-all.png'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/all-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>All</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>All</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -39,13 +39,13 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-equipments.png'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/equipment-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Equipments</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Equipments</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -54,13 +54,13 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-appliances.png'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/appliances-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Appliances</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Appliances</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -69,13 +69,13 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-furnishings.png'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/furnishings-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Furnishings</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Furnishings</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -84,13 +84,13 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/icon-materials.png'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/materials-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Materials</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Materials</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -273,7 +273,7 @@
             "pageLength": 10
         });
 
-            $('#style-3_wrapper .title-container').html('<h4 style="font-weight: bold; color: #dc3545;">Material Requisition</h4>');
+            $('#style-3_wrapper .title-container').html('<h4 style="font-weight: bold; color: #8C0404;">Material Requisition</h4>');
 
         multiCheck(c3);
     </script>

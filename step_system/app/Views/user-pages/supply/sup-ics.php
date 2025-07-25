@@ -25,7 +25,7 @@
 
                                 <div class="invoice-detail-title d-flex flex-column text-start mb-0">
                                     <div>
-                                        <h2 class="fw-bold" style="color: #C62742">Inventory Custodian Slip</h2>
+                                        <h2 class="fw-bold" style="color: #8C0404">Inventory Custodian Slip</h2>
                                     </div>
                                     <div class="d-flex justify-content-start gap-3">
                                         <p class="col-auto text-start mb-0">FM-PR-007</p>
@@ -110,7 +110,7 @@
                                             </div>
 
                                             <div class="d-flex justify-content-between">
-                                                <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF">Add Item</button>
+                                                <button type="button" class="btn btn-md additem" style="background-color: #8C0404; color: #FFFFFF">Add Item</button>
                                                 <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span>1,000</span></p>
                                             </div>
 
@@ -182,7 +182,7 @@
 
                                 <div class="row">
                                     <div class="col-xl-12 col-md-4">
-                                        <a href="javascript:void(0);" class="btn btn-send" style="background-color: #C62742; color: #FFFFFF">Send</a>
+                                        <a href="javascript:void(0);" class="btn btn-send" style="background-color: #8C0404; color: #FFFFFF">Send</a>
                                     </div>
                                     <div class="col-xl-12 col-md-4">
                                         <a href="javascript:void(0);" class="btn btn-dark btn-download">Save</a>

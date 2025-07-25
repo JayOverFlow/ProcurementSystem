@@ -24,14 +24,14 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/all.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/all-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
 
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>All</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>All</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -40,14 +40,14 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/equipment.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/equipment-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
 
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Equipments</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Equipments</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -56,14 +56,14 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/appliances.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/appliances-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
 
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Appliances</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Appliances</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -72,14 +72,14 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/furnishings.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/furnishings-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
 
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Furnishings</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Furnishings</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -88,14 +88,14 @@
             <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
                 <div class="card-top-content">
                     <div class="avatar avatar-lg">
-                        <img src="<?= base_url('assets/images/materials.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                        <img src="<?= base_url('assets/images/materials-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
 
                     </div>
                 </div>
                 <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                     <div class="card-body text-end">
-                        <h5 class="card-title mb-2" style="color: #DC3545"><strong>Materials</strong></h5>
-                        <h5 class="card-text" style="color: #515365">12</h5>
+                        <h5 class="card-title mb-2" style="color: #8C0404"><strong>Materials</strong></h5>
+                        <h5 class="card-text" style="color:rgb(0, 0, 0)">12</h5>
                     </div>
                 </div>
             </div>
@@ -108,12 +108,12 @@
                     <table id="style-3" class="table style-3 dt-table-hover">
                         <thead>
                         <tr>
-                            <th class="checkbox-column text-center"> MR-Id </th>
+                            <th class="checkbox-column text-center">MR-Id</th>
                             <th>Item Name</th>
-                            <th>Location</th>
+                            <th>Assigned</th>
+                            <th>Department/Office</th>
                             <th>Date Received</th>
-                            <th class="dt-no-sorting">Action</th>
-
+                            <th class="dt-no-sorting text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -123,12 +123,8 @@
                             <td>Ron Eric Legaspi</td>
                             <td>Basic Arts and Sciences Department</td>
                             <td>May 1, 2024</td>
-                            <td>
-                                <ul class="table-controls">
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                </ul>
-
+                            <td class="text-center">
+                                <a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                             </td>
                         </tr>
                         <tr>
@@ -137,12 +133,8 @@
                             <td>Ron Eric Legaspi</td>
                             <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
-                            <td>
-                                <ul class="table-controls">
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                </ul>
-
+                            <td class="text-center">
+                                <a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                             </td>
                         </tr>
                         <tr>
@@ -151,12 +143,8 @@
                             <td>Ron Eric Legaspi</td>
                             <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
-                            <td>
-                                <ul class="table-controls">
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                </ul>
-
+                            <td class="text-center">
+                                <a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                             </td>
                         </tr>
                         <tr>
@@ -165,12 +153,8 @@
                             <td>Ron Eric Legaspi</td>
                             <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
-                            <td>
-                                <ul class="table-controls">
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                </ul>
-
+                            <td class="text-center">
+                                <a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                             </td>
                         </tr>
                         <tr>
@@ -179,12 +163,8 @@
                             <td>Ron Eric Legaspi</td>
                             <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
-                            <td>
-                                <ul class="table-controls">
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                </ul>
-
+                            <td class="text-center">
+                                <a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                             </td>
                         </tr>
                         <tr>
@@ -193,12 +173,8 @@
                             <td>Ron Eric Legaspi</td>
                             <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
-                            <td>
-                                <ul class="table-controls">
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                </ul>
-
+                            <td class="text-center">
+                                <a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                             </td>
                         </tr>
                         <tr>
@@ -207,12 +183,8 @@
                             <td>Ron Eric Legaspi</td>
                             <td>Basic Arts and Sciences Department</td>
                             <td>August 23, 2023</td>
-                            <td>
-                                <ul class="table-controls">
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                    <li><a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-8 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                </ul>
-
+                            <td class="text-center">
+                                <a href="javascript:void(0);" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-original-title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-8 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                             </td>
                         </tr>
                         </tbody>
@@ -306,7 +278,7 @@
             "pageLength": 10
         });
 
-            $('#style-3_wrapper .title-container').html('<h4 style="font-weight: bold; color: #dc3545;">Material Requisition</h4>');
+            $('#style-3_wrapper .title-container').html('<h4 style="font-weight: bold; color: #8C0404;">Material Requisition</h4>');
 
         multiCheck(c3);
     </script>

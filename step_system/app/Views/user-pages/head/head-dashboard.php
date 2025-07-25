@@ -28,8 +28,8 @@
                     <!-- Stepper Column -->
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
                         <div class="widget widget-activity-five">
-                            <div class="widget-heading">
-                                <h5 class="">Procurement Status</h5>
+                            <div class="widget-heading">    
+                                <h5 style="color: #8C0404">Procurement Status</h5>
 
                                 <div class="task-action">
                                     <div class="dropdown">
