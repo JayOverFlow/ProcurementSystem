@@ -31,7 +31,7 @@
 
     <!--  BEGIN HEADER  -->
     <div class="header-container container-xxl box-shadow-none">
-        <?= $this->include('partials/faculty/fac-header'); ?>
+        <?= $this->include('user-pages/director/partials/dir-header'); ?>
     </div>
     <!--  END HEADER  -->
 
@@ -42,7 +42,7 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN NAV  -->
-        <?= $this->include('partials/faculty/fac-nav'); ?>
+        <?= $this->include('user-pages/director/partials/dir-nav'); ?>
         <!--  END NAV  -->
 
         <!--  BEGIN CONTENT AREA  -->
@@ -51,10 +51,7 @@
 
                 <div class="middle-content container-xxl p-0">
                     <?= $this->renderSection('content'); ?>
-                    
                 </div>
-
-                
 
             </div>
             <!--  BEGIN FOOTER  -->
@@ -71,6 +68,10 @@
     <script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js'); ?>"></script>
     <script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js'); ?>"></script>
     <script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js'); ?>"></script>
+    <script src="<?= base_url('assets/src/assets/js/custom.js') ?>"></script>
+    <script src="<?= base_url('assets/src/plugins/src/global/vendors.min.js') ?>"></script>
+
+
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->

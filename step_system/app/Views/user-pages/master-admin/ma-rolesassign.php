@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/adm-base-layout') ?>
+<?= $this->extend('user-pages/master-admin/layout/adm-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Admin Dashboard</title>

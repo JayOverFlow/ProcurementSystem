@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/sup-base-layout') ?>
+<?= $this->extend('user-pages/supply/layout/sup-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Supply Officer MR</title>
@@ -19,7 +19,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('partials/general/mr'); ?>
+<?= $this->include('general-pages/mr'); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

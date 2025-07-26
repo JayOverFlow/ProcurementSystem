@@ -31,7 +31,7 @@
 
     <!--  BEGIN HEADER  -->
     <div class="header-container container-xxl box-shadow-none">
-        <?= $this->include('partials/planning/plan-header'); ?>
+        <?= $this->include('user-pages/planning/partials/plan-header'); ?>
     </div>
     <!--  END HEADER  -->
 
@@ -42,7 +42,7 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN NAV  -->
-        <?= $this->include('partials/planning/plan-nav'); ?>
+        <?= $this->include('user-pages/planning/partials/plan-nav'); ?>
         <!--  END NAV  -->
 
         <!--  BEGIN CONTENT AREA  -->

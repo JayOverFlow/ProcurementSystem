@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/head-base-layout') ?>
+<?= $this->extend('user-pages/head/layout/head-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Department Head Tasks</title>
@@ -22,7 +22,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('tasks') ?>
+<?= $this->include('general-pages/tasks') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
