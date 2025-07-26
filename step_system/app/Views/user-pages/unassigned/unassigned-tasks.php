@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/unassigned-base-layout') ?>
+<?= $this->extend('user-pages/unassigned/layout/unassigned-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Unassigned Tasks</title>
@@ -22,7 +22,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('tasks') ?>
+<?= $this->include('general-pages/tasks') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

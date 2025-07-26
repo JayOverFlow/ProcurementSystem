@@ -34,7 +34,7 @@
 
     <!--  BEGIN HEADER  -->
       <div class="header-container container-xxl box-shadow-none">
-        <?= $this->include('partials/head/h-header') ?>
+        <?= $this->include('user-pages/master-admin/partials/adm-header') ?>
       </div>
     <!--  END HEADER  -->
     
@@ -43,7 +43,7 @@
         <div class="main-container" id="container">
 
             <!--  BEGIN NAV  -->
-            <?= $this->include('partials/head/h-nav') ?>
+            <?= $this->include('user-pages/master-admin/partials/adm-nav') ?>
             <!--  END NAV  -->
 
             <!--  BEGIN CONTENT AREA  -->

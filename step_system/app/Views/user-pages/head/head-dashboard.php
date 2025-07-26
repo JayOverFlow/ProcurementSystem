@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/head-base-layout') ?>
+<?= $this->extend('user-pages/head/layout/head-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Head Dashboard</title>

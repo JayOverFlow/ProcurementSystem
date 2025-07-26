@@ -167,6 +167,11 @@ $routes->group('tasks', function($routes) {
     $routes->post('update-app-status', 'TasksController::updateAppStatus');
 });
 
+// Material Requisition (MR)
+$routes->group('mr', function($routes) {
+    $routes->get('', 'MrController::index');
+
+});
 
 // APP
 $routes->group('app', function($routes) {
@@ -189,12 +194,6 @@ $routes->group('po', function($routes) {
     $routes->get('create', 'PoController::index');
     $routes->get('create/(:num)', 'PoController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PoController::save');
-});
-
-// Material Requisition (MR)
-$routes->group('mr', function($routes) {
-    $routes->get('', 'MrController::index');
-
 });
 
 // Preview

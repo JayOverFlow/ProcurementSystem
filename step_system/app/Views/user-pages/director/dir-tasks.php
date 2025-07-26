@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/dir-base-layout') ?>
+<?= $this->extend('user-pages/director/layout/dir-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Director Tasks</title>
@@ -22,7 +22,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('tasks') ?>
+<?= $this->include('general-pages/tasks') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
