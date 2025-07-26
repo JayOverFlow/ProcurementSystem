@@ -232,6 +232,7 @@
     function getDepartmentSelectHtml(selectedDepId) {
         var departmentSelectHtml = `<select class="form-control form-control-sm department-select">`;
         departmentSelectHtml += `<option value="">Select Department</option>`;
+        departmentSelectHtml += `<option value="create-new" style="background-color: #e3f2fd; font-weight: bold;">+ Create New Department</option>`;
 
         if (departmentsData.Academic && departmentsData.Academic.length > 0) {
             // Sort Academic departments alphabetically
@@ -256,6 +257,30 @@
         }
         departmentSelectHtml += `</select>`;
         return departmentSelectHtml;
+    }
+
+    // Helper function to generate new department creation HTML
+    function getNewDepartmentHtml() {
+        return `
+            <div class="new-department-container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control form-control-sm new-dep-name-input" placeholder="Enter Department Name">
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control form-control-sm new-dep-type-select">
+                            <option value="">Type</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Administrative">Administrative</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <button type="button" class="btn btn-danger mb-2 me-4 create-dep-btn">Create Department</button>
+                    <button type="button" class="btn btn-light-danger mb-2 me-4 cancel-new-dep-btn">Cancel</button>
+                </div>
+            </div>
+        `;
     }
 
     // Handle Edit button click
@@ -396,6 +421,194 @@
                 );
             }
         });
+    });
+
+    // Helper function to save role with department (used after creating new department)
+    function saveRoleWithDepartment($row, roleName, depId, depName, isAfterDepartmentCreation) {
+        var isNewRow = $row.hasClass('new-row');
+        var roleId = isNewRow ? null : $row.data('role-id');
+        
+        var url = isNewRow ? '<?= base_url('admin/rolesdep/create') ?>' : '<?= base_url('admin/rolesdep/update') ?>';
+        var dataToSend = {
+            role_name: roleName,
+            dep_id: depId,
+            '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+        };
+
+        if (!isNewRow) {
+            dataToSend.role_id = roleId;
+        }
+
+        // AJAX request to save role data
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: dataToSend,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    var successMessage = isAfterDepartmentCreation ? 
+                        'Department and Role created successfully!' : 
+                        (isNewRow ? 'Role added successfully.' : 'Role updated successfully.');
+                    
+                    Swal.fire(
+                        isNewRow ? 'Added!' : 'Updated!',
+                        successMessage,
+                        'success'
+                    );
+                    
+                    if (isNewRow) {
+                        // For new row, assign the new role_id and convert to static display
+                        $row.data('role-id', response.role_id);
+                        $row.removeClass('new-row');
+                    }
+                    
+                    // Update the row with new values
+                    $row.find('.role-name-cell').text(roleName).data('original-value', roleName);
+                    $row.find('.department-name-cell').text(depName).data('original-value', depName).data('original-dep-id', depId);
+
+                    // Update DataTables internal data and redraw
+                    var rowData = c1.row($row).data();
+                    rowData[0] = roleName; // Role Name is the first column
+                    rowData[1] = depName; // Department Name is the second column
+                    c1.row($row).data(rowData).draw(false);
+
+                    // Revert buttons to Edit and Delete
+                    $row.find('.action-cell').html(`
+                        <div class="action-btns">
+                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                            </a>
+                            <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </a>
+                        </div>
+                    `);
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        response.message,
+                        'error'
+                    );
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                Swal.fire(
+                    'Error!',
+                    'An error occurred. Please check console for details.',
+                    'error'
+                );
+            }
+        });
+    }
+
+    // Handle department select change - show create new department form when "create-new" is selected
+    $('#style-1').on('change', '.department-select', function() {
+        var $select = $(this);
+        var $cell = $select.closest('td');
+        
+        if ($select.val() === 'create-new') {
+            $cell.html(getNewDepartmentHtml());
+        }
+    });
+
+    // Handle create department button click
+    $('#style-1').on('click', '.create-dep-btn', function() {
+        var $container = $(this).closest('.new-department-container');
+        var depName = $container.find('.new-dep-name-input').val().trim();
+        var depType = $container.find('.new-dep-type-select').val();
+        
+        // Validation
+        if (!depName) {
+            alert('Department name is required.');
+            return;
+        }
+        
+        if (!depType) {
+            alert('Department type is required.');
+            return;
+        }
+        
+        // AJAX request to create new department
+        $.ajax({
+            url: '<?= base_url('admin/department/create') ?>',
+            type: 'POST',
+            data: {
+                dep_name: depName,
+                dep_type: depType,
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Add the new department to the departmentsData object
+                    var newDepartment = {
+                        dep_id: response.dep_id,
+                        dep_name: response.dep_name,
+                        dep_type: response.dep_type
+                    };
+                    
+                    if (!departmentsData[response.dep_type]) {
+                        departmentsData[response.dep_type] = [];
+                    }
+                    departmentsData[response.dep_type].push(newDepartment);
+                    
+                    // Replace the create form with a select dropdown with the new department selected
+                    var $cell = $container.closest('td');
+                    $cell.html(getDepartmentSelectHtml(response.dep_id));
+                    
+                    // After creating the department, automatically proceed to save the role
+                    var $row = $cell.closest('tr');
+                    var isNewRow = $row.hasClass('new-row');
+                    
+                    if (isNewRow) {
+                        // Get the role name from the input field
+                        var newRoleName = $row.find('.new-role-name-input').val().trim();
+                        
+                        if (newRoleName) {
+                            // Automatically save the role with the newly created department
+                            saveRoleWithDepartment($row, newRoleName, response.dep_id, response.dep_name, true);
+                        } else {
+                            Swal.fire(
+                                'Department Created!',
+                                'Department "' + response.dep_name + '" created successfully. Please enter a role name to complete the process.',
+                                'success'
+                            );
+                        }
+                    } else {
+                        Swal.fire(
+                            'Created!',
+                            'Department "' + response.dep_name + '" created successfully.',
+                            'success'
+                        );
+                    }
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        response.message,
+                        'error'
+                    );
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                Swal.fire(
+                    'Error!',
+                    'An error occurred while creating the department.',
+                    'error'
+                );
+            }
+        });
+    });
+
+    // Handle cancel new department button click
+    $('#style-1').on('click', '.cancel-new-dep-btn', function() {
+        var $container = $(this).closest('.new-department-container');
+        var $cell = $container.closest('td');
+        
+        // Replace the create form with the original select dropdown
+        $cell.html(getDepartmentSelectHtml(null));
     });
 
     // Handle Delete button click

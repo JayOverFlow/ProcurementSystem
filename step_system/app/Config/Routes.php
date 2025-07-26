@@ -100,6 +100,7 @@ $routes->group('admin', function($routes){
     $routes->post('rolesdep/update', 'MasterAdmin\MADashboardController::updateRoleDepartment'); // Table 2
     $routes->post('rolesdep/create', 'MasterAdmin\MADashboardController::createRoleDepartment'); // Table 2
     $routes->post('rolesdep/delete', 'MasterAdmin\MADashboardController::deleteRoleDepartment'); // Table 2
+    $routes->post('department/create', 'MasterAdmin\MADashboardController::createDepartment'); // Table 2 - Create New Department
 
     $routes->get('usertype', 'MasterAdmin\MADashboardController::userTypeIndex'); // Table 3
     $routes->post('usertype/update', 'MasterAdmin\MADashboardController::update'); // Table 3
