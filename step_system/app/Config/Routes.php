@@ -187,8 +187,8 @@ $routes->group('pr', function($routes) {
 // PO
 $routes->group('po', function($routes) {
     $routes->get('create', 'PoController::index');
+    $routes->get('create/(:num)', 'PoController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PoController::save');
-    // $routes->get('preview/(:num)', 'AppController::preview/$1');
 });
 
 // Material Requisition (MR)
