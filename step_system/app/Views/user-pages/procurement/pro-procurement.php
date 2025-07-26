@@ -123,6 +123,5 @@
     const deleteUrl = '<?= base_url('procurement/delete') ?>';
 </script>
 <script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
-
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
 <?= $this->endSection() ?>
