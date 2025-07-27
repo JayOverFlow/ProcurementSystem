@@ -45,7 +45,7 @@
                             <div class="invoice-detail-body">
                                 <div class="invoice-detail-title d-flex flex-column text-start mb-0">
                                     <div>
-                                        <h2 class="fw-bold" style="color: #C62742">Purchase Order</h2>
+                                        <h2 class="fw-bold" style="color: #8D0404">Purchase Order</h2>
                                     </div>
                                     <div class="d-flex justify-content-start gap-3">
                                         <p class="col-auto text-start mb-0">FM-PR-007</p>
@@ -492,7 +492,7 @@
                                         <button type="submit" formaction="<?= base_url('po/submit') ?>" class="btn btn-submit w-100 warning submit-po" style="background-color: #C62742; color: #FFFFFF" <?= (!isset($po['po_id']) || empty($po['po_id']) || $isReadOnly) ? 'disabled' : '' ?>>Submit</button>
                                     </div>
                                     <div class="col-xl-12 col-md-4">
-                                        <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
+                                        <button class="btn btn-submit w-100" style="background-color: #8D0404; color: #FFFFFF">Export</button>
                                     </div>
                                 </div>
                             </div>

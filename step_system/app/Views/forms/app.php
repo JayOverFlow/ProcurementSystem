@@ -45,7 +45,7 @@
                             <div class="invoice-detail-body">
                                 <div class="invoice-detail-title d-flex flex-column text-start mb-0">
                                     <div>
-                                        <h2 class="fw-bold" style="color: #C62742">ANNUAL PROCUREMENT PLAN</h2>
+                                        <h2 class="fw-bold" style="color: #8D0404">ANNUAL PROCUREMENT PLAN</h2>
                                     </div>
                                     <div class="d-flex justify-content-start gap-3">
                                         <p class="col-auto text-start mb-0">FM-SUP-001</p>
@@ -138,7 +138,7 @@
                                         </table>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add item</button>
+                                        <button type="button" class="btn btn-md additem" style="background-color: #8D0404; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add item</button>
                                         <p class="mt-2 text-end"><span class="fw-bold">TOTAL AMOUNT</span> <span class="ms-2">₱</span><span class="ms-2" id="total-amount-app">0.00</span></p>
                                     </div>
                                 </div>

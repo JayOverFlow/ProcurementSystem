@@ -45,7 +45,7 @@
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
         <div class="widget widget-activity-five h-100 d-flex flex-column">
             <div class="widget-heading ms-3 pb-0">
-                <h4 class="text-center fw-bold" style="color: #DC3545">Procurement Status</h4>
+                <h4 class="text-center fw-bold" style="color: #8D0404">Procurement Status</h4>
             </div>
             <div class="widget-content">
                 <div class="w-shadow-top"></div>
@@ -60,7 +60,7 @@
     </div>
                     <!-- Mail Section -->
                     <div class="col-xl-9 col-lg-6 col-md-6 col-sm-6">
-                    <?= $this->include('general-pages/tasks') ?>
+                    <?= $this->include('general-pages/tasks-head') ?>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/notification/snackbar/snackbar.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/apps/mailbox.js') ?>"></script>
-<script src="<?= base_url('assets/js/tasks_page/tasks.js') ?>"></script>
+<script src="<?= base_url('assets/js/tasks_page/tasks-head.js') ?>"></script>
 
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 

@@ -1498,15 +1498,15 @@ fieldset:disabled .btn {
 
 .btn-danger {
   color: #fff !important;
-  background-color: #e7515a;
-  border-color: #e7515a;
+  background-color: #AC1414;
+  border-color: #AC1414;
   box-shadow: 0 10px 20px -10px rgba(231, 81, 90, 0.59);
 }
 .btn-danger:hover, .btn-danger:focus {
   color: #fff !important;
-  background-color: #e7515a !important;
+  background-color: rgb(180, 64, 72) !important;
   box-shadow: none;
-  border-color: #e7515a !important;
+  border-color: rgb(180, 64, 72) !important;
 }
 .btn-danger:active, .btn-danger.active {
   background-color: #e7515a;
@@ -3731,7 +3731,7 @@ fieldset:disabled .btn {
 }
 
 .text-secondary {
-  color: #805dca !important;
+  color: #CCCCCC !important;
 }
 
 .text-dark {

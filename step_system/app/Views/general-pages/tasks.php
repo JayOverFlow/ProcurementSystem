@@ -2,21 +2,21 @@
     <div class="widget-content widget-content-area">
         <table id="style-2" class="table style-2 dt-table-hover">
             <thead>
-                <tr class="text-center">
-                    <th>Submitted By</th>
+                <tr class="">
+                    <th class="text-center">Submitted By</th>
                     <th>Document Type</th>
                     <th>Date Submitted</th>
-                    <th>Status</th>
+                    <th class="text-center">Status</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (!empty($tasks)): ?>
                     <?php foreach ($tasks as $task): ?>
-                        <tr class="text-center task-row" style="cursor: pointer;" data-task-id="<?= esc($task['task_id']) ?>">
-                            <td><?= esc($task['submitted_by_name']) ?></td>
+                        <tr class=" task-row" style="cursor: pointer;" data-task-id="<?= esc($task['task_id']) ?>">
+                            <td class="text-center"><?= esc($task['submitted_by_name']) ?></td>
                             <td><?= esc($task['task_type']) ?></td>
                             <td><?= esc(date('F j, Y, g:i a', strtotime($task['created_at']))) ?></td>
-                            <td>
+                            <td class="text-center">
                                 <?php
                                     $status = $task['ppmp_status'] ?? $task['app_status'] ?? $task['pr_status'] ?? $task['po_status'] ?? 'Pending';
                                     $badge_class = 'badge-warning'; // Default for Pending
@@ -57,7 +57,7 @@
                 <p id="modal-description"></p>
                 <div id="modal-action-buttons" class="widget-content text-center mt-5">
                     <button type="button" id="reject-btn" class="btn btn-sm warning reject" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
-                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #C62742; color: #FFFFFF">APPROVE</button>
+                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #8C0404; color: #FFFFFF">APPROVE</button>
                 </div>
                 <div id="modal-status-display" class="text-center mt-5" style="display: none;">
                     <!-- Content will be set by JavaScript -->

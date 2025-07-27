@@ -50,7 +50,7 @@
 
                                 <div class="invoice-detail-title d-flex flex-column text-start mb-0">
                                     <div>
-                                        <h2 class="fw-bold" style="color: #C62742">Purchase Request</h2>
+                                        <h2 class="fw-bold" style="color: #8D0404">Purchase Request</h2>
                                     </div>
                                     <div class="d-flex justify-content-start gap-3">
                                         <p class="col-auto text-start mb-0">FM-PR-007</p>
@@ -260,7 +260,9 @@
                                     </div>
 
                                     <div class="d-flex justify-content-between">
-                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add Item</button>
+
+                                        <button type="button" class="btn btn-md additem" style="background-color: #8D0404; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add Item</button>
+
                                         <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span id="total-amount-pr">0</span></p>
                                     </div>
                                     
