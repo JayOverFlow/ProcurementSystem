@@ -8,6 +8,7 @@ use App\Models\PoModel;
 use App\Models\PoItemModel;
 use App\Models\PoItemSpecModel;
 use App\Models\TaskModel;
+use App\Models\PpmpModel;
 
 class PoController extends BaseController
 {
@@ -64,7 +65,68 @@ class PoController extends BaseController
         $userData = $this->loadUserSession();
         $db = \Config\Database::connect();
         
+        $rules = [
+            'po_supplier' => ['label' => 'Supplier', 'rules' => 'required'],
+            'po_address' => ['label' => 'Address', 'rules' => 'required'],
+            'po_tele' => [
+                'label' => 'Telephone Number',
+                'rules' => 'required|regex_match[/^\\d{4}-\\d{4}(\\s+to\\s+\\d{2})?$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} must be numbers only in the format "xxxx-xxxx" or "xxxx-xxxx to xx".'
+                ]
+            ],
+            'po_tin' => [
+                'label' => 'TIN',
+                'rules' => 'required|regex_match[/^\\d{3}-\\d{3}-\\d{3}-\\d{3}$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} must be numbers only in the format "xxx-xxx-xxx-xxx".'
+                ]
+            ],
+            'po_ponumber' => [
+                'label' => 'P.O. Number',
+                'rules' => 'required|regex_match[/^(?=.*-)[\\d-]+$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} field must contain only numbers and hyphen (-) "xxxx-xx-xx".'
+                ]
+            ],
+            'po_date' => ['label' => 'Date', 'rules' => 'required'],
+            'po_mode' => ['label' => 'Mode of Procurement', 'rules' => 'required'],
+            'po_tuptin' => [
+                'label' => 'TUP-Taguig TIN',
+                'rules' => 'required|regex_match[/^\\d{3}-\\d{3}-\\d{3}-\\d{3}$/]',
+                'errors' => [
+                    'regex_match' => 'The {field} must be numbers only in the format "xxx-xxx-xxx-xxx".'
+                ]
+            ],
+            'po_place_delivery' => ['label' => 'Place of Delivery', 'rules' => 'required'],
+            'po_date_delivery' => ['label' => 'Date of Delivery', 'rules' => 'required'],
+            'po_delivery_term' => ['label' => 'Delivery Term', 'rules' => 'required'],
+            'po_payment_term' => ['label' => 'Payment Term', 'rules' => 'required'],
+            'po_description' => ['label' => 'Description', 'rules' => 'required'],
+            'po_amount_in_words' => ['label' => 'Amount in Words', 'rules' => 'required'],
+            'po_total_amount' => ['label' => 'Total Amount', 'rules' => 'required|numeric'],
+            'conforme_name_of_supplier' => ['label' => 'Conforme Name of Supplier', 'rules' => 'required'],
+            'conforme_date' => ['label' => 'Conforme Date', 'rules' => 'required'],
+            'conforme_campus_director' => ['label' => 'Campus Director', 'rules' => 'required'],
+            'po_fund_cluster' => ['label' => 'Funds Cluster', 'rules' => 'required'],
+            'po_fund_available' => ['label' => 'Funds Available', 'rules' => 'required'],
+            'po_accountant' => ['label' => 'Accountant', 'rules' => 'required'],
+            'po_orsburs' => ['label' => 'ORS/BURS No.', 'rules' => 'required'],
+            'po_date_orsburs' => ['label' => 'Date of the ORS/BURS', 'rules' => 'required'],
+            'po_amount' => ['label' => 'Amount', 'rules' => 'required|numeric'],
+            'items.*.po_items_unit' => ['label' => 'Unit', 'rules' => 'required'],
+            'items.*.po_items_descrip' => ['label' => 'Item Description', 'rules' => 'required'],
+            'items.*.po_items_quantity' => ['label' => 'Quantity', 'rules' => 'required|numeric'],
+            'items.*.po_items_cost' => ['label' => 'Unit Cost', 'rules' => 'required|numeric'],
+            'items.*.po_items_amount' => ['label' => 'Amount', 'rules' => 'required|numeric']
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
         $poId = $this->request->getPost('po_id'); // Get po_id from hidden input
+
         
         $db->transStart();
         try {
@@ -168,7 +230,9 @@ class PoController extends BaseController
                 return redirect()->back()->with('error', 'Failed to save Purchase Order. Please try again.');
             }
 
-            return redirect()->to('/po/create/' . $poId)->with('success', 'Purchase Order saved successfully.');
+
+            return redirect()->to('po/create' . $poId)->withInput()->with('success', 'Purchase Order saved successfully.');
+
 
         } catch (\Exception $e) {
             log_message('error', 'PO Saving/Submission Error: ' . $e->getMessage());

@@ -56,6 +56,15 @@ $routes->group('faculty', ['filter' => 'auth:user'], function($routes) {
     // $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
 });
 
+// Assistant Director
+$routes->group('assistant-director', function($routes) {
+    $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('procurement', 'AssistantDirector\AssistantDirectorProcurementController::index');
+    // $routes->get('tasks', 'AssistantDirector\AssistantDirectorTasksController::index');
+    // $routes->get('mr', 'AssistantDirector\AssistantDirectorMRController::index');
+    // $routes->get('ppmp', 'AssistantDirector\AssistantDirectorPPMPController::index');
+    $routes->get('pr', 'AssistantDirector\AssistantDirectorPRController::index');
+});
 // Director
 $routes->group('director', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
