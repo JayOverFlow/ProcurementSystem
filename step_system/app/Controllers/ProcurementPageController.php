@@ -110,7 +110,7 @@ class ProcurementPageController extends BaseController
 
             // Determine the correct form and its ID based on task_type
             switch ($formType) {
-                case 'Project Procurement Management':
+                case 'Project Procurement Management Plan':
                     if ($task['ppmp_id_fk']) {
                         $formDetails = $this->ppmpModel->find($task['ppmp_id_fk']);
                         $documentId = $formDetails['ppmp_id'] ?? null;
@@ -173,7 +173,7 @@ class ProcurementPageController extends BaseController
                 // Determine the correct URL slug based on the task type
                 $urlSlug = '';
                 switch ($task['task_type']) {
-                    case 'Project Procurement Management':
+                    case 'Project Procurement Management Plan':
                         $urlSlug = 'ppmp';
                         break;
                     case 'Purchase Request':
@@ -195,7 +195,7 @@ class ProcurementPageController extends BaseController
                 log_message('debug', 'getUsersForms: Task Type: ' . $task['task_type'] . ', Determined URL Slug: ' . $urlSlug);
 
                 $formAbbreviations = [
-                    'Project Procurement Management' => 'PPMP',
+                    'Project Procurement Management Plan' => 'PPMP',
                     'Annual Procurement Plan' => 'APP',
                     'Purchase Request' => 'PR',
                     'Purchase Order' => 'PO',

@@ -7,9 +7,15 @@
 						<div class="col-auto d-flex align-items-center ms-3" style="gap: 0.5rem;">
 							<label for="filter-form-type" class="form-label mb-0 me-1" style="font-weight: 500;">Filter:</label>
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
-								<option value="PR">PR</option>
-								<option value="PPMP">PPMP</option>
-								<option value="" selected>All</option>
+								<?php if (isset($filter_options) && is_array($filter_options)):
+									foreach ($filter_options as $label => $value):
+										if ($label === 'ALL'): ?>
+											<option value="" selected>All</option>
+										<?php else: ?>
+											<option value="<?= htmlspecialchars($value) ?>"><?= htmlspecialchars($label) ?></option>
+										<?php endif;
+									endforeach;
+								endif; ?>
 							</select>
 						</div>
 						<div class="col d-flex justify-content-end align-items-center">
@@ -62,3 +68,4 @@
 		</div>
 	</div>
 </div>
+									
