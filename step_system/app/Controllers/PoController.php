@@ -5,16 +5,46 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\PoModel;
 use App\Models\PoItemModel;
+use App\Models\PoItemSpecModel;
+use App\Models\TaskModel;
 
 class PoController extends BaseController
 {
     protected $poModel;
     protected $poItemModel;
+    protected $poItemSpecModel;
+    protected $taskModel;
 
     public function __construct()
     {
         $this->poModel = new PoModel();
         $this->poItemModel = new PoItemModel();
+        $this->poItemSpecModel = new PoItemSpecModel();
+        $this->taskModel = new TaskModel();
+    }
+
+    public function index($poId = null)
+    {
+        $userData = $this->loadUserSession();
+
+        $data = [
+            'user_data' => $userData,
+            'po' => null,
+            'po_items' => []
+        ];
+
+        if ($poId) {
+            $po = $this->poModel->find($poId);
+            if ($po) {
+                $data['po'] = $po;
+                $data['po_items'] = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
+                foreach($data['po_items'] as &$item) {
+                    $item['specifications'] = $this->poItemSpecModel->where('po_item_specs_id_fk', $item['po_items_id'])->findAll();
+                }
+            }
+        }
+
+        return view('user-pages/procurement/pro-po', $data);
     }
 
     public function save()
@@ -77,8 +107,106 @@ class PoController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // Handle successful validation (e.g., save to database)
-        // For now, just a success message
-        return redirect()->back()->with('success', 'Purchase Order saved successfully.');
+        $userData = $this->loadUserSession();
+        $db = \Config\Database::connect();
+        $poId = $this->request->getPost('po_id');
+
+        $db->transStart();
+
+        try {
+            $poData = [
+                'po_supplier' => $this->request->getPost('po_supplier'),
+                'po_address' => $this->request->getPost('po_address'),
+                'po_tele' => $this->request->getPost('po_tele'),
+                'po_tin' => $this->request->getPost('po_tin'),
+                'po_ponumber' => $this->request->getPost('po_ponumber'),
+                'po_date' => $this->request->getPost('po_date'),
+                'po_mode' => $this->request->getPost('po_mode'),
+                'po_tuptin' => $this->request->getPost('po_tuptin'),
+                'po_place_delivery' => $this->request->getPost('po_place_delivery'),
+                'po_date_delivery' => $this->request->getPost('po_date_delivery'),
+                'po_delivery_term' => $this->request->getPost('po_delivery_term'),
+                'po_payment_term' => $this->request->getPost('po_payment_term'),
+                'po_description' => $this->request->getPost('po_description'),
+                'po_amount_in_words' => $this->request->getPost('po_amount_in_words'),
+                'po_total_amount' => $this->request->getPost('po_total_amount'),
+                'conforme_name_of_supplier' => $this->request->getPost('conforme_name_of_supplier'),
+                'conforme_date' => $this->request->getPost('conforme_date'),
+                'conforme_campus_director' => $this->request->getPost('conforme_campus_director'),
+                'po_fund_cluster' => $this->request->getPost('po_fund_cluster'),
+                'po_fund_available' => $this->request->getPost('po_fund_available'),
+                'po_accountant' => $this->request->getPost('po_accountant'),
+                'po_orsburs' => $this->request->getPost('po_orsburs'),
+                'po_date_orsburs' => $this->request->getPost('po_date_orsburs'),
+                'po_amount' => $this->request->getPost('po_amount'),
+                'saved_by_user_id_fk' => $userData['user_id'],
+                'po_status' => 'Draft',
+            ];
+
+            if ($poId) {
+                $this->poModel->update($poId, $poData);
+                $poItems = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
+                foreach($poItems as $poItem) {
+                    $this->poItemSpecModel->where('po_item_specs_id_fk', $poItem['po_items_id'])->delete();
+                }
+                $this->poItemModel->where('po_items_id_fk', $poId)->delete();
+                $message = 'Purchase Order updated successfully.';
+            } else {
+                $this->poModel->insert($poData);
+                $poId = $this->poModel->getInsertID();
+                $message = 'Purchase Order saved successfully.';
+            }
+
+            $items = $this->request->getPost('items') ?? [];
+            foreach ($items as $item) {
+                $poItemData = [
+                    'po_items_id_fk' => $poId,
+                    'po_items_stockno' => $item['po_items_stockno'],
+                    'po_items_unit' => $item['po_items_unit'],
+                    'po_items_descrip' => $item['po_items_descrip'],
+                    'po_items_quantity' => $item['po_items_quantity'],
+                    'po_items_cost' => $item['po_items_cost'],
+                    'po_items_amount' => $item['po_items_amount'],
+                ];
+                $this->poItemModel->insert($poItemData);
+                $poItemId = $this->poItemModel->getInsertID();
+
+                if (!empty($item['specifications'])) {
+                    foreach ($item['specifications'] as $spec) {
+                        $this->poItemSpecModel->insert([
+                            'po_item_specs_id_fk' => $poItemId,
+                            'po_item_spec_descrip' => $spec
+                        ]);
+                    }
+                }
+            }
+
+            $taskData = [
+                'submitted_by' => $userData['user_id'],
+                'submitted_to' => null,
+                'po_id_fk' => $poId,
+                'task_type' => 'Purchase Order',
+                'task_description' => 'A Purchase Order has been saved and is ready for submission.'
+            ];
+
+            $existingTask = $this->taskModel->getTaskByPoId($poId);
+            if ($existingTask) {
+                $this->taskModel->update($existingTask['task_id'], $taskData);
+            } else {
+                $this->taskModel->insert($taskData);
+            }
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'An error occurred while saving the Purchase Order.');
+            }
+
+            return redirect()->to('po/create/' . $poId)->with('success', $message);
+
+        } catch (\Exception $e) {
+            log_message('error', 'PO Save Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
+        }
     }
 }
