@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/pro-base-layout') ?>
+<?= $this->extend('user-pages/supply/layout/sup-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Procurement Officer Procurement</title>

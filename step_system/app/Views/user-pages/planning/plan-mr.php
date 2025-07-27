@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/plan-base-layout') ?>
+<?= $this->extend('user-pages/planning/layout/plan-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Planning MR</title>
@@ -19,7 +19,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('partials/general/mr'); ?>
+<?= $this->include('general-pages/mr'); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

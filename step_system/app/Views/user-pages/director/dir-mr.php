@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/dir-base-layout') ?>
+<?= $this->extend('user-pages/director/layout/dir-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Dashboard MR</title>
@@ -19,7 +19,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('partials/general/mr'); ?>
+<?= $this->include('general-pages/mr'); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/fac-base-layout') ?>
+<?= $this->extend('user-pages/faculty/layout/fac-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Faculty Dashboard</title>

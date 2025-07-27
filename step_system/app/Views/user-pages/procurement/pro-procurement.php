@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/pro-base-layout') ?>
+<?= $this->extend('user-pages/procurement/layout/pro-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Procurement Officer Procurement</title>
@@ -123,6 +123,5 @@
     const deleteUrl = '<?= base_url('procurement/delete') ?>';
 </script>
 <script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
-
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
 <?= $this->endSection() ?>

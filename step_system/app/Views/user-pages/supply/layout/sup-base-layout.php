@@ -22,44 +22,60 @@
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
 </head>
-<body class="layout-boxed">
-
+<body class="layout-boxed enable-secondaryNav">
 <!-- BEGIN LOADER -->
 <div id="load_screen"> <div class="loader"> <div class="loader-content">
             <div class="spinner-grow align-self-center"></div>
         </div></div></div>
 <!--  END LOADER -->
 
+<!--  BEGIN HEADER  -->
+<div class="header-container container-xxl box-shadow-none">
+    <?= $this->include('user-pages/supply/partials/sup-header'); ?>
+</div>
+<!--  END HEADER  -->
+
+
 <!--  BEGIN MAIN CONTAINER  -->
-<div class="main-container " id="container">
+<div class="main-container" id="container">
 
     <div class="overlay"></div>
     <div class="search-overlay"></div>
 
+    <!--  BEGIN NAV  -->
+    <?= $this->include('user-pages/supply/partials/sup-nav'); ?>
+    <!--  END NAV  -->
+
     <!--  BEGIN CONTENT AREA  -->
-    <div id="content" class="main-content ms-1 mt-0 mb-xl-5">
+    <div id="content" class="main-content mt-5">
+        <div class="layout-px-spacing pt-3">
 
-
-            <div class="middle-content">
+            <div class="middle-content container-xxl p-0">
                 <?= $this->renderSection('content'); ?>
             </div>
 
-
+        </div>
+        <!--  BEGIN FOOTER  -->
+        <!--  END FOOTER  -->
     </div>
     <!--  END CONTENT AREA  -->
+
 </div>
 <!-- END MAIN CONTAINER -->
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="<?= base_url('assets/src/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js'); ?>"></script>
-<script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js'); ?>"></script>
+<script src="<?= base_url('assets/src/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
+<script src="<?= base_url('assets/layouts/horizontal-light-menu/app.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/global/vendors.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/mousetrap/mousetrap.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/waves/waves.min.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/custom.js') ?>"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 <?= $this->renderSection('js') ?>
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
 </body>
 </html>

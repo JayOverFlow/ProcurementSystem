@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/sup-base-layout') ?>
+<?= $this->extend('user-pages/supply/layout/sup-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP |  Supply Officer Project Procurement Management Plan</title>

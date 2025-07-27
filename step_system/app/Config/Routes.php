@@ -100,6 +100,7 @@ $routes->group('admin', function($routes){
     $routes->post('rolesdep/update', 'MasterAdmin\MADashboardController::updateRoleDepartment'); // Table 2
     $routes->post('rolesdep/create', 'MasterAdmin\MADashboardController::createRoleDepartment'); // Table 2
     $routes->post('rolesdep/delete', 'MasterAdmin\MADashboardController::deleteRoleDepartment'); // Table 2
+    $routes->post('department/create', 'MasterAdmin\MADashboardController::createDepartment'); // Table 2 - Create New Department
 
     $routes->get('usertype', 'MasterAdmin\MADashboardController::userTypeIndex'); // Table 3
     $routes->post('usertype/update', 'MasterAdmin\MADashboardController::update'); // Table 3
@@ -167,6 +168,11 @@ $routes->group('tasks', function($routes) {
     $routes->post('update-app-status', 'TasksController::updateAppStatus');
 });
 
+// Material Requisition (MR)
+$routes->group('mr', function($routes) {
+    $routes->get('', 'MrController::index');
+
+});
 
 // APP
 $routes->group('app', function($routes) {
@@ -187,14 +193,8 @@ $routes->group('pr', function($routes) {
 // PO
 $routes->group('po', function($routes) {
     $routes->get('create', 'PoController::index');
+    $routes->get('create/(:num)', 'PoController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PoController::save');
-    // $routes->get('preview/(:num)', 'AppController::preview/$1');
-});
-
-// Material Requisition (MR)
-$routes->group('mr', function($routes) {
-    $routes->get('', 'MrController::index');
-
 });
 
 // Preview

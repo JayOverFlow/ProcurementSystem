@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/pro-base-layout') ?>
+<?= $this->extend('user-pages/procurement/layout/pro-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Procurement Dashboard</title>
@@ -60,7 +60,7 @@
     </div>
                     <!-- Mail Section -->
                     <div class="col-xl-9 col-lg-6 col-md-6 col-sm-6">
-                    <?= $this->include('tasks') ?>
+                    <?= $this->include('general-pages/tasks') ?>
                     </div>
                 </div>
             </div>
