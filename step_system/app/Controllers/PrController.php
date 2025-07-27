@@ -182,15 +182,6 @@ class PrController extends BaseController
                 // Create new PR
                 $this->prModel->insert($prData);
                 $prId = $this->prModel->getInsertID();
-                
-                // 2. Insert into pr_items_tbl
-                $this->taskModel->insert([
-                    'submitted_by' => $userData['user_id'],
-                    'submitted_to' => null,
-                    'pr_id_fk' => $prId,
-                    'task_type' => 'Purchase Request',
-                    'task_description' => 'A new Purchase Request has been submitted for your review.'
-                ]);
 
                 $message = 'Your Purchase Request has been saved.';
             } else {
@@ -217,14 +208,23 @@ class PrController extends BaseController
             if (!empty($itemData)) {
                 $this->prItemModel->insertBatch($itemData);
             }
-
-            $this->taskModel->insert([
+ 
+            // Create/Update task
+            $taskData = [
                 'submitted_by' => $userData['user_id'],
                 'submitted_to' => null,
                 'pr_id_fk' => $prId,
                 'task_type' => 'Purchase Request',
-                'task_description' => 'A new Purchase Request has been submitted for your review.'
-            ]);
+                'task_description' => 'A Purchase Request has been saved and is ready for submission.'
+            ];
+
+            $existingTask = $this->taskModel->getTaskByPrId($prId);
+
+            if ($existingTask) {
+                $this->taskModel->update($existingTask['task_id'], $taskData);
+            } else {
+                $this->taskModel->insert($taskData);
+            }
 
             $db->transComplete();
 
