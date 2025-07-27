@@ -55,22 +55,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Save & Submit confirmation
-    const saveSubmitButton = document.querySelector('.warning.save');
-    if(saveSubmitButton) {
-        saveSubmitButton.addEventListener('click', function(e) {
+    const appForm = document.getElementById('app-form');
+    const saveBtn = document.querySelector('.save-app');
+    const submitBtn = document.querySelector('.submit-app');
+
+    if (appForm && saveBtn) {
+        saveBtn.addEventListener('click', function(e) {
             e.preventDefault(); // Prevent the form from submitting immediately
     
             Swal.fire({
                 title: 'Confirm Save?',
                 text: "Do you want to save this Annual Procurement Plan?",
-                icon: 'warning',
+                icon: 'info',
                 showCancelButton: true,
-                confirmButtonColor: '#8ABB2F',
-                cancelButtonColor: '#7B7B7B',
-                confirmButtonText: 'Save'
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('app-form').submit();
+                    appForm.action = this.getAttribute('formaction');
+                    appForm.submit();
+                }
+            });
+        });
+    }
+
+    if (appForm && submitBtn) {
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Confirm Submission?',
+                text: "Are you sure you want to submit this for review? You will not be able to edit it after submission.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, submit it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    appForm.action = this.getAttribute('formaction');
+                    appForm.submit();
                 }
             });
         });
