@@ -21,6 +21,9 @@ class ProcurementController extends ProcurementPageController
             case "Director":
                 return view('user-pages/director/dir-procurement', $data);
                 break;
+            case "Assistant Director":
+                return view('user-pages/assistant-director/ast-dir-procurement', $data);
+                break;
             case "Head":
                 return view('user-pages/head/head-procurement', $data);
                 break;

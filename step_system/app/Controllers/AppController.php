@@ -62,12 +62,106 @@ class AppController extends BaseController
     public function save()
     {
         $userData = $this->loadUserSession();
-        // $appModel = new AppModel();
-        // $appItemModel = new AppItemModel();
-        // $taskModel = new TaskModel();
-        // $userModel = new UserModel();
+        $appId = $this->request->getPost('app_id');
+
+        $rules = [
+            'app_dep_id_fk' => [
+                'label' => 'Department',
+                'rules' => 'required|is_natural_no_zero',
+                'errors' => [
+                    'required' => 'Please select a department.',
+                    'is_natural_no_zero' => 'Please select a valid department.'
+                ]
+            ],
+            'app_prepared_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required|is_natural_no_zero',
+                'errors' => [
+                    'required' => 'Please select who prepared this document.',
+                    'is_natural_no_zero' => 'Please select a valid user.'
+                ]
+            ],
+            'prepared_by_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Designation is a required field.'
+                ]
+            ],
+            'app_approved_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required|is_natural_no_zero',
+                'errors' => [
+                    'required' => 'Please select the approver.',
+                    'is_natural_no_zero' => 'Please select a valid approver.'
+                ]
+            ],
+            'approved_by_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Approver designation is a required field.'
+                ]
+            ],
+            'app_recommending_by_name' => [
+                'label' => 'Printed Name',
+                'rules' => 'required|is_natural_no_zero',
+                'errors' => [
+                    'required' => 'Please select who is recommending approval.',
+                    'is_natural_no_zero' => 'Please select a valid recommender.'
+                ]
+            ],
+            'recommending_approval_designation' => [
+                'label' => 'Designation',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Recommender designation is a required field.'
+                ]
+            ]
+        ];
+
+        // Dynamically add rules for items that are not empty
+        $items = $this->request->getPost('items') ?? [];
+        $hasAtLeastOneItem = false;
+        foreach ($items as $index => $item) {
+            // Use a more reliable check for emptiness that doesn't ignore '0'
+            $isRowEmpty = true;
+            foreach ($item as $value) {
+                if ($value !== '' && $value !== null) {
+                    $isRowEmpty = false;
+                    break;
+                }
+            }
+
+            if (!$isRowEmpty) {
+                $hasAtLeastOneItem = true;
+                $rules["items.{$index}.total"] = [
+                    'label' => 'Total',
+                    'rules' => 'numeric',
+                    'errors' => ['numeric' => 'Total must be a number.']
+                ];
+                $rules["items.{$index}.mooe"] = [
+                    'label' => 'MOOE',
+                    'rules' => 'numeric',
+                    'errors' => ['numeric' => 'MOOE must be a number.']
+                ];
+                $rules["items.{$index}.co"] = [
+                    'label' => 'CO',
+                    'rules' => 'numeric',
+                    'errors' => ['numeric' => 'CO must be a number.']
+                ];
+            }
+        }
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        if (!$hasAtLeastOneItem) {
+            return redirect()->back()->withInput()->with('errors', ['items' => 'No data was entered.']);
+        }
+        
         $db = \Config\Database::connect();
-        $appId = $this->request->getPost('app_id'); // Get app_id from hidden input
 
         $db->transStart();
 
@@ -103,10 +197,17 @@ class AppController extends BaseController
             $items = $this->request->getPost('items') ?? [];
             $itemData = [];
             foreach ($items as $item) {
-                // Skip the row only if both code and project name are empty
-                // if (empty($item['app_item_code']) && empty($item['procurement_project'])) {
-                //     continue;
-                // }
+                // Skip rows where all values are empty or null
+                $isRowEmpty = true;
+                foreach ($item as $value) {
+                    if ($value !== '' && $value !== null) {
+                        $isRowEmpty = false;
+                        break;
+                    }
+                }
+                if ($isRowEmpty) {
+                    continue;
+                }
                 
                 $itemData[] = [
                     'app_id_fk' => $appId,
@@ -157,9 +258,9 @@ class AppController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->to('app/create/' . $appId)->with('error', 'An error occurred while saving the Annual Procurement Plan.');
+                return redirect()->back()->with('error', 'An error occurred while saving the Annual Procurement Plan.');
             }
-            return redirect()->to('app/create/' . $appId)->with('success', 'Annual Procurement Plan has been saved.');
+            return redirect()->back()->with('success', 'Annual Procurement Plan has been saved.');
 
         } catch (\Exception $e) {
             log_message('error', 'APP Creation/Submission Error: ' . $e->getMessage());

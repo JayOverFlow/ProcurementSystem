@@ -1,7 +1,7 @@
-<?= $this->extend('user-pages/procurement/layout/pro-base-layout') ?>
+<?= $this->extend('layouts/ast-dir-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Procurement Officer Procurement</title>
+<title>TUP STEP | Assistant Director Procurement</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
@@ -33,7 +33,6 @@
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
 								<option value="PR">PR</option>
 								<option value="PPMP">PPMP</option>
-								<option value="PO">PO</option>
 								<option value="" selected>All</option>
 							</select>
 						</div>
@@ -55,7 +54,7 @@
 						<table id="procurement-table" class="table table-hover text-nowrap">
 							<thead>
 								<tr>
-									<th style="min-width: 40px; width: 40px;"><input class="form-check-input" type="checkbox" id="select-all"></th>
+									<th style="min-width: 40px; width: 40px;" class="no-sort"></th>
 									<th>Form</th>
 									<th>Document-Id</th>
 									<th>Sent To</th>
@@ -65,6 +64,10 @@
 							<tbody>
 								<?php if (!empty($forms)): ?>
 									<?php foreach ($forms as $form): ?>
+										<?php
+											// url_slug is now provided by the controller
+											// The switch statement is no longer needed here
+										?>
 										<?php /* Make the entire row clickable to view/edit the form, and include task_id for deletion */ ?>
 										<tr data-href="<?= base_url($form['url_slug'] . '/create/' . esc($form['document_id'])) ?>" data-task-id="<?= esc($form['task_id']) ?>" style="cursor: pointer;">
 											<td><input class="form-check-input" type="checkbox" onclick="event.stopPropagation();" value="<?= esc($form['task_id']) ?>"></td>
@@ -76,7 +79,7 @@
 									<?php endforeach; ?>
 								<?php else: ?>
 									<tr>
-										<td colspan="5" class="text-center">You haven't created any forms yet.</td>
+										<td colspan="5" class="text-center">No forms found.</td>
 									</tr>
 								<?php endif; ?>
 							</tbody>
@@ -105,7 +108,6 @@
       <div class="modal-body d-flex flex-column gap-2">
         <a href="<?= base_url('ppmp/create') ?>" class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</a>
         <a href="<?= base_url('pr/create') ?>" class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</a>
-		<a href="<?= base_url('po/create') ?>" class="btn" style="background:#2d0006; color:white;">PURCHASE ORDER</a>
       </div>
     </div>
   </div>
@@ -115,14 +117,12 @@
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
-<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
-
-<!-- Centralized Procurement Logic -->
 <script>
-    // Define page-specific variables for the centralized script
     const table_id = '#procurement-table';
     const deleteUrl = '<?= base_url('procurement/delete') ?>';
 </script>
-<script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
+<script src="<?= base_url('assets/js/procurement_page/procurement.js') ?>"></script>
+<script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
+
 <?= $this->endSection() ?>
