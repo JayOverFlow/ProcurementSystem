@@ -201,6 +201,14 @@ $routes->group('po', ['filter' => 'auth:auth'], function($routes) {
     $routes->post('submit', 'PoController::submit');
 });
 
+// PAR
+$routes->group('par', ['filter' => 'auth:auth'], function($routes) {
+    $routes->get('create', 'ParController::index');
+    $routes->get('create/(:num)', 'ParController::index/$1'); // For loading the form with the data
+    $routes->post('save', 'ParController::save');
+    $routes->post('submit', 'ParController::submit');
+});
+
 // Preview
 $routes->group('', function($routes) {
     $routes->get('ppmp/preview/(:num)', 'PpmpController::preview/$1');

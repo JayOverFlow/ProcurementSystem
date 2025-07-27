@@ -42,7 +42,8 @@
       <div class="modal-body d-flex flex-column gap-2">
         <a href="<?= base_url('ppmp/create') ?>" class="btn" style="background:#6b0011; color:white;">PROJECT PROCUREMENT MANAGEMENT PLAN</a>
         <a href="<?= base_url('pr/create') ?>" class="btn" style="background:#a10013; color:white;">PURCHASE REQUEST</a>
-		<a href="<?= base_url('ics/create') ?>" class="btn" style="background:#2d0006; color:white;">INVENTORY CUSTODIAN SLIP</a>
+        <a href="<?= base_url('par/create') ?>" class="btn" style="background:#30070b; color:white;">PROPERTY ACKNOWLEDGEMENT RECEIPT</a>
+		    <a href="<?= base_url('ics/create') ?>" class="btn" style="background:#020202; color:white;">INVENTORY CUSTODIAN SLIP</a>
       </div>
     </div>
   </div>
