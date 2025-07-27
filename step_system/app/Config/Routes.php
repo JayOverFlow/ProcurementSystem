@@ -12,7 +12,7 @@ $routes->group('', function($routes) {
     $routes->post('testing', 'TestingController::testing');
 });
 
-$routes->group('', function($routes) {
+$routes->group('', ['filter' => 'auth:guest'], function($routes) {
     $routes->get('register', 'AuthController::register');
     $routes->post('register', 'AuthController::register');
 });
@@ -27,24 +27,25 @@ $routes->group('auth', function($routes) {
 });
 
 // Login
-$routes->group('', function($routes) {
+$routes->group('', ['filter' => 'auth:guest'], function($routes) {
     $routes->get('login', 'AuthController::login');
     $routes->post('login', 'AuthController::login');
 });
 
 // Admin Login
-$routes->group('admin', function($routes) {
+$routes->group('admin', ['filter' => 'auth:guest'], function($routes) {
     $routes->get('login', 'AuthController::adminLogin');
     $routes->post('login', 'AuthController::adminLogin');
     $routes->get('register', 'AuthController::adminRegister');
     $routes->post('register', 'AuthController::adminRegister');
-    $routes->get('logout', 'AuthController::adminLogout');
 });
+
+$routes->get('admin/logout', 'AuthController::adminLogout');
 
 $routes->get('logout', 'AuthController::logout');
 
 // Faculty or Section Head
-$routes->group('faculty', function($routes) {
+$routes->group('faculty', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
     $routes->get('procurement', 'Faculty\FacultyProcurementController::index');
     // $routes->get('ppmp', 'Faculty\FacultyPPMPController::index');
@@ -56,7 +57,7 @@ $routes->group('faculty', function($routes) {
 });
 
 // Director
-$routes->group('director', function($routes) {
+$routes->group('director', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
     $routes->get('procurement', 'Director\DirectorProcurementController::index');
     // $routes->get('tasks', 'Director\DirectorTasksController::index');
@@ -65,7 +66,7 @@ $routes->group('director', function($routes) {
     $routes->get('pr', 'Director\DirectorPRController::index');
 });
 // Planning
-    $routes->group('planning', function($routes) {
+    $routes->group('planning', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
         $routes->get('procurement', 'Planning\PlanningProcurementController::index');
     // $routes->get('mr', 'PlanningController::mr');
@@ -81,7 +82,7 @@ $routes->group('director', function($routes) {
 });
 
 // Department Head
-$routes->group('head', function($routes) {
+$routes->group('head', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
     $routes->get('procurement', 'DepartmentHead\DHProcurementController::index');
     $routes->get('mr', 'DepartmentHead\DHDashboard::mr');
@@ -93,7 +94,7 @@ $routes->group('head', function($routes) {
     $routes->get('tasks', 'DepartmentHead\DHDashboard::tasks');
 });
 // Master Admin
-$routes->group('admin', function($routes){
+$routes->group('admin', ['filter' => 'auth:admin'], function($routes){
     $routes->get('dashboard', 'MasterAdmin\MADashboardController::dashboardIndex'); // Table 1
 
     $routes->get('rolesdep', 'MasterAdmin\MADashboardController::rolesDepIndex'); // Table 2
@@ -113,7 +114,7 @@ $routes->group('admin', function($routes){
 });
 
 // Procurement Officer
-$routes->group('procurement', function($routes) {
+$routes->group('procurement', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
     $routes->get('procurement', 'ProcurementOffice\ProcurementController::index');
     // $routes->get('mr', 'ProcurementOffice\ProcurementController::mr');
@@ -125,7 +126,7 @@ $routes->group('procurement', function($routes) {
 });
 
 // Supply
-$routes->group('supply', function($routes) {
+$routes->group('supply', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
     $routes->get('procurement', 'Supply\SupplyController::procurement');
     $routes->get('tasks', 'Supply\SupplyController::tasks');
@@ -139,7 +140,7 @@ $routes->group('supply', function($routes) {
 });
 
 // Unassigned
-$routes->group('unassigned', function($routes) {
+$routes->group('unassigned', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
     $routes->get('procurement', 'Unassigned\UnassignedProcurementController::index');
     $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
@@ -152,7 +153,7 @@ $routes->group('unassigned', function($routes) {
 
 
 // PPMP
-$routes->group('ppmp', function($routes) {
+$routes->group('ppmp', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create', 'PpmpController::index');
     $routes->get('create/(:num)', 'PpmpController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PpmpController::save');
@@ -161,7 +162,7 @@ $routes->group('ppmp', function($routes) {
 });
 
 // Tasks
-$routes->group('tasks', function($routes) {
+$routes->group('tasks', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('', 'TasksController::index');
     $routes->get('details/(:num)', 'TasksController::getDetails/$1');
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
@@ -169,13 +170,13 @@ $routes->group('tasks', function($routes) {
 });
 
 // Material Requisition (MR)
-$routes->group('mr', function($routes) {
+$routes->group('mr', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('', 'MrController::index');
 
 });
 
 // APP
-$routes->group('app', function($routes) {
+$routes->group('app', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create', 'AppController::index');
     $routes->get('create/(:num)', 'AppController::index/$1'); // For loading the form with the data
     $routes->post('save', 'AppController::save');
@@ -184,14 +185,14 @@ $routes->group('app', function($routes) {
 });
 
 // PR
-$routes->group('pr', function($routes) {
+$routes->group('pr', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create', 'PrController::index');
     $routes->get('create/(:num)', 'PrController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PrController::save');
 });
 
 // PO
-$routes->group('po', function($routes) {
+$routes->group('po', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create', 'PoController::index');
     $routes->get('create/(:num)', 'PoController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PoController::save');
@@ -203,8 +204,8 @@ $routes->group('', function($routes) {
     $routes->get('app/preview/(:num)', 'AppController::preview/$1');
 });
 
-// Dasboard
-$routes->group('dashboard', function($routes) {
+// Dashboard
+$routes->group('dashboard', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('', 'DashboardController::index');
 });
 
