@@ -1,8 +1,43 @@
 <form id="pr-form" action="<?= base_url('/pr/save') ?>" method="post">
+    <?= csrf_field() ?>
     <input type="hidden" name="pr_id" value="<?= esc($pr['pr_id'] ?? '') ?>">
     <div class="row invoice layout-top-spacing layout-spacing">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            
+            <?php
+                $isReadOnly = isset($pr['pr_status']) && $pr['pr_status'] !== 'Draft';
+            ?>
+            <?php if (session()->getFlashdata('success')): ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: '<?= session()->getFlashdata('success') ?>',
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Ok'
+                        });
+                    });
+                </script>
+            <?php endif; ?>
+            <?php if (session()->getFlashdata('error')): ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: '<?= session()->getFlashdata('error') ?>',
+                            icon: 'error',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Ok'
+                        });
+                    });
+                </script>
+            <?php endif; ?>
+
+            <?php if ($isReadOnly): ?>
+                <div class="alert alert-light-info bg-primary" role="alert">
+                    This document is already submitted and cannot be edited.
+                </div>
+            <?php endif; ?>
             <div class="doc-container">
 
                 <div class="row">
@@ -35,7 +70,7 @@
                                                 <div class="form-group row">
                                                     <label for="pr-department" class="col-sm-3 col-form-label col-form-label-sm">Department</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-control-sm" id="pr-department" name="pr_department">
+                                                        <select class="form-control form-control-sm" id="pr-department" name="pr_department" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(!empty($departments)): ?>
                                                                 <?php foreach($departments as $department): ?>
@@ -52,7 +87,7 @@
                                                 <div class="form-group row mt-4">
                                                     <label for="pr-section" class="col-sm-3 col-form-label col-form-label-sm">Section</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="pr-section" name="pr_section" value="<?= esc($pr['pr_section'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="pr-section" name="pr_section" value="<?= esc($pr['pr_section'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>                                                     
                                                 
@@ -68,14 +103,14 @@
                                                 <div class="form-group row">
                                                     <label for="pr-no-date" class="col-sm-3 col-form-label col-form-label-sm">P.R. No. Date</label>
                                                     <div class="col-sm-9">
-                                                        <input type="date" class="form-control form-control-sm" id="pr-no-date" name="pr_no_date" value="<?= esc($pr['pr_no_date'] ?? '') ?>">
+                                                        <input type="date" class="form-control form-control-sm" id="pr-no-date" name="pr_no_date" value="<?= esc($pr['pr_no_date'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="pr-sai-no-date" class="col-sm-3 col-form-label col-form-label-sm">SAI. No. Date</label>
                                                     <div class="col-sm-9">
-                                                        <input type="date" class="form-control form-control-sm" id="pr-sai-no-date" name="pr_sai_no_date" value="<?= esc($pr['pr_sai_no_date'] ?? '') ?>">
+                                                        <input type="date" class="form-control form-control-sm" id="pr-sai-no-date" name="pr_sai_no_date" value="<?= esc($pr['pr_sai_no_date'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>
                                                 
@@ -109,14 +144,14 @@
                                                 <?php if (!empty($pr_items)): ?>
                                                     <?php foreach ($pr_items as $index => $item): ?>
                                                         <tr>
-                                                            <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_quantity]" value="<?= esc($item['pr_items_quantity']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_unit]" value="<?= esc($item['pr_items_unit']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_descrip]" value="<?= esc($item['pr_items_descrip']) ?>"></td>
-                                                            <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm unit-cost" name="items[<?= $index ?>][pr_items_cost]" value="<?= esc($item['pr_items_cost']) ?>"></td>
+                                                            <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_quantity]" value="<?= esc($item['pr_items_quantity']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_unit]" value="<?= esc($item['pr_items_unit']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pr_items_descrip]" value="<?= esc($item['pr_items_descrip']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
+                                                            <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm unit-cost" name="items[<?= $index ?>][pr_items_cost]" value="<?= esc($item['pr_items_cost']) ?>" <?= $isReadOnly ? 'disabled' : '' ?>></td>
                                                             <td class="px-1"><input type="text" class="form-control form-control-sm total-cost" name="items[<?= $index ?>][pr_items_total_cost]" value="<?= esc($item['pr_items_total_cost']) ?>" readonly></td>
                                                             <td class="delete-item-row text-center">
                                                                 <ul class="table-controls">
-                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                    <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete" <?= $isReadOnly ? 'style="pointer-events: none; color: grey;"' : '' ?>><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                                 </ul>
                                                             </td>
                                                         </tr>
@@ -140,7 +175,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-between">
-                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF">Add Item</button>
+                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add Item</button>
                                         <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span id="total-amount-pr">0</span></p>
                                     </div>
                                     
@@ -161,7 +196,7 @@
                                                 <div class="form-group">
                                                     <label for="pr-requested-by-name" class="col-sm-3 col-form-label col-form-label-sm">Printed Name</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-control-sm" id="pr-requested-by-name" name="pr_requested_by_name">
+                                                        <select class="form-control form-control-sm" id="pr-requested-by-name" name="pr_requested_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(!empty($users)): ?>
                                                                 <?php foreach($users as $user): ?>
@@ -178,7 +213,7 @@
                                                 <div class="form-group">
                                                     <label for="pr-requested-by-designation" class="col-sm-3 col-form-label col-form-label-sm">Designation</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="pr-requested-by-designation" name="pr_requested_by_designation" value="<?= esc($pr['pr_requested_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="pr-requested-by-designation" name="pr_requested_by_designation" value="<?= esc($pr['pr_requested_by_designation'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>
                                                 
@@ -194,7 +229,7 @@
                                                 <div class="form-group">
                                                     <label for="pr-approved-by-name" class="col-sm-3 col-form-label col-form-label-sm">Printed Name</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-control-sm" id="pr-approved-by-name" name="pr_approved_by_name">
+                                                        <select class="form-control form-control-sm" id="pr-approved-by-name" name="pr_approved_by_name" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                             <option>Select</option>
                                                             <?php if(!empty($users)): ?>
                                                                 <?php foreach($users as $user): ?>
@@ -211,7 +246,7 @@
                                                 <div class="form-group">
                                                     <label for="pr-approved-by-designation" class="col-sm-3 col-form-label col-form-label-sm">Designation</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control form-control-sm" id="pr-approved-by-designation" name="pr_approved_by_designation" value="<?= esc($pr['pr_approved_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm" id="pr-approved-by-designation" name="pr_approved_by_designation" value="<?= esc($pr['pr_approved_by_designation'] ?? '') ?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                     </div>
                                                 </div>
                                                 
@@ -236,7 +271,10 @@
 
                                 <div class="row">
                                     <div class="col-xl-12 col-md-4">
-                                        <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
+                                        <button type="submit" formaction="<?= base_url('pr/save') ?>" class="btn btn-submit w-100 warning save-pr" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Save</button>
+                                    </div>
+                                    <div class="col-xl-12 col-md-4">
+                                        <button type="submit" formaction="<?= base_url('pr/submit') ?>" class="btn btn-submit w-100 warning submit-pr" style="background-color: #C62742; color: #FFFFFF" <?= (!isset($pr['pr_id']) || empty($pr['pr_id']) || $isReadOnly) ? 'disabled' : '' ?>>Submit</button>
                                     </div>
                                     <div class="col-xl-12 col-md-4">
                                         <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
