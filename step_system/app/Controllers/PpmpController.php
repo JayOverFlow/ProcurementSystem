@@ -75,112 +75,8 @@ class PpmpController extends BaseController
     {
         $userData = $this->loadUserSession();
         $db = \Config\Database::connect();
-        $ppmpId = $this->request->getPost('ppmp_id');
-        $redirectUrl = $ppmpId ? 'ppmp/create/' . $ppmpId : 'ppmp/create';
 
-        // Validation rules
-        $rules = [
-            'ppmp_office_fk' => 'required|greater_than[0]',
-            'ppmp_prepared_by_position' => 'required',
-            'ppmp_prepared_by_name' => 'required|greater_than[0]',
-            'ppmp_recommended_by_position' => 'required',
-            'ppmp_recommended_by_name' => 'required|greater_than[0]',
-            'ppmp_evaluated_by_position' => 'required',
-            'ppmp_evaluated_by_name' => 'required|greater_than[0]',
-            'ppmp_period_covered' => 'required|numeric|exact_length[4]',
-            'ppmp_total_budget_allocated' => 'required|numeric',
-            'ppmp_total_proposed_budget' => 'required|numeric',
-        ];
-
-        $messages = [
-            'ppmp_office_fk' => [
-                'required' => 'Please select an Office.',
-                'greater_than' => 'Please select an Office.'
-            ],
-            'ppmp_prepared_by_position' => ['required' => 'The Position field is required.'],
-            'ppmp_prepared_by_name' => [
-                'required' => 'Please select a Personel.',
-                'greater_than' => 'Please select a Personel.'
-            ],
-            'ppmp_recommended_by_position' => ['required' => 'The Position field is required.'],
-            'ppmp_recommended_by_name' => [
-                'required' => 'Please select a Personel.',
-                'greater_than' => 'Please select a Personel.'
-            ],
-            'ppmp_evaluated_by_position' => ['required' => 'The Position field is required.'],
-            'ppmp_evaluated_by_name' => [
-                'required' => 'Please select a Personel.',
-                'greater_than' => 'Please select a Personel.'
-            ],
-            'ppmp_period_covered' => [
-                'required' => 'The Period Covered field is required.',
-                'numeric' => 'The Period Covered must be a number.',
-                'exact_length' => 'The Period Covered must be a 4-digit year.'
-            ],
-            'ppmp_total_budget_allocated' => [
-                'required' => 'The Total Budget Allocated field is required.',
-                'numeric' => 'The Total Budget Allocated must be a number.'
-            ],
-            'ppmp_total_proposed_budget' => [
-                'required' => 'The Total Proposed Budget field is required.',
-                'numeric' => 'The Total Proposed Budget must be a number.'
-            ],
-        ];
-
-        if (!$this->validate($rules, $messages)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-
-        // Custom validation for items
-        $mooeItems = $this->request->getPost('items') ?? [];
-        $coItems = $this->request->getPost('items_co') ?? [];
-        $itemErrors = [];
-
-        $isItemRowFilled = function($item) {
-            return !empty($item['code']) || !empty($item['gen_desc']) || !empty($item['qty_size']) || !empty($item['est_budget']);
-        };
-
-        $hasFilledRow = false;
-
-        foreach ($mooeItems as $key => $item) {
-            if ($isItemRowFilled($item)) {
-                $hasFilledRow = true;
-                if (empty($item['code'])) { $itemErrors["items.{$key}.code"] = 'Code is required.'; }
-                if (empty($item['gen_desc'])) { $itemErrors["items.{$key}.gen_desc"] = 'General Description is required.'; }
-                // Quantity/Size is NOT required and does NOT need to be numeric
-                // Estimated Budget is NOT required to be numeric
-                if (empty($item['qty_size'])) {
-                    // Do nothing, it's optional
-                }
-                if (empty($item['est_budget'])) {
-                    $itemErrors["items.{$key}.est_budget"] = 'Estimated Budget is required.';
-                }
-            }
-        }
-
-        foreach ($coItems as $key => $item) {
-            if ($isItemRowFilled($item)) {
-                $hasFilledRow = true;
-                if (empty($item['code'])) { $itemErrors["items_co.{$key}.code"] = 'Code is required.'; }
-                if (empty($item['gen_desc'])) { $itemErrors["items_co.{$key}.gen_desc"] = 'General Description is required.'; }
-                // Quantity/Size is NOT required and does NOT need to be numeric
-                // Estimated Budget is NOT required to be numeric
-                if (empty($item['qty_size'])) {
-                    // Do nothing, it's optional
-                }
-                if (empty($item['est_budget'])) {
-                    $itemErrors["items_co.{$key}.est_budget"] = 'Estimated Budget is required.';
-                }
-            }
-        }
-
-        if (!$hasFilledRow) {
-            $itemErrors['items'] = 'No data was entered.';
-        }
-
-        if (!empty($itemErrors)) {
-            return redirect()->back()->withInput()->with('errors', $itemErrors);
-        }
+        $ppmpId = $this->request->getPost('ppmp_id'); // Get ppmp_id from hidden input
 
         $db->transStart();
 
@@ -223,17 +119,14 @@ class PpmpController extends BaseController
             $items = array_merge($mooeItems, $coItems);
 
             foreach ($items as $item) {
-                if (!$isItemRowFilled($item)) {
-                    continue; // Skip empty rows
-                }
                 $months = $item['month'] ?? [];
 
                 $allItems[] = [
                     'ppmp_id_fk' => $ppmpId,
                     'ppmp_item_code' => $item['code'],
                     'ppmp_item_name' => $item['gen_desc'],
-                    'ppmp_item_quantity' => str_replace(',', '', $item['qty_size']),
-                    'ppmp_item_estimated_budget' => str_replace(',', '', $item['est_budget']),
+                    'ppmp_item_quantity' => $item['qty_size'],
+                    'ppmp_item_estimated_budget' => $item['est_budget'],
                     'ppmp_sched_jan' => $months['jan'] ?? 0,
                     'ppmp_sched_feb' => $months['feb'] ?? 0,
                     'ppmp_sched_mar' => $months['mar'] ?? 0,
@@ -278,14 +171,15 @@ class PpmpController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->to($redirectUrl)->with('error', 'Failed to save the PPMP. Please check the logs.');
+                return redirect()->back()->with('error', 'An error occurred while saving the Project Procurement Management Plan.');
             } else {
+                // return redirect()->back()->with('success', 'Your Project Procurement Management Plan has been saved.');
                 return redirect()->to('ppmp/create/' . $ppmpId)->with('success', 'Your Project Procurement Management Plan has been saved.');
             }
 
         } catch (\Exception $e) {
             log_message('error', 'PPMP Saving/Submission Error: ' . $e->getMessage());
-            return redirect()->to($redirectUrl)->with('error', 'An unexpected error occurred.');
+            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }
 
@@ -323,19 +217,19 @@ class PpmpController extends BaseController
         $taskModel = new TaskModel();
 
         if (empty($ppmpId)) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Invalid Project Procurement Management Plan ID for submission.');
         }
         
         // Check if PPMP has already been submitted
         $ppmp = $this->ppmpModel->find($ppmpId);
         if ($ppmp && $ppmp['ppmp_status'] !== 'Draft') {
-            return redirect()->to('ppmp/create/' . $ppmpId);
+            return redirect()->to('ppmp/create/' . $ppmpId)->with('error', 'This Project Procurement Management Plan has already been submitted.');
         }
 
         $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
 
         if (empty($planningOfficers)) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
         }
 
         $db->transStart();
@@ -352,7 +246,7 @@ class PpmpController extends BaseController
                 ]);
             } else {
                  // This case should ideally not happen in a normal workflow
-                return redirect()->back()->with('error', 'Could not find the original task to update.');
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
             }
 
             // Create new tasks for other planning officers
@@ -372,10 +266,10 @@ class PpmpController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'PPMP submission failed due to a database error.');
+                return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
             }
 
-            return redirect()->to('ppmp/create/' . $ppmpId);
+            return redirect()->to('ppmp/create/' . $ppmpId)->with('success', 'Project Procurement Management Plan successfully submitted to Planning Office for review.');
 
         } catch (\Exception $e) {
             log_message('error', 'PPMP Submission Error: ' . $e->getMessage());
