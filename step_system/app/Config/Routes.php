@@ -234,3 +234,6 @@ $routes->group('stepper', function($routes) {
 
 // Procurement Feature Routes
 $routes->post('procurement/delete', 'ProcurementPageController::deleteForms'); // Route to handle soft deletion of forms
+
+// Sample Route for PPMP Preview
+$routes->get('ppmp/preview/', 'PpmpSampleController::index');

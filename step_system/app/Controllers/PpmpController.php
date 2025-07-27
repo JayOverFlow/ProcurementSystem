@@ -305,13 +305,16 @@ class PpmpController extends BaseController
             'office' => $departmentModel->getDepartmentNameById($ppmp['ppmp_office_fk']),
             'prepared_by' => $userModel->getUserFullNameById($ppmp['ppmp_prepared_by_name']),
             'recommended_by' => $userModel->getUserFullNameById($ppmp['ppmp_recommended_by_name']),
+            'ppmp_prepared_by_position' => $ppmp['ppmp_prepared_by_position'] ?? '',
+            'ppmp_recommended_by_position' => $ppmp['ppmp_recommended_by_position'] ?? '',
+            'ppmp_evaluated_by_position' => $ppmp['ppmp_evaluated_by_position'] ?? '',
+            'evaluated_by' => isset($ppmp['ppmp_evaluated_by_name']) ? $userModel->getUserFullNameById($ppmp['ppmp_evaluated_by_name']) : '',
         ];
 
-        
         if (empty($data['ppmp'])) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('PPMP not found');
         }
-        
+
         return view('preview-pages/ppmp-preview', $data);
     }
 
