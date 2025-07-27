@@ -44,55 +44,6 @@ $routes->get('admin/logout', 'AuthController::adminLogout');
 
 $routes->get('logout', 'AuthController::logout');
 
-// Faculty or Section Head
-$routes->group('faculty', ['filter' => 'auth:user'], function($routes) {
-    $routes->get('dashboard', 'DashboardController::index');
-    $routes->get('procurement', 'Faculty\FacultyProcurementController::index');
-    // $routes->get('ppmp', 'Faculty\FacultyPPMPController::index');
-    $routes->get('pr', 'Faculty\FacultyPRController::index');
-    // $routes->get('tasks', 'Faculty\FacultyTasksController::index');
-    // $routes->get('mr', 'Faculty\FacultyMRController::index');
-    // $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
-    // $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
-});
-
-// Director
-$routes->group('director', ['filter' => 'auth:user'], function($routes) {
-    $routes->get('dashboard', 'DashboardController::index');
-    $routes->get('procurement', 'Director\DirectorProcurementController::index');
-    // $routes->get('tasks', 'Director\DirectorTasksController::index');
-    // $routes->get('mr', 'Director\DirectorMRController::index');
-    // $routes->get('ppmp', 'Director\DirectorPPMPController::index');
-    $routes->get('pr', 'Director\DirectorPRController::index');
-});
-// Planning
-    $routes->group('planning', ['filter' => 'auth:user'], function($routes) {
-    $routes->get('dashboard', 'DashboardController::index');
-        $routes->get('procurement', 'Planning\PlanningProcurementController::index');
-    // $routes->get('mr', 'PlanningController::mr');
-    // $routes->get('ppmp', 'PlanningController::ppmp');
-    $routes->get('pr', 'PlanningController::pr');
-    // $routes->get('app', 'PlanningController::app');
-    $routes->get('inventory', 'PlanningController::inventory');
-    $routes->get('file1', 'PlanningController::file1');
-    $routes->get('file2', 'PlanningController::file2');
-    $routes->get('file1', 'PlanningController::file1');
-    $routes->get('file2', 'PlanningController::file2');
-
-});
-
-// Department Head
-$routes->group('head', ['filter' => 'auth:user'], function($routes) {
-    $routes->get('dashboard', 'DashboardController::index');
-    $routes->get('procurement', 'DepartmentHead\DHProcurementController::index');
-    $routes->get('mr', 'DepartmentHead\DHDashboard::mr');
-    // $routes->get('ppmp', 'DepartmentHead\DHDashboard::ppmp');
-    $routes->get('pr', 'DepartmentHead\DHDashboard::pr');
-    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
-    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
-    $routes->post('pr/debug-test', 'DebugController::testRoute'); // Temporary debug route
-    $routes->get('tasks', 'DepartmentHead\DHDashboard::tasks');
-});
 // Master Admin
 $routes->group('admin', ['filter' => 'auth:admin'], function($routes){
     $routes->get('dashboard', 'MasterAdmin\MADashboardController::dashboardIndex'); // Table 1
@@ -113,44 +64,42 @@ $routes->group('admin', ['filter' => 'auth:admin'], function($routes){
     $routes->post('rolesassign/createUserAssignment', 'MasterAdmin\MADashboardController::createUserAssignment'); // Table 4
 });
 
-// Procurement Officer
-$routes->group('procurement', ['filter' => 'auth:user'], function($routes) {
+// Faculty or Section Head
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
-    $routes->get('procurement', 'ProcurementOffice\ProcurementController::index');
-    // $routes->get('mr', 'ProcurementOffice\ProcurementController::mr');
-    // $routes->get('ppmp', 'ProcurementOffice\ProcurementController::ppmp');
-    $routes->get('pr', 'ProcurementOffice\ProcurementController::pr');
-    // $routes->get('tasks', 'ProcurementOffice\ProcurementController::tasks');
-    $routes->get('po', 'ProcurementOffice\ProcurementController::po');
-    $routes->get('inventory', 'ProcurementOffice\ProcurementController::inventory');
+});
+
+// Director
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
+    $routes->get('dashboard', 'DashboardController::index');
+});
+
+// Planning
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
+    $routes->get('dashboard', 'DashboardController::index');
+    // $routes->get('inventory', 'PlanningController::inventory');
+});
+
+// Head
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
+    $routes->get('dashboard', 'DashboardController::index');
+
+});
+
+// Procurement Officer
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
+    $routes->get('dashboard', 'DashboardController::index');
 });
 
 // Supply
-$routes->group('supply', ['filter' => 'auth:user'], function($routes) {
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
-    $routes->get('procurement', 'Supply\SupplyController::procurement');
-    $routes->get('tasks', 'Supply\SupplyController::tasks');
-    $routes->get('mr', 'Supply\SupplyController::mr');
-    // $routes->get('ppmp', 'Supply\SupplyController::ppmp');
-    $routes->get('par', 'Supply\SupplyController::par');
-    $routes->get('ics', 'Supply\SupplyController::ics');
-    $routes->get('su', 'Supply\SupplyController::su');
-    $routes->get('inventory', 'Supply\SupplyController::inventory');
-    $routes->get('my-files', 'Supply\SupplyController::myFiles');
 });
 
 // Unassigned
-$routes->group('unassigned', ['filter' => 'auth:user'], function($routes) {
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
-    $routes->get('procurement', 'Unassigned\UnassignedProcurementController::index');
-    $routes->get('ppmp', 'Unassigned\UnassignedPPMPController::index');
-    $routes->get('pr', 'Unassigned\UnassignedPRController::index');
-    $routes->get('tasks', 'Unassigned\UnassignedTasksController::index');
-    $routes->get('mr', 'Unassigned\UnassignedMRController::index');
-    $routes->post('ppmp/export-excel', 'ExportController::exportPpmp');
-    $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
 });
-
 
 // PPMP
 $routes->group('ppmp', ['filter' => 'auth:auth'], function($routes) {
@@ -221,8 +170,6 @@ $routes->group('procurement', function($routes) {
 $routes->group('stepper', function($routes) {
     $routes->get('stepper-status/(:num)', 'StepperController::getStepperStatus/$1');
 });
-
-
 
 // Procurement Feature Routes
 $routes->post('procurement/delete', 'ProcurementPageController::deleteForms'); // Route to handle soft deletion of forms
