@@ -229,13 +229,13 @@ class PrController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back();
+                return redirect()->back()->with('error', 'An error occurred while saving the Purchase Request.');
             } else {
                 return redirect()->to('pr/create/' . $prId)->with('success', $message);
             }
         } catch (\Exception $e) {
             log_message('error', 'PR Save Error: ' . $e->getMessage());
-            return redirect()->back();
+            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }
 
@@ -247,14 +247,14 @@ class PrController extends BaseController
         // If the document already submitted
         $pr = $this->prModel->find($prId);
         if ($pr && $pr['pr_status'] !== 'Draft') {
-            return redirect()->to('pr/create/' . $prId);
+            return redirect()->to('pr/create/' . $prId)->with('error', 'This Purchase Request has already been submitted.');
         }
 
         // NOTE: Saved PRs should be submitted to Head by user's department
         $head = $this->userModel->getHeadByDepId($userData['user_dep_id']); // Get Head of department / Office
         // If there's no Head
         if (empty($head)) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Cannot submit: No Head found in the system for your department.');
         }
 
         $db->transStart(); // Start db transaction
@@ -269,7 +269,7 @@ class PrController extends BaseController
                     'task_description' => 'A new Purchase Request has been submitted for your review.',
                 ]);
             } else { // If task not found
-                return redirect()->back();
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
             }
 
             $this->prModel->update($prId, ['pr_status' => 'Pending']); // Update the pr_status to Pending
@@ -278,15 +278,15 @@ class PrController extends BaseController
 
             // If transaction failed
             if ($db->transStatus() === false) {
-                return redirect()->back();
+                return redirect()->back()->with('error', 'Failed to submit Purchase Request due to a database error.');
             }
 
             // Redirect back with succesful message
-            return redirect()->to('/pr/create/' . $prId)->with('success', 'Purchase Request successfully submitted to Campus Director for review.');
+            return redirect()->to('pr/create/' . $prId)->with('success', 'Purchase Request successfully submitted to your Department Head for review.');
 
         } catch (\Exception $e) {
             log_message('error', 'PR Submission Error: ' . $e->getMessage());
-            return redirect()->back();
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
         }
     }
 }
