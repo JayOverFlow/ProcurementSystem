@@ -199,6 +199,7 @@ $routes->group('pr', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create', 'PrController::index');
     $routes->get('create/(:num)', 'PrController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PrController::save');
+    $routes->post('submit', 'PrController::submit');
 });
 
 // PO

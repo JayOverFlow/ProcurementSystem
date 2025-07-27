@@ -242,7 +242,7 @@ class PrController extends BaseController
     public function submit() {
         $userData = $this->loadUserSession();
         $db = \Config\Database::connect(); // Database connection
-        $prId = $this->request->getPost('pr'); // Get the pr_id from hidden input field
+        $prId = $this->request->getPost('pr_id'); // Get the pr_id from hidden input field
 
         // If the document already submitted
         $pr = $this->prModel->find($prId);
@@ -251,7 +251,7 @@ class PrController extends BaseController
         }
 
         // NOTE: Saved PRs should be submitted to Head by user's department
-        $head = $this->userModel->getHeadByDepId(userData['user_dep_id']); // Get Head of department / Office
+        $head = $this->userModel->getHeadByDepId($userData['user_dep_id']); // Get Head of department / Office
         // If there's no Head
         if (empty($head)) {
             return redirect()->back();
@@ -260,12 +260,12 @@ class PrController extends BaseController
         $db->transStart(); // Start db transaction
 
         try {
-            $task = $this->getTaskByprId($prId); // Get task corresponds to prId
+            $task = $this->taskModel->getTaskByPrId($prId); // Get task corresponds to prId
             // If task found
             if ($task) {
                 // Update task to submit to director
                 $this->taskModel->update($task['task_id'],[
-                    'submitted_to' => $head,
+                    'submitted_to' => $head['user_id'],
                     'task_description' => 'A new Purchase Request has been submitted for your review.',
                 ]);
             } else { // If task not found
@@ -282,7 +282,7 @@ class PrController extends BaseController
             }
 
             // Redirect back with succesful message
-            return redirect()->to('pr/create' . $prId);
+            return redirect()->to('/pr/create/' . $prId)->with('success', 'Purchase Request successfully submitted to Campus Director for review.');
 
         } catch (\Exception $e) {
             log_message('error', 'PR Submission Error: ' . $e->getMessage());

@@ -78,3 +78,50 @@ document.querySelectorAll('.item-table tbody tr').forEach(row => {
 
 deleteItemRow();
 updateGrandTotal();
+
+document.addEventListener('DOMContentLoaded', function() {
+    const prForm = document.getElementById('pr-form');
+    const saveBtn = document.querySelector('.save-pr');
+    const submitBtn = document.querySelector('.submit-pr');
+
+    if (prForm && saveBtn) {
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Confirm Save?',
+                text: "Do you want to save this Purchase Request?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    prForm.submit();
+                }
+            });
+        });
+    }
+
+    if (prForm && submitBtn) {
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Confirm Submission?',
+                text: "Are you sure you want to submit this for review? You will not be able to edit it after submission.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, submit it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    prForm.action = this.getAttribute('formaction');
+                    prForm.submit();
+                }
+            });
+        });
+    }
+});
