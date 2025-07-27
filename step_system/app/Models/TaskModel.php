@@ -106,4 +106,11 @@ class TaskModel extends Model
                     ->where('is_deleted', 0)
                     ->first();
     }
+
+    public function getTaskByPoId($poId) {
+        return $this->withDeleted()
+                    ->where('po_id_fk', $poId)
+                    ->where('is_deleted', 0)
+                    ->first();
+    }
 }
