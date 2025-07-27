@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/head-base-layout') ?>
+<?= $this->extend('user-pages/head/layout/head-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Head Dashboard</title>
@@ -26,7 +26,7 @@
 <?= $this->section('content') ?>
 <div class="row just-content-evenly h-100 align-items-stretch">
                     <!-- Stepper Column -->
-    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
+                    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
         <div class="widget widget-activity-five h-100 d-flex flex-column">
             <div class="widget-heading ms-3 pb-0">
                 <h4 class="text-center fw-bold" style="color: #DC3545">Procurement Status</h4>
@@ -154,10 +154,10 @@
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
 
 <script>
-
-    c3 = $('#style-3').DataTable({
+c3 = $('#style-3').DataTable({
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
     "<'table-responsive'tr>" +
     "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
@@ -174,7 +174,6 @@
     });
 
     multiCheck(c3);
-
     // Function to fetch and render stepper status
     function fetchAndRenderStepper(departmentId) {
         fetch(`<?= base_url('stepper/stepper-status/') ?>${departmentId}`)
@@ -189,7 +188,7 @@
 
                     itemTimeline.innerHTML = `
                         <div class="t-dot">
-                            <div class="${phase.icon_class}" style="background-color: ${phase.icon_class === 't-secondary' ? '#6c757d' : (phase.icon_class === 't-warning' ? '#ffc107' : '')}; box-shadow: 0 10px 20px -8px ${phase.icon_class === 't-secondary' ? '#6c757d' : (phase.icon_class === 't-warning' ? '#ffc107' : '')};">${phase.icon}</div>
+                            <div class="${phase.icon_class}">${phase.icon}</div>
                         </div>
                         <div class="t-content">
                             <div class="t-uppercontent">
@@ -257,5 +256,7 @@
         </div>
     </div>
 </div>
+
+</script>
 
 <?= $this->endSection() ?>

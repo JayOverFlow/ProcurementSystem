@@ -61,14 +61,16 @@
       <path value="$PROJECT_DIR$/step_system/vendor/psr/container" />
       <path value="$PROJECT_DIR$/step_system/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/step_system/vendor/phpoffice/phpspreadsheet" />
-      <path value="$PROJECT_DIR$/step_system/vendor/psr/simple-cache" />
-      <path value="$PROJECT_DIR$/step_system/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/step_system/vendor/psr/http-factory" />
-      <path value="$PROJECT_DIR$/step_system/vendor/psr/http-client" />
+
       <path value="$PROJECT_DIR$/step_system/vendor/ezyang/htmlpurifier" />
-      <path value="$PROJECT_DIR$/step_system/vendor/maennchen/zipstream-php" />
       <path value="$PROJECT_DIR$/step_system/vendor/markbaker/matrix" />
       <path value="$PROJECT_DIR$/step_system/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/step_system/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/step_system/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/step_system/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/step_system/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/step_system/vendor/maennchen/zipstream-php" />
+
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

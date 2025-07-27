@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/fac-base-layout') ?>
+<?= $this->extend('user-pages/faculty/layout/fac-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Faculty MR</title>
@@ -20,7 +20,7 @@
 
 <?= $this->section('content') ?>
 
-<?= $this->include('partials/general/mr'); ?>
+<?= $this->include('general-pages/mr'); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/pro-base-layout') ?>
+<?= $this->extend('user-pages/procurement/layout/pro-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Procurement Officer MR</title>
@@ -20,7 +20,7 @@
 
 <?= $this->section('content') ?>
 
-<?= $this->include('partials/general/mr'); ?>
+<?= $this->include('general-pages/mr'); ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

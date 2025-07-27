@@ -25,7 +25,7 @@
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
 
-<body class="layout-boxed enable-secondaryNav">
+<body class="layout-boxed">
     <!-- BEGIN LOADER -->
     <div id="load_screen"> <div class="loader"> <div class="loader-content">
         <div class="spinner-grow align-self-center"></div>
@@ -34,7 +34,7 @@
 
     <!--  BEGIN HEADER  -->
       <div class="header-container container-xxl box-shadow-none">
-        <?= $this->include('partials/master-admin/adm-header') ?>
+        <?= $this->include('user-pages/procurement/partials/pro-header') ?>
       </div>
     <!--  END HEADER  -->
     
@@ -43,7 +43,7 @@
         <div class="main-container" id="container">
 
             <!--  BEGIN NAV  -->
-            <?= $this->include('partials/master-admin/adm-nav') ?>
+            <?= $this->include('user-pages/procurement/partials/pro-nav') ?>
             <!--  END NAV  -->
 
             <!--  BEGIN CONTENT AREA  -->

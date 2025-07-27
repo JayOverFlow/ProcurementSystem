@@ -20,6 +20,100 @@ $(document).ready(function () {
         });
     }
 
+    // --- Calculate item amount (quantity × unit cost) ---
+    function calculateItemAmount(row) {
+        const quantityInput = row.find('input[name$="[po_items_quantity]"]');
+        const costInput = row.find('input[name$="[po_items_cost]"]');
+        const amountInput = row.find('input[name$="[po_items_amount]"]');
+
+        const quantity = parseFloat(quantityInput.val()) || 0;
+        const cost = parseFloat(costInput.val()) || 0;
+        const amount = quantity * cost;
+
+        amountInput.val(amount.toFixed(2));
+        updateTotalAmount();
+    }
+
+    // --- Update total amount ---
+    function updateTotalAmount() {
+        let totalAmount = 0;
+        $('.item-table tbody tr').each(function() {
+            const amount = parseFloat($(this).find('input[name$="[po_items_amount]"]').val()) || 0;
+            totalAmount += amount;
+        });
+        
+        // Update the total amount field
+        $('#po-total-amount').val(totalAmount.toFixed(2));
+        
+        // Optional: Update amount in words
+        updateAmountInWords(totalAmount);
+    }
+
+    // --- Convert number to words (optional feature) ---
+    function numberToWords(num) {
+        if (num === 0) return 'Zero';
+        
+        const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+        const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+        const thousands = ['', 'Thousand', 'Million', 'Billion'];
+        
+        function convertHundreds(n) {
+            let result = '';
+            if (n >= 100) {
+                result += ones[Math.floor(n / 100)] + ' Hundred ';
+                n %= 100;
+            }
+            if (n >= 20) {
+                result += tens[Math.floor(n / 10)] + ' ';
+                n %= 10;
+            } else if (n >= 10) {
+                result += teens[n - 10] + ' ';
+                n = 0;
+            }
+            if (n > 0) {
+                result += ones[n] + ' ';
+            }
+            return result;
+        }
+        
+        let result = '';
+        let thousandIndex = 0;
+        
+        while (num > 0) {
+            if (num % 1000 !== 0) {
+                result = convertHundreds(num % 1000) + thousands[thousandIndex] + ' ' + result;
+            }
+            num = Math.floor(num / 1000);
+            thousandIndex++;
+        }
+        
+        return result.trim();
+    }
+
+    // --- Update amount in words ---
+    function updateAmountInWords(amount) {
+        const words = numberToWords(Math.floor(amount));
+        const cents = Math.round((amount - Math.floor(amount)) * 100);
+        let amountInWords = words + ' Pesos';
+        
+        if (cents > 0) {
+            amountInWords += ' and ' + numberToWords(cents) + ' Centavos';
+        }
+        
+        $('#po-amount-in-words').val(amountInWords + ' Only');
+    }
+
+    // --- Attach event listeners to row inputs ---
+    function attachRowEventListeners(row) {
+        row.find('input[name$="[po_items_quantity]"]').on('input', function() {
+            calculateItemAmount(row);
+        });
+        row.find('input[name$="[po_items_cost]"]').on('input', function() {
+            calculateItemAmount(row);
+        });
+    }
+
     // --- Add Item button click handler ---
     $('.additem').on('click', function () {
         var $tbody = $('.item-table tbody');
@@ -37,17 +131,19 @@ $(document).ready(function () {
                         </div>
                     </div>
                 </td>
-                <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[0][po_items_quantity]"></td>
-                <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[0][po_items_cost]"></td>
-                <td class="px-1"><input type="number" class="form-control form-control-sm" name="items[0][po_items_amount]" readonly></td>
+                <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm" name="items[0][po_items_quantity]"></td>
+                <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm" name="items[0][po_items_cost]"></td>
+                <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm" name="items[0][po_items_amount]" readonly></td>
                 <td class="delete-item-row text-center">
                     <ul class="table-controls">
                         <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                     </ul>
                 </td>
             </tr>`;
-        $tbody.append(newItemRow);
+        var $newRow = $(newItemRow);
+        $tbody.append($newRow);
         updateRowIndices();
+        attachRowEventListeners($newRow);
     });
 
     // --- Delegate delete row event ---
@@ -55,6 +151,7 @@ $(document).ready(function () {
         if ($('.item-table tbody tr').length > 1) {
             $(this).closest('tr').remove();
             updateRowIndices();
+            updateTotalAmount(); // Recalculate total after deletion
         }
     });
 
@@ -76,18 +173,76 @@ $(document).ready(function () {
         $(this).closest('.input-group').remove();
     });
 
-    // --- Calculate amount ---
-    function calculateAmount(row) {
-        var quantity = parseFloat(row.find('input[name*="[po_items_quantity]"]').val()) || 0;
-        var cost = parseFloat(row.find('input[name*="[po_items_cost]"]').val()) || 0;
-        var amount = quantity * cost;
-        row.find('input[name*="[po_items_amount]"]').val(amount.toFixed(2));
+    // --- Initialize existing items when editing ---
+    function initializeExistingItems() {
+        // Attach event listeners to all existing rows
+        $('.item-table tbody tr').each(function() {
+            const $row = $(this);
+            attachRowEventListeners($row);
+            calculateItemAmount($row);
+        });
+        
+        // Update total amount on page load
+        updateTotalAmount();
     }
 
-    // --- Delegate input event for quantity and cost ---
-    $('.item-table tbody').on('input', 'input[name*="[po_items_quantity]"], input[name*="[po_items_cost]"]', function () {
-        calculateAmount($(this).closest('tr'));
-    });
+    // --- Populate items when editing existing PO ---
+    if (typeof poItems !== 'undefined' && poItems && poItems.length > 0) {
+        const $tbody = $('.item-table tbody');
+        $tbody.empty(); // Clear the default row
+        
+        poItems.forEach(function(item, index) {
+            let specificationsHtml = '';
+            
+            // Add main description input
+            let descriptionHtml = `
+                <div class="input-group mb-1">
+                    <input type="text" class="form-control form-control-sm description-input" name="items[${index}][po_items_descrip]" value="${item.po_items_descrip || ''}">
+                    <button class="description-btn add-description" type="button" tabindex="-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d6efd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </button>
+                </div>`;
+            
+            // Add specifications if they exist
+            if (item.specifications && item.specifications.length > 0) {
+                item.specifications.forEach(function(spec) {
+                    descriptionHtml += `
+                        <div class="input-group mb-1">
+                            <input type="text" class="form-control form-control-sm description-input-spec" name="items[${index}][specifications][]" value="${spec.po_item_spec_descrip || ''}" placeholder="Item specifications">
+                            <button class="description-btn remove-description" type="button" tabindex="-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            </button>
+                        </div>`;
+                });
+            }
+            
+            const itemRowHtml = `
+                <tr>
+                    <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[${index}][po_items_stockno]" value="${item.po_items_stockno || ''}"></td>
+                    <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[${index}][po_items_unit]" value="${item.po_items_unit || ''}"></td>
+                    <td class="px-1">
+                        <div class="description-container">
+                            ${descriptionHtml}
+                        </div>
+                    </td>
+                    <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm" name="items[${index}][po_items_quantity]" value="${item.po_items_quantity || ''}"></td>
+                    <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm" name="items[${index}][po_items_cost]" value="${item.po_items_cost || ''}"></td>
+                    <td class="px-1"><input type="number" step="0.01" class="form-control form-control-sm" name="items[${index}][po_items_amount]" value="${item.po_items_amount || ''}" readonly></td>
+                    <td class="delete-item-row text-center">
+                        <ul class="table-controls">
+                            <li class="p-2"><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                        </ul>
+                    </td>
+                </tr>`;
+            
+            const $newRow = $(itemRowHtml);
+            $tbody.append($newRow);
+            attachRowEventListeners($newRow);
+        });
+    }
+    
+    // Initialize existing items on page load
+    initializeExistingItems();
 });
 
 // Save & Submit confirmation

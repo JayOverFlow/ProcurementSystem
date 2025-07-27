@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/plan-base-layout') ?>
+<?= $this->extend('user-pages/planning/layout/plan-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Planning Dashboard</title>
@@ -138,14 +138,12 @@
 
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js'); ?>"></script>
+<script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js'); ?>"></script>
 
 <!-- For Data Table -->
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js'); ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
 <script>
-
 c3 = $('#style-3').DataTable({
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
     "<'table-responsive'tr>" +

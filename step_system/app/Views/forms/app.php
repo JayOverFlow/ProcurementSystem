@@ -1,8 +1,44 @@
 <?php $errors = session()->get('errors'); ?>
 <div class="row invoice layout-top-spacing layout-spacing">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <?php
+            $isReadOnly = isset($app['app_status']) && $app['app_status'] !== 'Draft';
+        ?>
+        <?php if (session()->getFlashdata('success')): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: '<?= session()->getFlashdata('success') ?>',
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            </script>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('error')): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: '<?= session()->getFlashdata('error') ?>',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            </script>
+        <?php endif; ?>
+
+        <?php if ($isReadOnly): ?>
+            <div class="alert alert-light-info bg-primary" role="alert">
+                This document is already submitted and cannot be edited.
+            </div>
+        <?php endif; ?>
         <div class="doc-container">
             <form id="app-form" action="<?= base_url('app/save') ?>" method="POST">
+                <?= csrf_field() ?>
                 <input type="hidden" name="app_id" value="<?= esc($app['app_id'] ?? '') ?>">
                 <div class="row">
                     <div class="col-xl-9">
@@ -55,6 +91,7 @@
                                                     <?php $items = old('items') ?? $app_items; ?>
                                                     <?php foreach ($items as $index => $item): ?>
                                                         <tr>
+
                                                             <td class="px-1">
                                                                 <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.app_item_code'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][app_item_code]" value="<?= esc($item['app_item_code'] ?? ($item['app_item_code'] ?? '')) ?>">
                                                                 <?php if(isset($errors['items.' . $index . '.app_item_code'])): ?>
@@ -111,9 +148,11 @@
                                                                     <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.co']) ?></div>
                                                                 <?php endif ?>
                                                             </td>
+
+
                                                             <td class="delete-item-row px-1 pt-2">
                                                                 <ul class="table-controls">
-                                                                    <li><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                    <li><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete" <?= $isReadOnly ? 'style="pointer-events: none; color: grey;"' : '' ?>><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                                 </ul>
                                                             </td>
                                                         </tr>
@@ -147,7 +186,7 @@
                                         </table>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF">Add item</button>
+                                        <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF" <?= $isReadOnly ? 'disabled' : '' ?>>Add item</button>
                                         <p class="mt-2 text-end"><span class="fw-bold">TOTAL AMOUNT</span> <span class="ms-2">₱</span><span class="ms-2" id="total-amount-app">0.00</span></p>
                                     </div>
                                 </div>
@@ -161,6 +200,7 @@
                                                 <label for="app-dep-id-fk" class="col-sm-1 col-form-label col-form-label-sm me-4">Department</label>
                                                 <div class="col-sm-9 ms-5">
                                                     <select class="form-control form-control-sm <?php if(isset($errors['app_dep_id_fk'])): ?> is-invalid <?php endif ?>" id="app-dep-id-fk" name="app_dep_id_fk">
+
                                                         <option>Select</option>
                                                         <?php if(!empty($departments)): ?>
                                                             <?php foreach($departments as $department): ?>
@@ -179,6 +219,7 @@
                                                     <label for="app-prepared-by-name">Printed Name</label>
                                                     <div>
                                                         <select class="form-control form-control-sm <?php if(isset($errors['app_prepared_by_name'])): ?> is-invalid <?php endif ?>" id="app-prepared-by-name" name="app_prepared_by_name">
+
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
@@ -199,6 +240,7 @@
                                                         <?php if(isset($errors['prepared_by_designation'])): ?>
                                                             <div class="invalid-feedback"><?= esc($errors['prepared_by_designation']) ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -213,6 +255,7 @@
                                                     <label for="app-approved-by-name">Printed Name</label>
                                                     <div>
                                                         <select class="form-control form-control-sm <?php if(isset($errors['app_approved_by_name'])): ?> is-invalid <?php endif ?>" id="app-approved-by-name" name="app_approved_by_name">
+
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
@@ -233,6 +276,7 @@
                                                         <?php if(isset($errors['approved_by_designation'])): ?>
                                                             <div class="invalid-feedback"><?= esc($errors['approved_by_designation']) ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -245,6 +289,7 @@
                                                     <label for="app-recommending-by-name">Printed Name</label>
                                                     <div>
                                                         <select class="form-control form-control-sm <?php if(isset($errors['app_recommending_by_name'])): ?> is-invalid <?php endif ?>" id="app-recommending-by-name" name="app_recommending_by_name">
+
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
@@ -265,6 +310,7 @@
                                                         <?php if(isset($errors['recommending_approval_designation'])): ?>
                                                             <div class="invalid-feedback"><?= esc($errors['recommending_approval_designation']) ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -285,6 +331,7 @@
                                         <?php else: ?>
                                             <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
                                         <?php endif; ?>
+
                                     </div>
                                     <div class="col-xl-12 col-md-4">
                                         <a href="<?= base_url('app/preview/' . ($app['app_id'] ?? '')) ?>" class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Preview</a>

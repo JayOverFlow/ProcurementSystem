@@ -307,7 +307,7 @@ class AppController extends BaseController
         $db->transStart(); // Start db transaction
 
         try {
-            $task = $this->getTaskByAppId($appId); // Get task corresponds to appId
+            $task = $this->taskModel->getTaskByAppId($appId); // Get task corresponds to appId
             // If task found
             if ($task) {
                 // Update task to submit to director
@@ -329,7 +329,7 @@ class AppController extends BaseController
             }
 
             // Redirect back with succesful message
-            return redirect()->to('app/create' . $appId)->with('success', 'Annual Procurement Plan successfully submitted to Campus Director for review.');
+            return redirect()->to('/app/create/' . $appId)->with('success', 'Annual Procurement Plan successfully submitted to Campus Director for review.');
 
         } catch (\Exception $e) {
             log_message('error', 'APP Submission Error: ' . $e->getMessage());

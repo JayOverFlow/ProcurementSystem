@@ -5,11 +5,11 @@ alwaysApply: true
 ---
 Procurement Process
 
-1. PPMP Creation & Submission
+1. PPMP Creation & Submission - Done
 	1.1 User will create PPMP
 	1.2 User will submit PPMP to Planning Office
 
-2. PPMP review & APP Creation
+2. PPMP review & APP Creation Done
 	2.1 Planning Office will review PPMP
 	2.2 If rejected, update PPMP review status to rejected
 	2.2 If approved, update PPMP review status to approved
@@ -17,10 +17,10 @@ Procurement Process
 		2.4 Planning Officer will submit APP to Director
 
 3. APP review
-	3.1 Director will review APP
-	3.2 If rejected, update APP review status to rejected
-	3.2 If approved, update APP review status to approved
-		3.3 System will give access to Head to create & assign PR along with approved APP
+	3.1 Director will review APP o
+	3.2 If rejected, update APP review status to rejected o
+	3.2 If approved, update APP review status to approved o
+		3.3 System will give access to Head to create & assign PR along with approved APP 
 
 4. PR Creation, Assignment & Submission
 	4.1 Head will create PR based on APP and assign faculties and staffs to create PR

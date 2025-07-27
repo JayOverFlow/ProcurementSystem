@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/plan-base-layout') ?>
+<?= $this->extend('user-pages/planning/layout/plan-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Planning Officer Procurement</title>

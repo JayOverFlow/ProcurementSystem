@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/head-base-layout') ?>
+<?= $this->extend('user-pages/head/layout/head-base-layout') ?>
 
 <?= $this->section('title') ?>
     <title>TUP STEP | Department Head MR</title>
@@ -20,7 +20,7 @@
 
 <?= $this->section('content') ?>
 
-            <?= $this->include('partials/general/mr'); ?>
+            <?= $this->include('general-pages/mr'); ?>
 
 <?= $this->endSection() ?>
 

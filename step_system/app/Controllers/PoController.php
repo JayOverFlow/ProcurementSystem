@@ -24,15 +24,35 @@ class PoController extends BaseController
         $this->taskModel = new TaskModel();
     }
 
-    public function index()
+    public function index($poId = null)
     {
         $userData = $this->loadUserSession();
 
         $data = [
             'user_data' => $userData,
+            'po' => null, // Will hold the PO main data if editing an existing form
+            'po_items' => [] // Will hold the PO items data if editing an existing form
         ];
 
-        // If the user is not a Planning Officer
+        // If a poId is provided in the URL, fetch the existing PO data
+        if ($poId) {
+            $po = $this->poModel->find($poId);
+            if ($po) {
+                // If PO found, fetch its associated items
+                $poItems = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
+                
+                // For each item, fetch its specifications
+                foreach ($poItems as &$item) {
+                    $item['specifications'] = $this->poItemSpecModel->where('po_item_specs_id_fk', $item['po_items_id'])->findAll();
+                }
+                
+                // Populate the data array with existing PO and its items
+                $data['po'] = $po;
+                $data['po_items'] = $poItems;
+            }
+        }
+
+        // If the user is not a Procurement Officer
         if (($userData['gen_role'] ?? null) !== 'Procurement') {
             return redirect()->back()->with('error', 'This page is restricted.');
         }
@@ -104,10 +124,13 @@ class PoController extends BaseController
         if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
+
+        $poId = $this->request->getPost('po_id'); // Get po_id from hidden input
+
         
         $db->transStart();
         try {
-            // 1. Insert into po_tbl
+            // 1. Insert or Update po_tbl
             $poData = [
                 'po_supplier' => $this->request->getPost('po_supplier'),
                 'po_address' => $this->request->getPost('po_address'),
@@ -136,8 +159,22 @@ class PoController extends BaseController
                 'saved_by_user_id_fk' => $userData['user_id'],
                 'po_status' => 'Draft',
             ];
-            $this->poModel->insert($poData);
-            $poId = $this->poModel->getInsertID();
+            
+            if ($poId) {
+                // Update existing PO
+                $this->poModel->update($poId, $poData);
+                
+                // Delete existing items and specifications for this PO before inserting new ones
+                $existingItems = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
+                foreach ($existingItems as $item) {
+                    $this->poItemSpecModel->where('po_item_specs_id_fk', $item['po_items_id'])->delete();
+                }
+                $this->poItemModel->where('po_items_id_fk', $poId)->delete();
+            } else {
+                // Insert new PO
+                $this->poModel->insert($poData);
+                $poId = $this->poModel->getInsertID();
+            }
 
             // 2. Insert Items and Specifications
             $items = $this->request->getPost('items') ?? [];
@@ -166,15 +203,26 @@ class PoController extends BaseController
                 }
             }
 
-            // 3. Create Task
+            // 3. Create/Update task
             $taskData = [
                 'submitted_by' => $userData['user_id'],
                 'submitted_to' => null,
                 'po_id_fk' => $poId,
                 'task_type' => 'Purchase Order',
-                'task_description' => 'A new Purchase Order has been submitted for your review.',
+                'task_description' => 'Purchase Order has been ' . ($this->request->getPost('po_id') ? 'updated' : 'submitted') . ' for your review.',
+                'is_deleted' => 0 // Explicitly set is_deleted to 0 for new or updated tasks
             ];
-            $this->taskModel->insert($taskData);
+
+            // Check if a task for this PO already exists
+            $existingTask = $this->taskModel->where('po_id_fk', $poId)->first();
+
+            if ($existingTask) {
+                // Update existing task
+                $this->taskModel->update($existingTask['task_id'], $taskData);
+            } else {
+                // Insert new task
+                $this->taskModel->insert($taskData);
+            }
 
             $db->transComplete();
 
@@ -182,7 +230,9 @@ class PoController extends BaseController
                 return redirect()->back()->with('error', 'Failed to save Purchase Order. Please try again.');
             }
 
-            return redirect()->to('po/create')->withInput()->with('success', 'Purchase Order saved successfully.');
+
+            return redirect()->to('po/create' . $poId)->withInput()->with('success', 'Purchase Order saved successfully.');
+
 
         } catch (\Exception $e) {
             log_message('error', 'PO Saving/Submission Error: ' . $e->getMessage());

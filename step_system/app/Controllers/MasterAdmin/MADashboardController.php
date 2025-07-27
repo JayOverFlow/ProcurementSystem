@@ -184,6 +184,55 @@ class MADashboardController extends BaseController //
         }
     }
 
+    public function createDepartment(): ResponseInterface // Table 2 - Create New Department
+    {
+        $departmentModel = new DepartmentModel();
+
+        $rules = [
+            'dep_name' => 'required|max_length[200]',
+            'dep_type' => 'required|in_list[Academic,Administrative]'
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $this->validator->getErrors()
+            ]);
+        }
+
+        $depName = $this->request->getPost('dep_name');
+        $depType = $this->request->getPost('dep_type');
+
+        // Check if department name already exists
+        $existingDepartment = $departmentModel->where('dep_name', $depName)->first();
+        if ($existingDepartment) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Department name already exists.'
+            ]);
+        }
+
+        $insertData = [
+            'dep_name' => $depName,
+            'dep_type' => $depType
+        ];
+
+        if ($departmentModel->insert($insertData)) {
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'Department created successfully.',
+                'dep_id' => $departmentModel->getInsertID(),
+                'dep_name' => $depName,
+                'dep_type' => $depType
+            ]);
+        } else {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Failed to create department.'
+            ]);
+        }
+    }
+
     public function userTypeIndex(): string // Table 3
     {
         $departmentModel = new DepartmentModel();

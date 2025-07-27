@@ -1,4 +1,6 @@
 <form id="po-form" action="<?= base_url('/po/save') ?>" method="post">
+    <!-- Hidden field for PO ID when editing existing PO -->
+    <input type="hidden" name="po_id" value="<?= isset($po) ? $po['po_id'] : '' ?>">
     <div class="row invoice layout-top-spacing layout-spacing">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="doc-container">
@@ -29,6 +31,7 @@
                                                         <?php if (session('errors.po_supplier')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_supplier') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group row mt-4">
@@ -38,6 +41,7 @@
                                                         <?php if (session('errors.po_address')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_address') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
 
@@ -48,6 +52,7 @@
                                                         <?php if (session('errors.po_tele')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_tele') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
 
@@ -58,6 +63,7 @@
                                                         <?php if (session('errors.po_tin')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_tin') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
                                                 
@@ -74,6 +80,7 @@
                                                         <?php if (session('errors.po_ponumber')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_ponumber') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group row mt-4">
@@ -83,6 +90,7 @@
                                                         <?php if (session('errors.po_date')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_date') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
                                                 <div class="form-group row mt-4">
@@ -92,6 +100,7 @@
                                                         <?php if (session('errors.po_mode')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_mode') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
                                                 <div class="form-group row mt-4">
@@ -101,6 +110,7 @@
                                                         <?php if (session('errors.po_tuptin')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_tuptin') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
                                             </div>
@@ -127,6 +137,7 @@
                                                         <?php if (session('errors.po_place_delivery')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_place_delivery') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group row mt-4">
@@ -136,6 +147,7 @@
                                                         <?php if (session('errors.po_date_delivery')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_date_delivery') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
                                             </div>
@@ -151,6 +163,7 @@
                                                         <?php if (session('errors.po_delivery_term')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_delivery_term') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
                                                 <div class="form-group row mt-4">
@@ -160,6 +173,7 @@
                                                         <?php if (session('errors.po_payment_term')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_payment_term') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>  
                                             </div>
@@ -228,7 +242,6 @@
 
                                     <div class="d-flex justify-content-between">
                                         <button type="button" class="btn btn-md additem" style="background-color: #C62742; color: #FFFFFF">Add Item</button>
-                                        <p class="mt-2"><span class="fw-bold">Total Amount: </span>₱<span>1,000</span></p>
                                     </div>
                                     
                                 </div>
@@ -245,6 +258,7 @@
                                                             <?php if (session('errors.po_description')) : ?>
                                                                 <div class="invalid-feedback d-block"><?= session('errors.po_description') ?></div>
                                                             <?php endif ?>
+
                                                         </div>
                                                     </div>
                                                     <div class="form-group row mt-4">
@@ -254,6 +268,7 @@
                                                             <?php if (session('errors.po_amount_in_words')) : ?>
                                                                 <div class="invalid-feedback d-block"><?= session('errors.po_amount_in_words') ?></div>
                                                             <?php endif ?>
+
                                                         </div>
                                                     </div>  
                                                 </div>
@@ -269,6 +284,7 @@
                                                             <?php if (session('errors.po_total_amount')) : ?>
                                                                 <div class="invalid-feedback d-block"><?= session('errors.po_total_amount') ?></div>
                                                             <?php endif ?>
+
                                                         </div>
                                                     </div>  
                                                     
@@ -299,6 +315,7 @@
                                                         <?php if (session('errors.conforme_name_of_supplier')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.conforme_name_of_supplier') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
 
@@ -309,6 +326,7 @@
                                                         <?php if (session('errors.conforme_date')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.conforme_date') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
                                                 
@@ -326,6 +344,7 @@
                                                         <?php if (session('errors.conforme_campus_director')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.conforme_campus_director') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div>
                                                 
@@ -347,6 +366,7 @@
                                                         <?php if (session('errors.po_fund_cluster')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_fund_cluster') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
 
@@ -357,6 +377,7 @@
                                                         <?php if (session('errors.po_fund_available')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_fund_available') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
 
@@ -367,6 +388,7 @@
                                                         <?php if (session('errors.po_accountant')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_accountant') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
 
@@ -383,6 +405,7 @@
                                                         <?php if (session('errors.po_orsburs')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_orsburs') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
 
@@ -393,16 +416,18 @@
                                                         <?php if (session('errors.po_date_orsburs')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_date_orsburs') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
 
                                                 <div class="form-group row mt-2">
-                                                    <label for="po-amount" class="col-sm-3 col-form-label col-form-label-sm">Amount</label>
+                                                    <label for="po-total-amount" class="col-sm-3 col-form-label col-form-label-sm">Amount</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control form-control-sm" id="po-amount" name="po_amount" value="<?= old('po_amount') ?>">
                                                         <?php if (session('errors.po_amount')) : ?>
                                                             <div class="invalid-feedback d-block"><?= session('errors.po_amount') ?></div>
                                                         <?php endif ?>
+
                                                     </div>
                                                 </div> 
 
@@ -444,3 +469,12 @@
         </div>
     </div>
 </form>
+
+<script>
+// Pass PO items and specifications data to JavaScript
+<?php if (isset($po_items) && !empty($po_items)): ?>
+var poItems = <?= json_encode($po_items) ?>;
+<?php else: ?>
+var poItems = [];
+<?php endif; ?>
+</script>

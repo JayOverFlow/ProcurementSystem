@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/preview-layout') ?>
+<?= $this->extend('user-pages/planning/layout/plan-base-layout') ?>
 
 
 <?= $this->section('css') ?>
