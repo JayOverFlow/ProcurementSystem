@@ -56,15 +56,6 @@ $routes->group('faculty', ['filter' => 'auth:user'], function($routes) {
     // $routes->post('pr/export-excel', 'ExportController::exportPurchaseRequest');
 });
 
-// Assistant Director
-$routes->group('assistant-director', function($routes) {
-    $routes->get('dashboard', 'DashboardController::index');
-    $routes->get('procurement', 'AssistantDirector\AssistantDirectorProcurementController::index');
-    // $routes->get('tasks', 'AssistantDirector\AssistantDirectorTasksController::index');
-    // $routes->get('mr', 'AssistantDirector\AssistantDirectorMRController::index');
-    // $routes->get('ppmp', 'AssistantDirector\AssistantDirectorPPMPController::index');
-    $routes->get('pr', 'AssistantDirector\AssistantDirectorPRController::index');
-});
 // Director
 $routes->group('director', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
@@ -207,6 +198,7 @@ $routes->group('po', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create', 'PoController::index');
     $routes->get('create/(:num)', 'PoController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PoController::save');
+    $routes->post('submit', 'PoController::submit');
 });
 
 // Preview
@@ -235,5 +227,4 @@ $routes->group('stepper', function($routes) {
 // Procurement Feature Routes
 $routes->post('procurement/delete', 'ProcurementPageController::deleteForms'); // Route to handle soft deletion of forms
 
-// Sample Route for PPMP Preview
-$routes->get('ppmp/preview/', 'PpmpSampleController::index');
+

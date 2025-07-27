@@ -152,9 +152,6 @@
                             </div>
                         </div>
                         <div class="dropdown-item">
-                            <a href="#">My Files</a>
-                        </div>
-                        <div class="dropdown-item">
                         <a href="<?= base_url('/logout') ?>">Log Out</a>
                         </div>
                     </div>

@@ -12,9 +12,26 @@ class ProcurementController extends ProcurementPageController
         $userData = $this->loadUserSession();
         $userForms = $this->getUsersForms($userData['user_id']);
 
+        // Dynamically generate filter options from the forms list
+        $formTypesInTable = array_unique(array_column($userForms, 'form_type'));
+
+        $filterOptions = ['ALL' => 'ALL'];
+        foreach ($formTypesInTable as $formType) {
+            if (!empty($formType)) {
+                $filterOptions[$formType] = $formType;
+            }
+        }
+
+        // Sort the options alphabetically, keeping ALL first
+        $allOption = $filterOptions['ALL'];
+        unset($filterOptions['ALL']);
+        ksort($filterOptions);
+        $filterOptions = ['ALL' => $allOption] + $filterOptions;
+
         $data = [
             'user_data' => $userData,
             'forms' => $userForms,
+            'filter_options' => $filterOptions,
         ];
 
         switch ($userData['gen_role']) {

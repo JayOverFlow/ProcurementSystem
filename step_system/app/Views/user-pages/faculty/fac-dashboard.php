@@ -25,7 +25,7 @@
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
         <div class="widget widget-activity-five h-100 d-flex flex-column">
             <div class="widget-heading ms-3 pb-0">
-                <h4 class="text-center fw-bold" style="color: #DC3545">Procurement Status</h4>
+                <h4 class="text-center fw-bold" style="color: #8D0404">Procurement Status</h4>
             </div>
             <div class="widget-content">
                 <div class="w-shadow-top"></div>
