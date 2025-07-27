@@ -3,12 +3,12 @@
         <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
             <div class="card-top-content">
                 <div class="avatar avatar-lg">
-                    <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                    <img src="<?= base_url('assets/images/all-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                 </div>
             </div>
             <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                 <div class="card-body text-end">
-                    <h5 class="card-title mb-2" style="color: #DC3545"><strong>All</strong></h5>
+                    <h5 class="card-title mb-2" style="color: #8C0404"><strong>All</strong></h5>
                     <h5 class="card-text" style="color: #515365">12</h5>
                 </div>
             </div>
@@ -18,12 +18,12 @@
         <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
             <div class="card-top-content">
                 <div class="avatar avatar-lg">
-                    <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                    <img src="<?= base_url('assets/images/equipment-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                 </div>
             </div>
             <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                 <div class="card-body text-end">
-                    <h5 class="card-title mb-2" style="color: #DC3545"><strong>Equipments</strong></h5>
+                    <h5 class="card-title mb-2" style="color: #8C0404"><strong>Equipments</strong></h5>
                     <h5 class="card-text" style="color: #515365">12</h5>
                 </div>
             </div>
@@ -33,12 +33,12 @@
         <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
             <div class="card-top-content">
                 <div class="avatar avatar-lg">
-                    <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                    <img src="<?= base_url('assets/images/appliances-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                 </div>
             </div>
             <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                 <div class="card-body text-end">
-                    <h5 class="card-title mb-2" style="color: #DC3545"><strong>Appliances</strong></h5>
+                    <h5 class="card-title mb-2" style="color: #8C0404"><strong>Appliances</strong></h5>
                     <h5 class="card-text" style="color: #515365">12</h5>
                 </div>
             </div>
@@ -48,12 +48,12 @@
         <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
             <div class="card-top-content">
                 <div class="avatar avatar-lg">
-                    <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                    <img src="<?= base_url('assets/images/furnishings-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                 </div>
             </div>
             <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                 <div class="card-body text-end">
-                    <h5 class="card-title mb-2" style="color: #DC3545"><strong>Furnishings</strong></h5>
+                    <h5 class="card-title mb-2" style="color: #8C0404"><strong>Furnishings</strong></h5>
                     <h5 class="card-text" style="color: #515365">12</h5>
                 </div>
             </div>
@@ -63,12 +63,12 @@
         <div class="card style-5 mb-md-0 mb-4 py-3 h-100 ">
             <div class="card-top-content">
                 <div class="avatar avatar-lg">
-                    <img src="<?= base_url('assets/images/icon-faculty.svg'); ?>" class="rounded-circle" alt="faculty icon">
+                    <img src="<?= base_url('assets/images/materials-icon.svg'); ?>" class="rounded-circle" alt="faculty icon">
                 </div>
             </div>
             <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                 <div class="card-body text-end">
-                    <h5 class="card-title mb-2" style="color: #DC3545"><strong>Equipments</strong></h5>
+                    <h5 class="card-title mb-2" style="color: #8C0404"><strong>Materials</strong></h5>
                     <h5 class="card-text" style="color: #515365">12</h5>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                             <th>Item Name</th>
                             <th>Location</th>
                             <th>Date Received</th>
-                            <th class="text-center">Quantity</th>
+                            <th class="">Quantity</th>
                             <th class="text-center dt-no-sorting">Action</th>
                         </tr>
                     </thead>

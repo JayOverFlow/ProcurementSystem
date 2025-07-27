@@ -29,7 +29,7 @@
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
                             <div class="widget widget-t-sales-widget widget-m-income">
                                 <div class="media">
-                                    <img src="<?= base_url('assets/images/icon-staff.svg') ?>" class="navbar-logo" alt="logo">
+                                    <img src="<?= base_url('assets/images/Staff.svg') ?>" class="navbar-logo" alt="logo">
                                     <div class="media-body">
                                         <p class="widget-text">Staff</p>
                                         <p class="widget-numeric-value"><?= esc($staffCount ?? 0) ?></p>
@@ -53,7 +53,7 @@
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
                             <div class="widget widget-t-sales-widget widget-m-sales">
                                 <div class="media">
-                                    <img src="<?= base_url('assets/images/icon-offices.svg') ?>" class="navbar-logo" alt="logo">
+                                    <img src="<?= base_url('assets/images/roles.svg') ?>" class="navbar-logo" alt="logo">
                                     <div class="media-body">
                                         <p class="widget-text">Roles</p>
                                         <p class="widget-numeric-value"><?= esc($allRoleCount ?? 0) ?></p>
@@ -65,7 +65,7 @@
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
                             <div class="widget widget-t-sales-widget widget-m-orders">
                                 <div class="media">
-                                    <img src="<?= base_url('assets/images/icon-departments.svg') ?>" class="navbar-logo" alt="logo">
+                                    <img src="<?= base_url('assets/images/offices.svg') ?>" class="navbar-logo" alt="logo">
                                     <div class="media-body">
                                         <p class="widget-text">Offices</p>
                                         <p class="widget-numeric-value"><?= esc($allDepCount ?? 0) ?></p>

@@ -15,7 +15,6 @@ $admin_pages = [
             <div class="nav-logo">
                 <div class="nav-item theme-logo">
                     <a href="<?= base_url('./index.html'); ?>">
-                        <img src="<?= base_url('assets/images/logo.png'); ?>" class="navbar-logo" alt="logo">
                     </a>
                 </div>
                 <div class="nav-item theme-text">
@@ -33,7 +32,6 @@ $admin_pages = [
             <li class="menu">
                 <a href="<?= base_url('admin/dashboard') ?>" aria-expanded="true" class="dropdown-toggle <?= ($current_path === 'admin/dashboard') ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span style="color: white">Users</span>
                     </div>
                     <div>
@@ -49,7 +47,6 @@ $admin_pages = [
             <li class="menu">
                 <a href="<?= base_url('admin/rolesdep') ?>" aria-expanded="true" class="dropdown-toggle <?= ($current_path === 'admin/rolesdep') ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div class="">
-                        <img src="<?= base_url('assets/images/icon-procurement.svg') ?>" class="navbar-logo" alt="logo">
                         <span>Roles & Offices</span>
                     </div>
                     <div>
@@ -65,7 +62,6 @@ $admin_pages = [
             <li class="menu">
                 <a href="<?= base_url('admin/usertype') ?>" aria-expanded="true" class="dropdown-toggle <?= ($current_path === 'admin/usertype') ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div class="">
-                        <img src="<?= base_url('assets/images/icon-tasks.svg') ?>" class="navbar-logo" alt="logo">
                         <span>User Type</span>
                     </div>
                     <div>
@@ -77,7 +73,6 @@ $admin_pages = [
             <li class="menu">
                 <a href="<?= base_url('admin/rolesassign') ?>" aria-expanded="true" class="dropdown-toggle <?= ($current_path === 'admin/rolesassign') ? 'active text-white fw-bold shadow-text' : '' ?>">
                     <div class="">
-                        <img src="<?= base_url('assets/images/icon-mr.svg') ?>" class="navbar-logo" alt="logo">
                         <span>Roles Assignment</span>
                     </div>
                     <div>

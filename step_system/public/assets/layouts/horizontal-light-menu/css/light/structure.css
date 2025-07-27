@@ -638,7 +638,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
   font-size: 13px;
   font-weight: 500;
   margin-bottom: 0;
-  color: #4361ee;
+  color: #8C0404;
 }
 .navbar .navbar-item .nav-item.dropdown.user-profile-dropdown .nav-link:after {
   display: none;
@@ -663,8 +663,8 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
   border-radius: 8px;
 }
 .navbar .navbar-item .nav-item.user-profile-dropdown .dropdown-menu .dropdown-item:hover a {
-  color: #4361ee;
-  background: #ebedf2;
+  color: #C62742;
+  background: #F1F2F3;
 }
 .navbar .navbar-item .nav-item.user-profile-dropdown .dropdown-menu .dropdown-item.active, .navbar .navbar-item .nav-item.user-profile-dropdown .dropdown-menu .dropdown-item:active {
   background-color: transparent;
