@@ -4,32 +4,22 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ParModel extends Model
+class ParItemModel extends Model
 {
-    protected $table            = 'par_tbl';
-    protected $primaryKey       = 'prop_ack_id';
+    protected $table            = 'par_items_tbl';
+    protected $primaryKey       = 'par_item_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'prop_ack_status',
-        'prop_ack_po_item_id_fk',
-        'par_fund_cluster',
-        'par_po_no',
-        'par_no',
-        'par_code_no',
-        'prop_ack_received_by_fk',
-        'prop_ack_received_date',
-        'prop_ack_issued_by_fk',
-        'prop_ack_issued_date',
-        'prop_ack_deli_stats',
-        'prop_ack_bid_stats',
-        'saved_by_user_id_fk',
-        'par_received_from_user_fk',
-        'par_received_from_date',
-        'par_issued_by_user_fk',
-        'par_issued_by_date',
+        'par_qty',
+        'par_unit',
+        'par_descrip',
+        'par_prop_no',
+        'par_date_acquired',
+        'par_amount',
+        'par_id_fk',
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -61,4 +51,4 @@ class ParModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-} 
+}

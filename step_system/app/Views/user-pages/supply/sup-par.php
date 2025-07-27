@@ -1,7 +1,7 @@
-<?= $this->extend('user-pages/supply/layout/supp-base-layout') ?>
+<?= $this->extend('user-pages/supply/layout/sup-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Purchase Request</title>
+<title>TUP STEP | Supply Property Acknowledgement Receipt </title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
@@ -16,13 +16,15 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('forms/pr') ?>
+<?= $this->include('forms/par') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- For Table???? -->
-<script src="<?= base_url('assets/src/assets/js/apps/pr.js') ?>"></script>
+
+<!-- For Table -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="<?= base_url('assets/src/assets/js/apps/sup-par.js') ?>"></script>
 <!-- For Sweet Alerts -->
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 

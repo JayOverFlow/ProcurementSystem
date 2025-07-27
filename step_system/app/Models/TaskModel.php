@@ -113,4 +113,11 @@ class TaskModel extends Model
                     ->where('is_deleted', 0)
                     ->first();
     }
+
+    public function getTaskByParId($parId) {
+        return $this->withDeleted()
+                    ->where('par_id_fk', $parId)
+                    ->where('is_deleted', 0)
+                    ->first();
+    }
 }
