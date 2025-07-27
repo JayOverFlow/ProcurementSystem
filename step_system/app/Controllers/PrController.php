@@ -77,13 +77,13 @@ class PrController extends BaseController
         // Validation rules
         $rules = [
             'pr_department' => 'required|greater_than[0]',
-            'pr_section' => 'required|greater_than[0]',
+            'pr_section' => 'required',
             'pr_requested_by_name' => 'required|greater_than[0]',
             'pr_requested_by_designation' => 'required',
             'pr_approved_by_name' => 'required|greater_than[0]',
             'pr_approved_by_designation' => 'required',
-            'pr_no_date' => 'required|valid_date',
-            'pr_sai_no_date' => 'required|valid_date',
+            // 'pr_no_date' => 'required|valid_date', // No longer required
+            // 'pr_sai_no_date' => 'required|valid_date', // No longer required
         ];
 
         $messages = [
@@ -91,28 +91,18 @@ class PrController extends BaseController
                 'required' => 'Please select a Department.',
                 'greater_than' => 'Please select a Department.'
             ],
-            'pr_section' => [
-                'required' => 'Please select a Section.',
-                'greater_than' => 'Please select a Section.'
-            ],
+            'pr_section' => ['required' => 'The Section field is required.'],
             'pr_requested_by_name' => [
-                'required' => 'Please select a Personel.',
-                'greater_than' => 'Please select a Personel.'
+                'required' => 'Please select a Personnel.',
+                'greater_than' => 'Please select a Personnel.'
             ],
             'pr_requested_by_designation' => ['required' => 'The Designation field is required.'],
             'pr_approved_by_name' => [
-                'required' => 'Please select a Personel.',
-                'greater_than' => 'Please select a Personel.'
+                'required' => 'Please select a Personnel.',
+                'greater_than' => 'Please select a Personnel.'
             ],
             'pr_approved_by_designation' => ['required' => 'The Designation field is required.'],
-            'pr_no_date' => [
-                'required' => 'The PR Date field is required.',
-                'valid_date' => 'Please enter a valid date.'
-            ],
-            'pr_sai_no_date' => [
-                'required' => 'The SAI Date field is required.',
-                'valid_date' => 'Please enter a valid date.'
-            ],
+            // Removed messages for pr_no_date and pr_sai_no_date
         ];
 
         if (!$this->validate($rules, $messages)) {
@@ -136,15 +126,25 @@ class PrController extends BaseController
         foreach ($items as $key => $item) {
             if ($isItemRowFilled($item)) {
                 $hasFilledRow = true;
+
+                // Qty. validation
                 if (empty($item['pr_items_quantity'])) {
                     $itemErrors["items.{$key}.pr_items_quantity"] = 'Quantity is required.';
                 } elseif (!is_numeric(str_replace(',', '', $item['pr_items_quantity']))) {
                     $itemErrors["items.{$key}.pr_items_quantity"] = 'Quantity must be a number.';
                 }
 
-                if (empty($item['pr_items_unit'])) { $itemErrors["items.{$key}.pr_items_unit"] = 'Unit is required.'; }
-                if (empty($item['pr_items_descrip'])) { $itemErrors["items.{$key}.pr_items_descrip"] = 'Description is required.'; }
-                
+                // Unit validation (required, but NOT numeric)
+                if (empty($item['pr_items_unit'])) {
+                    $itemErrors["items.{$key}.pr_items_unit"] = 'Unit is required.';
+                }
+
+                // Description validation (required, but NOT numeric)
+                if (empty($item['pr_items_descrip'])) {
+                    $itemErrors["items.{$key}.pr_items_descrip"] = 'Description is required.';
+                }
+
+                // Unit Cost validation
                 if (empty($item['pr_items_cost'])) {
                     $itemErrors["items.{$key}.pr_items_cost"] = 'Estimated Cost is required.';
                 } elseif (!is_numeric(str_replace(',', '', $item['pr_items_cost']))) {
@@ -231,7 +231,7 @@ class PrController extends BaseController
             if ($db->transStatus() === false) {
                 return redirect()->back();
             } else {
-                return redirect()->to('pr/create/' . $prId);
+                return redirect()->to('pr/create/' . $prId)->with('success', $message);
             }
         } catch (\Exception $e) {
             log_message('error', 'PR Save Error: ' . $e->getMessage());
