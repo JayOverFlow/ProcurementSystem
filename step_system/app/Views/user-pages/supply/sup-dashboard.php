@@ -32,7 +32,7 @@
                 <div class="mt-container mx-auto h-100">
                     <div class="timeline-line" id="stepper-timeline">
                         <!-- Stepper items will be dynamically loaded here -->
-                    </div>                                    
+                    </div>
                 </div>
                 <div class="w-shadow-bottom"></div>
             </div>
@@ -140,7 +140,7 @@
 
     </div>
 </div>
-    
+
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
@@ -251,6 +251,6 @@ function fetchAndRenderStepper(departmentId) {
     </div>
 </div>
 </script>
-    
+
 
 <?= $this->endSection() ?>

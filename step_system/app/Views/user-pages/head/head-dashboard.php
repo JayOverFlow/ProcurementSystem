@@ -36,7 +36,7 @@
                 <div class="mt-container mx-auto h-100">
                     <div class="timeline-line" id="stepper-timeline">
                         <!-- Stepper items will be dynamically loaded here -->
-                    </div>                                    
+                    </div>
                 </div>
                 <div class="w-shadow-bottom"></div>
             </div>
@@ -234,6 +234,26 @@
     } else {
         console.error('User department ID is not available.');
     }
+
+    // custom styling for DataTables elements
+    $('.dt--top-section').addClass('mb-3');
+    $('.dt--top-section .l').addClass('dt-length');
+    $('.dt--top-section .f').addClass('dt-search');
+    $('.dt--top-section .dt-length select').addClass('form-control');
+    $('.dt--top-section .dt-search input').addClass('form-control');
+
+    // custom styling for length menu
+    $('.dt-length').css({
+        'display': 'flex',
+        'align-items': 'center',
+        'gap': '10px'
+    });
+    $('.dt-length label').css({
+        'margin-bottom': '0',
+        'white-space': 'nowrap'
+    });
+    });
+
 </script>
 
 <!-- Stepper Detail Modal -->

@@ -1,7 +1,7 @@
 <header class="header navbar navbar-expand-sm expand-header">
 
             <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
-            
+
             <ul class="navbar-item theme-brand flex-row text-center">
                 <li class="nav-item theme-logo">
                     <a href="index.html">
@@ -36,23 +36,7 @@
                                             <h6 class="">Ron Eric sent you a Purchase Request</h6>
                                             <p class="">45 min ago</p>
                                         </div>
-                                        
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="dropdown-item">
-                                <div class="media server-log">
-                                    <img src="<?= base_url('assets/images/red-file-icon.png'); ?>" class="border-0 rounded-0 me-2" alt="file" style="width: 24px; height: 24px;">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Ron Eric sent you a Purchase Request</h6>
-                                            <p class="">45 min ago</p>
-                                        </div>
-                                        
+
                                         <div class="icon-status">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                         </div>
@@ -68,22 +52,7 @@
                                             <h6 class="">Ron Eric sent you a Purchase Request</h6>
                                             <p class="">45 min ago</p>
                                         </div>
-                                        
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dropdown-item">
-                                <div class="media server-log">
-                                    <img src="<?= base_url('assets/images/red-file-icon.png'); ?>" class="border-0 rounded-0 me-2" alt="file" style="width: 24px; height: 24px;">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Ron Eric sent you a Purchase Request</h6>
-                                            <p class="">45 min ago</p>
-                                        </div>
-                                        
+
                                         <div class="icon-status">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                         </div>
@@ -99,7 +68,22 @@
                                             <h6 class="">Ron Eric sent you a Purchase Request</h6>
                                             <p class="">45 min ago</p>
                                         </div>
-                                        
+
+                                        <div class="icon-status">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-item">
+                                <div class="media server-log">
+                                    <img src="<?= base_url('assets/images/red-file-icon.png'); ?>" class="border-0 rounded-0 me-2" alt="file" style="width: 24px; height: 24px;">
+                                    <div class="media-body">
+                                        <div class="data-info">
+                                            <h6 class="">Ron Eric sent you a Purchase Request</h6>
+                                            <p class="">45 min ago</p>
+                                        </div>
+
                                         <div class="icon-status">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                         </div>
@@ -115,17 +99,33 @@
                                             <h6 class="">Ron Eric sent you a Purchase Request</h6>
                                             <p class="">45 min ago</p>
                                         </div>
-                                        
+
                                         <div class="icon-status">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
+                            <div class="dropdown-item">
+                                <div class="media server-log">
+                                    <img src="<?= base_url('assets/images/red-file-icon.png'); ?>" class="border-0 rounded-0 me-2" alt="file" style="width: 24px; height: 24px;">
+                                    <div class="media-body">
+                                        <div class="data-info">
+                                            <h6 class="">Ron Eric sent you a Purchase Request</h6>
+                                            <p class="">45 min ago</p>
+                                        </div>
+
+                                        <div class="icon-status">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    
+
                 </li>
 
                 <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
@@ -153,7 +153,7 @@
                         <a href="<?= base_url('/logout') ?>">Log Out</a>
                         </div>
                     </div>
-                    
+
                 </li>
             </ul>
         </header>
