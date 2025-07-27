@@ -74,6 +74,93 @@ class PrController extends BaseController
         $db = \Config\Database::connect();
         $prId = $this->request->getPost('pr_id');
 
+        // Validation rules
+        $rules = [
+            'pr_department' => 'required|greater_than[0]',
+            'pr_section' => 'required|greater_than[0]',
+            'pr_requested_by_name' => 'required|greater_than[0]',
+            'pr_requested_by_designation' => 'required',
+            'pr_approved_by_name' => 'required|greater_than[0]',
+            'pr_approved_by_designation' => 'required',
+            'pr_no_date' => 'required|valid_date',
+            'pr_sai_no_date' => 'required|valid_date',
+        ];
+
+        $messages = [
+            'pr_department' => [
+                'required' => 'Please select a Department.',
+                'greater_than' => 'Please select a Department.'
+            ],
+            'pr_section' => [
+                'required' => 'Please select a Section.',
+                'greater_than' => 'Please select a Section.'
+            ],
+            'pr_requested_by_name' => [
+                'required' => 'Please select a Personel.',
+                'greater_than' => 'Please select a Personel.'
+            ],
+            'pr_requested_by_designation' => ['required' => 'The Designation field is required.'],
+            'pr_approved_by_name' => [
+                'required' => 'Please select a Personel.',
+                'greater_than' => 'Please select a Personel.'
+            ],
+            'pr_approved_by_designation' => ['required' => 'The Designation field is required.'],
+            'pr_no_date' => [
+                'required' => 'The PR Date field is required.',
+                'valid_date' => 'Please enter a valid date.'
+            ],
+            'pr_sai_no_date' => [
+                'required' => 'The SAI Date field is required.',
+                'valid_date' => 'Please enter a valid date.'
+            ],
+        ];
+
+        if (!$this->validate($rules, $messages)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // Custom validation for items
+        $items = $this->request->getPost('items') ?? [];
+        $itemErrors = [];
+
+        $isItemRowFilled = function($item) {
+            return !empty($item['pr_items_quantity']) || !empty($item['pr_items_unit']) || !empty($item['pr_items_descrip']) || !empty($item['pr_items_cost']);
+        };
+        
+        $hasFilledRow = false;
+        foreach (array_filter($items, $isItemRowFilled) as $item) {
+            $hasFilledRow = true;
+            break;
+        }
+
+        foreach ($items as $key => $item) {
+            if ($isItemRowFilled($item)) {
+                $hasFilledRow = true;
+                if (empty($item['pr_items_quantity'])) {
+                    $itemErrors["items.{$key}.pr_items_quantity"] = 'Quantity is required.';
+                } elseif (!is_numeric(str_replace(',', '', $item['pr_items_quantity']))) {
+                    $itemErrors["items.{$key}.pr_items_quantity"] = 'Quantity must be a number.';
+                }
+
+                if (empty($item['pr_items_unit'])) { $itemErrors["items.{$key}.pr_items_unit"] = 'Unit is required.'; }
+                if (empty($item['pr_items_descrip'])) { $itemErrors["items.{$key}.pr_items_descrip"] = 'Description is required.'; }
+                
+                if (empty($item['pr_items_cost'])) {
+                    $itemErrors["items.{$key}.pr_items_cost"] = 'Estimated Cost is required.';
+                } elseif (!is_numeric(str_replace(',', '', $item['pr_items_cost']))) {
+                    $itemErrors["items.{$key}.pr_items_cost"] = 'Estimated Cost must be a number.';
+                }
+            }
+        }
+        
+        if (!$hasFilledRow) {
+            $itemErrors['items'] = 'At least one item must be filled out.';
+        }
+
+        if (!empty($itemErrors)) {
+            return redirect()->back()->withInput()->with('errors', array_merge($this->validator->getErrors(), $itemErrors));
+        }
+
         $db->transStart();
 
         try {
@@ -142,13 +229,13 @@ class PrController extends BaseController
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'An error occurred while saving the Purchase Request.');
+                return redirect()->back();
             } else {
-                return redirect()->to('pr/create/' . $prId)->with('success', $message);
+                return redirect()->to('pr/create/' . $prId);
             }
         } catch (\Exception $e) {
             log_message('error', 'PR Save Error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
+            return redirect()->back();
         }
     }
 
@@ -160,14 +247,14 @@ class PrController extends BaseController
         // If the document already submitted
         $pr = $this->prModel->find($prId);
         if ($pr && $pr['pr_status'] !== 'Draft') {
-            return redirect()->to('pr/create/' . $prId)->with('error', 'This Purchase Request has already been submitted.');
+            return redirect()->to('pr/create/' . $prId);
         }
 
         // NOTE: Saved PRs should be submitted to Head by user's department
         $head = $this->userModel->getHeadByDepId(userData['user_dep_id']); // Get Head of department / Office
         // If there's no Head
         if (empty($head)) {
-            return redirect()->back()->with('error', 'Cannot submit: No Head found in the system.');
+            return redirect()->back();
         }
 
         $db->transStart(); // Start db transaction
@@ -182,7 +269,7 @@ class PrController extends BaseController
                     'task_description' => 'A new Purchase Request has been submitted for your review.',
                 ]);
             } else { // If task not found
-                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+                return redirect()->back();
             }
 
             $this->prModel->update($prId, ['pr_status' => 'Pending']); // Update the pr_status to Pending
@@ -191,15 +278,15 @@ class PrController extends BaseController
 
             // If transaction failed
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
+                return redirect()->back();
             }
 
             // Redirect back with succesful message
-            return redirect()->to('pr/create' . $prId)->with('success', 'Purchase Request successfully submitted to Campus Director for review.');
+            return redirect()->to('pr/create' . $prId);
 
         } catch (\Exception $e) {
             log_message('error', 'PR Submission Error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
+            return redirect()->back();
         }
     }
 }

@@ -1,3 +1,4 @@
+<?php $errors = session()->get('errors'); ?>
 <div class="row invoice layout-top-spacing layout-spacing">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="doc-container">
@@ -22,8 +23,11 @@
 
                                 <div class="invoice-detail-items pt-0">
                                     <p class="col-auto text-start mt-3 mb-3">Annual Procurement Plan for FY 2025</p>
+                                    <?php if (isset($errors['items']) && is_string($errors['items'])): ?>
+                                        <div class="alert alert-danger text-center"><?= esc($errors['items']) ?></div>
+                                    <?php endif; ?>
                                     <div class="table-responsive">
-                                        <table class="table item-table">
+                                        <table class="table item-table <?php if (isset($errors['items']) && is_string($errors['items'])): ?>border border-danger<?php endif; ?>">
                                             <thead>
                                                 <tr>
                                                     <th class="col-1 text-center">Code</th>
@@ -47,25 +51,66 @@
                                                 <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
                                             </thead>
                                             <tbody>
-                                                <?php if (!empty($app_items)): ?>
-                                                    <?php foreach ($app_items as $index => $item): ?>
+                                                <?php if (!empty(old('items')) || !empty($app_items)): ?>
+                                                    <?php $items = old('items') ?? $app_items; ?>
+                                                    <?php foreach ($items as $index => $item): ?>
                                                         <tr>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][app_item_code]" value="<?= esc($item['app_item_code']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][procurement_project]" value="<?= esc($item['app_item_name']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][pmo_end_user]" value="<?= esc($item['app_item_pmo']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][mode_of_procurement]" value="<?= esc($item['app_item_mode']) ?>"></td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.app_item_code'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][app_item_code]" value="<?= esc($item['app_item_code'] ?? ($item['app_item_code'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.app_item_code'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.app_item_code']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.procurement_project'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][procurement_project]" value="<?= esc($item['app_item_name'] ?? ($item['procurement_project'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.procurement_project'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.procurement_project']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.pmo_end_user'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][pmo_end_user]" value="<?= esc($item['app_item_pmo'] ?? ($item['pmo_end_user'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.pmo_end_user'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.pmo_end_user']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.mode_of_procurement'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][mode_of_procurement]" value="<?= esc($item['app_item_mode'] ?? ($item['mode_of_procurement'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.mode_of_procurement'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.mode_of_procurement']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
                                                             <td class="px-1">
                                                                 <div class="d-flex justify-content-between">
-                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][ads_post]" value="<?= esc($item['app_item_adspost']) ?>">
-                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][sub_open]" value="<?= esc($item['app_item_subopen']) ?>">
-                                                                    <input type="text" class="form-control form-control-sm me-1 text-center" name="items[<?= $index ?>][notice_award]" value="<?= esc($item['app_item_notice']) ?>">
-                                                                    <input type="text" class="form-control form-control-sm me-1" name="items[<?= $index ?>][contract_signing]" value="<?= esc($item['app_item_contract']) ?>">
+                                                                    <input type="text" class="form-control form-control-sm me-1 text-center <?php if(isset($errors['items.' . $index . '.ads_post'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][ads_post]" value="<?= esc($item['app_item_adspost'] ?? ($item['ads_post'] ?? '')) ?>">
+                                                                    <input type="text" class="form-control form-control-sm me-1 text-center <?php if(isset($errors['items.' . $index . '.sub_open'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][sub_open]" value="<?= esc($item['app_item_subopen'] ?? ($item['sub_open'] ?? '')) ?>">
+                                                                    <input type="text" class="form-control form-control-sm me-1 text-center <?php if(isset($errors['items.' . $index . '.notice_award'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][notice_award]" value="<?= esc($item['app_item_notice'] ?? ($item['notice_award'] ?? '')) ?>">
+                                                                    <input type="text" class="form-control form-control-sm me-1 <?php if(isset($errors['items.' . $index . '.contract_signing'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][contract_signing]" value="<?= esc($item['app_item_contract'] ?? ($item['contract_signing'] ?? '')) ?>">
                                                                 </div>
                                                             </td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][source_of_funds]" value="<?= esc($item['app_item_source_fund']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][total]" value="<?= esc($item['app_item_estimated_total']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][mooe]" value="<?= esc($item['app_item_estimated_mooe']) ?>"></td>
-                                                            <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[<?= $index ?>][co]" value="<?= esc($item['app_item_estimated_co']) ?>"></td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.source_of_funds'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][source_of_funds]" value="<?= esc($item['app_item_source_fund'] ?? ($item['source_of_funds'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.source_of_funds'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.source_of_funds']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.total'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][total]" value="<?= esc($item['app_item_estimated_total'] ?? ($item['total'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.total'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.total']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.mooe'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][mooe]" value="<?= esc($item['app_item_estimated_mooe'] ?? ($item['mooe'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.mooe'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.mooe']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
+                                                            <td class="px-1">
+                                                                <input type="text" class="form-control form-control-sm <?php if(isset($errors['items.' . $index . '.co'])): ?> is-invalid <?php endif ?>" name="items[<?= $index ?>][co]" value="<?= esc($item['app_item_estimated_co'] ?? ($item['co'] ?? '')) ?>">
+                                                                <?php if(isset($errors['items.' . $index . '.co'])): ?>
+                                                                    <div class="invalid-feedback"><?= esc($errors['items.' . $index . '.co']) ?></div>
+                                                                <?php endif ?>
+                                                            </td>
                                                             <td class="delete-item-row px-1 pt-2">
                                                                 <ul class="table-controls">
                                                                     <li><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
@@ -115,14 +160,17 @@
                                             <div class="form-group row mb-3">
                                                 <label for="app-dep-id-fk" class="col-sm-1 col-form-label col-form-label-sm me-4">Department</label>
                                                 <div class="col-sm-9 ms-5">
-                                                    <select class="form-control form-control-sm" id="app-dep-id-fk" name="app_dep_id_fk">
+                                                    <select class="form-control form-control-sm <?php if(isset($errors['app_dep_id_fk'])): ?> is-invalid <?php endif ?>" id="app-dep-id-fk" name="app_dep_id_fk">
                                                         <option>Select</option>
                                                         <?php if(!empty($departments)): ?>
                                                             <?php foreach($departments as $department): ?>
-                                                                <option value="<?= esc($department['dep_id']) ?>" <?= isset($app['app_dep_id_fk']) && $app['app_dep_id_fk'] == $department['dep_id'] ? 'selected' : '' ?>><?= esc($department['dep_name']) ?></option>
+                                                                <option value="<?= esc($department['dep_id']) ?>" <?= (old('app_dep_id_fk') ?? ($app['app_dep_id_fk'] ?? '')) == $department['dep_id'] ? 'selected' : '' ?>><?= esc($department['dep_name']) ?></option>
                                                             <?php endforeach; ?>
                                                         <?php endif;?>
                                                     </select>
+                                                    <?php if(isset($errors['app_dep_id_fk'])): ?>
+                                                        <div class="invalid-feedback"><?= esc($errors['app_dep_id_fk']) ?></div>
+                                                    <?php endif ?>
                                                 </div>
                                             </div>
                                             <h4>Prepared By:</h4>
@@ -130,21 +178,27 @@
                                                 <div class="form-group">
                                                     <label for="app-prepared-by-name">Printed Name</label>
                                                     <div>
-                                                        <select class="form-control form-control-sm" id="app-prepared-by-name" name="app_prepared_by_name">
+                                                        <select class="form-control form-control-sm <?php if(isset($errors['app_prepared_by_name'])): ?> is-invalid <?php endif ?>" id="app-prepared-by-name" name="app_prepared_by_name">
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
-                                                                    $selected = (isset($app['app_prepared_by_name']) && $app['app_prepared_by_name'] == $user['user_id']) ? 'selected' : '';
+                                                                    $selected = (old('app_prepared_by_name') ?? ($app['app_prepared_by_name'] ?? '')) == $user['user_id'] ? 'selected' : '';
                                                                     echo "<option value='" . esc($user['user_id']) . "' $selected>" . esc($user['user_fullname']) . "</option>";
                                                                 endforeach;
                                                             endif;?>
                                                         </select>
+                                                        <?php if(isset($errors['app_prepared_by_name'])): ?>
+                                                            <div class="invalid-feedback"><?= esc($errors['app_prepared_by_name']) ?></div>
+                                                        <?php endif ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="prepared-by-designation">Designation</label>
                                                     <div>
-                                                        <input type="text" class="form-control form-control-sm" id="prepared-by-designation" name="prepared_by_designation" value="<?= esc($app['app_prepared_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm <?php if(isset($errors['prepared_by_designation'])): ?> is-invalid <?php endif ?>" id="prepared-by-designation" name="prepared_by_designation" value="<?= old('prepared_by_designation') ?? esc($app['app_prepared_by_designation'] ?? '') ?>">
+                                                        <?php if(isset($errors['prepared_by_designation'])): ?>
+                                                            <div class="invalid-feedback"><?= esc($errors['prepared_by_designation']) ?></div>
+                                                        <?php endif ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,21 +212,27 @@
                                                 <div class="form-group">
                                                     <label for="app-approved-by-name">Printed Name</label>
                                                     <div>
-                                                        <select class="form-control form-control-sm" id="app-approved-by-name" name="app_approved_by_name">
+                                                        <select class="form-control form-control-sm <?php if(isset($errors['app_approved_by_name'])): ?> is-invalid <?php endif ?>" id="app-approved-by-name" name="app_approved_by_name">
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
-                                                                    $selected = (isset($app['app_approved_by_name']) && $app['app_approved_by_name'] == $user['user_id']) ? 'selected' : '';
+                                                                    $selected = (old('app_approved_by_name') ?? ($app['app_approved_by_name'] ?? '')) == $user['user_id'] ? 'selected' : '';
                                                                     echo "<option value='" . esc($user['user_id']) . "' $selected>" . esc($user['user_fullname']) . "</option>";
                                                                 endforeach;
                                                             endif;?>
                                                         </select>
+                                                        <?php if(isset($errors['app_approved_by_name'])): ?>
+                                                            <div class="invalid-feedback"><?= esc($errors['app_approved_by_name']) ?></div>
+                                                        <?php endif ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="approved-by-designation">Designation</label>
                                                     <div>
-                                                        <input type="text" class="form-control form-control-sm" id="approved-by-designation" name="approved_by_designation" value="<?= esc($app['app_approved_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm <?php if(isset($errors['approved_by_designation'])): ?> is-invalid <?php endif ?>" id="approved-by-designation" name="approved_by_designation" value="<?= old('approved_by_designation') ?? esc($app['app_approved_by_designation'] ?? '') ?>">
+                                                        <?php if(isset($errors['approved_by_designation'])): ?>
+                                                            <div class="invalid-feedback"><?= esc($errors['approved_by_designation']) ?></div>
+                                                        <?php endif ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,21 +244,27 @@
                                                 <div class="form-group">
                                                     <label for="app-recommending-by-name">Printed Name</label>
                                                     <div>
-                                                        <select class="form-control form-control-sm" id="app-recommending-by-name" name="app_recommending_by_name">
+                                                        <select class="form-control form-control-sm <?php if(isset($errors['app_recommending_by_name'])): ?> is-invalid <?php endif ?>" id="app-recommending-by-name" name="app_recommending_by_name">
                                                             <option>Select</option>
                                                             <?php if(!empty($users)):
                                                                 foreach($users as $user):
-                                                                    $selected = (isset($app['app_recommending_by_name']) && $app['app_recommending_by_name'] == $user['user_id']) ? 'selected' : '';
+                                                                    $selected = (old('app_recommending_by_name') ?? ($app['app_recommending_by_name'] ?? '')) == $user['user_id'] ? 'selected' : '';
                                                                     echo "<option value='" . esc($user['user_id']) . "' $selected>" . esc($user['user_fullname']) . "</option>";
                                                                 endforeach;
                                                             endif;?>
                                                         </select>
+                                                        <?php if(isset($errors['app_recommending_by_name'])): ?>
+                                                            <div class="invalid-feedback"><?= esc($errors['app_recommending_by_name']) ?></div>
+                                                        <?php endif ?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="recommending_approval_designation">Designation</label>
                                                     <div>
-                                                        <input type="text" class="form-control form-control-sm" id="recommending_approval_designation" name="recommending_approval_designation" value="<?= esc($app['app_recommending_by_designation'] ?? '') ?>">
+                                                        <input type="text" class="form-control form-control-sm <?php if(isset($errors['recommending_approval_designation'])): ?> is-invalid <?php endif ?>" id="recommending_approval_designation" name="recommending_approval_designation" value="<?= old('recommending_approval_designation') ?? esc($app['app_recommending_by_designation'] ?? '') ?>">
+                                                        <?php if(isset($errors['recommending_approval_designation'])): ?>
+                                                            <div class="invalid-feedback"><?= esc($errors['recommending_approval_designation']) ?></div>
+                                                        <?php endif ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,10 +280,21 @@
                             <div class="invoice-action-btn">
                                 <div class="row widget-content">
                                     <div class="col-xl-12 col-md-4">
-                                        <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
+                                        <?php if (isset($app['app_status']) && in_array($app['app_status'], ['Pending', 'Approved', 'Disapproved'])): ?>
+                                            <button type="button" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF" disabled>Save</button>
+                                        <?php else: ?>
+                                            <button type="submit" class="btn btn-submit w-100 warning save" style="background-color: #C62742; color: #FFFFFF">Save</button>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="col-xl-12 col-md-4">
-                                        <button class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Export</button>
+                                        <a href="<?= base_url('app/preview/' . ($app['app_id'] ?? '')) ?>" class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF">Preview</a>
+                                    </div>
+                                    <div class="col-xl-12 col-md-4 mt-2">
+                                        <?php if (isset($app['app_status']) && $app['app_status'] == 'Draft'): ?>
+                                            <button type="button" id="submit-app-btn" class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF" data-app-id="<?= esc($app['app_id']) ?>">Submit</button>
+                                        <?php else: ?>
+                                            <button type="button" class="btn btn-submit w-100" style="background-color: #C62742; color: #FFFFFF" disabled>Submit</button>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -228,3 +305,31 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById('submit-app-btn').addEventListener('click', function() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to submit this Annual Procurement Plan. This action cannot be undone.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, submit it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '<?= base_url('app/submit') ?>';
+            
+            let appIdInput = document.createElement('input');
+            appIdInput.type = 'hidden';
+            appIdInput.name = 'app_id';
+            appIdInput.value = this.getAttribute('data-app-id');
+            form.appendChild(appIdInput);
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+});
+</script>

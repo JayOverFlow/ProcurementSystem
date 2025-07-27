@@ -59,6 +59,26 @@ class DashboardController extends BaseController
                 return view('user-pages/director/dir-dashboard', $data);
                 break;
 
+            case "Assistant Director":
+                // Fetch the necessary data to pass to assistant director dashboard
+            $dashboardData = [
+            'procurement_status' => null,
+            'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
+            'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
+            'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
+            'subordinates' => $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId)
+];
+
+           // Store user data and dashbaord data
+           $data = [
+           'user_data' => $userData,
+           'dashboard_data' => $dashboardData,
+           'user_department_id' => $departmentId // Pass department ID to the view
+];
+ 
+// Redirect user sa dashboard page niya with pass data with contains the necessary data to render to dashboard
+return view('user-pages/assistant-director/ast-dir-dashboard', $data);
+break;
             case "Head":
                 // Fetch the necessary data to pass to dashboard
                 $dashboardData = [

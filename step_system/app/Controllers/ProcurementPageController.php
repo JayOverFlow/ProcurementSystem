@@ -182,6 +182,9 @@ class ProcurementPageController extends BaseController
                     case 'Annual Procurement Plan':
                         $urlSlug = 'app';
                         break;
+                    case 'Purchase Order':
+                        $urlSlug = 'po';
+                        break;
                     // Add more cases for other form types here as needed in the future
                     default:
                         $urlSlug = ''; // Fallback for unknown types

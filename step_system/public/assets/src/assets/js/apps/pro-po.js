@@ -75,6 +75,19 @@ $(document).ready(function () {
     $(document).on('click', '.remove-description', function() {
         $(this).closest('.input-group').remove();
     });
+
+    // --- Calculate amount ---
+    function calculateAmount(row) {
+        var quantity = parseFloat(row.find('input[name*="[po_items_quantity]"]').val()) || 0;
+        var cost = parseFloat(row.find('input[name*="[po_items_cost]"]').val()) || 0;
+        var amount = quantity * cost;
+        row.find('input[name*="[po_items_amount]"]').val(amount.toFixed(2));
+    }
+
+    // --- Delegate input event for quantity and cost ---
+    $('.item-table tbody').on('input', 'input[name*="[po_items_quantity]"], input[name*="[po_items_cost]"]', function () {
+        calculateAmount($(this).closest('tr'));
+    });
 });
 
 // Save & Submit confirmation
