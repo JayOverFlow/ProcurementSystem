@@ -7,6 +7,7 @@ use App\Models\PoModel;
 use App\Models\PoItemModel;
 use App\Models\PoItemSpecModel;
 use App\Models\TaskModel;
+use App\Models\UserModel;
 
 class PoController extends BaseController
 {
@@ -14,6 +15,7 @@ class PoController extends BaseController
     protected $poItemModel;
     protected $poItemSpecModel;
     protected $taskModel;
+    protected $userModel;
 
     public function __construct()
     {
@@ -21,6 +23,7 @@ class PoController extends BaseController
         $this->poItemModel = new PoItemModel();
         $this->poItemSpecModel = new PoItemSpecModel();
         $this->taskModel = new TaskModel();
+        $this->userModel = new UserModel();
     }
 
     public function index($poId = null)
@@ -207,6 +210,50 @@ class PoController extends BaseController
         } catch (\Exception $e) {
             log_message('error', 'PO Save Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
+        }
+    }
+
+    public function submit()
+    {
+        $db = \Config\Database::connect();
+        $poId = $this->request->getPost('po_id');
+
+        $po = $this->poModel->find($poId);
+        if ($po && $po['po_status'] !== 'Draft') {
+            return redirect()->to('po/create/' . $poId)->with('error', 'This Purchase Order has already been submitted.');
+        }
+
+        $director = $this->userModel->getDirector();
+        if (empty($director)) {
+            return redirect()->back()->with('error', 'Cannot submit: No Campus Director found in the system.');
+        }
+
+        $db->transStart();
+
+        try {
+            $task = $this->taskModel->getTaskByPoId($poId);
+            if ($task) {
+                $this->taskModel->update($task['task_id'], [
+                    'submitted_to' => $director['user_id'],
+                    'task_description' => 'A new Purchase Order has been submitted for your review.',
+                ]);
+            } else {
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+            }
+
+            $this->poModel->update($poId, ['po_status' => 'Pending']);
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'Failed to submit Purchase Order due to a database error.');
+            }
+
+            return redirect()->to('/po/create/' . $poId)->with('success', 'Purchase Order successfully submitted to Campus Director for review.');
+
+        } catch (\Exception $e) {
+            log_message('error', 'PO Submission Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
         }
     }
 }
