@@ -66,8 +66,10 @@ body:before {
   top: 0;
   height: 100%;
   border-radius: inherit;
-  background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, rgba(255, 19, 97, 0.75) 100%);
-  width: 55%;
+  background-image: url('/assets/images/box-cover.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50%;
 }
 
 .opt-input {

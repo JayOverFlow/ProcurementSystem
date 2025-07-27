@@ -62,12 +62,33 @@ class AppController extends BaseController
     public function save()
     {
         $userData = $this->loadUserSession();
-        // $appModel = new AppModel();
-        // $appItemModel = new AppItemModel();
-        // $taskModel = new TaskModel();
-        // $userModel = new UserModel();
         $db = \Config\Database::connect();
         $appId = $this->request->getPost('app_id'); // Get app_id from hidden input
+
+        // Validation rules
+        $rules = [
+            'app_dep_id_fk' => 'required|greater_than[0]',
+            'app_prepared_by_name' => 'required|greater_than[0]',
+            'prepared_by_designation' => 'required',
+            'app_recommending_by_name' => 'required|greater_than[0]',
+            'recommending_approval_designation' => 'required',
+            'app_approved_by_name' => 'required|greater_than[0]',
+            'approved_by_designation' => 'required',
+        ];
+
+        $messages = [
+            'app_dep_id_fk' => ['required' => 'Please select a Department.', 'greater_than' => 'Please select a Department.'],
+            'app_prepared_by_name' => ['required' => 'Please select who prepared the document.', 'greater_than' => 'Please select who prepared the document.'],
+            'prepared_by_designation' => ['required' => 'The designation for who prepared is required.'],
+            'app_recommending_by_name' => ['required' => 'Please select who will recommend for approval.', 'greater_than' => 'Please select who will recommend for approval.'],
+            'recommending_approval_designation' => ['required' => 'The designation for recommending approval is required.'],
+            'app_approved_by_name' => ['required' => 'Please select who will approve the document.', 'greater_than' => 'Please select who will approve the document.'],
+            'approved_by_designation' => ['required' => 'The designation for the approver is required.'],
+        ];
+
+        if (!$this->validate($rules, $messages)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
 
         $db->transStart();
 
@@ -103,10 +124,17 @@ class AppController extends BaseController
             $items = $this->request->getPost('items') ?? [];
             $itemData = [];
             foreach ($items as $item) {
-                // Skip the row only if both code and project name are empty
-                // if (empty($item['app_item_code']) && empty($item['procurement_project'])) {
-                //     continue;
-                // }
+                // Skip rows where all values are empty or null
+                $isRowEmpty = true;
+                foreach ($item as $value) {
+                    if ($value !== '' && $value !== null) {
+                        $isRowEmpty = false;
+                        break;
+                    }
+                }
+                if ($isRowEmpty) {
+                    continue;
+                }
                 
                 $itemData[] = [
                     'app_id_fk' => $appId,
@@ -128,38 +156,30 @@ class AppController extends BaseController
                 $this->appItemModel->insertBatch($itemData);
             }
 
-            // // 3. Create tasks for Campus Director
-            // $directors = $userModel->getUsersByRoleName('Campus Director');
-
-            // if (empty($directors)) {
-            //     $db->transRollback();
-            //     return redirect()->back()->with('error', "Failed to submit APP: No user with the role 'Campus Director' was found.");
-            // }
-
-            // foreach ($directors as $directorId) {
-            //     $taskModel->insert([
-            //         'submitted_by' => $userId,
-            //         'submitted_to' => $directorId,
-            //         'app_id_fk' => $appId,
-            //         'task_type' => 'Annual Procurement Plan',
-            //         'task_description' => 'A new Annual Procurement Plan has been submitted for your review.'
-            //     ]);
-            // }
-
-            $this->taskModel->insert([
+            // Create/Update task for this APP
+            $taskData = [
                 'submitted_by' => $userData['user_id'],
                 'submitted_to' => null,
                 'app_id_fk' => $appId,
                 'task_type' => 'Annual Procurement Plan',
-                'task_description' => 'A new Annual Procurement Plan has been submitted for your review.'
-            ]);
+                'task_description' => 'An Annual Procurement Plan has been saved and is ready for submission.'
+            ];
+
+            $existingTask = $this->taskModel->where('app_id_fk', $appId)->first();
+
+            if ($existingTask) {
+                $this->taskModel->update($existingTask['task_id'], $taskData);
+            } else {
+                $this->taskModel->insert($taskData);
+            }
             
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->to('app/create/' . $appId)->with('error', 'An error occurred while saving the Annual Procurement Plan.');
+                return redirect()->back()->with('error', 'An error occurred while saving the Annual Procurement Plan.');
             }
-            return redirect()->to('app/create/' . $appId)->with('success', 'Annual Procurement Plan has been saved.');
+            // return redirect()->back()->with('success', 'Annual Procurement Plan has been saved.');
+            return redirect()->to('app/create/' . $appId)->with('success', 'Your Annual Procurement Plan has been saved.');
 
         } catch (\Exception $e) {
             log_message('error', 'APP Creation/Submission Error: ' . $e->getMessage());

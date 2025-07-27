@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\PoModel;
 use App\Models\PoItemModel;
 use App\Models\PoItemSpecModel;
@@ -16,7 +15,8 @@ class PoController extends BaseController
     protected $poItemSpecModel;
     protected $taskModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->poModel = new PoModel();
         $this->poItemModel = new PoItemModel();
         $this->poItemSpecModel = new PoItemSpecModel();
@@ -29,31 +29,19 @@ class PoController extends BaseController
 
         $data = [
             'user_data' => $userData,
-            'po' => null, // Will hold the PO main data if editing an existing form
-            'po_items' => [] // Will hold the PO items data if editing an existing form
+            'po' => null,
+            'po_items' => []
         ];
 
-        // If a poId is provided in the URL, fetch the existing PO data
         if ($poId) {
             $po = $this->poModel->find($poId);
             if ($po) {
-                // If PO found, fetch its associated items
-                $poItems = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
-                
-                // For each item, fetch its specifications
-                foreach ($poItems as &$item) {
+                $data['po'] = $po;
+                $data['po_items'] = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
+                foreach($data['po_items'] as &$item) {
                     $item['specifications'] = $this->poItemSpecModel->where('po_item_specs_id_fk', $item['po_items_id'])->findAll();
                 }
-                
-                // Populate the data array with existing PO and its items
-                $data['po'] = $po;
-                $data['po_items'] = $poItems;
             }
-        }
-
-        // If the user is not a Procurement Officer
-        if (($userData['gen_role'] ?? null) !== 'Procurement') {
-            return redirect()->back()->with('error', 'This page is restricted.');
         }
 
         return view('user-pages/procurement/pro-po', $data);
@@ -61,14 +49,71 @@ class PoController extends BaseController
 
     public function save()
     {
+        $rules = [
+            'po_supplier' => 'required',
+            'po_address' => 'required',
+            'po_tele' => 'required|numeric',
+            'po_tin' => 'required',
+            'po_ponumber' => 'required',
+            'po_date' => 'required',
+            'po_mode' => 'required',
+            'po_tuptin' => 'required',
+            'po_place_delivery' => 'required',
+            'po_date_delivery' => 'required',
+            'po_delivery_term' => 'required',
+            'po_payment_term' => 'required',
+            'po_description' => 'required',
+            'po_amount_in_words' => 'required',
+            'po_total_amount' => 'required|numeric',
+            'conforme_name_of_supplier' => 'required',
+            'conforme_date' => 'required',
+            'conforme_campus_director' => 'required',
+            'po_fund_cluster' => 'required',
+            'po_fund_available' => 'required',
+            'po_accountant' => 'required',
+            'po_orsburs' => 'required',
+            'po_date_orsburs' => 'required',
+            'po_amount' => 'required|numeric',
+        ];
+
+        $messages = [
+            'po_supplier' => ['required' => 'Supplier is required.'],
+            'po_address' => ['required' => 'Address is required.'],
+            'po_tele' => ['required' => 'Telephone number is required.', 'numeric' => 'Telephone number must be numeric.'],
+            'po_tin' => ['required' => 'TIN is required.'],
+            'po_ponumber' => ['required' => 'P.O. Number is required.'],
+            'po_date' => ['required' => 'Date is required.'],
+            'po_mode' => ['required' => 'Mode of Procurement is required.'],
+            'po_tuptin' => ['required' => 'TUP-Taguig TIN is required.'],
+            'po_place_delivery' => ['required' => 'Place of Delivery is required.'],
+            'po_date_delivery' => ['required' => 'Date of Delivery is required.'],
+            'po_delivery_term' => ['required' => 'Delivery Term is required.'],
+            'po_payment_term' => ['required' => 'Payment Term is required.'],
+            'po_description' => ['required' => 'Description is required.'],
+            'po_amount_in_words' => ['required' => 'Amount in Words is required.'],
+            'po_total_amount' => ['required' => 'Total Amount is required.', 'numeric' => 'Total Amount must be numeric.'],
+            'conforme_name_of_supplier' => ['required' => 'Name of Supplier is required.'],
+            'conforme_date' => ['required' => 'Date is required.'],
+            'conforme_campus_director' => ['required' => 'Campus Director is required.'],
+            'po_fund_cluster' => ['required' => 'Funds Cluster is required.'],
+            'po_fund_available' => ['required' => 'Funds Available is required.'],
+            'po_accountant' => ['required' => 'Accountant is required.'],
+            'po_orsburs' => ['required' => 'ORS / BURS NO. is required.'],
+            'po_date_orsburs' => ['required' => 'Date of the ORS / BURS is required.'],
+            'po_amount' => ['required' => 'Amount is required.', 'numeric' => 'Amount must be numeric.'],
+        ];
+
+        if (!$this->validate($rules, $messages)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
         $userData = $this->loadUserSession();
         $db = \Config\Database::connect();
-        
-        $poId = $this->request->getPost('po_id'); // Get po_id from hidden input
-        
+        $poId = $this->request->getPost('po_id');
+
         $db->transStart();
+
         try {
-            // 1. Insert or Update po_tbl
             $poData = [
                 'po_supplier' => $this->request->getPost('po_supplier'),
                 'po_address' => $this->request->getPost('po_address'),
@@ -97,27 +142,24 @@ class PoController extends BaseController
                 'saved_by_user_id_fk' => $userData['user_id'],
                 'po_status' => 'Draft',
             ];
-            
+
             if ($poId) {
-                // Update existing PO
                 $this->poModel->update($poId, $poData);
-                
-                // Delete existing items and specifications for this PO before inserting new ones
-                $existingItems = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
-                foreach ($existingItems as $item) {
-                    $this->poItemSpecModel->where('po_item_specs_id_fk', $item['po_items_id'])->delete();
+                $poItems = $this->poItemModel->where('po_items_id_fk', $poId)->findAll();
+                foreach($poItems as $poItem) {
+                    $this->poItemSpecModel->where('po_item_specs_id_fk', $poItem['po_items_id'])->delete();
                 }
                 $this->poItemModel->where('po_items_id_fk', $poId)->delete();
+                $message = 'Purchase Order updated successfully.';
             } else {
-                // Insert new PO
                 $this->poModel->insert($poData);
                 $poId = $this->poModel->getInsertID();
+                $message = 'Purchase Order saved successfully.';
             }
 
-            // 2. Insert Items and Specifications
             $items = $this->request->getPost('items') ?? [];
             foreach ($items as $item) {
-                $itemData = [
+                $poItemData = [
                     'po_items_id_fk' => $poId,
                     'po_items_stockno' => $item['po_items_stockno'],
                     'po_items_unit' => $item['po_items_unit'],
@@ -126,52 +168,44 @@ class PoController extends BaseController
                     'po_items_cost' => $item['po_items_cost'],
                     'po_items_amount' => $item['po_items_amount'],
                 ];
-                $this->poItemModel->insert($itemData);
+                $this->poItemModel->insert($poItemData);
                 $poItemId = $this->poItemModel->getInsertID();
 
                 if (!empty($item['specifications'])) {
-                    $specData = [];
-                    foreach($item['specifications'] as $spec) {
-                        $specData[] = [
+                    foreach ($item['specifications'] as $spec) {
+                        $this->poItemSpecModel->insert([
                             'po_item_specs_id_fk' => $poItemId,
-                            'po_item_spec_descrip' => $spec,
-                        ];
+                            'po_item_spec_descrip' => $spec
+                        ]);
                     }
-                    $this->poItemSpecModel->insertBatch($specData);
                 }
             }
 
-            // 3. Create/Update task
             $taskData = [
                 'submitted_by' => $userData['user_id'],
                 'submitted_to' => null,
                 'po_id_fk' => $poId,
                 'task_type' => 'Purchase Order',
-                'task_description' => 'Purchase Order has been ' . ($this->request->getPost('po_id') ? 'updated' : 'submitted') . ' for your review.',
-                'is_deleted' => 0 // Explicitly set is_deleted to 0 for new or updated tasks
+                'task_description' => 'A Purchase Order has been saved and is ready for submission.'
             ];
 
-            // Check if a task for this PO already exists
-            $existingTask = $this->taskModel->where('po_id_fk', $poId)->first();
-
+            $existingTask = $this->taskModel->getTaskByPoId($poId);
             if ($existingTask) {
-                // Update existing task
                 $this->taskModel->update($existingTask['task_id'], $taskData);
             } else {
-                // Insert new task
                 $this->taskModel->insert($taskData);
             }
 
             $db->transComplete();
 
             if ($db->transStatus() === false) {
-                return redirect()->back()->with('error', 'Failed to save Purchase Order. Please try again.');
+                return redirect()->back()->with('error', 'An error occurred while saving the Purchase Order.');
             }
 
-            return redirect()->to('/po/create/' . $poId)->with('success', 'Purchase Order saved successfully.');
+            return redirect()->to('po/create/' . $poId)->with('success', $message);
 
         } catch (\Exception $e) {
-            log_message('error', 'PO Saving/Submission Error: ' . $e->getMessage());
+            log_message('error', 'PO Save Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }

@@ -1,11 +1,11 @@
-<?= $this->extend('user-pages/supply/layout/supp-base-layout') ?>
+<?= $this->extend('layouts/ast-dir-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Purchase Request</title>
+<title>TUP STEP | Assistant Director Project Procurement Management Plan</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
-<link href="<?= base_url('assets/src/assets/css/light/apps/invoice-add.css') ?>" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/src/assets/css/light/apps/ppmp.css') ?>" rel="stylesheet" type="text/css" />
 
 <link href="<?= base_url('assets/src/assets/css/dark/apps/invoice-add.css') ?>" rel="stylesheet" type="text/css" />
 
@@ -16,13 +16,14 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('forms/pr') ?>
+<?= $this->include('forms/ppmp') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- For Table???? -->
-<script src="<?= base_url('assets/src/assets/js/apps/pr.js') ?>"></script>
+
+<!-- For Table -->
+<script src="<?= base_url('assets/src/assets/js/apps/ppmp.js') ?>"></script>
 <!-- For Sweet Alerts -->
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 

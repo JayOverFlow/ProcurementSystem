@@ -1,7 +1,7 @@
-<?= $this->extend('user-pages/supply/layout/supp-base-layout') ?>
+<?= $this->extend('layouts/ast-dir-base-layout') ?>
 
 <?= $this->section('title') ?>
-<title>TUP STEP | Purchase Request</title>
+<title>TUP STEP | Assistant Director Purchase Request</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
