@@ -225,3 +225,4 @@ $routes->group('stepper', function($routes) {
 
 // Procurement Feature Routes
 $routes->post('procurement/delete', 'ProcurementPageController::deleteForms'); // Route to handle soft deletion of forms
+
