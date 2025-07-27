@@ -258,7 +258,7 @@ class PpmpController extends BaseController
                 'submitted_by' => $userData['user_id'],
                 'submitted_to' => null,
                 'ppmp_id_fk' => $ppmpId,
-                'task_type' => 'Project Procurement Management',
+                'task_type' => 'Project Procurement Management Plan',
                 'task_description' => 'Project Procurement Management Plan has been ' . ($ppmpId ? 'updated' : 'submitted') . ' for your review.',
                 'is_deleted' => 0 // Explicitly set is_deleted to 0 for new or updated tasks
             ];
@@ -361,7 +361,7 @@ class PpmpController extends BaseController
                     'submitted_by' => session()->get('user_id'),
                     'submitted_to' => $officerId,
                     'ppmp_id_fk' => $ppmpId,
-                    'task_type' => 'PPMP',
+                    'task_type' => 'Project Procurement Management Plan',
                     'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
                 ]);
             }

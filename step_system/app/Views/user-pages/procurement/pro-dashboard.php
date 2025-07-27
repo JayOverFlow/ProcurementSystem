@@ -60,7 +60,7 @@
     </div>
                     <!-- Mail Section -->
                     <div class="col-xl-9 col-lg-6 col-md-6 col-sm-6">
-                    <?= $this->include('general-pages/tasks') ?>
+                    <?= $this->include('general-pages/tasks-head') ?>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/notification/snackbar/snackbar.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/apps/mailbox.js') ?>"></script>
-<script src="<?= base_url('assets/js/tasks_page/tasks.js') ?>"></script>
+<script src="<?= base_url('assets/js/tasks_page/tasks-head.js') ?>"></script>
 
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 

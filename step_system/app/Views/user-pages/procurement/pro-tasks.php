@@ -22,13 +22,13 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('general-pages/tasks') ?>
+<?= $this->include('general-pages/tasks-head') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
-<script src="<?= base_url('assets/js/tasks_page/tasks.js') ?>"></script>
+<script src="<?= base_url('assets/js/tasks_page/tasks-head.js') ?>"></script>
 <script src="<?= base_url('assets/src/plugins/src/sweetalerts2/sweetalerts2.min.js') ?>"></script>
 <?= $this->endSection() ?>
