@@ -74,6 +74,93 @@ class PrController extends BaseController
         $db = \Config\Database::connect();
         $prId = $this->request->getPost('pr_id');
 
+        // Validation rules
+        $rules = [
+            'pr_department' => 'required|greater_than[0]',
+            'pr_section' => 'required',
+            'pr_requested_by_name' => 'required|greater_than[0]',
+            'pr_requested_by_designation' => 'required',
+            'pr_approved_by_name' => 'required|greater_than[0]',
+            'pr_approved_by_designation' => 'required',
+            // 'pr_no_date' => 'required|valid_date', // No longer required
+            // 'pr_sai_no_date' => 'required|valid_date', // No longer required
+        ];
+
+        $messages = [
+            'pr_department' => [
+                'required' => 'Please select a Department.',
+                'greater_than' => 'Please select a Department.'
+            ],
+            'pr_section' => ['required' => 'The Section field is required.'],
+            'pr_requested_by_name' => [
+                'required' => 'Please select a Personnel.',
+                'greater_than' => 'Please select a Personnel.'
+            ],
+            'pr_requested_by_designation' => ['required' => 'The Designation field is required.'],
+            'pr_approved_by_name' => [
+                'required' => 'Please select a Personnel.',
+                'greater_than' => 'Please select a Personnel.'
+            ],
+            'pr_approved_by_designation' => ['required' => 'The Designation field is required.'],
+            // Removed messages for pr_no_date and pr_sai_no_date
+        ];
+
+        if (!$this->validate($rules, $messages)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // Custom validation for items
+        $items = $this->request->getPost('items') ?? [];
+        $itemErrors = [];
+
+        $isItemRowFilled = function($item) {
+            return !empty($item['pr_items_quantity']) || !empty($item['pr_items_unit']) || !empty($item['pr_items_descrip']) || !empty($item['pr_items_cost']);
+        };
+        
+        $hasFilledRow = false;
+        foreach (array_filter($items, $isItemRowFilled) as $item) {
+            $hasFilledRow = true;
+            break;
+        }
+
+        foreach ($items as $key => $item) {
+            if ($isItemRowFilled($item)) {
+                $hasFilledRow = true;
+
+                // Qty. validation
+                if (empty($item['pr_items_quantity'])) {
+                    $itemErrors["items.{$key}.pr_items_quantity"] = 'Quantity is required.';
+                } elseif (!is_numeric(str_replace(',', '', $item['pr_items_quantity']))) {
+                    $itemErrors["items.{$key}.pr_items_quantity"] = 'Quantity must be a number.';
+                }
+
+                // Unit validation (required, but NOT numeric)
+                if (empty($item['pr_items_unit'])) {
+                    $itemErrors["items.{$key}.pr_items_unit"] = 'Unit is required.';
+                }
+
+                // Description validation (required, but NOT numeric)
+                if (empty($item['pr_items_descrip'])) {
+                    $itemErrors["items.{$key}.pr_items_descrip"] = 'Description is required.';
+                }
+
+                // Unit Cost validation
+                if (empty($item['pr_items_cost'])) {
+                    $itemErrors["items.{$key}.pr_items_cost"] = 'Estimated Cost is required.';
+                } elseif (!is_numeric(str_replace(',', '', $item['pr_items_cost']))) {
+                    $itemErrors["items.{$key}.pr_items_cost"] = 'Estimated Cost must be a number.';
+                }
+            }
+        }
+        
+        if (!$hasFilledRow) {
+            $itemErrors['items'] = 'At least one item must be filled out.';
+        }
+
+        if (!empty($itemErrors)) {
+            return redirect()->back()->withInput()->with('errors', array_merge($this->validator->getErrors(), $itemErrors));
+        }
+
         $db->transStart();
 
         try {
