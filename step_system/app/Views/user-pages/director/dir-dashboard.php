@@ -25,7 +25,7 @@
     <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
         <div class="widget widget-activity-five h-100 d-flex flex-column">
             <div class="widget-heading ms-3 pb-0">
-                <h4 class="text-center fw-bold" style="color: #DC3545">Procurement Status</h4>
+                <h4 class="text-center fw-bold" style="color: #8D0404">Procurement Status</h4>
             </div>
             <div class="widget-content">
                 <div class="w-shadow-top"></div>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                         <div class="card-body text-end">
-                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Faculty Members</strong></h5>
+                            <h5 class="card-title mb-2" style="color: #8D0404"><strong>Faculty Members</strong></h5>
                             <h5 class="card-text" style="color: #515365"><?= esc($dashboard_data['faculty_count']) ?></h5>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                         <div class="card-body text-end">
-                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Staff</strong></h5>
+                            <h5 class="card-title mb-2" style="color: #8D0404"><strong>Staff</strong></h5>
                             <h5 class="card-text" style="color: #515365"><?= esc($dashboard_data['staff_count']) ?></h5>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="card-content flex-grow-1 d-flex align-items-center justify-content-center">
                         <div class="card-body text-end">
-                            <h5 class="card-title mb-2" style="color: #DC3545"><strong>Department Budget</strong></h5>
+                            <h5 class="card-title mb-2" style="color: #8D0404"><strong>Department Budget</strong></h5>
                             <h5 class="card-text" style="color: #515365">₱<?= esc($dashboard_data['department_budget']['bud_total'] ?? '0.00') ?></h5>
                         </div>
                     </div>
@@ -297,7 +297,7 @@ function fetchAndRenderStepper(departmentId) {
         Example:
         ```css
         .modal-header {
-            background-color: #DC3545; /* Your desired color */
+            background-color: #8D0404; /* Your desired color */
             color: #FFFFFF; /* Text color */
         }
         .modal-body {
