@@ -421,14 +421,14 @@ class AuthController extends BaseController {
 
                 // Determine redirect URL based on gen_role
                 $redirectUrl = match ($user['gen_role']) {
-                    'Director' => base_url('/director/dashboard'),
-                    'Head' => base_url('/head/dashboard'),
-                    'Planning Officer' => base_url('/planning/dashboard'),
-                    'Procurement' => base_url('/procurement/dashboard'),
-                    'Supply' => base_url('/supply/dashboard'),
-                    'Faculty' => base_url('/faculty/dashboard'),
-                    'Assistant Director' => base_url('/assistant-director/dashboard'),
-                    null => base_url('/unassigned/dashboard'),
+                    'Director' => base_url('/dashboard'),
+                    'Head' => base_url('/dashboard'),
+                    'Planning Officer' => base_url('/dashboard'),
+                    'Procurement' => base_url('/dashboard'),
+                    'Supply' => base_url('/dashboard'),
+                    'Faculty' => base_url('/dashboard'),
+                    'Assistant Director' => base_url('/dashboard'),
+                    null => base_url('/dashboard'),
 
                     default => base_url('/login') // Default fallback if gen_role is not matched
                 };
