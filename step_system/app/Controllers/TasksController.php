@@ -28,7 +28,7 @@ class TasksController extends BaseController
         $role = $userData['gen_role'] ?? null;
 
         // Determine task type based on role
-        $headsRoles = ['Director', 'Planning Officer', 'Head', 'Procurement', 'Supply'];
+        $headsRoles = ['Director', 'Planning Officer', 'Head', 'Procurement', 'Supply', 'Assistant Director'];
         $nonHeadRoles = ['Faculty', null]; // Faculty = Section Head, null = Unassigned
 
         if (in_array($role, $headsRoles)) {

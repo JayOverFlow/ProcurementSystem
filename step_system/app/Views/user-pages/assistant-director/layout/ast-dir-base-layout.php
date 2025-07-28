@@ -31,7 +31,7 @@
 
     <!--  BEGIN HEADER  -->
     <div class="header-container container-xxl box-shadow-none">
-        <?= $this->include('partials/assistant-director/ast-dir-header'); ?>
+        <?= $this->include('user-pages/assistant-director/partials/ast-dir-header'); ?>
     </div>
     <!--  END HEADER  -->
 
@@ -42,7 +42,7 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN NAV  -->
-        <?= $this->include('partials/assistant-director/ast-dir-nav'); ?>
+        <?= $this->include('user-pages/assistant-director/partials/ast-dir-nav'); ?>
         <!--  END NAV  -->
 
         <!--  BEGIN CONTENT AREA  -->

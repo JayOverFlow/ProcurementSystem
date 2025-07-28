@@ -217,7 +217,7 @@
                                             <div class="form-group row mt-4">
                                                 <label for="date-approved" class="col-sm-3 col-form-label col-form-label-sm">Date Approved</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc(old('ppmp_date_approved', $ppmp['ppmp_date_approved'] ?? '')) /* Pre-populate date approved */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
+                                                    <input type="date" class="form-control form-control-sm" id="ppmp-date-approved" name="ppmp_date_approved" placeholder="MM/DD/YYYY" value="<?= esc(old('ppmp_date_approved', $ppmp['ppmp_date_approved'] ?? '')) /* Pre-populate date approved */?>" <?= $isReadOnly ? 'disabled' : '' ?>>
                                                 </div>
                                             </div>
 

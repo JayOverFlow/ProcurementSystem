@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/ast-dir-base-layout') ?>
+<?= $this->extend('user-pages/assistant-director/layout/ast-dir-base-layout') ?>
 
 <?= $this->section('title') ?>
 <title>TUP STEP | Assistant Director Tasks</title>
@@ -22,7 +22,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?= $this->include('tasks') ?>
+<?= $this->include('general-pages/tasks-head') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
