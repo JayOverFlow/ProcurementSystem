@@ -105,24 +105,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (parForm && submitBtn) {
-        submitBtn.addEventListener('click', function(e) {
-            e.preventDefault();
+    // SweetAlert for Submit button
+    $('.submit-par').on('click', function(e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
 
-            Swal.fire({
-                title: 'Confirm Submission?',
-                text: "Are you sure you want to submit this for review? You will not be able to edit it after submission.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, submit it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    parForm.action = this.getAttribute('formaction');
-                    parForm.submit();
-                }
-            });
+        const selectedUserElement = document.getElementById('par-received-from-user-fk');
+        const selectedOption = selectedUserElement.options[selectedUserElement.selectedIndex];
+        const recipientFullName = selectedOption.getAttribute('data-fullname');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You are about to submit this Property Acknowledgement Receipt. It will be submitted to " + recipientFullName + ". Do you want to continue?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, submit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.attr('action', $(this).attr('formaction')).submit();
+            }
         });
-    }
+    });
 });
