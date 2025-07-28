@@ -61,6 +61,7 @@
 <!-- BEGIN PAGE LEVEL SCRIPTS -->   
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dashboard/head-dashboard.js'); ?>"></script>
 
 <script>
 c3 = $('#style-3').DataTable({

@@ -121,6 +121,7 @@ $routes->group('tasks', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('details/(:num)', 'TasksController::getDetails/$1');
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
     $routes->post('update-app-status', 'TasksController::updateAppStatus');
+    $routes->post('assign/ppmp', 'TasksController::assignPpmp'); // Assign PPMP Task
 });
 
 // Material Requisition (MR)
