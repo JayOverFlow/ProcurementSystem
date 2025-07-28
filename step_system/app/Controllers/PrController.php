@@ -289,4 +289,33 @@ class PrController extends BaseController
             return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
         }
     }
+
+    public function preview($prId)
+    {
+        $prModel = new PrModel();
+        $prItemModel = new PrItemModel();
+        $departmentModel = new DepartmentModel();
+        $userModel = new UserModel();
+
+        $pr = $prModel->find($prId);
+        $prItems = $prItemModel->where('pr_id_fk', $prId)->findAll();
+
+        $data = [
+            'pr' => $pr,
+            'pr_items' => $prItems,
+            'department' => $departmentModel->getDepartmentNameById($pr['pr_department']),
+            'requested_by' => $userModel->getUserFullNameById($pr['pr_requested_by_name']),
+            'approved_by' => $userModel->getUserFullNameById($pr['pr_approved_by_name']),
+            'pr_requested_by_position' => $pr['pr_requested_by_position'] ?? '',
+            'pr_approved_by_position' => $pr['pr_approved_by_position'] ?? '',
+            'pr_reviewed_by_position' => $pr['pr_reviewed_by_position'] ?? '',
+            'reviewed_by' => isset($pr['pr_reviewed_by_name']) ? $userModel->getUserFullNameById($pr['pr_reviewed_by_name']) : '',
+        ];
+
+        if (empty($data['pr'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Purchase Request not found');
+        }
+
+        return view('preview-pages/pr-preview', $data);
+    }
 }
