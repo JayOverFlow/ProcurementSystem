@@ -28,7 +28,7 @@ Procurement Process
 	4.3 Faculty and Staffs will submit PR to Head
 	4.4 Head will submit the collection of PRs to Immediate Supervisor
 
-5. PR review
+5. PR review - Done
 	5.1 Immediate Supervisor will review the PR
 	5.2 If rejected, update PR review status to rejected
 	5.2 If approved, update PR review status to approved
@@ -39,11 +39,11 @@ Procurement Process
 	8.2 If unsuccessful, update bidding status to unsuccessful
 	8.2 If successful, update bidding status to successful
 
-7. PO creation & Submission
+7. PO creation & Submission - Done
 	6.1 Procurement Office will create PO based on PR & APP
 	6.2 Procurement Office will submit the PO to Director
 
-8. PO review
+8. PO review - Done
 	7.1 Director will review PO
 	7.2 If rejected, update PO review status to rejected
 	7.2 If approved, update PO review status to approved
@@ -53,7 +53,7 @@ Procurement Process
 	9.1 Supply Office will wait for delivery
 	9.2 If delivered, update delivery status to delivered
 
-10. PAR & ICS Creation & Submission
+10. PAR (Save, Submit, and Review - Done) & ICS Creation & Submission
 	10.1 Supply Office will create PARs & ICS' for each faculty and staff
 	10.2 Supply Office will submit PARs & ICS' to corresponding faculties and staffs
 
