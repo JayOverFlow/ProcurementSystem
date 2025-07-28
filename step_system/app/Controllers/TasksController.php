@@ -244,4 +244,40 @@ class TasksController extends BaseController
 
         return $this->response->setStatusCode(500, 'Failed to update status.');
     }
-} 
+  
+    /**
+     * Handles the AJAX request to assign a PPMP task to a subordinate.
+     */
+    public function assignPpmp()
+    {
+        // Get the current user's data from the session
+        $userData = $this->loadUserSession();
+        $assignerId = $userData['user_id'];
+
+        // Get the subordinate's user ID from the POST request
+        $assigneeId = $this->request->getPost('user_id');
+
+        // Basic validation
+        if (empty($assigneeId)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User ID is required.'])->setStatusCode(400);
+        }
+
+        // Prepare the data for the new task
+        $taskData = [
+            'submitted_by'     => $assignerId,
+            'submitted_to'     => $assigneeId,
+            'task_description' => 'PPMP Form Assignment for the next fiscal year.',
+            'task_type'        => 'Assignment',
+            'task_status'      => 'Pending',
+        ];
+
+        // Call the model to insert the new task
+        if ($this->taskModel->assignPpmpTask($taskData)) {
+            // Return a success response
+            return $this->response->setJSON(['success' => true, 'message' => 'Task assigned successfully.']);
+        } else {
+            // Return an error response
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to assign task.'])->setStatusCode(500);
+        }
+    }
+}

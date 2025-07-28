@@ -72,8 +72,12 @@
 
 <?= $this->section('js') ?>
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/plugins/src/apex/apexcharts.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js') ?>"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<?= base_url('assets/js/dashboard/head-dashboard.js'); ?>"></script>
+
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>

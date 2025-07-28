@@ -25,6 +25,7 @@ class TaskModel extends Model
         'po_id_fk',
         'par_id_fk', // Added to allowed fields to ensure it can be assigned
         'ics_id_fk', // Added to allowed fields to ensure it can be assigned
+        'task_status',
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -123,5 +124,34 @@ class TaskModel extends Model
                     ->where('par_id_fk', $parId)
                     ->where('is_deleted', 0)
                     ->first();
+    }
+
+    /**
+     * Creates a new task assignment for PPMP.
+     *
+     * @param array $data The data for the new task assignment.
+     * @return bool True on success, false on failure.
+     */
+    public function assignPpmpTask(array $data): bool
+    {
+        // The insert method returns the new ID on success, or false on failure.
+        // We return a boolean to indicate the outcome.
+        return $this->insert($data) !== false;
+    }
+
+    /**
+     * Checks if a user has an active PPMP assignment.
+     *
+     * @param int $userId The ID of the user to check.
+     * @return bool True if an active assignment exists, false otherwise.
+     */
+    public function hasActivePpmpAssignment(int $userId): bool
+    {
+        $result = $this->where('submitted_to', $userId)
+                         ->where('task_type', 'assignment')
+                         ->where('is_deleted', 0)
+                         ->first();
+
+        return !empty($result);
     }
 }

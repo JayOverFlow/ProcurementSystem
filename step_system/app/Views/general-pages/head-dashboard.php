@@ -77,10 +77,16 @@
                                             <td class="text-center"><?= esc($subordinate['user_firstname']) ?></td>
                                             <td class="text-center"><?= esc($subordinate['user_lastname']) ?></td>
                                             <td class="text-center">
+                                                <?php if ($subordinate['has_assignment']): ?>
+                                                    <span class="badge outline-badge-success mb-1 me-1">Assigned</span>
+                                                <?php else: ?>
                                                     <span class="badge outline-badge-dark mb-1 me-1">Not Assigned</span>
+                                                <?php endif; ?>
                                             </td>
                                             <td class="text-center">
-                                                <button class="btn btn-danger mb-1 me-1">Assign</button>
+                                                <?php if (!$subordinate['has_assignment']): ?>
+                                                    <button class="btn btn-danger btn-sm assign-ppmp-btn" data-user-id="<?= esc($subordinate['user_id']) ?>">Assign</button>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
