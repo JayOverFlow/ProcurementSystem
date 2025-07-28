@@ -57,12 +57,14 @@ class TaskModel extends Model
     public function getTasksForUser(int $userId)
     {
         return $this->withDeleted()
-                    ->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status')
+                    ->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status, par_tbl.prop_ack_status, ics_tbl.invent_custo_status')
                     ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_by')
                     ->join('ppmp_tbl', 'ppmp_tbl.ppmp_id = tasks_tbl.ppmp_id_fk', 'left')
                     ->join('app_tbl', 'app_tbl.app_id = tasks_tbl.app_id_fk', 'left')
                     ->join('pr_tbl', 'pr_tbl.pr_id = tasks_tbl.pr_id_fk', 'left')
                     ->join('po_tbl', 'po_tbl.po_id = tasks_tbl.po_id_fk', 'left')
+                    ->join('par_tbl', 'par_tbl.prop_ack_id = tasks_tbl.par_id_fk', 'left') // Added join for par_tbl
+                    ->join('ics_tbl', 'ics_tbl.invent_custo_id = tasks_tbl.ics_id_fk', 'left') // Added join for ics_tbl
                     ->where('tasks_tbl.submitted_to', $userId)
                     ->where('tasks_tbl.is_deleted', 0)
                     ->orderBy('tasks_tbl.created_at', 'DESC')
