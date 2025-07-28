@@ -242,3 +242,9 @@
         </div>
     </div>
 </div>
+</form>
+
+<script>
+    // Pass the items data to JavaScript
+    var existingItems = <?= json_encode($par_items ?? []) ?>;
+</script>

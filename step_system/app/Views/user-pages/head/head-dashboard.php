@@ -43,7 +43,7 @@
         </div>
     </div>
 
-                    <!-- Right Side Container: Cards (Row 1) + Data Table (Row 2) -->
+    <?= $this->include('general-pages/head-dashboard') ?>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 <script src="<?= base_url('assets/src/plugins/src/apex/apexcharts.min.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js') ?>"></script>
 <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->   
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js') ?>"></script>
 <script src="<?= base_url('assets/src/assets/js/custom.js'); ?>"></script>
 
