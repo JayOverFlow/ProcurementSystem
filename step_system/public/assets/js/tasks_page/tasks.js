@@ -86,11 +86,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     approveBtn.setAttribute('data-id', data.po_id_fk);
                     rejectBtn.setAttribute('data-task-type', 'po');
                     rejectBtn.setAttribute('data-id', data.po_id_fk);
+                } else if (data.par_id_fk) {
+                    modalPreviewLink.href = `/par/preview/${data.par_id_fk}`;
+                    modalPreviewLink.style.display = 'inline-flex';
+                    modalPreviewLinkText.textContent = 'View submitted Property Acknowledgement Receipt';
+                    approveBtn.setAttribute('data-task-type', 'par');
+                    approveBtn.setAttribute('data-id', data.par_id_fk);
+                    rejectBtn.setAttribute('data-task-type', 'par');
+                    rejectBtn.setAttribute('data-id', data.par_id_fk);
+                } else if (data.ics_id_fk) {
+                    modalPreviewLink.href = `/ics/preview/${data.ics_id_fk}`;
+                    modalPreviewLink.style.display = 'inline-flex';
+                    modalPreviewLinkText.textContent = 'View submitted Inventory Custodian Slip';
+                    approveBtn.setAttribute('data-task-type', 'ics');
+                    approveBtn.setAttribute('data-id', data.ics_id_fk);
+                    rejectBtn.setAttribute('data-task-type', 'ics');
+                    rejectBtn.setAttribute('data-id', data.ics_id_fk);
                 }
 
-
                 // Handle status display
-                const status = data.ppmp_status || data.app_status || data.pr_status || data.po_status;
+                const status = data.ppmp_status || data.app_status || data.pr_status || data.po_status || data.par_status || data.ics_status;
                 if (status === 'Approved' || status === 'Rejected') {
                     modalActionButtons.style.display = 'none';
                     const badgeClass = status === 'Approved' ? 'badge-success' : 'badge-danger';
@@ -138,6 +153,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 endpoint = '/tasks/update-po-status';
                 payload = { po_id: id, status: status };
                 break;
+            case 'par':
+                documentType = 'Property Acknowledgement Receipt';
+                endpoint = '/tasks/update-par-status';
+                payload = { par_id: id, status: status };
+                break;
+            case 'ics':
+                documentType = 'Inventory Custodian Slip';
+                endpoint = '/tasks/update-ics-status';
+                payload = { ics_id: id, status: status };
+                break;
             default:
                 console.error('Unknown task type:', taskType);
                 return;
@@ -178,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         taskModal.hide();
                         Swal.fire(
-                            `${status}!`,
+                            `${status}!`, 
                             `The ${documentType} has been ${status.toLowerCase()}.`,
                             'success'
                         ).then(() => location.reload()); // Reload page to see changes

@@ -61,4 +61,9 @@ class ParModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function updateStatus(int $parId, string $status)
+    {
+        return $this->update($parId, ['prop_ack_status' => $status]);
+    }
 } 

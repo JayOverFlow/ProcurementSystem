@@ -121,6 +121,10 @@ $routes->group('tasks', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('details/(:num)', 'TasksController::getDetails/$1');
     $routes->post('update-ppmp-status', 'TasksController::updatePpmpStatus');
     $routes->post('update-app-status', 'TasksController::updateAppStatus');
+    $routes->post('update-pr-status', 'TasksController::updatePrStatus');
+    $routes->post('update-po-status', 'TasksController::updatePoStatus');
+    $routes->post('update-par-status', 'TasksController::updateParStatus'); // Added route for PAR status update
+    $routes->post('update-ics-status', 'TasksController::updateIcsStatus'); // Added route for ICS status update
 });
 
 // Material Requisition (MR)
@@ -161,6 +165,14 @@ $routes->group('par', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create/(:num)', 'ParController::index/$1'); // For loading the form with the data
     $routes->post('save', 'ParController::save');
     $routes->post('submit', 'ParController::submit');
+});
+
+// ICS
+$routes->group('ics', ['filter' => 'auth:auth'], function($routes) {
+    $routes->get('create', 'IcsController::index');
+    $routes->get('create/(:num)', 'IcsController::index/$1'); // For loading the form with the data
+    $routes->post('save', 'IcsController::save');
+    $routes->post('submit', 'IcsController::submit');
 });
 
 // Preview
