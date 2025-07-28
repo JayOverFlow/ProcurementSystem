@@ -47,6 +47,8 @@
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('assets/src/assets/js/dashboard/dash_1.js'); ?>"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<?= base_url('assets/js/dashboard/head-dashboard.js'); ?>"></script>
 
 <!-- For Data Table -->
 <script src="<?= base_url('assets/src/plugins/src/table/datatable/datatables.js'); ?>"></script>
