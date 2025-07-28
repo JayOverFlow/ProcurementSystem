@@ -74,6 +74,11 @@ $routes->group('', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');
 });
 
+// Assistant Director
+$routes->group('', ['filter' => 'auth:user'], function($routes) {
+    $routes->get('dashboard', 'DashboardController::index');
+});
+
 // Planning
 $routes->group('', ['filter' => 'auth:user'], function($routes) {
     $routes->get('dashboard', 'DashboardController::index');

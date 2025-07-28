@@ -14,7 +14,7 @@ class AuthFilter implements FilterInterface
      * normal execution. However, when an abnormal state
      * is found, it should return an instance of
      * CodeIgniter\HTTP\Response. If it does, script
-     * execution will end and that Response will be
+     * execution will end and that Response will bea
      * sent back to the client, allowing for error pages,
      * redirects, etc.
      *
