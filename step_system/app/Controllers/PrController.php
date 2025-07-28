@@ -265,7 +265,7 @@ class PrController extends BaseController
             if ($task) {
                 // Update task to submit to director
                 $this->taskModel->update($task['task_id'],[
-                    'submitted_to' => $head['user_id'],
+                    'submitted_to' => $head,
                     'task_description' => 'A new Purchase Request has been submitted for your review.',
                 ]);
             } else { // If task not found

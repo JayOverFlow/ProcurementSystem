@@ -151,16 +151,19 @@ class UserModel extends Model {
 
     public function getHeadByDepId($depId)
     {
-        return $this->select('users_tbl.user_id')
-            ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
-            ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id')
-            ->where('user_role_department_tbl.department_id', $depId)
-            ->groupStart()
-                ->like('roles_tbl.role_name', 'Head', 'after')
-                ->orLike('roles_tbl.role_name', 'Department Head', 'after')
-                ->orLike('roles_tbl.role_name', 'Planning Officer', 'after')
-            ->groupEnd()
-            ->first();
+
+        $builder = $this->db->table('users_tbl u');
+
+        $builder->select('u.user_id')
+                ->join('user_role_department_tbl urd', 'u.user_id = urd.user_id')
+                ->join('roles_tbl r', 'urd.role_id = r.role_id')
+                ->where('urd.department_id', $depId)
+                ->where('r.gen_role !=', 'Faculty') // Exclude 'Fac roles
+                ->limit(1);
+
+        $result = $builder->get()->getRowArray();
+
+        return $result['user_id'] ?? null; // Return user_id or null
     }
 }
 
