@@ -55,4 +55,9 @@ class PrModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function updateStatus(int $prId, string $status)
+    {
+        return $this->update($prId, ['pr_status' => $status]);
+    }
 }

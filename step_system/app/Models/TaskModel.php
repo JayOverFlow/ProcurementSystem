@@ -72,7 +72,7 @@ class TaskModel extends Model
     public function getTaskDetails(int $taskId)
     {
         return $this->withDeleted()
-                    ->select("tasks_tbl.created_at, tasks_tbl.task_description, tasks_tbl.ppmp_id_fk, tasks_tbl.app_id_fk, tasks_tbl.pr_id_fk, tasks_tbl.po_id_fk, users_tbl.user_fullname, users_tbl.user_email, GROUP_CONCAT(roles_tbl.role_name SEPARATOR ', ') as role_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status")
+                    ->select("tasks_tbl.created_at, tasks_tbl.task_description, tasks_tbl.ppmp_id_fk, tasks_tbl.app_id_fk, tasks_tbl.pr_id_fk, tasks_tbl.po_id_fk, tasks_tbl.par_id_fk, tasks_tbl.ics_id_fk, users_tbl.user_fullname, users_tbl.user_email, GROUP_CONCAT(roles_tbl.role_name SEPARATOR ', ') as role_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status, par_tbl.prop_ack_status, ics_tbl.invent_custo_status")
                     ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_by')
                     ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = tasks_tbl.submitted_by', 'left')
                     ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id', 'left')
@@ -80,6 +80,8 @@ class TaskModel extends Model
                     ->join('app_tbl', 'app_tbl.app_id = tasks_tbl.app_id_fk', 'left')
                     ->join('pr_tbl', 'pr_tbl.pr_id = tasks_tbl.pr_id_fk', 'left')
                     ->join('po_tbl', 'po_tbl.po_id = tasks_tbl.po_id_fk', 'left')
+                    ->join('par_tbl', 'par_tbl.prop_ack_id = tasks_tbl.par_id_fk', 'left') // Added join for par_tbl
+                    ->join('ics_tbl', 'ics_tbl.invent_custo_id = tasks_tbl.ics_id_fk', 'left') // Added join for ics_tbl
                     ->where('tasks_tbl.task_id', $taskId)
                     ->where('tasks_tbl.is_deleted', 0)
                     ->groupBy([
@@ -89,7 +91,9 @@ class TaskModel extends Model
                        'ppmp_tbl.ppmp_status',
                        'app_tbl.app_status',
                        'pr_tbl.pr_status',
-                       'po_tbl.po_status'
+                       'po_tbl.po_status',
+                       'par_tbl.prop_ack_status', // Added to groupBy
+                       'ics_tbl.invent_custo_status' // Added to groupBy
                     ])
                     ->first();
     }

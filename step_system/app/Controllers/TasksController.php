@@ -6,6 +6,10 @@ use App\Controllers\BaseController;
 use App\Models\TaskModel;
 use App\Models\PpmpModel;
 use App\Models\AppModel;
+use App\Models\PrModel; // Added PrModel
+use App\Models\PoModel; // Added PoModel
+use App\Models\ParModel; // Added ParModel
+use App\Models\IcsModel; // Added IcsModel
 use App\Models\UserModel;
 
 class TasksController extends BaseController
@@ -13,12 +17,20 @@ class TasksController extends BaseController
     protected $taskModel;
     protected $ppmpModel;
     protected $appModel;
+    protected $prModel; // Declared PrModel
+    protected $poModel; // Declared PoModel
+    protected $parModel; // Declared ParModel
+    protected $icsModel; // Declared IcsModel
     protected $userModel;
 
     public function __construct() {
         $this->taskModel = new TaskModel();
         $this->ppmpModel = new PpmpModel();
         $this->appModel = new AppModel();
+        $this->prModel = new PrModel();
+        $this->poModel = new PoModel();
+        $this->parModel = new ParModel(); // Initialized ParModel
+        $this->icsModel = new IcsModel(); // Initialized IcsModel
         $this->userModel = new UserModel();
     }
 
@@ -165,6 +177,74 @@ class TasksController extends BaseController
         return $this->response->setStatusCode(500, 'Failed to update status.');
     }
 
+    public function updatePrStatus()
+    {
+        $json = $this->request->getJSON();
+        $prId = $json->pr_id ?? null;
+        $status = $json->status ?? null;
+
+        if (!$prId || !in_array($status, ['Approved', 'Rejected'])) {
+            return $this->response->setStatusCode(400, 'Invalid data provided.');
+        }
+
+        if ($this->prModel->updateStatus($prId, $status)) {
+            return $this->response->setJSON(['success' => true]);
+        }
+        
+        return $this->response->setStatusCode(500, 'Failed to update status.');
+    }
+
+    public function updatePoStatus()
+    {
+        $json = $this->request->getJSON();
+        $poId = $json->po_id ?? null;
+        $status = $json->status ?? null;
+
+        if (!$poId || !in_array($status, ['Approved', 'Rejected'])) {
+            return $this->response->setStatusCode(400, 'Invalid data provided.');
+        }
+
+        if ($this->poModel->updateStatus($poId, $status)) {
+            return $this->response->setJSON(['success' => true]);
+        }
+        
+        return $this->response->setStatusCode(500, 'Failed to update status.');
+    }
+
+    public function updateParStatus()
+    {
+        $json = $this->request->getJSON();
+        $parId = $json->par_id ?? null;
+        $status = $json->status ?? null;
+
+        if (!$parId || !in_array($status, ['Approved', 'Rejected'])) {
+            return $this->response->setStatusCode(400, 'Invalid data provided.');
+        }
+
+        if ($this->parModel->update($parId, ['prop_ack_status' => $status])) {
+            return $this->response->setJSON(['success' => true]);
+        }
+
+        return $this->response->setStatusCode(500, 'Failed to update status.');
+    }
+
+    public function updateIcsStatus()
+    {
+        $json = $this->request->getJSON();
+        $icsId = $json->ics_id ?? null;
+        $status = $json->status ?? null;
+
+        if (!$icsId || !in_array($status, ['Approved', 'Rejected'])) {
+            return $this->response->setStatusCode(400, 'Invalid data provided.');
+        }
+
+        if ($this->icsModel->update($icsId, ['invent_custo_status' => $status])) {
+            return $this->response->setJSON(['success' => true]);
+        }
+
+        return $this->response->setStatusCode(500, 'Failed to update status.');
+    }
+  
     /**
      * Handles the AJAX request to assign a PPMP task to a subordinate.
      */

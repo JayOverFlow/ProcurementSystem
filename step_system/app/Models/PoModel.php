@@ -73,4 +73,9 @@ class PoModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function updateStatus(int $poId, string $status)
+    {
+        return $this->update($poId, ['po_status' => $status]);
+    }
 }
