@@ -140,8 +140,8 @@
                         <div class="user-profile-section">
                             <div class="media mx-auto">
                                 <div class="media-body">
-                                    <h5></h5>
-                                    <p></p>
+                                    <h5><?= esc($user_data['user_fullname']) ?></h5>
+                                    <p><?= esc($user_data['user_role_name'] ?? $user_data['user_type']) ?></p>
                                 </div>
                             </div>
                         </div>
@@ -154,3 +154,5 @@
                 </li>
             </ul>
         </header>
+
+        

@@ -29,12 +29,16 @@
 
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/assets/css/dark/scrollspyNav.css'); ?>"/>
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/plugins/css/dark/stepper/custom-bsStepper.css'); ?>">
+    <link href="<?= base_url('assets/src/assets/css/light/authentication/auth-cover.css'); ?>" rel="stylesheet" type="text/css" />
+
 
     <!-- For Modal -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/assets/css/light/components/modal.css'); ?>"/>
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/src/assets/css/dark/components/modal.css'); ?>"/>
 
     <link type="text/css" href="<?= base_url('assets/src/plugins/src/animate/animate.css" rel="stylesheet'); ?>" />
+        <link href="<?= base_url('assets/src/assets/css/light/authentication/auth-cover.css'); ?>" rel="stylesheet" type="text/css" />
+
 
     <!-- For Loader -->
     <link href="<?= base_url('assets/src/plugins/css/light/loaders/custom-loader.css'); ?>" rel="stylesheet" type="text/css" />
@@ -84,13 +88,7 @@
                         
                     <div class="auth-cover">
     
-                        <div class="position-relative">
-    
-                            <img src="<?= base_url('assets/src/assets/img/auth-cover.svg'); ?>" alt="auth-img">
-    
-                            <h2 class="mt-5 text-white font-weight-bolder px-2">Join the community of expert developers</h2>
-                            <p class="text-white px-2">It is easy to setup with great customer experience. Start your 7-day free trial</p>
-                        </div>
+                        
 
                     </div>
                 </div>
