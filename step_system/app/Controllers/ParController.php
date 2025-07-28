@@ -153,7 +153,8 @@ class ParController extends BaseController
                 'task_description' => 'A Property Acknowledgement Receipt has been saved and is ready for submission.'
             ];
 
-            $existingTask = $this->taskModel->where('par_id_fk', $parId)->first(); // Need to add getTaskByParId to TaskModel
+            // $existingTask = $this->taskModel->where('par_id_fk', $parId)->first(); // Need to add getTaskByParId to TaskModel
+            $existingTask = $this->taskModel->getTaskByParId($parId); // Need to add getTaskByParId to TaskModel
 
             if ($existingTask) {
                 $this->taskModel->update($existingTask['task_id'], $taskData);
@@ -171,6 +172,50 @@ class ParController extends BaseController
         } catch (\Exception $e) {
             log_message('error', 'PAR Save Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
+        }
+    }
+
+    public function submit() {
+        $userData = $this->loadUserSession();
+        $db = \Config\Database::connect(); // Database connection
+        $parId = $this->request->getPost('par_id'); // Get the par_id from hidden input field
+
+        // If the document already submitted
+        $par = $this->parModel->find($parId);
+        if ($par && $par['prop_ack_status'] !== 'Draft') {
+            return redirect()->to('par/create/' . $parId)->with('error', 'This Property Acknowledgement Receipt has already been submitted.');
+        }
+
+        $db->transStart(); // Start db transaction
+
+        try {
+            $task = $this->taskModel->getTaskByParId($parId); // Get task corresponds to parId
+            // If task found
+            if ($task) {
+                // Update task to submit to director
+                $this->taskModel->update($task['task_id'],[
+                    'submitted_to' => $this->request->getPost('par_received_from_user_fk'),
+                    'task_description' => 'A new Property Acknowledgement Receipt has been submitted for your review.',
+                ]);
+            } else { // If task not found
+                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+            }
+
+            $this->parModel->update($parId, ['prop_ack_status' => 'Pending']); // Update the prop_ack_status to Pending
+
+            $db->transComplete(); // Complete the database transaction
+
+            // If transaction failed
+            if ($db->transStatus() === false) {
+                return redirect()->back()->with('error', 'Failed to submit Property Acknowledgement Receipt due to a database error.');
+            }
+
+            // Redirect back with successful message
+            return redirect()->to('par/create/' . $parId)->with('success', 'Property Acknowledgement Receipt successfully submitted for review.');
+
+        } catch (\Exception $e) {
+            log_message('error', 'PAR Submission Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
         }
     }
 }

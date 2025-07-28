@@ -153,7 +153,7 @@
 
 
                                                 <div class="ms-3">
-                                                    <h4 class="mt-3">Received From:</h4>
+                                                    <h4 class="mt-3">Received By:</h4>
                                                     <div class="form-group row mt-4 ms-1">
                                                         <label for="par-received-from-user-fk" class="col-sm-3 col-form-label col-form-label-sm">Personnel</label>
                                                         <div class="col-sm-9">
@@ -161,7 +161,7 @@
                                                                 <option value="0">Select</option>
                                                                 <?php if(!empty($users)): ?>
                                                                     <?php foreach($users as $user): ?>
-                                                                        <option value="<?= esc($user['user_id']) ?>" <?= isset($par['par_received_from_user_fk']) && $par['par_received_from_user_fk'] == $user['user_id'] ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
+                                                                        <option value="<?= esc($user['user_id']) ?>" data-fullname="<?= esc($user['user_fullname']) ?>" <?= isset($par['par_received_from_user_fk']) && $par['par_received_from_user_fk'] == $user['user_id'] ? 'selected' : '' ?>><?= esc($user['user_fullname']) ?></option>
                                                                     <?php endforeach; ?>
                                                                 <?php endif;?>
                                                             </select>
