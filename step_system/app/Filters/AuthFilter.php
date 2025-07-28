@@ -49,20 +49,8 @@ class AuthFilter implements FilterInterface
                         if ($isAdminLoggedIn) {
                             return redirect()->to('/admin/dashboard');
                         } else {
-                            // Redirect based on user type/role
-                            $userType = $session->get('user_gen_role');
-                            switch ($userType) {
-                                case 'Faculty':
-                                    return redirect()->to('/faculty/dashboard');
-                                case 'Supply':
-                                    return redirect()->to('/supply/dashboard');
-                                case 'ProcurementOffice':
-                                    return redirect()->to('/procurement/dashboard');
-                                case 'Unassigned':
-                                    return redirect()->to('/unassigned/dashboard');
-                                default:
-                                    return redirect()->to('/dashboard');
-                            }
+                            // Redirect regular users to the main dashboard
+                            return redirect()->to('/dashboard');
                         }
                     }
                     break;
