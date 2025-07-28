@@ -182,4 +182,9 @@ $routes->group('stepper', function($routes) {
 // Procurement Feature Routes
 $routes->post('procurement/delete', 'ProcurementPageController::deleteForms'); // Route to handle soft deletion of forms
 
+//preview pages (DELETE THIS)
+$routes->group('preview', function ($routes) {
+$routes->get('po', 'PreviewController::postPreviewPO');
+$routes->get('pr', 'PreviewController::postPreviewPR');
+});
 
