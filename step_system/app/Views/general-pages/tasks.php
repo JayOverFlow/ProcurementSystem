@@ -56,8 +56,7 @@
             <div class="modal-body">
                 <p id="modal-description"></p>
                 <div id="modal-action-buttons" class="widget-content text-center mt-5">
-                    <button type="button" id="reject-btn" class="btn btn-sm warning reject" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
-                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #8C0404; color: #FFFFFF">APPROVE</button>
+                    <button type="button" id="create-btn" class="btn btn-sm" style="background-color: #8C0404; color: #FFFFFF">CREATE</button>
                 </div>
                 <div id="modal-status-display" class="text-center mt-5" style="display: none;">
                     <!-- Content will be set by JavaScript -->

@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalDescription = document.getElementById('modal-description');
     const modalPreviewLink = document.getElementById('modal-preview-link');
     const modalPreviewLinkText = document.getElementById('modal-preview-link-text');
-    const approveBtn = document.getElementById('approve-btn');
-    const rejectBtn = document.getElementById('reject-btn');
+    const createBtn = document.getElementById('create-btn');
     const modalActionButtons = document.getElementById('modal-action-buttons');
     const modalStatusDisplay = document.getElementById('modal-status-display');
 
@@ -31,10 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalDate.textContent = '';
         modalDescription.textContent = '';
         modalPreviewLink.style.display = 'none';
-        approveBtn.removeAttribute('data-id');
-        approveBtn.removeAttribute('data-task-type');
-        rejectBtn.removeAttribute('data-id');
-        rejectBtn.removeAttribute('data-task-type');
+        // No longer need to manage approve/reject buttons
         modalActionButtons.style.display = 'block';
         modalStatusDisplay.style.display = 'none';
 
@@ -58,50 +54,44 @@ document.addEventListener('DOMContentLoaded', function () {
                     modalPreviewLink.href = `/ppmp/preview/${data.ppmp_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
                     modalPreviewLinkText.textContent = 'View submitted PPMP';
-                    approveBtn.setAttribute('data-task-type', 'ppmp');
-                    approveBtn.setAttribute('data-id', data.ppmp_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'ppmp');
-                    rejectBtn.setAttribute('data-id', data.ppmp_id_fk);
+                    // approveBtn.setAttribute('data-task-type', 'ppmp');
+                    // approveBtn.setAttribute('data-id', data.ppmp_id_fk);
+                    // rejectBtn.setAttribute('data-task-type', 'ppmp');
+                    // rejectBtn.setAttribute('data-id', data.ppmp_id_fk);
                 } else if (data.app_id_fk) {
                     modalPreviewLink.href = `/app/preview/${data.app_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
                     modalPreviewLinkText.textContent = 'View submitted APP';
-                    approveBtn.setAttribute('data-task-type', 'app');
-                    approveBtn.setAttribute('data-id', data.app_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'app');
-                    rejectBtn.setAttribute('data-id', data.app_id_fk);
+                    // approveBtn.setAttribute('data-task-type', 'app');
+                    // approveBtn.setAttribute('data-id', data.app_id_fk);
+                    // rejectBtn.setAttribute('data-task-type', 'app');
+                    // rejectBtn.setAttribute('data-id', data.app_id_fk);
                 } else if (data.pr_id_fk) {
                     modalPreviewLink.href = `/pr/preview/${data.pr_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
                     modalPreviewLinkText.textContent = 'View submitted Purchase Request';
-                    approveBtn.setAttribute('data-task-type', 'pr');
-                    approveBtn.setAttribute('data-id', data.pr_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'pr');
-                    rejectBtn.setAttribute('data-id', data.pr_id_fk);
+                    // approveBtn.setAttribute('data-task-type', 'pr');
+                    // approveBtn.setAttribute('data-id', data.pr_id_fk);
+                    // rejectBtn.setAttribute('data-task-type', 'pr');
+                    // rejectBtn.setAttribute('data-id', data.pr_id_fk);
                 } else if (data.po_id_fk) {
                     modalPreviewLink.href = `/po/preview/${data.po_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
                     modalPreviewLinkText.textContent = 'View submitted Purchase Order';
-                    approveBtn.setAttribute('data-task-type', 'po');
-                    approveBtn.setAttribute('data-id', data.po_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'po');
-                    rejectBtn.setAttribute('data-id', data.po_id_fk);
+                    // approveBtn.setAttribute('data-task-type', 'po');
+                    // approveBtn.setAttribute('data-id', data.po_id_fk);
+                    // rejectBtn.setAttribute('data-task-type', 'po');
+                    // rejectBtn.setAttribute('data-id', data.po_id_fk);
                 } else if (data.par_id_fk) {
                     modalPreviewLink.href = `/par/preview/${data.par_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
                     modalPreviewLinkText.textContent = 'View submitted Property Acknowledgement Receipt';
-                    approveBtn.setAttribute('data-task-type', 'par');
-                    approveBtn.setAttribute('data-id', data.par_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'par');
-                    rejectBtn.setAttribute('data-id', data.par_id_fk);
+                    // No longer need to manage approve/reject buttons
                 } else if (data.ics_id_fk) {
                     modalPreviewLink.href = `/ics/preview/${data.ics_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
                     modalPreviewLinkText.textContent = 'View submitted Inventory Custodian Slip';
-                    approveBtn.setAttribute('data-task-type', 'ics');
-                    approveBtn.setAttribute('data-id', data.ics_id_fk);
-                    rejectBtn.setAttribute('data-task-type', 'ics');
-                    rejectBtn.setAttribute('data-id', data.ics_id_fk);
+                    // No longer need to manage approve/reject buttons
                 }
 
                 // Handle status display
@@ -222,8 +212,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    approveBtn.addEventListener('click', handleStatusUpdate);
-    rejectBtn.addEventListener('click', handleStatusUpdate);
+    createBtn.addEventListener('click', function() {
+        window.location.href = '/procurement';
+    });
 
     c2 = $('#style-2').DataTable({
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'f><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'>>>" +
