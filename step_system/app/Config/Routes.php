@@ -125,7 +125,11 @@ $routes->group('tasks', ['filter' => 'auth:auth'], function($routes) {
     $routes->post('update-po-status', 'TasksController::updatePoStatus');
     $routes->post('update-par-status', 'TasksController::updateParStatus'); // Added route for PAR status update
     $routes->post('update-ics-status', 'TasksController::updateIcsStatus'); // Added route for ICS status update
-    $routes->post('assign/ppmp', 'TasksController::assignPpmp'); // Assign PPMP Task
+});
+
+// Tasks
+$routes->group('tasks', ['filter' => 'auth:auth'], function($routes) {
+    $routes->post('assign', 'TasksController::assignTask'); // Assign PPMP or PR Task
 });
 
 // Material Requisition (MR)

@@ -245,37 +245,51 @@ class TasksController extends BaseController
         return $this->response->setStatusCode(500, 'Failed to update status.');
     }
   
-    /**
-     * Handles the AJAX request to assign a PPMP task to a subordinate.
+        /**
+     * Handles the AJAX request to assign a task (PPMP or PR) to a subordinate.
      */
-    public function assignPpmp()
+    public function assignTask()
     {
         // Get the current user's data from the session
         $userData = $this->loadUserSession();
         $assignerId = $userData['user_id'];
 
-        // Get the subordinate's user ID from the POST request
+                // Get data from the POST request
         $assigneeId = $this->request->getPost('user_id');
+        $taskType = $this->request->getPost('task_type'); // 'ppmp' or 'pr'
 
-        // Basic validation
-        if (empty($assigneeId)) {
-            return $this->response->setJSON(['success' => false, 'message' => 'User ID is required.'])->setStatusCode(400);
+        // Validation
+        if (empty($assigneeId) || empty($taskType)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User ID and task type are required.'])->setStatusCode(400);
         }
 
-        // Prepare the data for the new task
+        // Determine task description based on type
+        $description = '';
+        switch ($taskType) {
+            case 'ppmp':
+                $description = 'You are assigned to draft the Project Procurement Management Plan.';
+                break;
+            case 'pr':
+                $description = 'You are assigned to create the Purchase Request.';
+                break;
+            default:
+                return $this->response->setJSON(['success' => false, 'message' => 'Invalid task type.'])->setStatusCode(400);
+        }
+
+        // Prepare data for the new task
         $taskData = [
             'submitted_by'     => $assignerId,
             'submitted_to'     => $assigneeId,
-            'task_description' => 'You are assigned to draft the Project Procurement Management Plan.',
-            'task_type'        => 'Assignment', 
+            'task_description' => $description,
+            'task_type'        => 'Assignment',
             'task_status'      => 'Pending',
         ];
 
-        // Call the model to insert the new task
+        // Use a transaction to ensure atomicity
         $db = \Config\Database::connect();
         $db->transStart();
 
-        $this->taskModel->assignPpmpTask($taskData);
+        $this->taskModel->insert($taskData);
 
         $db->transComplete();
 

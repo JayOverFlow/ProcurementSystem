@@ -63,4 +63,31 @@ class PpmpModel extends Model
     {
         return $this->update($ppmpId, ['ppmp_status' => $status]);
     }
+
+    /**
+     * Checks if a user has an approved PPMP for the current year.
+     */
+    public function hasApprovedPpmpForUser(int $userId): bool
+    {
+        $currentYear = date('Y');
+        $result = $this->where('saved_by_user_id_fk', $userId)
+                        ->where('ppmp_status', 'Approved')
+                        ->where('YEAR(ppmp_date_approved)', $currentYear)
+                        ->first();
+
+        return $result !== null;
+    }
+
+    public function hasApprovedPpmpForDepartment(int $departmentId): bool
+    {
+        $currentYear = date('Y');
+        $builder = $this->db->table($this->table . ' as pml');
+        $builder->join('user_role_department_tbl as urd', 'pml.saved_by_user_id_fk = urd.user_id');
+        $builder->where('urd.department_id', $departmentId);
+        $builder->where('pml.ppmp_status', 'Approved');
+        $builder->where('YEAR(pml.ppmp_date_approved)', $currentYear);
+        $query = $builder->get();
+
+        return $query->getRow() !== null;
+    }
 }
