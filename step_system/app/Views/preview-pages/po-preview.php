@@ -1,316 +1,286 @@
-<?= $this->extend('user-pages/planning/layout/plan-base-layout') ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Order</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: #f5f5f5; 
+            font-size: 12px;
+        }
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            color: #C62742;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .header .form-info {
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        .info-col {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .info-col:last-child {
+            margin-right: 0;
+        }
+        .label {
+            font-weight: bold;
+            display: inline-block;
+            min-width: 80px;
+        }
+        .gentlemen {
+            margin: 20px 0;
+            font-size: 12px;
+        }
+        .delivery-info {
+            display: flex;
+            margin: 15px 0;
+        }
+        .delivery-left, .delivery-right {
+            flex: 1;
+        }
+        .delivery-right {
+            margin-left: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 11px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: none;
+        }
+        th {
+            border-bottom: 2px solid #f3f4f6;
+            font-weight: normal;
+            color: black;
+        }
+        tbody tr:nth-of-type(odd) td {
+            background-color: rgba(0,0,0,.05);
+        }
+        .description {
+            text-align: left !important;
+        }
+        .total-section {
+            text-align: right;
+            margin: 20px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .signature-section {
+            margin-top: 30px;
+        }
+        .signature-row {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .signature-col {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .signature-col:last-child {
+            margin-right: 0;
+        }
+        .underline {
+            border-bottom: 1px solid #000;
+            min-height: 20px;
+            margin-bottom: 5px;
+        }
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>PURCHASE ORDER</h1>
+        <div class="form-info">FM-PR-007 &nbsp;&nbsp;&nbsp; REV 0 &nbsp;&nbsp;&nbsp; 09NOV2016</div>
+    </div>
 
-
-<?= $this->section('css') ?>
-    <link href="<?= base_url('assets/src/assets/css/light/apps/invoice-add.css') ?>" rel="stylesheet" type="text/css" />
-
-    <link href="<?= base_url('assets/src/assets/css/dark/apps/invoice-add.css') ?>" rel="stylesheet" type="text/css" />
-<?= $this->endSection() ?>
-
-<?= $this->section('content') ?>
-    <div class="row invoice layout-top-spacing layout-spacing">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
-        <div class="doc-container">
-
-            <div class="row">
-                <div class="col-xl-9" style="width: 100%">
-
-                    <div class="invoice-detail-body">
-
-                        <div class="invoice-content">
-
-                            <div class="invoice-detail-title d-flex flex-column text-start mb-0">
-                                <div>
-                                    <h2 class="fw-bold" style="color: #C62742">Purchase Order</h2>
-                                </div>
-                                <div class="d-flex justify-content-start gap-3">
-                                    <p class="col-auto text-start mb-0">FM-PR-007</p>
-                                    <p class="col-auto text-start mb-0">REV 0</p>
-                                    <p class="col-auto text-start mb-0">09NOV2016</p>
-                                </div>
-                            </div>
-
-                            <hr class="my-3">
-                            <div class="invoice-detail-title d-flex flex-column text-start mb-0">
-
-                                <div class="content-section">
-
-                                    <div class="inv--head-section inv--detail-section">
-
-                                        <div class="row">
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-street-addr mt-3" style="color: #1a1e21; font-size: large">Office</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">Address</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">Tel No.</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">TIN</p>
-                                            </div>
-
-                                            <div class="col-sm-6 col-12 mr-auto">
-                                                <p class="inv-street-addr mt-3" style="font-size: large">BASIC ARTS AND SCIENCES DEPARTMENT</p>
-                                                <p class="inv-email-address">05</p>
-                                                <p class="inv-email-address">2024-05-67</p>
-                                                <p class="inv-email-address">2024-05-67</p>
-                                            </div>
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-street-addr mt-3" style="color: #1a1e21; font-size: large">P.O. No.</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">Date</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">Mode of Procurement</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">TUP-Taguig TIN</p>
-                                            </div>
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-street-addr mt-3"  style="font-size: large">2024-05-67</p>
-                                                <p class="inv-email-address">05/29/2024</p>
-                                                <p class="inv-email-address  text-opacity-50 fst-italic">Direct Contracting</p>
-                                                <p class="inv-email-address  text-opacity-50">000-824-548-001</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <hr class="my-3">
-                                    <div class="inv--detail-section inv--customer-detail-section">
-
-                                        <div class="row">
-                                            <p class="text-lg-start">Gentlemen</p>
-                                            <p class="inv-to text-center" style="margin-left: 10px; padding:0px 20px 0px 20px" >Note:Please furnish this Office the following articles subject to the term and conditions contained herein. </p>
-                                        </div>
-
-                                    </div>
-
-                                    <hr class="my-2">
-
-                                        <div class="inv--head-section inv--detail-section">
-
-                                            <div class="row">
-
-                                                <div class="col-sm-2 col-12 mr-auto">
-                                                    <p class="inv-street-addr" style="color: #1a1e21; ">Place of Delivery</p>
-                                                    <p class="inv-email-address" style="color: #1a1e21">Date of Delivery</p>
-
-                                                </div>
-
-                                                <div class="col-sm-6 col-12 mr-auto">
-                                                    <p class="inv-email-address fw-bold">TUP-Taguig Supply Office</p>
-                                                    <p class="inv-email-address"></p>
-                                                </div>
-
-                                                <div class="col-sm-2 col-12 mr-auto">
-                                                    <p class="inv-street-addr" style="color: #1a1e21; ">Delivery Term</p>
-                                                    <p class="inv-email-address" style="color: #1a1e21">Payment Term</p>
-                                                </div>
-
-                                                <div class="col-sm-2 col-12 mr-auto">
-                                                    <p class="inv-email-address  text-opacity-50 fst-italic">90 calendar days</p>
-                                                    <p class="inv-email-address  text-opacity-50">15 calendar days</p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    <hr class="my-1 mt-1">
-
-                                    <div class="inv--product-table-section">
-                                        <div class="table-responsive">
-                                            <table class="table-striped table">
-                                                <thead class="">
-                                                <tr>
-                                                    <th style="background: #FFFFFF" scope="col text-center">Stock</th>
-                                                    <th style="background: #FFFFFF" scope="col text-center">Unit</th>
-                                                    <th style="background: #FFFFFF" scope="col text-center">Description</th>
-                                                    <th style="background: #FFFFFF" class="text-center" scope="col">Quantity</th>
-                                                    <th style="background: #FFFFFF" class="text-center" scope="col">Unit Cost</th>
-                                                    <th style="background: #FFFFFF" class="text-center" scope="col">Amount</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center">set</td>
-                                                    <td>Bridge set, ME-6991</td>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">67,071.00</td>
-                                                    <td class="text-center">67,071.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>Includes:</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>16x I-beam #5 (16) 24cm long; 36x I-beam #4 (36) 17cm long</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>36x I-beam #3 (36) 11.5cm long; 16x I-beam #2 (16) 8cm long</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>16x I-beam #1 (16) 5.5cm long</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>28x Connectors; 150x Screw; 1x Flexible road bed(3m)</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>                                                </tr>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>1x Track Coupler; 24x Road bed clips</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>1x Car with flag and mass; 1x Starter bracket</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>32x Cord tensioning clips; 1x Yellow cord (1 roll)</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td>1x Instruction Manual</td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center">unit</td>
-                                                    <td>Wireless Load Cell and Accelerometer,PS-3216</td>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">24,434.00</td>
-                                                    <td class="text-center">24,434.00</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center">unit</td>
-                                                    <td>PASCO Capstone, Single User License, ui-5401</td>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">22,434.00</td>
-                                                    <td class="text-center">22,434.00</td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <hr class="mt-2">
-
-                                    <div class="inv--head-section inv--detail-section">
-
-                                        <div class="row">
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-street-addr" style="color: #1a1e21; ">Description</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">Amount in Words</p>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-12 mr-auto">
-                                                <p class="inv-email-address">Supplies for Laboratory Equipment (PASCO) - BASD Physics</p>
-                                                <p class="inv-email-address">One Hundred Thirteen Thousand Nine Hundred Thirty Nine Pesos Only</p>
-                                            </div>
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-email-address" style="color: #1a1e21; font-size: large">Total</p>
-                                            </div>
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-email-address text-danger text-opacity-50" style="font-size: large">₱ 113,939.00</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <hr class="mt-2">
-
-                                    <div class="inv--head-section inv--detail-section">
-
-                                        <div class="row">
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-street-addr" style="color: #1a1e21;">Funds Cluster</p>
-                                                <p class="inv-email-address" style="color: #1a1e21">Funds Available</p>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-12 mr-auto">
-                                                <p class="inv-email-address">Supplies for Laboratory Equipment (PASCO) - BASD Physics</p>
-                                                <p class="inv-email-address">Supplies for Laboratory Equipment (PASCO) - BASD Physics</p>
-                                            </div>
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-email-address" style="color: #1a1e21;">ORS/BURS No. </p>
-                                                <p class="inv-email-address" style="color: #1a1e21;">Date of the ORS/BURS</p>
-                                                <p class="inv-email-address" style="color: #1a1e21;">Amount</p>
-                                            </div>
-
-                                            <div class="col-sm-2 col-12 mr-auto">
-                                                <p class="inv-email-address  text-opacity-50">2024 - 05 - 256</p>
-                                                <p class="inv-email-address  text-opacity-50">5/30/24</p>
-                                                <p class="inv-email-address  text-opacity-50">₱113,939.00</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
+    <div class="info-row">
+        <div class="info-col">
+            <span class="label">Supplier:</span> <?= $po['po_supplier'] ?? 'SCIENCESTAR CORPORATION' ?>
+        </div>
+        <div class="info-col">
+            <span class="label">P.O. No.:</span> <?= $po['po_ponumber'] ?? '2014-05-67' ?>
         </div>
     </div>
-    <?= $this->endSection() ?>
 
-    <?= $this->section('js') ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="<?= base_url('assets/src/assets/js/apps/invoice-add.js') ?>"></script>
+    <div class="info-row">
+        <div class="info-col">
+            <span class="label">Address:</span> <?= $po['po_address'] ?? 'Unit 1505 Antel Global Corporate Center, Julia Vargas Ave., Ortigas Center, Pasig City' ?>
+        </div>
+        <div class="info-col">
+            <span class="label">Date:</span> <?= $po['po_date'] ?? date('Y-m-d') ?>
+        </div>
+    </div>
 
-    <!-- For Table -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="<?= base_url('assets/src/assets/js/apps/fac-ppmp.js') ?>"></script>
-<?= $this->endSection() ?>
+    <div class="info-row">
+        <div class="info-col">
+            <span class="label">Tel No.:</span> <?= $po['po_tele'] ?? '(02) 8631-8000' ?>
+        </div>
+        <div class="info-col">
+            <span class="label">Mode of Procurement:</span>&nbsp;&nbsp; <?= $po['po_mode'] ?? 'N/A' ?>
+        </div>
+    </div>
+
+    <div class="info-row">
+        <div class="info-col">
+            <span class="label">TIN:</span> <?= $po['po_tin'] ?? '123-456-789-000' ?>
+        </div>
+        <div class="info-col">
+            <span class="label">TUP-Taguig TIN:</span> <?= $po['po_tuptin'] ?? '000-123-456-789' ?>
+        </div>
+    </div>
+    <br>
+    <hr class="my-2">
+    <div class="gentlemen">
+        <p><strong>Gentlemen:</strong></p>
+        <p>Please furnish this Office the following articles subject to the terms and conditions contained herein:</p>
+    </div>
+    <hr class="my-2">
+
+    <div class="delivery-info">
+        <div class="delivery-left">
+            <div><span class="label">Place of Delivery:</span> <?= $po['po_place_delivery'] ?? 'OR' ?></div>
+            <div><span class="label">Date of Delivery:</span> <?= $po['po_date_delivery'] ?? '2014-05-67' ?></div>
+        </div>
+        <div class="delivery-right">
+            <div><span class="label">Delivery Term:</span> <?= $po['po_delivery_term'] ?? '30' ?></div>
+            <div><span class="label">Payment Term:</span> <?= $po['po_payment_term'] ?? '2014-05-67' ?></div>
+        </div>
+    </div>
+<hr class="my-2">
+    <table>
+        <thead>
+            <tr>
+                <th>Stock</th>
+                <th>Unit</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit Cost</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            // Debug: Show what data we have
+            // echo "<tr><td colspan='6'>Debug: po_items count: " . count($po_items ?? []) . "</td></tr>";
+            ?>
+            <?php if (!empty($po_items)): ?>
+                <?php foreach ($po_items as $item): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($item['po_items_stockno'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($item['po_items_unit'] ?? '') ?></td>
+                        <td class="description">
+                            <?= htmlspecialchars($item['po_items_descrip'] ?? '') ?>
+                            <?php if (!empty($item['specifications'])): ?>
+                                <br>
+                                <?php foreach ($item['specifications'] as $spec): ?>
+                                    - <?= htmlspecialchars($spec['po_item_spec_descrip'] ?? '') ?><br>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </td>
+                        <td><?= htmlspecialchars($item['po_items_quantity'] ?? '') ?></td>
+                        <td>₱ <?= number_format($item['po_items_cost'] ?? 0, 2) ?></td>
+                        <td>₱ <?= number_format($item['po_items_amount'] ?? 0, 2) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- Fallback static data for demonstration -->
+                <tr>
+                    <td>N/A</td>
+                    <td>set</td>
+                    <td class="description">Bridge Set<br>
+                        - Span: 18.30 m<br>
+                        - Width: 4.30 m<br>
+                        - Load Capacity: 15 tons<br>
+                        - Material: Steel and Concrete
+                    </td>
+                    <td>1</td>
+                    <td>₱ 113,939.00</td>
+                    <td>₱ 113,939.00</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+<hr class="my-2">
+    <div class="info-row">
+        <div class="info-col">
+            <span class="label">Description:</span> <?= $po['po_description'] ?? 'Supplies for Laboratory Equipment (PASCO) - BASIC Physics' ?>
+        </div>
+        <div class="info-col" style="text-align: right;">
+            <span class="label">Total</span> <strong>₱ <?= number_format($po['po_total_amount'] ?? 113939, 2) ?></strong>
+        </div>
+    </div>
+
+    <div class="info-row">
+        <div class="info-col">
+            <span class="label">Amount in Words:</span> <?= $po['po_amount_in_words'] ?? 'One Hundred Thirteen Thousand Nine Hundred Thirty Nine Pesos Only' ?>
+        </div>
+    </div>
+    <hr class="my-2">
+    <div class="signature-section">
+        <div class="signature-row">
+            <div class="signature-col">
+                <div><strong>Conforme:</strong></div>
+              
+                <div style="text-align: center; margin-top: 5px;"><?= $po['conforme_name_of_supplier'] ?? 'Ron Eric Legaspi' ?></div>
+                <div style="text-align: center; font-size: 10px;">Signature over Printed Name</div>
+                <div style="text-align: center; margin-top: 10px;"><?= $po['conforme_date'] ?? '08/01/2024' ?></div>
+                <div style="text-align: center; font-size: 10px;">Date</div>
+            </div>
+            <div class="signature-col">
+                <div><strong>Yours truly,</strong></div>
+                
+                <div style="text-align: center; margin-top: 5px;"><?= $po['conforme_campus_director'] ?? 'ENGR. REXMELLE P. DECAMPA JR., Ph.D' ?></div>
+                <div style="text-align: center; font-size: 10px;">Campus Director</div>
+            </div>
+        </div>
+        <hr class="my-2">
+        <div class="signature-row">
+            <div class="signature-col">
+                <div><strong>Funds Cluster:</strong> <?= $po['po_fund_cluster'] ?? 'N/A' ?></div>
+                <div><span class="label">Funds Available:</span> <?= $po['po_fund_available'] ?? 'Supplies for Laboratory Equipment (PASCO) - BASIC Physics' ?></div>
+                <div class="" style="margin-top: 30px;"></div>
+                <div style="text-align: center; margin-top: 5px;"><?= $po['po_accountant'] ?? 'Juliet T. Navor' ?></div>
+                <div style="text-align: center; font-size: 10px;">Accountant III</div>
+            </div>
+            <div class="signature-col">
+                <div><span class="label">ORS/BURS No.:</span> <?= $po['po_orsburs'] ?? '2024 - 09 - 256' ?></div>
+                <div><span class="label">Date of the ORS/BURS:</span> <?= $po['po_date_orsburs'] ?? '5/30/24' ?></div>
+                <div><span class="label">Amount:</span> ₱<?= number_format($po['po_amount'] ?? 113939, 2) ?></div>
+            </div>
+        </div>
+</div>
+
+</body>
+</html>

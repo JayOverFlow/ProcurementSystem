@@ -10,7 +10,7 @@ class TaskModel extends Model
     protected $primaryKey       = 'task_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true; // Enable soft deletes for this model
+    protected $useSoftDeletes   = false; // Disable soft deletes to fix configuration conflict
     protected $protectFields    = true;
     protected $allowedFields    = [
         'submitted_by',
@@ -20,7 +20,7 @@ class TaskModel extends Model
         'ppmp_id_fk',
         'app_id_fk',
         'task_type',
-        'is_deleted', // Re-added 'is_deleted' to $allowedFields for explicit update by soft delete
+        'is_deleted',
         'pr_id_fk',
         'po_id_fk',
         'par_id_fk', // Added to allowed fields to ensure it can be assigned
@@ -156,10 +156,11 @@ class TaskModel extends Model
      */
     public function hasActivePpmpAssignment(int $userId): bool
     {
-        $result = $this->where('submitted_to', $userId)
-                         ->where('task_type', 'assignment')
-                         ->where('is_deleted', 0)
-                         ->first();
+        $result = $this->where([
+            'submitted_to' => $userId,
+            'task_type'    => 'assignment',
+            'task_status'  => 'Pending'
+        ])->first();
 
         return !empty($result);
     }

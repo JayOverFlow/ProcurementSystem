@@ -17,6 +17,7 @@ class DashboardController extends BaseController
     protected $userRoleDepartmentModel;
     protected $departmentBudgetModel;
     protected $mrItemModel;
+    protected $taskModel;
 
     public function __construct()
     {
@@ -24,6 +25,46 @@ class DashboardController extends BaseController
         $this->userRoleDepartmentModel = new UserRoleDepartmentModel();
         $this->departmentBudgetModel = new DepartmentBudgetModel();
         $this->mrItemModel = new MrItemModel();
+        $this->taskModel = new TaskModel();
+    }
+
+    /**
+     * Helper method to prepare dashboard data for Head roles with assignment checking
+     */
+    private function prepareHeadDashboardData($currentUserId, $departmentId)
+    {
+        // Fetch subordinates
+        $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
+        log_message('debug', '[DashboardController] Subordinates found: ' . json_encode($subordinates));
+
+        // Check for active assignments and identify if any subordinate is already assigned
+        $taskModel = new TaskModel();
+        $assignedUserName = null;
+        foreach ($subordinates as &$subordinate) {
+            $hasAssignment = $taskModel->hasActivePpmpAssignment($subordinate['user_id']);
+            log_message('debug', '[DashboardController] Checking assignment for user ID ' . $subordinate['user_id'] . '. Has assignment? ' . ($hasAssignment ? 'Yes' : 'No'));
+            $subordinate['has_assignment'] = $hasAssignment;
+            if ($hasAssignment) {
+                // If an assignment is found, store the user's full name
+                $assignedUserName = $subordinate['user_firstname'] . ' ' . $subordinate['user_lastname'];
+                log_message('debug', '[DashboardController] Assigned user found: ' . $assignedUserName);
+            }
+        }
+
+        // Prepare dashboard data
+        $dashboardData = [
+            'procurement_status' => null,
+            'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
+            'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
+            'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
+            'subordinates' => $subordinates,
+            'assigned_user_name' => $assignedUserName, // Pass the name of the assigned user to the view
+            'is_assignment_pending' => !is_null($assignedUserName) // Pass a flag indicating an assignment is pending
+        ];
+
+        log_message('debug', '[DashboardController] Final dashboard data: ' . json_encode($dashboardData));
+
+        return $dashboardData;
     }
 
     public function index()
@@ -40,28 +81,13 @@ class DashboardController extends BaseController
         switch ($userGenRole) {
             // If the user is Director 
             case "Director":
-                // Fetch subordinates
-                $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
-
-                // Check for active assignments for each subordinate
-                $taskModel = new TaskModel();
-                foreach ($subordinates as &$subordinate) {
-                    $subordinate['has_assignment'] = $taskModel->hasActivePpmpAssignment($subordinate['user_id']);
-                }
-
-                // Fetch the necessary data to pass to director dashboard
-                $dashboardData = [
-                    'procurement_status' => null,
-                    'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
-                    'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
-                    'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-                    'subordinates' => $subordinates
-                ];
+                // Use helper method to prepare dashboard data with assignment checking
+                $dashboard_data = $this->prepareHeadDashboardData($currentUserId, $departmentId);
                 
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
-                    'dashboard_data' => $dashboardData,
+                    'dashboard_data' => $dashboard_data,
                     'user_department_id' => $departmentId // Pass department ID to the view
                 ];
                  
@@ -70,28 +96,13 @@ class DashboardController extends BaseController
                 break;
 
             case "Assistant Director":
-                // Fetch subordinates
-                $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
-
-                // Check for active assignments for each subordinate
-                $taskModel = new TaskModel();
-                foreach ($subordinates as &$subordinate) {
-                    $subordinate['has_assignment'] = $taskModel->hasActivePpmpAssignment($subordinate['user_id']);
-                }
-
-                // Fetch the necessary data to pass to assistant director dashboard
-                $dashboardData = [
-                    'procurement_status' => null,
-                    'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
-                    'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
-                    'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-                    'subordinates' => $subordinates
-                ];
+                // Use helper method to prepare dashboard data with assignment checking
+                $dashboard_data = $this->prepareHeadDashboardData($currentUserId, $departmentId);
 
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,   
-                    'dashboard_data' => $dashboardData,
+                    'dashboard_data' => $dashboard_data,
                     'user_department_id' => $departmentId // Pass department ID to the view
                 ];
  
@@ -99,28 +110,13 @@ class DashboardController extends BaseController
                 return view('user-pages/assistant-director/ast-dir-dashboard', $data);
                 break;
             case "Head":
-                // Fetch subordinates
-                $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
-
-                // Check for active assignments for each subordinate
-                $taskModel = new TaskModel();
-                foreach ($subordinates as &$subordinate) {
-                    $subordinate['has_assignment'] = $taskModel->hasActivePpmpAssignment($subordinate['user_id']);
-                }
-
-                // Fetch the necessary data to pass to dashboard
-                $dashboardData = [
-                    'procurement_status' => null,
-                    'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
-                    'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
-                    'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-                    'subordinates' => $subordinates
-                ];
+                // Use helper method to prepare dashboard data with assignment checking
+                $dashboard_data = $this->prepareHeadDashboardData($currentUserId, $departmentId);
 
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
-                    'dashboard_data' => $dashboardData,
+                    'dashboard_data' => $dashboard_data,
                     'user_department_id' => $departmentId // Pass department ID to the view
                 ];
                 // Redirect using return view('[user-dashboard-page]', data)
@@ -128,28 +124,13 @@ class DashboardController extends BaseController
                 break;
 
             case "Planning Officer":
-                // Fetch subordinates
-                $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
-
-                // Check for active assignments for each subordinate
-                $taskModel = new TaskModel();
-                foreach ($subordinates as &$subordinate) {
-                    $subordinate['has_assignment'] = $taskModel->hasActivePpmpAssignment($subordinate['user_id']);
-                }
-
-                // Fetch the necessary data to pass to dashboard
-                $dashboardData = [
-                    'procurement_status' => null,
-                    'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
-                    'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
-                    'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-                    'subordinates' => $subordinates
-                ];
+                // Use helper method to prepare dashboard data with assignment checking
+                $dashboard_data = $this->prepareHeadDashboardData($currentUserId, $departmentId);
 
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
-                    'dashboard_data' => $dashboardData,
+                    'dashboard_data' => $dashboard_data,
                     'user_department_id' => $departmentId // Pass department ID to the view
                 ];
                 // Redirect using return view('[user-dashboard-page]', data)
@@ -157,28 +138,13 @@ class DashboardController extends BaseController
                 break;
 
             case "Supply":
-                // Fetch subordinates
-                $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
-
-                // Check for active assignments for each subordinate
-                $taskModel = new TaskModel();
-                foreach ($subordinates as &$subordinate) {
-                    $subordinate['has_assignment'] = $taskModel->hasActivePpmpAssignment($subordinate['user_id']);
-                }
-
-                // Fetch the necessary data to pass to dashboard
-                $dashboardData = [
-                    'procurement_status' => null,
-                    'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
-                    'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
-                    'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-                    'subordinates' => $subordinates
-                ];
+                // Use helper method to prepare dashboard data with assignment checking
+                $dashboard_data = $this->prepareHeadDashboardData($currentUserId, $departmentId);
 
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
-                    'dashboard_data' => $dashboardData,
+                    'dashboard_data' => $dashboard_data,
                     'user_department_id' => $departmentId // Pass department ID to the view
                 ];
                 // Redirect using return view('[user-dashboard-page]', data)
@@ -187,27 +153,12 @@ class DashboardController extends BaseController
                 break;
 
             case "Procurement":
-                // Fetch subordinates
-                $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
-
-                // Check for active assignments for each subordinate
-                $taskModel = new TaskModel();
-                foreach ($subordinates as &$subordinate) {
-                    $subordinate['has_assignment'] = $taskModel->hasActivePpmpAssignment($subordinate['user_id']);
-                }
-
-                // Fetch the necessary data to pass to dashboard
-                $dashboardData = [
-                    'procurement_status' => null,
-                    'faculty_count' => $this->userModel->getFacultyCountByDepartment($departmentId),
-                    'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
-                    'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
-                    'subordinates' => $subordinates
-                ];
+                // Use helper method to prepare dashboard data with assignment checking
+                $dashboard_data = $this->prepareHeadDashboardData($currentUserId, $departmentId);
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
-                    'dashboard_data' => $dashboardData,
+                    'dashboard_data' => $dashboard_data,
                     'user_department_id' => $departmentId // Pass department ID to the view
                 ];
                 // Redirect using return view('[user-dashboard-page]', data)
@@ -215,28 +166,89 @@ class DashboardController extends BaseController
                 break;
 
             case "Faculty": // = Section Head
-                // Fetch the necessary data to pass to dashboard
-                    $mrItems = $this->mrItemModel->getMrItemsByUserId($userData['user_id']);
-                    
-                // Store user data and dashbaord data
-                    $data = [
-                        'user_data' => $userData,
-                        'mr_items' => $mrItems,
-                        'user_department_id' => $departmentId // Pass department ID
-                    ];
-                // Redirect using return view('[user-dashboard-page]', data)
-                    return view('user-pages/faculty/fac-dashboard', $data);
-                break;
+                // Get tasks for the user
+                $tasks = $this->taskModel->getTasksForUser($userData['user_id']);
 
-            case null: // = Unassigned users
-                // Fetch the necessary data to pass to dashboard
-                $mrItems = $this->mrItemModel->getMrItemsByUserId($userData['user_id']);
+                // Dynamically generate filter options from the tasks list
+                $taskTypesInTable = array_unique(array_column($tasks, 'task_type'));
+
+                $filterOptions = ['ALL' => 'ALL'];
+                $taskTypeMap = [
+                    'Project Procurement Management Plan' => 'PPMP',
+                    'Annual Procurement Plan' => 'APP',
+                    'Purchase Request' => 'PR',
+                    'Purchase Order' => 'PO',
+                    'Property Acknowledgement Receipt' => 'PAR',
+                    'Inventory Custodian Slip' => 'ICS',
+                    'Assignment' => 'Assignment'
+                ];
+
+                foreach ($taskTypesInTable as $taskType) {
+                    if (isset($taskTypeMap[$taskType])) {
+                        $label = $taskTypeMap[$taskType];
+                        $filterOptions[$label] = $taskType;
+                    }
+                }
+
+                // Sort the options alphabetically by label, keeping ALL first
+                if (count($filterOptions) > 1) {
+                    $allOption = $filterOptions['ALL'];
+                    unset($filterOptions['ALL']);
+                    ksort($filterOptions);
+                    $filterOptions = ['ALL' => $allOption] + $filterOptions;
+                }
 
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
-                    'mr_items' => $mrItems,
-                    'user_department_id' => $departmentId // Pass department ID
+                    'user_department_id' => $departmentId, // Pass department ID
+                    'tasks' => $tasks,
+                    'filter_options' => $filterOptions
+                ];
+
+                // Redirect using return view('[user-dashboard-page]', data)
+                return view('user-pages/faculty/fac-dashboard', $data);
+                break;
+
+            case null: // = Unassigned users
+                // Get tasks for the user
+                $tasks = $this->taskModel->getTasksForUser($userData['user_id']);
+
+                // Dynamically generate filter options from the tasks list
+                $taskTypesInTable = array_unique(array_column($tasks, 'task_type'));
+
+                $filterOptions = ['ALL' => 'ALL'];
+                $taskTypeMap = [
+                    'Project Procurement Management Plan' => 'PPMP',
+                    'Annual Procurement Plan' => 'APP',
+                    'Purchase Request' => 'PR',
+                    'Purchase Order' => 'PO',
+                    'Property Acknowledgement Receipt' => 'PAR',
+                    'Inventory Custodian Slip' => 'ICS',
+                    'Assignment' => 'Assignment'
+                ];
+
+                foreach ($taskTypesInTable as $taskType) {
+                    if (isset($taskTypeMap[$taskType])) {
+                        $label = $taskTypeMap[$taskType];
+                        $filterOptions[$label] = $taskType;
+                    }
+                }
+
+                // Sort the options alphabetically by label, keeping ALL first
+                if (count($filterOptions) > 1) {
+                    $allOption = $filterOptions['ALL'];
+                    unset($filterOptions['ALL']);
+                    ksort($filterOptions);
+                    $filterOptions = ['ALL' => $allOption] + $filterOptions;
+                }
+
+                // Store user data and dashbaord data
+                $data = [
+                    'user_data' => $userData,
+                    'user_department_id' => $departmentId, // Pass department ID
+                    'tasks' => $tasks,
+                    'filter_options' => $filterOptions
                 ];
 
                 // Redirect using return view('[user-dashboard-page]', data)
