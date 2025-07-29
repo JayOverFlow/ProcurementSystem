@@ -266,18 +266,23 @@ class TasksController extends BaseController
         $taskData = [
             'submitted_by'     => $assignerId,
             'submitted_to'     => $assigneeId,
-            'task_description' => 'PPMP Form Assignment for the next fiscal year.',
-            'task_type'        => 'Assignment',
+            'task_description' => 'You are assigned to draft the Project Procurement Management Plan.',
+            'task_type'        => 'Assignment', 
             'task_status'      => 'Pending',
         ];
 
         // Call the model to insert the new task
-        if ($this->taskModel->assignPpmpTask($taskData)) {
-            // Return a success response
-            return $this->response->setJSON(['success' => true, 'message' => 'Task assigned successfully.']);
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        $this->taskModel->assignPpmpTask($taskData);
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to assign task due to a database transaction error.']);
         } else {
-            // Return an error response
-            return $this->response->setJSON(['success' => false, 'message' => 'Failed to assign task.'])->setStatusCode(500);
+            return $this->response->setJSON(['success' => true, 'message' => 'Task assigned successfully.']);
         }
     }
 }

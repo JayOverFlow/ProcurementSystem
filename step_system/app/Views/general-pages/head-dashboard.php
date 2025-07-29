@@ -55,7 +55,7 @@
             <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="statbox widget box box-shadow h-100">
                     <div class="widget-content widget-content-area h-100">
-                        <table id="style-3" class="table style-3 dt-table-hover">
+                        <table id="style-3" class="table style-3 dt-table-hover" data-assigned-user="<?= esc($dashboard_data['assigned_user_name'] ?? '', 'attr') ?>">
                             <thead>
                                 <tr>
                                     <th class="checkbox-column text-center">TUP-T ID</th>
@@ -77,16 +77,40 @@
                                             <td class="text-center"><?= esc($subordinate['user_firstname']) ?></td>
                                             <td class="text-center"><?= esc($subordinate['user_lastname']) ?></td>
                                             <td class="text-center">
-                                                <?php if ($subordinate['has_assignment']): ?>
-                                                    <span class="badge outline-badge-success mb-1 me-1">Assigned</span>
-                                                <?php else: ?>
-                                                    <span class="badge outline-badge-dark mb-1 me-1">Not Assigned</span>
-                                                <?php endif; ?>
+                                                <!-- Status Badge -->
+                                                <span class="badge status-badge <?= $subordinate['has_assignment'] ? 'bg-warning' : 'badge-light-danger' ?>">
+                                                    <?= $subordinate['has_assignment'] ? 'Pending' : 'Not Assigned' ?>
+                                                </span>
                                             </td>
                                             <td class="text-center">
-                                                <?php if (!$subordinate['has_assignment']): ?>
-                                                    <button class="btn btn-danger btn-sm assign-ppmp-btn" data-user-id="<?= esc($subordinate['user_id']) ?>">Assign</button>
-                                                <?php endif; ?>
+                                                <!-- Action Button -->
+                                                <?php
+                                                    $hasAssignment = $subordinate['has_assignment'];
+                                                    $isAssignmentPending = $dashboard_data['is_assignment_pending'];
+
+                                                    // Default state: Assign button
+                                                    $buttonText = 'Assign';
+                                                    $buttonClass = 'btn-danger'; // Red for primary action
+                                                    $buttonDisabled = '';
+
+                                                    if ($isAssignmentPending) {
+                                                        if ($hasAssignment) {
+                                                            // This user has the pending assignment
+                                                            $buttonText = 'Assigned';
+                                                            $buttonClass = 'btn-danger'; // Red to indicate assigned status
+                                                            $buttonDisabled = 'disabled'; // Cannot re-assign to the same person
+                                                        } else {
+                                                            // Another user has the assignment, this button is for re-assignment
+                                                            $buttonClass = 'btn-secondary'; // Gray to indicate secondary action
+                                                        }
+                                                    } else {
+                                                        // No one is assigned yet, all buttons are primary assign actions
+                                                        $buttonClass = 'btn-danger';
+                                                    }
+                                                ?>
+                                                <button class="btn <?= $buttonClass ?> btn-sm assign-ppmp-btn" data-user-id="<?= $subordinate['user_id'] ?>" <?= $buttonDisabled ?>>
+                                                    <?= $buttonText ?>
+                                                </button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
