@@ -218,53 +218,93 @@ class PpmpController extends BaseController
         $ppmpId = $this->request->getPost('ppmp_id');
         $userModel = new UserModel();
         $taskModel = new TaskModel();
+        $session = session();
 
         if (empty($ppmpId)) {
             return redirect()->back()->with('error', 'Invalid Project Procurement Management Plan ID for submission.');
         }
-        
+
         // Check if PPMP has already been submitted
         $ppmp = $this->ppmpModel->find($ppmpId);
         if ($ppmp && $ppmp['ppmp_status'] !== 'Draft') {
             return redirect()->to('ppmp/create/' . $ppmpId)->with('error', 'This Project Procurement Management Plan has already been submitted.');
         }
 
-        $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
+        // Get current user's info
+        $userGenRole = $session->get('user_gen_role');
+        $userId = $session->get('user_id');
+        $userDepId = $session->get('user_dep_id');
 
-        if (empty($planningOfficers)) {
-            return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
-        }
+        // Subordinate roles that need Head approval first
+        $subordinateRoles = ['Faculty', null, ''];
 
         $db->transStart();
 
         try {
-            // Update the original task
-            $firstOfficerId = array_shift($planningOfficers);
-            $originalTask = $taskModel->withDeleted()->where('ppmp_id_fk', $ppmpId)->where('is_deleted', 0)->first();
+            if (in_array($userGenRole, $subordinateRoles)) {
+                // === WORKFLOW FOR SUBORDINATES (e.g., Faculty) ===
+                $userDetails = $userModel->getUserDetailsById($userId);
+                $userDepId = $userDetails['dep_id'] ?? null;
+                $headId = $userModel->getHeadByDepId($userDepId);
 
-            if ($originalTask) {
-                $taskModel->update($originalTask['task_id'], [
-                    'submitted_to' => $firstOfficerId,
-                    'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
-                ]);
+                if (empty($headId)) {
+                    return redirect()->back()->with('error', 'Cannot submit: Your Department Head is not found in the system.');
+                }
+
+                // Update the original task to be submitted to the Head
+                $originalTask = $taskModel->withDeleted()->where('ppmp_id_fk', $ppmpId)->where('is_deleted', 0)->first();
+                if ($originalTask) {
+                    $taskModel->update($originalTask['task_id'], [
+                        'submitted_to' => $headId,
+                        'task_description' => 'A new PPMP from ' . $session->get('user_fullname') . ' requires your approval.'
+                    ]);
+                } else {
+                    return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+                }
+
+                // Update PPMP status to reflect it's waiting for Head approval
+                $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'For Head Approval']);
+
+                $successMessage = 'Project Procurement Management Plan successfully submitted to your Department Head for review.';
             } else {
-                 // This case should ideally not happen in a normal workflow
-                return redirect()->back()->with('error', 'Cannot find the original task to submit.');
-            }
+                // === ORIGINAL WORKFLOW FOR HEADS AND OTHER ROLES ===
+                $planningOfficers = $userModel->getUsersByGenRole('Planning Officer');
 
-            // Create new tasks for other planning officers
-            foreach ($planningOfficers as $officerId) {
-                $taskModel->insert([
-                    'submitted_by' => session()->get('user_id'),
-                    'submitted_to' => $officerId,
-                    'ppmp_id_fk' => $ppmpId,
-                    'task_type' => 'Project Procurement Management Plan',
-                    'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
-                ]);
-            }
+                if (empty($planningOfficers)) {
+                    return redirect()->back()->with('error', 'Cannot submit: No Planning Officer found in the system.');
+                }
 
-            // Finally, update the PPMP status
-            $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'Pending']);
+                // Update the original task for the first planning officer
+                $firstOfficerId = $planningOfficers[0]; // Get the first Planning Officer ID
+                $originalTask = $taskModel->withDeleted()->where('ppmp_id_fk', $ppmpId)->where('is_deleted', 0)->first();
+
+                if ($originalTask) {
+                    $taskModel->update($originalTask['task_id'], [
+                        'submitted_to' => $firstOfficerId,
+                        'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.'
+                    ]);
+                } else {
+                    return redirect()->back()->with('error', 'Cannot find the original task to submit.');
+                }
+
+                // Create new tasks for other planning officers (if any)
+                for ($i = 1; $i < count($planningOfficers); $i++) {
+                    $taskModel->insert([
+                        'ppmp_id_fk' => $ppmpId,
+                        'task_name' => 'Review PPMP',
+                        'task_description' => 'A new Project Procurement Management Plan has been submitted for your review.',
+                        'submitted_by' => $userId,
+                        'submitted_to' => $planningOfficers[$i],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'is_deleted' => 0
+                    ]);
+                }
+
+                // Update PPMP status to 'Submitted'
+                $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'Submitted']);
+
+                $successMessage = 'Project Procurement Management Plan successfully submitted to the Planning Officer.';
+            }
 
             $db->transComplete();
 
@@ -272,11 +312,173 @@ class PpmpController extends BaseController
                 return redirect()->back()->with('error', 'Failed to submit Project Procurement Management Plan due to a database error.');
             }
 
-            return redirect()->to('ppmp/create/' . $ppmpId)->with('success', 'Project Procurement Management Plan successfully submitted to Planning Office for review.');
+            return redirect()->to('ppmp/create/' . $ppmpId)->with('success', $successMessage);
 
         } catch (\Exception $e) {
             log_message('error', 'PPMP Submission Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
         }
     }
-} 
+
+    public function approve()
+    {
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        try {
+            $ppmpId = $this->request->getJSON()->ppmp_id;
+            $session = session();
+            $userId = $session->get('user_id');
+
+            // 1. Update PPMP status
+            $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'Pending']);
+
+            // 2. Find the task submitted to the current user (Head)
+            $task = $this->taskModel->where('ppmp_id_fk', $ppmpId)
+                                    ->where('submitted_to', $userId)
+                                    ->first();
+
+            if (!$task) {
+                throw new \Exception('Task not found for this PPMP and user.');
+            }
+
+            // 3. Find Planning Officers
+            $planningOfficers = $this->userModel->getUsersByGenRole('Planning Officer');
+            if (empty($planningOfficers)) {
+                throw new \Exception('No Planning Officer found in the system.');
+            }
+
+            // 4. Re-assign the task to the first Planning Officer
+            $firstOfficerId = array_shift($planningOfficers);
+            $this->taskModel->update($task['task_id'], [
+                'submitted_to' => $firstOfficerId,
+                'task_description' => 'A PPMP approved by the Department Head requires your review.'
+            ]);
+
+            // 5. Create new tasks for other planning officers
+            foreach ($planningOfficers as $officerId) {
+                $this->taskModel->insert([
+                    'submitted_by' => $task['submitted_by'], // Keep the original submitter
+                    'submitted_to' => $officerId,
+                    'ppmp_id_fk' => $ppmpId,
+                    'task_type' => 'Project Procurement Management Plan',
+                    'task_description' => 'A PPMP approved by the Department Head requires your review.'
+                ]);
+            }
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                 return $this->response->setJSON(['success' => false, 'message' => 'Database transaction failed.']);
+            }
+
+            return $this->response->setJSON(['success' => true]);
+
+        } catch (\Exception $e) {
+            log_message('error', '[PPMP Approve Error] ' . $e->getMessage());
+            return $this->response->setJSON(['success' => false, 'message' => 'An unexpected error occurred.']);
+        }
+    }
+
+    public function reject()
+    {
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        try {
+            $ppmpId = $this->request->getJSON()->ppmp_id;
+            $session = session();
+            $userId = $session->get('user_id'); // Current user (Head)
+
+            // 1. Update PPMP status
+            $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'Rejected']);
+
+            // 2. Find the task submitted to the Head
+            $task = $this->taskModel->where('ppmp_id_fk', $ppmpId)
+                                    ->where('submitted_to', $userId)
+                                    ->first();
+
+            if (!$task) {
+                throw new \Exception('Task not found for this PPMP and user.');
+            }
+
+            // 3. Re-assign the task back to the original submitter
+            $this->taskModel->update($task['task_id'], [
+                'submitted_to' => $task['submitted_by'],
+                'task_description' => 'Your submitted PPMP has been rejected by the Department Head. Please review and resubmit.'
+            ]);
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                return $this->response->setJSON(['success' => false, 'message' => 'Database transaction failed.']);
+            }
+
+            return $this->response->setJSON(['success' => true]);
+
+        } catch (\Exception $e) {
+            log_message('error', '[PPMP Reject Error] ' . $e->getMessage());
+            return $this->response->setJSON(['success' => false, 'message' => 'An unexpected error occurred.']);
+        }
+    }
+
+    public function submitToPlanning()
+    {
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        try {
+            $ppmpId = $this->request->getJSON()->ppmp_id;
+            $session = session();
+            $userId = $session->get('user_id');
+
+            // 1. Update PPMP status to 'Submitted'
+            $this->ppmpModel->update($ppmpId, ['ppmp_status' => 'Submitted']);
+
+            // 2. Find the task assigned to the current user (Head)
+            $task = $this->taskModel->where('ppmp_id_fk', $ppmpId)
+                                    ->where('submitted_to', $userId)
+                                    ->first();
+
+            if (!$task) {
+                throw new \Exception('Task not found for this PPMP and user.');
+            }
+
+            // 3. Find Planning Officers
+            $planningOfficers = $this->userModel->getUsersByGenRole('Planning Officer');
+            if (empty($planningOfficers)) {
+                throw new \Exception('No Planning Officer found in the system.');
+            }
+
+            // 4. Re-assign the task to the first Planning Officer
+            $firstOfficerId = array_shift($planningOfficers);
+            $this->taskModel->update($task['task_id'], [
+                'submitted_to' => $firstOfficerId,
+                'task_description' => 'A new PPMP from ' . $session->get('user_fullname') . ' has been submitted for your review.'
+            ]);
+
+            // 5. Create new tasks for other planning officers
+            foreach ($planningOfficers as $officerId) {
+                $this->taskModel->insert([
+                    'submitted_by' => $task['submitted_by'], // Keep the original submitter
+                    'submitted_to' => $officerId,
+                    'ppmp_id_fk' => $ppmpId,
+                    'task_type' => 'Project Procurement Management Plan',
+                    'task_description' => 'A new PPMP from ' . $session->get('user_fullname') . ' has been submitted for your review.'
+                ]);
+            }
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                 return $this->response->setJSON(['success' => false, 'message' => 'Database transaction failed.']);
+            }
+
+            return $this->response->setJSON(['success' => true]);
+
+        } catch (\Exception $e) {
+            log_message('error', '[PPMP Submit to Planning Error] ' . $e->getMessage());
+            return $this->response->setJSON(['success' => false, 'message' => 'An unexpected error occurred.']);
+        }
+    }
+}

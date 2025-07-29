@@ -158,12 +158,25 @@ class UserModel extends Model {
                 ->join('user_role_department_tbl urd', 'u.user_id = urd.user_id')
                 ->join('roles_tbl r', 'urd.role_id = r.role_id')
                 ->where('urd.department_id', $depId)
-                ->where('r.gen_role !=', 'Faculty') // Exclude 'Fac roles
+                ->where('r.gen_role !=', 'Faculty') // Exclude 'Faculty' roles
+                ->where('r.gen_role IS NOT NULL')   // Ensure gen_role is not null
                 ->limit(1);
 
         $result = $builder->get()->getRowArray();
 
         return $result['user_id'] ?? null; // Return user_id or null
+    }
+
+    public function getUserDetailsById($userId)
+    {
+        $builder = $this->db->table('users_tbl u');
+        $builder->select('u.*, d.dep_name, r.role_name, r.gen_role, urd.department_id as dep_id')
+                ->join('user_role_department_tbl urd', 'u.user_id = urd.user_id', 'left')
+                ->join('departments_tbl d', 'urd.department_id = d.dep_id', 'left')
+                ->join('roles_tbl r', 'urd.role_id = r.role_id', 'left')
+                ->where('u.user_id', $userId);
+
+        return $builder->get()->getRowArray();
     }
 }
 

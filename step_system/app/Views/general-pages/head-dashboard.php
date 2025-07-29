@@ -78,33 +78,37 @@
                                             <td class="text-center"><?= esc($subordinate['user_lastname']) ?></td>
                                             <td class="text-center">
                                                 <!-- Status Badge -->
-                                                <span class="badge status-badge <?= $subordinate['has_assignment'] ? 'bg-warning' : 'badge-light-danger' ?>">
-                                                    <?= $subordinate['has_assignment'] ? 'Pending' : 'Not Assigned' ?>
+                                                <?php
+                                                    $hasAssignment = $subordinate['has_assignment'];
+                                                    $statusText = $hasAssignment ? 'Pending' : 'Not Assigned';
+                                                    $statusClass = $hasAssignment ? 'bg-warning' : 'badge-light-danger';
+                                                ?>
+                                                <span class="badge status-badge <?= $statusClass ?>">
+                                                    <?= $statusText ?>
                                                 </span>
                                             </td>
                                             <td class="text-center">
                                                 <!-- Action Button -->
                                                 <?php
-                                                    $nextTask = $subordinate['next_task']; // 'ppmp' or 'pr'
+                                                    $nextTask = $subordinate['next_task'];
                                                     $taskTypeUpper = strtoupper($nextTask);
-                                                    $hasAssignment = $subordinate['has_assignment'];
                                                     $isAssignmentPending = $dashboard_data['is_assignment_pending'];
 
-                                                    // Base button properties
+                                                    // Default state
                                                     $buttonText = "Assign $taskTypeUpper";
-                                                    $buttonClass = 'btn-danger'; // Default: primary action
+                                                    $buttonClass = 'btn-danger';
                                                     $buttonDisabled = '';
 
-                                                    // Logic for when an assignment is already pending
-                                                    if ($isAssignmentPending) {
-                                                        if ($hasAssignment) {
-                                                            // This specific user is the one with the pending assignment
-                                                            $buttonText = 'Assigned';
-                                                            $buttonDisabled = 'disabled';
-                                                        } else {
-                                                            // Another user has the assignment, so this button becomes a secondary 're-assign' action
-                                                            $buttonClass = 'btn-secondary';
-                                                        }
+                                                    if ($hasAssignment) {
+                                                        // This is the currently assigned user
+                                                        $buttonText = 'Assigned';
+                                                        $buttonClass = 'btn-danger';
+                                                        $buttonDisabled = 'disabled';
+                                                    } elseif ($isAssignmentPending) {
+                                                        // Another user is assigned, so this button is disabled to prevent multiple assignments.
+                                                        $buttonText = "Assign $taskTypeUpper";
+                                                        $buttonClass = 'btn-danger';
+                                                        $buttonDisabled = 'disabled';
                                                     }
                                                 ?>
                                                 <button class="btn <?= $buttonClass ?> btn-sm assign-task-btn" 

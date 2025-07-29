@@ -43,23 +43,24 @@ class DashboardController extends BaseController
         $nextTaskForDepartment = $departmentHasApprovedPpmp ? 'pr' : 'ppmp';
 
         // For each subordinate, set their task and check for active assignments
-        $activeAssignee = null;
+        $activePrAssignee = null;
+        $isPpmpAssignmentPending = false;
         if ($nextTaskForDepartment === 'pr') {
-            $activeAssignee = $this->taskModel->getActivePrAssigneeForDepartment($departmentId);
+            $activePrAssignee = $this->taskModel->getActivePrAssigneeForDepartment($departmentId);
+        } else {
+            $isPpmpAssignmentPending = $this->taskModel->hasActivePpmpAssignmentForDepartment($departmentId);
         }
+
+        $isAssignmentPending = !is_null($activePrAssignee) || $isPpmpAssignmentPending;
 
         foreach ($subordinates as &$subordinate) {
             $subordinate['next_task'] = $nextTaskForDepartment;
 
             $hasAssignment = false;
             if ($nextTaskForDepartment === 'ppmp') {
-                // For PPMP, we check if ANY user has an active assignment to block new assignments.
-                // Note: This logic might need refinement if multiple PPMP assignments are allowed.
-                // For now, assuming one assignment at a time for the department.
                 $hasAssignment = $this->taskModel->hasActivePpmpAssignment($subordinate['user_id']);
             } else if ($nextTaskForDepartment === 'pr') {
-                // For PR, we check if the CURRENT subordinate is the one with the active assignment.
-                $hasAssignment = ($activeAssignee && $activeAssignee['submitted_to'] == $subordinate['user_id']);
+                $hasAssignment = ($activePrAssignee && $activePrAssignee['submitted_to'] == $subordinate['user_id']);
             }
             $subordinate['has_assignment'] = $hasAssignment;
         }
@@ -71,8 +72,8 @@ class DashboardController extends BaseController
             'staff_count' => $this->userModel->getStaffCountByDepartment($departmentId),
             'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
             'subordinates' => $subordinates,
-            'assigned_user_name' => $activeAssignee ? $activeAssignee['user_fullname'] : null,
-            'is_assignment_pending' => !is_null($activeAssignee)
+            'assigned_user_name' => $activePrAssignee ? $activePrAssignee['user_fullname'] : null, // This might need adjustment if we need PPMP assignee name
+            'is_assignment_pending' => $isAssignmentPending
         ];
 
         log_message('debug', '[DashboardController] Final dashboard data: ' . json_encode($dashboardData));
