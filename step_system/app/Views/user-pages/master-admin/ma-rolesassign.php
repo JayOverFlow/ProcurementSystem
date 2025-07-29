@@ -637,11 +637,21 @@
 
         // Basic validation for new assignment
         if (!userId) {
-            alert('Please select a user.');
+            Swal.fire({
+                title: 'Validation Error!',
+                text: 'Please select a user.',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6'
+            });
             return;
         }
         if (!newDepartmentId) {
-            alert('Please select a Department.');
+            Swal.fire({
+                title: 'Validation Error!',
+                text: 'Please select a Department.',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6'
+            });
             return;
         }
 
@@ -664,17 +674,33 @@
             contentType: 'application/json',
             success: function(response) {
                 if (response.status === 'success') {
-                    alert(response.message);
-                    // Remove the temporary row before reloading to ensure DataTables refreshes correctly
-                    row.remove();
-                    window.location.reload(); // Reload to reflect the new assignment in the table
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6'
+                    }).then(() => {
+                        // Remove the temporary row before reloading to ensure DataTables refreshes correctly
+                        row.remove();
+                        window.location.reload(); // Reload to reflect the new assignment in the table
+                    });
                 } else {
-                    alert('Error: ' + response.message);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.message,
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6'
+                    });
                 }
             },
             error: function(xhr, status, error) {
                 console.error(`[${performance.now().toFixed(2)}] Error creating user assignment:`, xhr, status, error);
-                alert('Failed to create user assignment. Please try again.');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to create user assignment. Please try again.',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6'
+                });
             }
         });
     });
