@@ -8,6 +8,8 @@ use App\Models\PoItemModel;
 use App\Models\PoItemSpecModel;
 use App\Models\TaskModel;
 use App\Models\UserModel;
+use App\Models\DepartmentModel;
+use App\Models\PrModel;
 
 class PoController extends BaseController
 {
@@ -255,5 +257,47 @@ class PoController extends BaseController
             log_message('error', 'PO Submission Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred during submission.');
         }
+    }
+
+    public function preview($poId)
+    {
+        $poModel = new PoModel();
+        $poItemModel = new PoItemModel();
+        $poItemSpecModel = new PoItemSpecModel();
+        $departmentModel = new DepartmentModel();
+        $userModel = new UserModel();
+        $prModel = new PrModel();
+
+        $po = $poModel->find($poId);
+        
+        if (empty($po)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Purchase Order not found');
+        }
+
+        $poItems = $poItemModel->where('po_items_id_fk', $poId)->findAll();
+
+        // Load specifications for each item
+        foreach($poItems as &$item) {
+            $item['specifications'] = $poItemSpecModel->where('po_item_specs_id_fk', $item['po_items_id'])->findAll();
+        }
+
+        $pr = [];
+        if (!empty($po['pr_id_fk'])) {
+            $pr = $prModel->find($po['pr_id_fk']);
+        }
+
+        $data = [
+            'po' => $po,
+            'po_items' => $poItems,
+            'department' => !empty($pr['pr_department']) ? $departmentModel->getDepartmentNameById($pr['pr_department']) : 'N/A',
+            'requested_by' => !empty($pr['pr_requested_by_name']) ? $userModel->getUserFullNameById($pr['pr_requested_by_name']) : 'N/A',
+            'approved_by' => !empty($pr['pr_approved_by_name']) ? $userModel->getUserFullNameById($pr['pr_approved_by_name']) : 'N/A',
+            'po_requested_by_position' => $pr['pr_requested_by_position'] ?? '',
+            'po_approved_by_position' => $pr['pr_approved_by_position'] ?? '',
+            'po_reviewed_by_position' => $po['po_reviewed_by_position'] ?? '',
+            'reviewed_by' => isset($po['po_reviewed_by_name']) ? $userModel->getUserFullNameById($po['po_reviewed_by_name']) : '',
+        ];
+
+        return view('preview-pages/po-preview', $data);
     }
 }

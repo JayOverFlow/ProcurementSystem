@@ -150,6 +150,7 @@ $routes->group('pr', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create/(:num)', 'PrController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PrController::save');
     $routes->post('submit', 'PrController::submit');
+    $routes->get('preview/(:num)', 'PrController::preview/$1');
 });
 
 // PO
@@ -158,6 +159,7 @@ $routes->group('po', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create/(:num)', 'PoController::index/$1'); // For loading the form with the data
     $routes->post('save', 'PoController::save');
     $routes->post('submit', 'PoController::submit');
+    $routes->get('preview/(:num)', 'PoController::preview/$1');
 });
 
 // PAR
