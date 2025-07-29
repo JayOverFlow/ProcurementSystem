@@ -9,7 +9,7 @@
 	===============================
 */
 body.dark .modal-backdrop {
-  background: linear-gradient(75deg, rgba(22, 28, 36, 0.48) 0%, rgb(22, 28, 36) 100%);
+  background: linear-gradient(75deg, rgba(35, 22, 36, 0.48) 0%, rgb(22, 28, 36) 100%);
 }
 body.dark .modal-backdrop.show {
   opacity: 0.8;
