@@ -191,13 +191,46 @@ class AppController extends BaseController
     {
         $appModel = new AppModel();
         $appItemModel = new AppItemModel();
+        $userModel = new UserModel();
 
+        // Fetch APP data with all fields including printed names
         $app = $appModel->find($appId);
         if (!$app) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('APP not found');
         }
 
+        // Fetch APP items
         $items = $appItemModel->where('app_id_fk', $appId)->findAll();
+
+        // Convert user IDs to actual user names for signature fields
+        $userIdFields = [
+            'app_prepared_by_name',
+            'app_recommending_by_name',
+            'app_approved_by_name'
+        ];
+
+        foreach ($userIdFields as $field) {
+            if (!empty($app[$field]) && is_numeric($app[$field])) {
+                // Fetch the actual user name using the user ID
+                $userName = $userModel->getUserFullNameById($app[$field]);
+                $app[$field] = $userName ?: 'Unknown User';
+            } else {
+                $app[$field] = $app[$field] ?: '';
+            }
+        }
+
+        // Ensure designation fields have default values if empty
+        $designationFields = [
+            'app_prepared_by_designation',
+            'app_recommending_by_designation',
+            'app_approved_by_designation'
+        ];
+
+        foreach ($designationFields as $field) {
+            if (!isset($app[$field]) || empty($app[$field])) {
+                $app[$field] = '';
+            }
+        }
 
         $data = [
             'app'   => $app,
