@@ -208,3 +208,9 @@ $routes->get('po', 'PreviewController::postPreviewPO');
 $routes->get('pr', 'PreviewController::postPreviewPR');
 });
 
+// ICS
+$routes->get('ics/create', 'Supply\\IcsController::index', ['filter' => 'userAuth']);
+$routes->get('ics/create/(:num)', 'Supply\\IcsController::index/$1', ['filter' => 'userAuth']);
+$routes->post('ics/save', 'Supply\\IcsController::save', ['filter' => 'userAuth']);
+$routes->post('ics/submit', 'Supply\\IcsController::submit', ['filter' => 'userAuth']);
+

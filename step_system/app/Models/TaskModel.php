@@ -31,10 +31,10 @@ class TaskModel extends Model
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $useTimestamps = false; // Changed to false as 'tasks_tbl' does not have 'updated_at' or 'deleted_at' columns
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
-    protected $updatedField  = ''; // Removed 'updated_at' reference
+    protected $updatedField  = '';
     protected $deletedField  = 'is_deleted';
 
     // Validation
@@ -124,6 +124,13 @@ class TaskModel extends Model
     public function getTaskByParId($parId) {
         return $this->withDeleted()
                     ->where('par_id_fk', $parId)
+                    ->where('is_deleted', 0)
+                    ->first();
+    }
+
+    public function getTaskByIcsId($icsId) {
+        return $this->withDeleted()
+                    ->where('ics_id_fk', $icsId)
                     ->where('is_deleted', 0)
                     ->first();
     }
