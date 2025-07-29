@@ -103,6 +103,7 @@ class IcsController extends BaseController
             }
 
             if ($icsId) {
+                // Delete existing items before inserting new ones to prevent duplicates
                 $this->icsItemModel->where('ics_id_fk', $icsId)->delete();
             }
 

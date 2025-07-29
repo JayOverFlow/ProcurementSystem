@@ -188,6 +188,9 @@ class ProcurementPageController extends BaseController
                     case 'Property Acknowledgement Receipt':
                         $urlSlug = 'par';
                         break;
+                    case 'Inventory Custodian Slip':
+                        $urlSlug = 'ics';
+                        break;
                     // Add more cases for other form types here as needed in the future
                     default:
                         $urlSlug = ''; // Fallback for unknown types
