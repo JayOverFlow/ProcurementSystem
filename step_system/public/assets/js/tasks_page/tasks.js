@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Handle status display
-                const status = data.ppmp_status || data.app_status || data.pr_status || data.po_status || data.par_status || data.ics_status;
+                const status = data.ppmp_status || data.app_status || data.pr_status || data.po_status || data.prop_ack_status || data.invent_custo_status;
                 if (status === 'Approved' || status === 'Rejected') {
                     modalActionButtons.style.display = 'none';
                     const badgeClass = status === 'Approved' ? 'badge-success' : 'badge-danger';
