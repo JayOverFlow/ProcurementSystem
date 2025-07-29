@@ -187,7 +187,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="user-tupid" class="mt-2">TUP ID</label>
-                                                    <input type="text" class="form-control" id="user-tupid" placeholder="" required>
+                                                    <input type="text" class="form-control" id="user-tupid" placeholder="_ _ _ _ _ _" required>
                                                     <div class="invalid-feedback">Please enter your TUP ID</div>
                                                 </div>
                                             </div>
@@ -195,7 +195,7 @@
                                     </div>
                                     
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF" disabled>Prev</button>
+                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF" disabled>Back</button>
                                         <button class="btn btn-nxt" style="background-color: #C62742; color: #FFFFFF">Next</button>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@
                                     </div>
                                     
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF">Prev</button>
+                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF">Back</button>
                                         <button class="btn btn-nxt" style="background-color: #C62742; color: #FFFFFF">Next</button>
                                     </div>
                                 </div>
@@ -327,7 +327,7 @@
                                     </div>
 
                                     <div class="button-action mt-5 d-flex justify-content-center">
-                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF">Prev</button>
+                                        <button class="btn btn-prev me-3" style="background-color: #C62742; color: #FFFFFF">Back</button>
                                         <button class="btn" style="background-color: #C62742; color: #FFFFFF" id="confirmSendOtpBtn" data-bs-toggle="modal" data-bs-target="#otpConfirmationModal">Next</button>
                                     </div>
                                 </div>
