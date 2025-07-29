@@ -556,8 +556,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 hideVerifyingOtpLoader();
                 if (data.status === 'success') {
-                    // Show success message and then redirect to login
-                    alert(data.message);
                     window.location.href = BASE_URL + 'login';
                 } else {
                     showErrorMessage(data.message);

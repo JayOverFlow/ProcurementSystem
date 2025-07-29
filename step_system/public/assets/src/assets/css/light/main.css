@@ -100,7 +100,7 @@ select.form-custom::-ms-expand {
 }
 
 .modal-content {
-  background: #0e1726;
+  background: #ffffff;
 }
 
 .code-section-container {
@@ -1966,7 +1966,7 @@ fieldset:disabled .btn {
 
 /* .btn-outline-primary:hover, .btn-outline-info:hover, .btn-outline-warning:hover, .btn-outline-success:hover, .btn-outline-danger:hover, .btn-outline-secondary:hover, .btn-outline-dark:hover {
   /* box-shadow: 0px 5px 20px 0 rgba(0, 0, 0, 0.1); */
-} */
+
 
 .btn-outline-primary:hover {
   color: #fff !important;
