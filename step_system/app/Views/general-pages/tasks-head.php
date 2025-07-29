@@ -137,8 +137,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>John doe de guzman</td>
-                            <td>Che</td>
+                            <td>Sample User</td>
+                            <td>Chemistry</td>
                             <td>2023-06-01</td>
                         </tr>
                     </tbody>

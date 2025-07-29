@@ -164,4 +164,15 @@ class TaskModel extends Model
 
         return !empty($result);
     }
+
+    public function getActivePrAssigneeForDepartment(int $departmentId): ?array
+    {
+        return $this->select('tasks_tbl.submitted_to, users_tbl.user_fullname')
+                    ->join('user_role_department_tbl as urd', 'urd.user_id = tasks_tbl.submitted_to')
+                    ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_to')
+                    ->where('urd.department_id', $departmentId)
+                    ->where('tasks_tbl.task_type', 'pr_assignment')
+                    ->where('tasks_tbl.task_status', 'Pending')
+                    ->first();
+    }
 }

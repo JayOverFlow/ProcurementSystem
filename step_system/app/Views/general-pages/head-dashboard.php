@@ -85,30 +85,31 @@
                                             <td class="text-center">
                                                 <!-- Action Button -->
                                                 <?php
+                                                    $nextTask = $subordinate['next_task']; // 'ppmp' or 'pr'
+                                                    $taskTypeUpper = strtoupper($nextTask);
                                                     $hasAssignment = $subordinate['has_assignment'];
                                                     $isAssignmentPending = $dashboard_data['is_assignment_pending'];
 
-                                                    // Default state: Assign button
-                                                    $buttonText = 'Assign';
-                                                    $buttonClass = 'btn-danger'; // Red for primary action
+                                                    // Base button properties
+                                                    $buttonText = "Assign $taskTypeUpper";
+                                                    $buttonClass = 'btn-danger'; // Default: primary action
                                                     $buttonDisabled = '';
 
+                                                    // Logic for when an assignment is already pending
                                                     if ($isAssignmentPending) {
                                                         if ($hasAssignment) {
-                                                            // This user has the pending assignment
+                                                            // This specific user is the one with the pending assignment
                                                             $buttonText = 'Assigned';
-                                                            $buttonClass = 'btn-danger'; // Red to indicate assigned status
-                                                            $buttonDisabled = 'disabled'; // Cannot re-assign to the same person
+                                                            $buttonDisabled = 'disabled';
                                                         } else {
-                                                            // Another user has the assignment, this button is for re-assignment
-                                                            $buttonClass = 'btn-secondary'; // Gray to indicate secondary action
+                                                            // Another user has the assignment, so this button becomes a secondary 're-assign' action
+                                                            $buttonClass = 'btn-secondary';
                                                         }
-                                                    } else {
-                                                        // No one is assigned yet, all buttons are primary assign actions
-                                                        $buttonClass = 'btn-danger';
                                                     }
                                                 ?>
-                                                <button class="btn <?= $buttonClass ?> btn-sm assign-ppmp-btn" data-user-id="<?= $subordinate['user_id'] ?>" <?= $buttonDisabled ?>>
+                                                <button class="btn <?= $buttonClass ?> btn-sm assign-task-btn" 
+                                                        data-user-id="<?= $subordinate['user_id'] ?>" 
+                                                        data-task-type="<?= $nextTask ?>" <?= $buttonDisabled ?>>
                                                     <?= $buttonText ?>
                                                 </button>
                                             </td>
