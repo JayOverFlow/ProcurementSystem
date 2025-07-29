@@ -95,7 +95,7 @@
                 <p id="modal-description"></p>
                 <div id="modal-action-buttons" class="widget-content text-center mt-5">
                     <button type="button" id="reject-btn" class="btn btn-sm warning reject" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
-                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #C62742; color: #FFFFFF">APPROVE</button>
+                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #C62742; color: #FFFFFF">Approve and Submit</button>
                 </div>
                 <div id="modal-status-display" class="text-center mt-5" style="display: none;">
                     <!-- Content will be set by JavaScript -->

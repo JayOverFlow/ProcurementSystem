@@ -175,4 +175,15 @@ class TaskModel extends Model
                     ->where('tasks_tbl.task_status', 'Pending')
                     ->first();
     }
+
+    public function hasActivePpmpAssignmentForDepartment(int $departmentId): bool
+    {
+        $result = $this->join('user_role_department_tbl as urd', 'urd.user_id = tasks_tbl.submitted_to')
+                         ->where('urd.department_id', $departmentId)
+                         ->where('tasks_tbl.task_type', 'assignment')
+                         ->where('tasks_tbl.task_status', 'Pending')
+                         ->first();
+
+        return !empty($result);
+    }
 }

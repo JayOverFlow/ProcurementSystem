@@ -136,7 +136,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     rejectBtn.setAttribute('data-id', data.ics_id_fk);
                 }
 
-                // Handle status display
+                // Set modal buttons and status display
+                const userGenRole = document.body.dataset.userGenRole;
+                const headRoles = ['Head', 'Director', 'Assistant Director', 'Supply', 'Procurement'];
+
+                if (data.ppmp_id_fk && headRoles.includes(userGenRole)) {
+                    approveBtn.textContent = 'Submit';
+                    rejectBtn.disabled = true; // As per user request
+                } else {
+                    approveBtn.textContent = 'Approve';
+                    rejectBtn.disabled = false;
+                }
                 const status = data.ppmp_status || data.app_status || data.pr_status || data.po_status || data.prop_ack_status || data.invent_custo_status;
                 if (status === 'Approved' || status === 'Rejected') {
                     modalActionButtons.style.display = 'none';
@@ -160,15 +170,23 @@ document.addEventListener('DOMContentLoaded', function () {
         const isApproved = this.id === 'approve-btn';
         const status = isApproved ? 'Approved' : 'Rejected';
         const confirmButtonColor = isApproved ? '#8ABB2F' : '#DC3545';
-        const confirmButtonText = isApproved ? 'Approve' : 'Reject';
+        const approveButtonText = document.getElementById('approve-btn').textContent.trim();
+        const confirmButtonText = isApproved ? approveButtonText : 'Yes, reject it!';
         
-        let documentType, endpoint, payload;
+        let documentType, endpoint, payload, actionText;
 
         switch (taskType) {
             case 'ppmp':
                 documentType = 'Project Procurement Management Plan';
-                endpoint = '/tasks/update-ppmp-status';
-                payload = { ppmp_id: id, status: status };
+                if (approveButtonText === 'Submit' && isApproved) {
+                    actionText = 'submit this PPMP to the Planning Officer';
+                    endpoint = '/ppmp/submit-to-planning'; // New endpoint for submitting to planning
+                    payload = { ppmp_id: id };
+                } else {
+                    actionText = `${status.toLowerCase()} this PPMP`;
+                    endpoint = isApproved ? '/ppmp/approve' : '/ppmp/reject';
+                    payload = { ppmp_id: id };
+                }
                 break;
             case 'app':
                 documentType = 'Annual Procurement Plan';

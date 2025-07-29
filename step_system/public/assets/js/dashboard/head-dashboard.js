@@ -43,9 +43,8 @@ $(document).ready(function() {
                             Swal.fire('Assigned!', 'Task assigned successfully.', 'success');
 
                             // --- Real-time UI Updates ---
-
-                            // --- Real-time UI Updates ---
                             const newAssigneeName = clickedButton.closest('tr').find('td:eq(1)').text().trim() + ' ' + clickedButton.closest('tr').find('td:eq(2)').text().trim();
+                            const table = $('#style-3');
                             table.data('assigned-user', newAssigneeName);
                             table.data('is-assignment-pending', 'true');
 
@@ -53,17 +52,17 @@ $(document).ready(function() {
                             $('#style-3 tbody tr').each(function() {
                                 const row = $(this);
                                 const button = row.find('.assign-task-btn');
-                                const statusBadge = row.find('.status span');
+                                const statusBadge = row.find('.status-badge');
                                 const currentUserId = button.data('user-id');
 
                                 if (currentUserId === userId) {
                                     // The user who was just assigned the task
-                                    button.text('Assigned').prop('disabled', true).removeClass('btn-primary btn-secondary').addClass('btn-danger');
-                                    statusBadge.text('Pending').removeClass('bg-success').addClass('bg-danger');
+                                    button.text('Assigned').prop('disabled', true).removeClass('btn-danger btn-primary').addClass('btn-danger');
+                                    statusBadge.text('Pending').removeClass('badge-light-danger').addClass('bg-warning');
                                 } else {
                                     // All other subordinates
-                                    button.text(`Assign ${taskTypeUpper}`).prop('disabled', false).removeClass('btn-danger btn-primary').addClass('btn-secondary');
-                                    statusBadge.text('Active').removeClass('bg-danger').addClass('bg-success');
+                                    button.text(`Assign ${taskType.toUpperCase()}`).prop('disabled', true).removeClass('btn-danger btn-primary btn-secondary').addClass('btn-danger');
+                                    statusBadge.text('Not Assigned').removeClass('bg-warning').addClass('badge-light-danger');
                                 }
                             });
 

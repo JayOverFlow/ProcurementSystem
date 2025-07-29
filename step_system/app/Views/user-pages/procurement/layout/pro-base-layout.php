@@ -25,7 +25,7 @@
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
 
-<body class="layout-boxed">
+<body class="layout-boxed enable-secondaryNav" data-user-gen-role="<?= session('user_gen_role') ?>">
     <!-- BEGIN LOADER -->
     <div id="load_screen"> <div class="loader"> <div class="loader-content">
         <div class="spinner-grow align-self-center"></div>

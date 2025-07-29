@@ -113,6 +113,9 @@ $routes->group('ppmp', ['filter' => 'auth:auth'], function($routes) {
     $routes->post('save', 'PpmpController::save');
     $routes->post('submit', 'PpmpController::submit');
     $routes->get('preview/(:num)', 'PpmpController::preview/$1');
+    $routes->post('approve', 'PpmpController::approve');
+    $routes->post('reject', 'PpmpController::reject');
+    $routes->post('submit-to-planning', 'PpmpController::submitToPlanning');
 });
 
 // Tasks
