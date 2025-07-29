@@ -35,12 +35,12 @@
 					</div>
 						<table id="tasks-table" class="table table-hover text-nowrap">
 							<thead>
-								<tr class="text-center">
+								<tr>
 									<th style="min-width: 40px; width: 40px;"><input class="form-check-input" type="checkbox" id="select-all"></th>
-									<th>Submitted By</th>
+									<th class="text-center">Submitted By</th>
 									<th>Document Type</th>
 									<th>Date Submitted</th>
-									<th>Status</th>
+									<th class="text-center">Status</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -54,12 +54,12 @@
 								            $badge_class = 'badge-danger';
 								        }
 								?>
-								        <tr class="text-center task-row" style="cursor: pointer;" data-task-id="<?= esc($task['task_id']) ?>">
+								        <tr class="task-row" style="cursor: pointer;" data-task-id="<?= esc($task['task_id']) ?>">
 											<td><input class="form-check-input" type="checkbox" onclick="event.stopPropagation();" value="<?= esc($task['task_id']) ?>"></td>
-								            <td><?= esc($task['submitted_by_name']) ?></td>
+								            <td class="text-center"><?= esc($task['submitted_by_name']) ?></td>
 								            <td><?= esc($task['task_type']) ?></td>
 								            <td><?= esc(date('F j, Y, g:i a', strtotime($task['created_at']))) ?></td>
-								            <td>
+								            <td class="text-center">
 								                <span class="badge <?= $badge_class ?>"><?= esc($status) ?></span>
 								            </td>
 								        </tr>

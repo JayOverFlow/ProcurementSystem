@@ -3,7 +3,7 @@
 		<div class="widget-content widget-content-area br-8 d-flex flex-column justify-content-center" style="min-height: 120px;">
 			<div class="table-responsive">
 				<div id="ecommerce-list_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-					<div class="row pt-4 pb-0 align-items-center justify-content-center">
+					<div class="row pt-4 pb-4 align-items-center justify-content-center">
 						<div class="col-auto d-flex align-items-center ms-3" style="gap: 0.5rem;">
 							<label for="filter-form-type" class="form-label mb-0 me-1" style="font-weight: 500;">Filter:</label>
 							<select class="form-select form-select-sm" id="filter-form-type" style="width: 110px; min-width: 80px; font-size: 0.95rem;">
