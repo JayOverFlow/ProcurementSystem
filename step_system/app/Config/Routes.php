@@ -165,7 +165,8 @@ $routes->group('po', ['filter' => 'auth:auth'], function($routes) {
 // PAR
 $routes->group('par', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('create', 'ParController::index');
-    $routes->get('create/(:num)', 'ParController::index/$1'); // For loading the form with the data
+    $routes->get('par/create/(:num)', 'ParController::index/$1');
+    $routes->get('ics/create/(:num)', 'IcsController::index/$1'); // For loading the form with the data
     $routes->post('save', 'ParController::save');
     $routes->post('submit', 'ParController::submit');
 });
