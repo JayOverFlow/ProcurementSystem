@@ -506,17 +506,18 @@ class PpmpController extends BaseController
                 throw new \Exception('No Planning Officer found in the system.');
             }
 
-            // 4. Re-assign the task to the first Planning Officer
+            // 4. Re-assign the task to the first Planning Officer, updating submitted_by to the current user (Head)
             $firstOfficerId = array_shift($planningOfficers);
             $this->taskModel->update($task['task_id'], [
+                'submitted_by' => $userId, // Set the Head as the new submitter
                 'submitted_to' => $firstOfficerId,
                 'task_description' => 'A new PPMP from ' . $session->get('user_fullname') . ' has been submitted for your review.'
             ]);
 
-            // 5. Create new tasks for other planning officers
+            // 5. Create new tasks for other planning officers, also with the Head as the submitter
             foreach ($planningOfficers as $officerId) {
                 $this->taskModel->insert([
-                    'submitted_by' => $task['submitted_by'], // Keep the original submitter
+                    'submitted_by' => $userId, // Set the Head as the submitter
                     'submitted_to' => $officerId,
                     'ppmp_id_fk' => $ppmpId,
                     'task_type' => 'Project Procurement Management Plan',

@@ -38,24 +38,29 @@ class StepperController extends BaseController
      */
     public function getStepperStatus(int $departmentId): ResponseInterface
     {
-        // 1. Retrieve and update the stepper status from the StepperModel.
-        //    The model handles all the complex logic of checking various procurement tables
-        //    and updating the `stepper_tbl` before returning the latest status.
-        $result = $this->stepperModel->getDepartmentStepperStatus($departmentId);
+        try {
+            // 1. Retrieve and update the stepper status from the StepperModel.
+            //    The model handles all the complex logic of checking various procurement tables
+            //    and updating the `stepper_tbl` before returning the latest status.
+            // Call the new stateless method to get real-time stepper data
+            $stepperData = $this->stepperModel->getStepperStatus($departmentId);
+            
+            if (empty($stepperData)) {
+                return $this->response->setJSON([]);
+            }
 
         // 2. Prepare the data for the frontend display.
         //    This involves adding dynamic icons and text colors based on the `stepper_status`.
         $formattedResult = [];
-        foreach ($result as $phase) {
-            // Convert the status to lowercase to ensure consistency with switch statement cases.
-            $status = strtolower($phase['stepper_status']);
+        foreach ($stepperData as $phaseName => $phaseData) {
+            $status = $phaseData['status'];
             $icon = '';        // Stores the HTML for the icon (SVG or image)
             $iconClass = '';   // Stores CSS class for the icon's background circle/container
             $textColor = '';
 
             // Determine the appropriate display name for the phase.
             $displayName = '';
-            switch ($phase['stepper_phase']) {
+            switch ($phaseName) {
                 case 'PPMP':
                     $displayName = 'Project Procurement Management Plan';
                     break;
@@ -81,25 +86,25 @@ class StepperController extends BaseController
                     $displayName = 'Inventory Custodian Slip';
                     break;
                 default:
-                    $displayName = $phase['stepper_phase']; // Fallback to original if not mapped
+                    $displayName = $phaseName; // Fallback to original if not mapped
                     break;
             }
 
             // Determine the appropriate icon, icon class, and text color based on the phase status.
             switch ($status) {
-                case 'completed':
+                case 'Completed':
                     // Checkmark icon for completed phases
                     $icon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
                     $iconClass = 't-success';   // Green background for success
                     $textColor = 'text-success'; // Green text
                     break;
-                case 'in_progress': // This now covers both 'in_progress' and 'rejected' states from the model
+                case 'In Progress': // This now covers both 'in_progress' and 'rejected' states from the model
                     // Clock icon for phases that are currently being processed/reviewed or rejected (pending revision)
                     $icon = '<img src="' . base_url('assets/images/clock.svg') . '" alt="clock">';
                     $iconClass = 't-warning';   // Amber background for warning/in-progress
                     $textColor = 'text-warning'; // Amber text
                     break;
-                case 'pending': // This explicitly means 'Not Started'
+                case 'Not Started': // This explicitly means 'Not Started'
                 default:
                     // Default to clock icon for pending phases (not yet started)
                     $icon = '<img src="' . base_url('assets/images/clock.svg') . '" alt="pending">';
@@ -110,22 +115,23 @@ class StepperController extends BaseController
 
             // Add the formatted phase data to the result array.
             $formattedResult[] = [
-                'phase'     => $phase['stepper_phase'],    // The short name of the phase (e.g., PPMP)
+                'phase'     => $phaseName,    // The short name of the phase (e.g., PPMP)
                 'display_name' => $displayName,             // The full, user-friendly name of the phase
                 'status'    => $status,                     // The processed status (lowercase)
-                'remark'    => $phase['stepper_remark'],    // The remark from the database
-                'updated_at'=> $phase['stepper_updated_at'], // Timestamp of last update
+                'remark'    => $phaseData['remark'],    // The remark from the database
                 'icon'      => $icon,                       // HTML string for the icon
                 'icon_class'=> $iconClass,                 // CSS class for the icon container
                 'text_color'=> $textColor                   // CSS class for text color
             ];
         }
 
-        // 3. Log the formatted result for debugging purposes (useful for frontend troubleshooting).
-        log_message('debug', 'Formatted Stepper Data: ' . json_encode($formattedResult));
-
         // 4. Return the formatted data as a JSON response to the frontend.
         //    The frontend JavaScript will then parse this JSON and dynamically render the stepper.
         return $this->response->setJSON($formattedResult);
+        
+        } catch (\Exception $e) {
+            log_message('error', '[StepperController] Exception: ' . $e->getMessage());
+            return $this->response->setStatusCode(500)->setJSON(['error' => 'An internal server error occurred.']);
+        }
     }
 }

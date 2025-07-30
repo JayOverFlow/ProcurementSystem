@@ -33,7 +33,236 @@ class StepperModel extends Model
      * @param int $departmentId The ID of the department for which to retrieve stepper status.
      * @return array An array of stepper phases, each with its current status and remarks.
      */
-    public function getDepartmentStepperStatus(int $departmentId): array
+    /**
+     * [NEW] Retrieves the real-time stepper status for a department by querying source tables directly.
+     * This is the new entry point for the StepperController.
+     */
+    public function getStepperStatus(int $departmentId): array
+    {
+        $stepperData = [];
+
+        // Phase 1: Get PPMP Status
+        $stepperData['PPMP'] = $this->_getPpmpStatus($departmentId);
+
+        // Phase 2: Get APP Status
+        $stepperData['APP'] = $this->_getAppStatus($departmentId, $stepperData['PPMP']);
+
+        // Phase 3: Get PR Status
+        $stepperData['PR'] = $this->_getPrStatus($departmentId, $stepperData['APP']);
+
+        // Phase 4: Get Bidding Status
+        $stepperData['Bidding'] = $this->_getBiddingStatus($departmentId, $stepperData['PR']);
+
+        // Phase 5: Get PO Status
+        $stepperData['PO'] = $this->_getPoStatus($departmentId, $stepperData['Bidding']);
+
+        // Phase 6: Get Delivery Status
+        $stepperData['Delivery'] = $this->_getDeliveryStatus($departmentId, $stepperData['PO']);
+
+        // Phase 7: Get PAR Status
+        $stepperData['PAR'] = $this->_getParStatus($departmentId, $stepperData['Delivery']);
+
+        // Phase 8: Get ICS Status
+        $stepperData['ICS'] = $this->_getIcsStatus($departmentId, $stepperData['PAR']);
+
+        return $stepperData;
+    }
+
+    /**
+     * [NEW] Gets the real-time status for the PPMP phase.
+     */
+    private function _getPpmpStatus(int $departmentId): array
+    {
+        $ppmp = $this->db->table('ppmp_tbl')
+                         ->select('ppmp_status')
+                         ->where('ppmp_office_fk', $departmentId)
+                         ->orderBy('ppmp_id', 'DESC')
+                         ->limit(1)
+                         ->get()
+                         ->getRowArray();
+
+        if (!$ppmp || $ppmp['ppmp_status'] === 'Draft') {
+            return [
+                'status' => 'Pending',
+                'remark' => 'Not yet started',
+            ];
+        }
+
+        $statusMap = [
+            'Approved' => 'Completed',
+            'Pending'  => 'In Progress',
+            'Rejected' => 'In Progress' // Rejected is a form of 'in_progress' as it requires action
+        ];
+
+        return [
+            'status' => $statusMap[$ppmp['ppmp_status']] ?? 'Pending',
+            'remark' => 'No remarks',
+        ];
+    }
+
+    /**
+     * [NEW] Gets the real-time status for the APP phase.
+     * The APP status is dependent on the PPMP phase being completed.
+     */
+    private function _getAppStatus(int $departmentId, array $ppmpStatus): array
+    {
+        // Check if the prerequisite PPMP phase is completed. If not, APP is pending.
+        if ($ppmpStatus['status'] !== 'Completed') {
+            return ['status' => 'Pending', 'remark' => 'Awaiting PPMP completion.'];
+        }
+
+        // Query for the latest APP record for the given department.
+        $app = $this->db->table('app_tbl')
+                        ->select('app_status') // Select only the columns we need
+                        ->where('app_dep_id_fk', $departmentId)
+                        ->orderBy('app_id', 'DESC') // Get the most recent APP
+                        ->limit(1)
+                        ->get()
+                        ->getRowArray();
+
+        // If no APP record exists yet, the status is in progress.
+        if (!$app) {
+            return ['status' => 'In Progress', 'remark' => 'APP creation is pending.'];
+        }
+
+        // Map the database status to the stepper's standardized statuses.
+        $statusMap = [
+            'Approved' => 'Completed',
+            'Pending'  => 'In Progress',
+            'Rejected' => 'In Progress' // Rejected means it needs rework, so it's 'In Progress'.
+        ];
+
+        // Return the mapped status and remark. Default to 'Pending' if status is unrecognized.
+        return [
+            'status' => $statusMap[$app['app_status']] ?? 'Pending',
+            'remark' => 'No remarks'
+        ];
+    }
+
+    private function _getPrStatus(int $departmentId, array $appStatus): array
+    {
+        if ($appStatus['status'] !== 'Completed') {
+            return ['status' => 'Pending', 'remark' => 'Awaiting APP completion.'];
+        }
+
+        $pr = $this->db->table('pr_tbl')
+                       ->select('pr_status')
+                       ->where('pr_department', $departmentId)
+                       ->orderBy('pr_id', 'DESC')->limit(1)->get()->getRowArray();
+
+        if (!$pr) {
+            return ['status' => 'In Progress', 'remark' => 'Purchase Request creation is pending.'];
+        }
+
+        $statusMap = ['Approved' => 'Completed', 'Pending' => 'In Progress', 'Rejected' => 'In Progress'];
+        return ['status' => $statusMap[$pr['pr_status']] ?? 'Pending', 'remark' => 'No remarks'];
+    }
+
+    private function _getBiddingStatus(int $departmentId, array $prStatus): array
+    {
+        if ($prStatus['status'] !== 'Completed') {
+            return ['status' => 'Pending', 'remark' => 'Awaiting PR approval.'];
+        }
+
+        $bidding = $this->db->table('bidding_tbl')
+                            ->select('bidding_status')
+                            ->where('bidding_department', $departmentId)
+                            ->orderBy('bidding_id', 'DESC')->limit(1)->get()->getRowArray();
+
+        if (!$bidding) {
+            return ['status' => 'In Progress', 'remark' => 'Bidding process is pending.'];
+        }
+
+        $statusMap = ['Successful' => 'Completed', 'Failed' => 'In Progress'];
+        return ['status' => $statusMap[$bidding['bidding_status']] ?? 'Pending', 'remark' => 'No remarks'];
+    }
+
+    private function _getPoStatus(int $departmentId, array $biddingStatus): array
+    {
+        if ($biddingStatus['status'] !== 'Completed') {
+            return ['status' => 'Pending', 'remark' => 'Awaiting successful Bidding.'];
+        }
+
+        $po = $this->db->table('po_tbl')
+                       ->select('po_status')
+                       ->join('pr_tbl', 'po_tbl.po_pr_fk = pr_tbl.pr_id')
+                       ->where('pr_tbl.pr_department', $departmentId)
+                       ->orderBy('po_id', 'DESC')->limit(1)->get()->getRowArray();
+
+        if (!$po) {
+            return ['status' => 'In Progress', 'remark' => 'Purchase Order creation is pending.'];
+        }
+
+        $statusMap = ['Approved' => 'Completed', 'Pending' => 'In Progress', 'Rejected' => 'In Progress'];
+        return ['status' => $statusMap[$po['po_status']] ?? 'Pending', 'remark' => 'No remarks'];
+    }
+
+    private function _getDeliveryStatus(int $departmentId, array $poStatus): array
+    {
+        if ($poStatus['status'] !== 'Completed') {
+            return ['status' => 'Pending', 'remark' => 'Awaiting PO approval.'];
+        }
+
+        $delivery = $this->db->table('delivery_status_tbl')
+                              ->select('status')
+                              ->join('po_tbl', 'delivery_status_tbl.po_id_fk = po_tbl.po_id')
+                              ->join('pr_tbl', 'po_tbl.po_pr_fk = pr_tbl.pr_id')
+                              ->where('pr_tbl.pr_department', $departmentId)
+                              ->orderBy('delivery_stat_id', 'DESC')->limit(1)->get()->getRowArray();
+
+        if (!$delivery) {
+            return ['status' => 'In Progress', 'remark' => 'Delivery is pending.'];
+        }
+
+        $statusMap = ['Delivered' => 'Completed'];
+        return ['status' => $statusMap[$delivery['status']] ?? 'Pending', 'remark' => 'No remarks'];
+    }
+
+    private function _getParStatus(int $departmentId, array $deliveryStatus): array
+    {
+        if ($deliveryStatus['status'] !== 'Completed') {
+            return ['status' => 'Pending', 'remark' => 'Awaiting Delivery completion.'];
+        }
+
+        $par = $this->db->table('prop_ack_tbl')
+                        ->join('po_items_tbl', 'prop_ack_tbl.prop_ack_po_item_id_fk = po_items_tbl.po_items_id')
+                        ->join('po_tbl', 'po_items_tbl.po_items_id_fk = po_tbl.po_id')
+                        ->join('pr_items_tbl', 'po_tbl.po_pr_items_id_fk = pr_items_tbl.pr_items_id')
+                        ->join('pr_tbl', 'pr_items_tbl.pr_id_fk = pr_tbl.pr_id')
+                        ->where('pr_tbl.pr_department', $departmentId)
+                        ->countAllResults();
+
+        if ($par > 0) {
+            return ['status' => 'Completed', 'remark' => 'Property Acknowledgement Receipt created.'];
+        }
+        return ['status' => 'In Progress', 'remark' => 'PAR creation is pending.'];
+    }
+
+    private function _getIcsStatus(int $departmentId, array $parStatus): array
+    {
+        if ($parStatus['status'] !== 'Completed') {
+            return ['status' => 'Pending', 'remark' => 'Awaiting PAR creation.'];
+        }
+
+        $ics = $this->db->table('invent_custo_tbl')
+                        ->join('prop_ack_tbl', 'invent_custo_tbl.invent_custo_prop_ack_fk = prop_ack_tbl.prop_ack_id')
+                        ->join('po_items_tbl', 'prop_ack_tbl.prop_ack_po_item_id_fk = po_items_tbl.po_items_id')
+                        ->join('po_tbl', 'po_items_tbl.po_items_id_fk = po_tbl.po_id')
+                        ->join('pr_items_tbl', 'po_tbl.po_pr_items_id_fk = pr_items_tbl.pr_items_id')
+                        ->join('pr_tbl', 'pr_items_tbl.pr_id_fk = pr_tbl.pr_id')
+                        ->where('pr_tbl.pr_department', $departmentId)
+                        ->countAllResults();
+
+        if ($ics > 0) {
+            return ['status' => 'Completed', 'remark' => 'Inventory Custodian Slip created.'];
+        }
+        return ['status' => 'In Progress', 'remark' => 'ICS creation is pending.'];
+    }
+
+    /**
+     * @deprecated This method uses the old, stateful logic of reading from and updating stepper_tbl.
+     */
+    public function getDepartmentStepperStatus_DEPRECATED(int $departmentId): array
     {
         // Define all the procurement phases in the correct order of progression
         $stepperPhases = [
@@ -80,7 +309,10 @@ class StepperModel extends Model
      * @param array $currentStepperData Reference to the current data from `stepper_tbl` for the department.
      *                                  This array is updated in real-time as phases are processed.
      */
-    private function updateStepperBasedOnProcurementStatus(int $departmentId, array $stepperPhases, array &$currentStepperData): void
+    /**
+     * @deprecated This is the old, complex waterfall logic for updating stepper statuses.
+     */
+    private function updateStepperBasedOnProcurementStatus_DEPRECATED(int $departmentId, array $stepperPhases, array &$currentStepperData): void
     {
         // Load CodeIgniter's date helper for functions like `now()`
         helper('date');
@@ -440,17 +672,17 @@ class StepperModel extends Model
 
             // Map database statuses to internal stepper statuses (case-insensitive comparison)
             if (strcasecmp($dbStatus, 'Approved') === 0 || strcasecmp($dbStatus, 'Delivered') === 0 || strcasecmp($dbStatus, 'Successful') === 0) {
-                $status = 'completed'; // Procurement document is approved/completed
+                $status = 'Completed'; // Procurement document is approved/completed
                 $remark = 'Phase ' . $phaseName . ' has been approved/completed.';
             } elseif (strcasecmp($dbStatus, 'Rejected') === 0) {
-                $status = 'in_progress'; // When a form is rejected, it goes back to pending/in-progress for revision
+                $status = 'In Progress'; // When a form is rejected, it goes back to pending/in-progress for revision
                 $remark = 'Phase ' . $phaseName . ' was rejected and is pending revision.' . ($remarkKey ? ' Reason: ' . ($dbRemark ?? 'N/A') : '');
             } elseif (strcasecmp($dbStatus, 'Pending') === 0) {
-                $status = 'in_progress'; // Procurement document is pending review
+                $status = 'In Progress'; // Procurement document is pending review
                 $remark = 'Phase ' . $phaseName . ' is currently pending review.';
             } else {
                 // If status exists but doesn't fall into above categories, consider it in progress
-                $status = 'in_progress';
+                $status = 'In Progress';
                 $remark = 'Phase ' . $phaseName . ' is in progress. Status: ' . $dbStatus;
             }
         }

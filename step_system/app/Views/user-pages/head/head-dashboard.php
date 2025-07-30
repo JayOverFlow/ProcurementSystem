@@ -25,8 +25,8 @@
         <!--  BEGIN CONTENT AREA  -->
 <?= $this->section('content') ?>
 <div class="row just-content-evenly h-100 align-items-stretch">
-                    <!-- Stepper Column -->
-                    <div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
+    
+<div class="col-xxl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex flex-column">
         <div class="widget widget-activity-five h-100 d-flex flex-column">
             <div class="widget-heading ms-3 pb-0">
                 <h4 class="text-center fw-bold" style="color: #8C0404">Procurement Status</h4>
@@ -156,8 +156,7 @@ c3 = $('#style-3').DataTable({
             </div>
             <div class="modal-body">
                 <p id="modalStepperStatus"></p>
-                <p id="modalStepperRemark"></p>
-                <p id="modalStepperUpdatedAt"></p>
+                <!-- <p id="modalStepperRemark"></p> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
