@@ -35,8 +35,8 @@ class DashboardController extends BaseController
      */
         private function prepareHeadDashboardData($currentUserId, $departmentId)
     {
-        // Fetch subordinates
-        $subordinates = $this->userRoleDepartmentModel->getUsersInSameDepartment($currentUserId, $departmentId);
+        // Fetch subordinates with their PPMP assignment status
+        $subordinates = $this->userRoleDepartmentModel->getSubordinatesWithPpmpStatus($currentUserId, $departmentId);
 
         // Determine the current procurement stage for the entire department
         $departmentHasApprovedPpmp = $this->ppmpModel->hasApprovedPpmpForDepartment($departmentId);
@@ -55,14 +55,6 @@ class DashboardController extends BaseController
 
         foreach ($subordinates as &$subordinate) {
             $subordinate['next_task'] = $nextTaskForDepartment;
-
-            $hasAssignment = false;
-            if ($nextTaskForDepartment === 'ppmp') {
-                $hasAssignment = $this->taskModel->hasActivePpmpAssignment($subordinate['user_id']);
-            } else if ($nextTaskForDepartment === 'pr') {
-                $hasAssignment = ($activePrAssignee && $activePrAssignee['submitted_to'] == $subordinate['user_id']);
-            }
-            $subordinate['has_assignment'] = $hasAssignment;
         }
 
         // Prepare dashboard data
@@ -73,10 +65,9 @@ class DashboardController extends BaseController
             'department_budget' => $this->departmentBudgetModel->getBudgetByDepartmentAndYear($departmentId, date('Y')),
             'subordinates' => $subordinates,
             'assigned_user_name' => $activePrAssignee ? $activePrAssignee['user_fullname'] : null, // This might need adjustment if we need PPMP assignee name
-            'is_assignment_pending' => $isAssignmentPending
+            'is_assignment_pending' => $isAssignmentPending,
+            'isPpmpPhaseComplete' => $departmentHasApprovedPpmp
         ];
-
-        log_message('debug', '[DashboardController] Final dashboard data: ' . json_encode($dashboardData));
 
         return $dashboardData;
     }

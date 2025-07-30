@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\UserRoleDepartmentModel;
 
 class TaskModel extends Model
 {
@@ -56,19 +57,41 @@ class TaskModel extends Model
 
     public function getTasksForUser(int $userId)
     {
-        return $this->withDeleted()
-                    ->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status, par_tbl.prop_ack_status, ics_tbl.invent_custo_status')
-                    ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_by')
-                    ->join('ppmp_tbl', 'ppmp_tbl.ppmp_id = tasks_tbl.ppmp_id_fk', 'left')
-                    ->join('app_tbl', 'app_tbl.app_id = tasks_tbl.app_id_fk', 'left')
-                    ->join('pr_tbl', 'pr_tbl.pr_id = tasks_tbl.pr_id_fk', 'left')
-                    ->join('po_tbl', 'po_tbl.po_id = tasks_tbl.po_id_fk', 'left')
-                    ->join('par_tbl', 'par_tbl.prop_ack_id = tasks_tbl.par_id_fk', 'left') // Added join for par_tbl
-                    ->join('ics_tbl', 'ics_tbl.invent_custo_id = tasks_tbl.ics_id_fk', 'left') // Added join for ics_tbl
-                    ->where('tasks_tbl.submitted_to', $userId)
-                    ->where('tasks_tbl.is_deleted', 0)
-                    ->orderBy('tasks_tbl.created_at', 'DESC')
-                    ->findAll();
+        // Get the IDs of the current user's subordinates
+        $userRoleDepModel = new UserRoleDepartmentModel();
+        $userDepId = session()->get('user_dep_id');
+        $subordinates = $userRoleDepModel->getUsersInSameDepartment($userId, $userDepId);
+        $subordinateIds = array_map(function($sub) { return $sub['user_id']; }, $subordinates);
+
+        $builder = $this->withDeleted()
+            ->select('tasks_tbl.task_id, tasks_tbl.task_type, tasks_tbl.created_at, tasks_tbl.task_status, users_tbl.user_fullname as submitted_by_name, ppmp_tbl.ppmp_status, app_tbl.app_status, pr_tbl.pr_status, po_tbl.po_status, par_tbl.prop_ack_status, ics_tbl.invent_custo_status')
+            ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_by')
+            ->join('ppmp_tbl', 'ppmp_tbl.ppmp_id = tasks_tbl.ppmp_id_fk', 'left')
+            ->join('app_tbl', 'app_tbl.app_id = tasks_tbl.app_id_fk', 'left')
+            ->join('pr_tbl', 'pr_tbl.pr_id = tasks_tbl.pr_id_fk', 'left')
+            ->join('po_tbl', 'po_tbl.po_id = tasks_tbl.po_id_fk', 'left')
+            ->join('par_tbl', 'par_tbl.prop_ack_id = tasks_tbl.par_id_fk', 'left')
+            ->join('ics_tbl', 'ics_tbl.invent_custo_id = tasks_tbl.ics_id_fk', 'left');
+
+        $builder->groupStart(); // Main group start
+
+        // Condition 1: Tasks directly assigned to the current user
+        $builder->where('tasks_tbl.submitted_to', $userId);
+
+        // Condition 2: Tasks submitted by subordinates that are now approved (processed by the Head)
+        if (!empty($subordinateIds)) {
+            $builder->orGroupStart()
+                ->whereIn('tasks_tbl.submitted_by', $subordinateIds)
+                ->where('ppmp_tbl.ppmp_status', 'Approved')
+            ->groupEnd();
+        }
+
+        $builder->groupEnd(); // Main group end
+
+        $builder->where('tasks_tbl.is_deleted', 0)
+                ->orderBy('tasks_tbl.created_at', 'DESC');
+
+        return $builder->findAll();
     }
 
     public function getTaskDetails(int $taskId)
@@ -85,17 +108,28 @@ class TaskModel extends Model
                     ->join('par_tbl', 'par_tbl.prop_ack_id = tasks_tbl.par_id_fk', 'left') // Added join for par_tbl
                     ->join('ics_tbl', 'ics_tbl.invent_custo_id = tasks_tbl.ics_id_fk', 'left') // Added join for ics_tbl
                     ->where('tasks_tbl.task_id', $taskId)
-                    ->where('tasks_tbl.is_deleted', 0)
+                    ->groupStart()
+                        ->where('tasks_tbl.is_deleted', 0)
+                        ->orWhere('ppmp_tbl.ppmp_status', 'Approved')
+                    ->groupEnd()
                     ->groupBy([
-                       'tasks_tbl.task_id',
-                       'users_tbl.user_fullname',
-                       'users_tbl.user_email',
-                       'ppmp_tbl.ppmp_status',
-                       'app_tbl.app_status',
-                       'pr_tbl.pr_status',
-                       'po_tbl.po_status',
-                       'par_tbl.prop_ack_status', // Added to groupBy
-                       'ics_tbl.invent_custo_status' // Added to groupBy
+                        'tasks_tbl.task_id',
+                        'tasks_tbl.created_at',
+                        'tasks_tbl.task_description',
+                        'tasks_tbl.ppmp_id_fk',
+                        'tasks_tbl.app_id_fk',
+                        'tasks_tbl.pr_id_fk',
+                        'tasks_tbl.po_id_fk',
+                        'tasks_tbl.par_id_fk',
+                        'tasks_tbl.ics_id_fk',
+                        'users_tbl.user_fullname',
+                        'users_tbl.user_email',
+                        'ppmp_tbl.ppmp_status',
+                        'app_tbl.app_status',
+                        'pr_tbl.pr_status',
+                        'po_tbl.po_status',
+                        'par_tbl.prop_ack_status',
+                        'ics_tbl.invent_custo_status'
                     ])
                     ->first();
     }
@@ -158,8 +192,7 @@ class TaskModel extends Model
     {
         $result = $this->where([
             'submitted_to' => $userId,
-            'task_type'    => 'assignment',
-            'task_status'  => 'Pending'
+            'task_type'    => 'assignment'
         ])->first();
 
         return !empty($result);
@@ -172,7 +205,6 @@ class TaskModel extends Model
                     ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_to')
                     ->where('urd.department_id', $departmentId)
                     ->where('tasks_tbl.task_type', 'pr_assignment')
-                    ->where('tasks_tbl.task_status', 'Pending')
                     ->first();
     }
 
@@ -181,7 +213,6 @@ class TaskModel extends Model
         $result = $this->join('user_role_department_tbl as urd', 'urd.user_id = tasks_tbl.submitted_to')
                          ->where('urd.department_id', $departmentId)
                          ->where('tasks_tbl.task_type', 'assignment')
-                         ->where('tasks_tbl.task_status', 'Pending')
                          ->first();
 
         return !empty($result);
