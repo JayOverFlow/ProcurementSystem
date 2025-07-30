@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     createBtn.addEventListener('click', function() {
-        window.location.href = '/procurement';
+        window.location.href = '/ppmp/create';
     });
 
     c2 = $('#style-2').DataTable({

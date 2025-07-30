@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function openTaskModal(taskId) {
         taskModal.show();
+        // Store taskId on the button to make it available to the event handler
+        approveBtn.setAttribute('data-task-id', taskId);
+        rejectBtn.setAttribute('data-task-id', taskId);
+
         // Show loading state
         modalFullName.textContent = 'Loading...';
         modalEmail.textContent = '';
@@ -165,7 +169,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleStatusUpdate(event) {
-        const id = this.dataset.id;
+        const id = this.dataset.id; // This is the ppmp_id, app_id, etc.
+        const taskId = this.dataset.taskId; // Retrieve the taskId from the button
         const taskType = this.dataset.taskType;
         const isApproved = this.id === 'approve-btn';
         const status = isApproved ? 'Approved' : 'Rejected';
@@ -180,8 +185,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 documentType = 'Project Procurement Management Plan';
                 if (approveButtonText === 'Submit' && isApproved) {
                     actionText = 'submit this PPMP to the Planning Officer';
-                    endpoint = '/ppmp/submit-to-planning'; // New endpoint for submitting to planning
-                    payload = { ppmp_id: id };
+                    endpoint = '/ppmp/submit-from-head'; // New endpoint for Head submission
+                    payload = { task_id: taskId, ppmp_id: id }; // Send both task_id and ppmp_id
                 } else {
                     actionText = `${status.toLowerCase()} this PPMP`;
                     endpoint = isApproved ? '/ppmp/approve' : '/ppmp/reject';
@@ -218,9 +223,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
         }
 
+        let swalTitle, swalText;
+
+        if (taskType === 'ppmp' && approveButtonText === 'Submit' && isApproved) {
+            swalTitle = 'Confirm Submission?';
+            swalText = 'This Project Procurement Management Plan will be sent to the Planning Officer.';
+        } else {
+            swalTitle = `Confirm ${status.toLowerCase()}?`;
+            swalText = `Do you want to ${status.toLowerCase()} this ${documentType}?`;
+        }
+
         Swal.fire({
-            title: `Confirm ${status.toLowerCase()}?`,
-            text: `Do you want to ${status.toLowerCase()} this ${documentType}?`,
+            title: swalTitle,
+            text: swalText,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: confirmButtonColor,

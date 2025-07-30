@@ -53,7 +53,34 @@ class UserRoleDepartmentModel extends Model
                     ->findAll();
     }
 
-    // public funtion
-
+    public function getSubordinatesWithPpmpStatus(int $currentUserId, int $departmentId): array
+    {
+        return $this->select([
+            'users_tbl.user_id',
+            'users_tbl.user_tupid',
+            'users_tbl.user_firstname',
+            'users_tbl.user_lastname',
+            'users_tbl.user_type',
+            "MAX(CASE 
+                WHEN ppmp.ppmp_status = 'Pending' THEN 'Submitted'
+                WHEN tasks.task_id IS NOT NULL THEN 'Assigned'
+                ELSE 'Not Assigned'
+             END) as assignment_status"
+        ])
+        ->join('users_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id')
+        ->join('tasks_tbl as tasks', "tasks.submitted_to = users_tbl.user_id AND tasks.task_type = 'assignment' AND tasks.is_deleted = 0", 'left')
+        ->join('ppmp_tbl as ppmp', 'ppmp.ppmp_id = tasks.ppmp_id_fk', 'left')
+        ->where('user_role_department_tbl.department_id', $departmentId)
+        ->where('users_tbl.user_id !=', $currentUserId)
+        ->groupBy([
+            'users_tbl.user_id',
+            'users_tbl.user_tupid',
+            'users_tbl.user_firstname',
+            'users_tbl.user_lastname',
+            'users_tbl.user_type'
+        ])
+        ->orderBy('users_tbl.user_firstname', 'ASC')
+        ->findAll();
+    }
 
 } 

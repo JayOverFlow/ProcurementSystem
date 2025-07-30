@@ -82,10 +82,8 @@ class PpmpModel extends Model
     {
         $currentYear = date('Y');
         $builder = $this->db->table($this->table . ' as pml');
-        $builder->join('user_role_department_tbl as urd', 'pml.saved_by_user_id_fk = urd.user_id');
-        $builder->where('urd.department_id', $departmentId);
+        $builder->where('pml.ppmp_office_fk', $departmentId);
         $builder->where('pml.ppmp_status', 'Approved');
-        $builder->where('YEAR(pml.ppmp_date_approved)', $currentYear);
         $query = $builder->get();
 
         return $query->getRow() !== null;

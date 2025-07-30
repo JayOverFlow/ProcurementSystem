@@ -46,7 +46,14 @@
 							<tbody>
 								<?php if (!empty($tasks)):
 								    foreach ($tasks as $task):
-								        $status = $task['ppmp_status'] ?? $task['app_status'] ?? $task['pr_status'] ?? $task['po_status'] ?? 'Pending';
+                                        // Prioritize task_status for the Head's view of their own actions
+                                        if (isset($task['task_status']) && in_array($task['task_status'], ['Approved', 'Rejected'])) {
+                                            $status = $task['task_status'];
+                                        } else {
+                                            // Fallback to the document's overall status
+                                            $status = $task['ppmp_status'] ?? $task['app_status'] ?? $task['pr_status'] ?? $task['po_status'] ?? 'Pending';
+                                        }
+
 								        $badge_class = 'badge-warning'; // Default for Pending
 								        if ($status === 'Approved') {
 								            $badge_class = 'badge-success';
