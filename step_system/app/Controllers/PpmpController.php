@@ -78,6 +78,137 @@ class PpmpController extends BaseController
 
         $ppmpId = $this->request->getPost('ppmp_id'); // Get ppmp_id from hidden input
 
+        // Validation rules for all required fields
+        $validationRules = [
+            'ppmp_office_fk' => [
+                'rules' => 'required|greater_than[0]',
+                'errors' => [
+                    'required' => 'Office is required.',
+                    'greater_than' => 'Please select a valid office.'
+                ]
+            ],
+            'ppmp_period_covered' => [
+                'rules' => 'required|min_length[4]',
+                'errors' => [
+                    'required' => 'Period covered is required.',
+                    'min_length' => 'Period covered must be at least 4 characters.'
+                ]
+            ],
+            'ppmp_total_budget_allocated' => [
+                'rules' => 'required|numeric|greater_than[0]',
+                'errors' => [
+                    'required' => 'Total budget allocated is required.',
+                    'numeric' => 'Total budget allocated must be a valid number.',
+                    'greater_than' => 'Total budget allocated must be greater than 0.'
+                ]
+            ],
+            'ppmp_total_proposed_budget' => [
+                'rules' => 'required|numeric|greater_than[0]',
+                'errors' => [
+                    'required' => 'Total proposed budget is required.',
+                    'numeric' => 'Total proposed budget must be a valid number.',
+                    'greater_than' => 'Total proposed budget must be greater than 0.'
+                ]
+            ],
+            'ppmp_prepared_by_position' => [
+                'rules' => 'required|min_length[2]',
+                'errors' => [
+                    'required' => 'Prepared by position is required.',
+                    'min_length' => 'Position must be at least 2 characters.'
+                ]
+            ],
+            'ppmp_prepared_by_name' => [
+                'rules' => 'required|greater_than[0]',
+                'errors' => [
+                    'required' => 'Prepared by personnel is required.',
+                    'greater_than' => 'Please select a valid personnel.'
+                ]
+            ],
+            'ppmp_recommended_by_position' => [
+                'rules' => 'required|min_length[2]',
+                'errors' => [
+                    'required' => 'Recommended by position is required.',
+                    'min_length' => 'Position must be at least 2 characters.'
+                ]
+            ],
+            'ppmp_recommended_by_name' => [
+                'rules' => 'required|greater_than[0]',
+                'errors' => [
+                    'required' => 'Recommended by personnel is required.',
+                    'greater_than' => 'Please select a valid personnel.'
+                ]
+            ],
+            'ppmp_evaluated_by_position' => [
+                'rules' => 'required|min_length[2]',
+                'errors' => [
+                    'required' => 'Evaluated by position is required.',
+                    'min_length' => 'Position must be at least 2 characters.'
+                ]
+            ],
+            'ppmp_evaluated_by_name' => [
+                'rules' => 'required|greater_than[0]',
+                'errors' => [
+                    'required' => 'Evaluated by personnel is required.',
+                    'greater_than' => 'Please select a valid personnel.'
+                ]
+            ]
+        ];
+
+        // Validate the form data
+        if (!$this->validate($validationRules)) {
+            $errors = $this->validator->getErrors();
+        } else {
+            $errors = [];
+        }
+        
+        // Validate items - ensure at least one item in either MOOE or CO is provided
+        $mooeItems = $this->request->getPost('items') ?? [];
+        $coItems = $this->request->getPost('items_co') ?? [];
+        
+        // Filter out empty items (items that don't have required fields filled)
+        $validMooeItems = array_filter($mooeItems, function($item) {
+            return !empty($item['code']) && !empty($item['gen_desc']);
+        });
+        
+        $validCoItems = array_filter($coItems, function($item) {
+            return !empty($item['code']) && !empty($item['gen_desc']);
+        });
+        
+        // Check if at least one row in either MOOE or CO is filled out
+        if (empty($validMooeItems) && empty($validCoItems)) {
+            $errors['items'] = 'No data was entered';
+        } else {
+            // Validate each valid item
+            $allValidItems = array_merge($validMooeItems, $validCoItems);
+            foreach ($allValidItems as $index => $item) {
+                if (empty($item['code'])) {
+                    $errors['items'] = 'All items must have a code.';
+                    break;
+                }
+                if (empty($item['gen_desc'])) {
+                    $errors['items'] = 'All items must have a general description.';
+                    break;
+                }
+                // Quantity/size is now optional - no validation required
+                
+                if (empty($item['est_budget'])) {
+                    $errors['items'] = 'All items must have an estimated budget.';
+                    break;
+                }
+                // Check if at least one month is selected
+                $months = $item['month'] ?? [];
+                if (empty($months)) {
+                    $errors['items'] = 'All items must have at least one month selected.';
+                    break;
+                }
+            }
+        }
+        
+        // If there are any validation errors, redirect back
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
         $db->transStart();
 
         try {

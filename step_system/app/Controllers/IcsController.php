@@ -55,7 +55,7 @@ class IcsController extends BaseController
 
         $rules = [
             'ics_fund_cluster' => 'required',
-            'ics_po_no' => 'required',
+            'ics_po_no' => 'required|regex_match[/^\d{3}-\d{2}-\d{2}$/]',
             'ics_par_no' => 'required',
             'ics_code_no' => 'required',
             'ics_received_from_user_fk' => 'required|greater_than[0]',
@@ -66,7 +66,10 @@ class IcsController extends BaseController
 
         $messages = [
             'ics_fund_cluster' => ['required' => 'Fund Cluster is required.'],
-            'ics_po_no' => ['required' => 'P.O. No. is required.'],
+            'ics_po_no' => [
+                'required' => 'P.O. No. is required.',
+                'regex_match' => 'P.O. Number must be in format XXX-XX-XX.'
+            ],
             'ics_par_no' => ['required' => 'PAR No. is required.'],
             'ics_code_no' => ['required' => 'Code No. is required.'],
             'ics_received_from_user_fk' => ['required' => 'Received From Personnel is required.', 'greater_than' => 'Received From Personnel is required.'],
