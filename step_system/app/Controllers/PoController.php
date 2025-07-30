@@ -57,12 +57,12 @@ class PoController extends BaseController
         $rules = [
             'po_supplier' => 'required',
             'po_address' => 'required',
-            'po_tele' => 'required|numeric',
-            'po_tin' => 'required',
-            'po_ponumber' => 'required',
+            'po_tele' => 'required|regex_match[/^\d{4}-\d{4}(\s+to\s+\d{2})?$/]',
+            'po_tin' => 'required|regex_match[/^\d{3}-\d{3}-\d{3}-\d{3}$/]',
+            'po_ponumber' => 'required|regex_match[/^\d{3}-\d{2}-\d{2}$/]',
             'po_date' => 'required',
             'po_mode' => 'required',
-            'po_tuptin' => 'required',
+            'po_tuptin' => 'required|regex_match[/^\d{3}-\d{3}-\d{3}-\d{3}$/]',
             'po_place_delivery' => 'required',
             'po_date_delivery' => 'required',
             'po_delivery_term' => 'required',
@@ -84,12 +84,24 @@ class PoController extends BaseController
         $messages = [
             'po_supplier' => ['required' => 'Supplier is required.'],
             'po_address' => ['required' => 'Address is required.'],
-            'po_tele' => ['required' => 'Telephone number is required.', 'numeric' => 'Telephone number must be numeric.'],
-            'po_tin' => ['required' => 'TIN is required.'],
-            'po_ponumber' => ['required' => 'P.O. Number is required.'],
+            'po_tele' => [
+                'required' => 'Telephone number is required.',
+                'regex_match' => 'Telephone number must be in format XXXX-XXXX or XXXX-XXXX to XX.'
+            ],
+            'po_tin' => [
+                'required' => 'TIN is required.',
+                'regex_match' => 'TIN must be in format XXX-XXX-XXX-XXX (numeric only).'
+            ],
+            'po_ponumber' => [
+                'required' => 'P.O. Number is required.',
+                'regex_match' => 'P.O. Number must be in format XXX-XX-XX.'
+            ],
             'po_date' => ['required' => 'Date is required.'],
             'po_mode' => ['required' => 'Mode of Procurement is required.'],
-            'po_tuptin' => ['required' => 'TUP-Taguig TIN is required.'],
+            'po_tuptin' => [
+                'required' => 'TUP-Taguig TIN is required.',
+                'regex_match' => 'TUP-Taguig TIN must be in format XXX-XXX-XXX-XXX (numeric only).'
+            ],
             'po_place_delivery' => ['required' => 'Place of Delivery is required.'],
             'po_date_delivery' => ['required' => 'Date of Delivery is required.'],
             'po_delivery_term' => ['required' => 'Delivery Term is required.'],

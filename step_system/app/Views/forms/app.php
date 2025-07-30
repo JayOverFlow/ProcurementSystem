@@ -120,7 +120,7 @@
                                                                 <input type="date" class="form-control form-control-sm me-1 text-center" placeholder="" name="items[0][ads_post]">
                                                                 <input type="date" class="form-control form-control-sm me-1 text-center" placeholder="" name="items[0][sub_open]">
                                                                 <input type="date" class="form-control form-control-sm me-1 text-center" placeholder="" name="items[0][notice_award]">
-                                                                <input type="date" class="form-control form-control-sm me-1" placeholder="" name="items[0][contract_signing]">
+                                                                <input type="date" class="form-control form-control-sm me-1 text-center" placeholder="" name="items[0][contract_signing]">
                                                             </div>
                                                         </td>
                                                         <td class="px-1"><input type="text" class="form-control form-control-sm" name="items[0][source_of_funds]"></td>
