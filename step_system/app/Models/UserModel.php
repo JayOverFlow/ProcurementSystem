@@ -41,7 +41,7 @@ class UserModel extends Model {
 
     // Authenticate user from login and retrieve their role and department information
     public function authenticateUser(string $user_email, string $user_password) {
-        $user = $this->select('users_tbl.*, roles_tbl.role_name, roles_tbl.gen_role, departments_tbl.dep_name, departments_tbl.dep_id')
+        $user = $this->select('users_tbl.*, roles_tbl.role_name, roles_tbl.gen_role, roles_tbl.role_id, departments_tbl.dep_name, departments_tbl.dep_id')
                      ->join('user_role_department_tbl', 'user_role_department_tbl.user_id = users_tbl.user_id', 'left')
                      ->join('roles_tbl', 'roles_tbl.role_id = user_role_department_tbl.role_id', 'left')
                      ->join('departments_tbl', 'departments_tbl.dep_id = user_role_department_tbl.department_id', 'left')
@@ -177,6 +177,32 @@ class UserModel extends Model {
                 ->where('u.user_id', $userId);
 
         return $builder->get()->getRowArray();
+    }
+
+    public function getParentUserByRoleId($roleId)
+    {
+        $parentRole = $this->db->table('roles_tbl')
+                               ->select('role_parent_role_id')
+                               ->where('role_id', $roleId)
+                               ->get()
+                               ->getRowArray();
+
+        if (empty($parentRole) || $parentRole['role_parent_role_id'] === null) {
+            return null; // No parent role found or parent_role_id is null
+        }
+
+        $parentRoleId = $parentRole['role_parent_role_id'];
+
+        $userInParentRole = $this->db->table('users_tbl u')
+                                     ->select('u.user_id')
+                                     ->join('user_role_department_tbl urd', 'u.user_id = urd.user_id')
+                                     ->join('roles_tbl r', 'urd.role_id = r.role_id')
+                                     ->where('r.role_id', $parentRoleId)
+                                     ->limit(1)
+                                     ->get()
+                                     ->getRowArray();
+
+        return $userInParentRole['user_id'] ?? null;
     }
 }
 

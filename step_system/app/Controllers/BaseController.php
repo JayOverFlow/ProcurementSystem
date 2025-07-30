@@ -84,6 +84,7 @@ abstract class BaseController extends Controller
                 'gen_role' => $this->session->get('user_gen_role'),
                 'user_dep_name' => $this->session->get('user_dep_name'),
                 'user_dep_id' => $this->session->get('user_dep_id'),
+                'user_role_id' => $this->session->get('user_role_id'),
             ];
         }
 

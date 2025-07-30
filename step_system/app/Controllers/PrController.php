@@ -250,12 +250,21 @@ class PrController extends BaseController
             return redirect()->to('pr/create/' . $prId)->with('error', 'This Purchase Request has already been submitted.');
         }
 
-        // NOTE: Saved PRs should be submitted to Head by user's department
-        $head = $this->userModel->getHeadByDepId($userData['user_dep_id']); // Get Head of department / Office
-        // If there's no Head
-        if (empty($head)) {
-            return redirect()->back()->with('error', 'Cannot submit: No Head found in the system for your department.');
+        if (empty($userData['user_role_id']) || $userData['gen_role'] === 'Faculty') {
+            $parent = $this->userModel->getHeadByDepId($userData['user_dep_id']); // Get Head of department / Office
+        } else {
+            $parent = $this->userModel->getParentUserByRoleId($userData['user_role_id']); // Get Assitant Director (parent of head)
         }
+
+        if (empty($parent)) {
+            return redirect()->back()->with('error', 'Cannot submit: No parent found in the system.');
+        }
+
+        // $head = $this->userModel->getHeadByDepId($userData['user_dep_id']); // Get Head of department / Office
+        // // If there's no Head
+        // if (empty($head)) {
+        //     return redirect()->back()->with('error', 'Cannot submit: No Head found in the system for your department.');
+        // }
 
         $db->transStart(); // Start db transaction
 
@@ -265,7 +274,8 @@ class PrController extends BaseController
             if ($task) {
                 // Update task to submit to director
                 $this->taskModel->update($task['task_id'],[
-                    'submitted_to' => $head,
+                    'submitted_to' => $parent,
+                    // 'submitted_to' => $head,
                     'task_description' => 'A new Purchase Request has been submitted for your review.',
                 ]);
             } else { // If task not found

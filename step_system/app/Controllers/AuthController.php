@@ -416,6 +416,7 @@ class AuthController extends BaseController {
                     'user_gen_role' => $user['gen_role'] ?? null,
                     'user_dep_name' => $user['dep_name'] ?? null,
                     'user_dep_id' => $user['dep_id'] ?? null,
+                    'user_role_id' => $user['role_id'] ?? null,
                     'isLoggedIn' => true
                 ]);
 
