@@ -236,8 +236,7 @@ function fetchAndRenderStepper(departmentId) {
             </div>
             <div class="modal-body">
                 <p id="modalStepperStatus"></p>
-                <p id="modalStepperRemark"></p>
-                <p id="modalStepperUpdatedAt"></p>
+                <!-- <p id="modalStepperRemark"></p> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
