@@ -10,6 +10,7 @@ use App\Models\TaskModel;
 use App\Models\DepartmentBudgetModel;
 use App\Models\MrItemModel;
 use App\Models\PpmpModel;
+use App\Models\AppModel;
 
 class DashboardController extends BaseController
 {
@@ -26,8 +27,9 @@ class DashboardController extends BaseController
         $this->userRoleDepartmentModel = new UserRoleDepartmentModel();
         $this->departmentBudgetModel = new DepartmentBudgetModel();
         $this->mrItemModel = new MrItemModel();
-                $this->taskModel = new TaskModel();
+        $this->taskModel = new TaskModel();
         $this->ppmpModel = new PpmpModel();
+        $this->appModel = new AppModel();
     }
 
     /**
@@ -35,12 +37,20 @@ class DashboardController extends BaseController
      */
         private function prepareHeadDashboardData($currentUserId, $departmentId)
     {
-        // Fetch subordinates with their PPMP assignment status
-        $subordinates = $this->userRoleDepartmentModel->getSubordinatesWithPpmpStatus($currentUserId, $departmentId);
-
         // Determine the current procurement stage for the entire department
         $departmentHasApprovedPpmp = $this->ppmpModel->hasApprovedPpmpForDepartment($departmentId);
-        $nextTaskForDepartment = $departmentHasApprovedPpmp ? 'pr' : 'ppmp';
+        $departmentHasApprovedApp = $departmentHasApprovedPpmp ? $this->appModel->hasApprovedAppForDepartment($departmentId) : false;
+
+        $nextTaskForDepartment = ($departmentHasApprovedPpmp && $departmentHasApprovedApp) ? 'pr' : 'ppmp';
+
+        // Fetch subordinates with their assignment status based on the next task
+        if ($nextTaskForDepartment === 'pr') {
+            $subordinates = $this->userRoleDepartmentModel->getSubordinatesWithPrStatus($currentUserId, $departmentId);
+        } else {
+            $subordinates = $this->userRoleDepartmentModel->getSubordinatesWithPpmpStatus($currentUserId, $departmentId);
+        }
+
+
 
         // For each subordinate, set their task and check for active assignments
         $activePrAssignee = null;
@@ -66,7 +76,8 @@ class DashboardController extends BaseController
             'subordinates' => $subordinates,
             'assigned_user_name' => $activePrAssignee ? $activePrAssignee['user_fullname'] : null, // This might need adjustment if we need PPMP assignee name
             'is_assignment_pending' => $isAssignmentPending,
-            'isPpmpPhaseComplete' => $departmentHasApprovedPpmp
+            'isPpmpPhaseComplete' => $departmentHasApprovedPpmp,
+            'isAppPhaseComplete' => $departmentHasApprovedApp
         ];
 
         return $dashboardData;
@@ -203,12 +214,27 @@ class DashboardController extends BaseController
                     $filterOptions = ['ALL' => $allOption] + $filterOptions;
                 }
 
+                // Determine the next task type based on pending assignments
+                $nextTaskType = 'ppmp'; // Default to PPMP
+                foreach ($tasks as $task) {
+                    if (isset($task['task_status']) && $task['task_status'] === 'Pending') {
+                        if ($task['task_type'] === 'PR Assignment') {
+                            $nextTaskType = 'pr';
+                            break; // A PR assignment is the next logical step
+                        } elseif ($task['task_type'] === 'PPMP Assignment') {
+                            $nextTaskType = 'ppmp';
+                            break; // A PPMP assignment is pending
+                        }
+                    }
+                }
+
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
                     'user_department_id' => $departmentId, // Pass department ID
                     'tasks' => $tasks,
-                    'filter_options' => $filterOptions
+                    'filter_options' => $filterOptions,
+                    'next_task_type' => $nextTaskType
                 ];
 
                 // Redirect using return view('[user-dashboard-page]', data)
@@ -248,12 +274,27 @@ class DashboardController extends BaseController
                     $filterOptions = ['ALL' => $allOption] + $filterOptions;
                 }
 
+                // Determine the next task type based on pending assignments
+                $nextTaskType = 'ppmp'; // Default to PPMP
+                foreach ($tasks as $task) {
+                    if (isset($task['task_status']) && $task['task_status'] === 'Pending') {
+                        if ($task['task_type'] === 'PR Assignment') {
+                            $nextTaskType = 'pr';
+                            break; // A PR assignment is the next logical step
+                        } elseif ($task['task_type'] === 'PPMP Assignment') {
+                            $nextTaskType = 'ppmp';
+                            break; // A PPMP assignment is pending
+                        }
+                    }
+                }
+
                 // Store user data and dashbaord data
                 $data = [
                     'user_data' => $userData,
                     'user_department_id' => $departmentId, // Pass department ID
                     'tasks' => $tasks,
-                    'filter_options' => $filterOptions
+                    'filter_options' => $filterOptions,
+                    'next_task_type' => $nextTaskType
                 ];
 
                 // Redirect using return view('[user-dashboard-page]', data)

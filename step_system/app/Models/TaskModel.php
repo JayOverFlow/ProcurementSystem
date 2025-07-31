@@ -192,7 +192,7 @@ class TaskModel extends Model
     {
         $result = $this->where([
             'submitted_to' => $userId,
-            'task_type'    => 'assignment'
+            'task_type'    => 'PPMP Assignment'
         ])->first();
 
         return !empty($result);
@@ -204,7 +204,7 @@ class TaskModel extends Model
                     ->join('user_role_department_tbl as urd', 'urd.user_id = tasks_tbl.submitted_to')
                     ->join('users_tbl', 'users_tbl.user_id = tasks_tbl.submitted_to')
                     ->where('urd.department_id', $departmentId)
-                    ->where('tasks_tbl.task_type', 'pr_assignment')
+                    ->where('tasks_tbl.task_type', 'PR Assignment')
                     ->first();
     }
 
@@ -212,7 +212,7 @@ class TaskModel extends Model
     {
         $result = $this->join('user_role_department_tbl as urd', 'urd.user_id = tasks_tbl.submitted_to')
                          ->where('urd.department_id', $departmentId)
-                         ->where('tasks_tbl.task_type', 'assignment')
+                         ->where('tasks_tbl.task_type', 'PPMP Assignment')
                          ->first();
 
         return !empty($result);

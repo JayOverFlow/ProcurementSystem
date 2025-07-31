@@ -79,25 +79,20 @@
                                             <td class="text-center">
                                                 <!-- Status Badge -->
                                                 <?php
-                                                    $isPpmpPhaseComplete = $dashboard_data['isPpmpPhaseComplete'];
-                                                    if ($isPpmpPhaseComplete) {
-                                                        $statusText = 'Not Assigned';
-                                                        $statusClass = 'badge-light-success'; // Disabled success color
-                                                    } else {
-                                                        $status = $subordinate['assignment_status'];
-                                                        $statusText = $status;
-                                                        $statusClass = '';
-                                                        switch ($status) {
-                                                            case 'Not Assigned':
-                                                                $statusClass = 'badge-light-danger';
-                                                                break;
-                                                            case 'Assigned':
-                                                                $statusClass = 'bg-primary';
-                                                                break;
-                                                            case 'Submitted':
-                                                                $statusClass = 'bg-warning';
-                                                                break;
-                                                        }
+                                                    $status = $subordinate['assignment_status'];
+                                                    $statusText = $status;
+                                                    $statusClass = '';
+
+                                                    switch ($status) {
+                                                        case 'Not Assigned':
+                                                            $statusClass = 'badge-light-danger'; // Red
+                                                            break;
+                                                        case 'Assigned':
+                                                            $statusClass = 'badge-light-success'; // Green
+                                                            break;
+                                                        case 'Submitted':
+                                                            $statusClass = 'bg-warning'; // Yellow for Submitted
+                                                            break;
                                                     }
                                                 ?>
                                                 <span class="badge status-badge <?= $statusClass ?>">
@@ -107,34 +102,40 @@
                                             <td class="text-center">
                                                 <!-- Action Button -->
                                                 <?php
-                                                    $isAssignmentPending = $dashboard_data['is_assignment_pending'];
-                                                    $buttonClass = 'btn-danger'; // Default class
+                                                    $is_assignment_pending = $dashboard_data['is_assignment_pending'];
+                                                    $is_app_phase_complete = $dashboard_data['isAppPhaseComplete'];
+                                                    $task_type = $subordinate['next_task'];
+                                                    $assignment_status = $subordinate['assignment_status'];
 
-                                                    if ($isPpmpPhaseComplete) {
-                                                        $buttonText = 'Assign PR';
-                                                        $buttonDisabled = 'disabled';
-                                                    } else {
-                                                        $status = $subordinate['assignment_status'];
-                                                        $buttonText = 'Assign PPMP';
-                                                        $buttonDisabled = '';
+                                                    // Default button state
+                                                    $buttonText = 'Assign ' . strtoupper($task_type);
+                                                    $buttonClass = 'btn-danger'; // Always red
+                                                    $buttonDisabled = '';
 
-                                                        switch ($status) {
-                                                            case 'Assigned':
-                                                            case 'Submitted':
-                                                                $buttonText = $status;
-                                                                $buttonDisabled = 'disabled';
-                                                                break;
-                                                            case 'Not Assigned':
-                                                                if ($isAssignmentPending) {
-                                                                    $buttonDisabled = 'disabled';
-                                                                }
-                                                                break;
+                                                    if ($task_type === 'ppmp') {
+                                                        // --- Original PPMP Logic ---
+                                                        if ($assignment_status === 'Assigned' || $assignment_status === 'Submitted') {
+                                                            $buttonText = $assignment_status;
+                                                            $buttonClass = ($assignment_status === 'Assigned') ? 'btn-danger' : 'btn-success'; // Keep success for 'Submitted'
+                                                            $buttonDisabled = 'disabled';
+                                                        } elseif ($is_assignment_pending) {
+                                                            // If another subordinate is already assigned, disable this one.
+                                                            $buttonDisabled = 'disabled';
+                                                        }
+                                                    } else { // --- New PR Logic ---
+                                                        if (!$is_app_phase_complete) {
+                                                            // Disable PR button if APP is not yet approved
+                                                            $buttonDisabled = 'disabled';
+                                                        } elseif ($assignment_status === 'Assigned') {
+                                                            // If this specific subordinate is assigned, disable their button
+                                                            $buttonText = 'Assigned';
+                                                            $buttonDisabled = 'disabled';
                                                         }
                                                     }
                                                 ?>
                                                 <button class="btn <?= $buttonClass ?> btn-sm assign-task-btn" 
                                                         data-user-id="<?= $subordinate['user_id'] ?>" 
-                                                        data-task-type="<?= $isPpmpPhaseComplete ? 'pr' : 'ppmp' ?>" <?= $buttonDisabled ?>>
+                                                        data-task-type="<?= esc($task_type) ?>" <?= $buttonDisabled ?>>
                                                     <?= $buttonText ?>
                                                 </button>
                                             </td>
