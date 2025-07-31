@@ -1,7 +1,7 @@
 <?= $this->extend('user-pages/supply/layout/sup-base-layout') ?>
 
 <?= $this->section('title') ?>
-    <title>TUP STEP | Supply MR</title>
+    <title>TUP STEP | Supply Inventory</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
