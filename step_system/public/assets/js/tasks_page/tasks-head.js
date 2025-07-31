@@ -80,17 +80,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                // Populate modal with fetched data
                 modalFullName.textContent = data.user_fullname;
                 modalEmail.textContent = data.user_email;
                 modalRole.textContent = data.role_name || 'N/A';
-                
+
                 const date = new Date(data.created_at);
                 modalDate.textContent = date.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
-                
+
                 modalDescription.textContent = data.task_description;
 
-                if (data.task_type === 'Purchase Order') {
+                if (data.task_type === 'Purchase Order Review') {
+                    modalActionButtons.innerHTML = `<button type="button" id="reject-btn" class="btn btn-sm warning reject" style="background-color: #7B7B7B; color: #FFFFFF">REJECT</button>
+                                                    <button type="button" id="approve-btn" class="btn btn-sm warning approve" style="background-color: #C62742; color: #FFFFFF">Approve</button>`;
+                    modalStatusDisplay.style.display = 'none';
+
+                    // Set data attributes for review actions
+                    const approveBtn = document.getElementById('approve-btn');
+                    const rejectBtn = document.getElementById('reject-btn');
+                    approveBtn.setAttribute('data-task-id', taskId);
+                    approveBtn.setAttribute('data-task-type', 'po');
+                    approveBtn.setAttribute('data-id', data.po_id_fk);
+                    rejectBtn.setAttribute('data-task-id', taskId);
+                    rejectBtn.setAttribute('data-task-type', 'po');
+                    rejectBtn.setAttribute('data-id', data.po_id_fk);
+
+                    // Re-attach event listeners
+                    approveBtn.addEventListener('click', handleStatusUpdate);
+                    rejectBtn.addEventListener('click', handleStatusUpdate);
+
+                    modalPreviewLink.href = `/po/preview/${data.po_id_fk}`;
+                    modalPreviewLinkText.textContent = 'View submitted Purchase Order';
+                    modalPreviewLink.style.display = 'inline-flex';
+
+                } else if (data.task_type === 'Purchase Order') {
                     // Hide generic approve/reject buttons and status display
                     modalActionButtons.innerHTML = `<button type="button" id="create-po-btn" class="btn btn-sm btn-danger" data-pr-id="${data.pr_id_fk}">Create Purchase Order</button>`;
                     modalStatusDisplay.style.display = 'none';
