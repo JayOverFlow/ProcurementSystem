@@ -250,7 +250,9 @@ class PoController extends BaseController
                 $this->taskModel->update($task['task_id'], [
                     'submitted_to' => $director['user_id'],
                     'task_description' => 'A new Purchase Order has been submitted for your review.',
+                    'task_type' => 'Purchase Order Review',
                 ]);
+                log_message('debug', 'Task type set for PO submission: ' . $task['task_type']);
             } else {
                 return redirect()->back()->with('error', 'Cannot find the original task to submit.');
             }
