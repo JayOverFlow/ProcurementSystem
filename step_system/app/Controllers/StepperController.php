@@ -44,7 +44,7 @@ class StepperController extends BaseController
             //    and updating the `stepper_tbl` before returning the latest status.
             // Call the new stateless method to get real-time stepper data
             $stepperData = $this->stepperModel->getStepperStatus($departmentId);
-            
+
             if (empty($stepperData)) {
                 return $this->response->setJSON([]);
             }

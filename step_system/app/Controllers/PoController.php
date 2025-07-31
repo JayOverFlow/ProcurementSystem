@@ -59,7 +59,7 @@ class PoController extends BaseController
             'po_address' => 'required',
             'po_tele' => 'required|regex_match[/^\d{4}-\d{4}(\s+to\s+\d{2})?$/]',
             'po_tin' => 'required|regex_match[/^\d{3}-\d{3}-\d{3}-\d{3}$/]',
-            'po_ponumber' => 'required|regex_match[/^\d{3}-\d{2}-\d{2}$/]',
+            'po_ponumber' => 'required|regex_match[/^\d{4}-\d{2}-\d{2}$/]',
             'po_date' => 'required',
             'po_mode' => 'required',
             'po_tuptin' => 'required|regex_match[/^\d{3}-\d{3}-\d{3}-\d{3}$/]',
@@ -94,7 +94,7 @@ class PoController extends BaseController
             ],
             'po_ponumber' => [
                 'required' => 'P.O. Number is required.',
-                'regex_match' => 'P.O. Number must be in format XXX-XX-XX.'
+                'regex_match' => 'P.O. Number must be in format XXXX-XX-XX.'
             ],
             'po_date' => ['required' => 'Date is required.'],
             'po_mode' => ['required' => 'Mode of Procurement is required.'],

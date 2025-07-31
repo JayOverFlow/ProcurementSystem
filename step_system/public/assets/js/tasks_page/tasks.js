@@ -212,8 +212,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    createBtn.addEventListener('click', function() {
-        window.location.href = '/ppmp/create';
+    document.querySelector('#create-btn').addEventListener('click', function() {
+        const taskType = $(this).data('task-type');
+
+        // Redirect based on the task type
+        if (taskType === 'pr') {
+            window.location.href = '/pr/create';
+        } else {
+            // Default to PPMP creation page
+            window.location.href = '/ppmp/create';
+        }
     });
 
     c2 = $('#style-2').DataTable({

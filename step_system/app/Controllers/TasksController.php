@@ -117,9 +117,23 @@ class TasksController extends BaseController
         // Get assignments/tasks for section heads and unassigned users
         $tasks = $this->taskModel->getTasksForUser($userData['user_id']);
 
+        $nextTaskType = 'ppmp'; // Default to PPMP
+        foreach ($tasks as $task) {
+            if (isset($task['task_status']) && $task['task_status'] === 'Pending') {
+                if ($task['task_type'] === 'PR Assignment') {
+                    $nextTaskType = 'pr';
+                    break; // A PR assignment is the next logical step
+                } elseif ($task['task_type'] === 'PPMP Assignment') {
+                    $nextTaskType = 'ppmp';
+                    break; // A PPMP assignment is pending
+                }
+            }
+        }
+
         $data = [
             'user_data' => $userData,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'next_task_type' => $nextTaskType,
         ];
 
         $role = $userData['gen_role'] ?? null;
@@ -263,14 +277,17 @@ class TasksController extends BaseController
             return $this->response->setJSON(['success' => false, 'message' => 'User ID and task type are required.'])->setStatusCode(400);
         }
 
-        // Determine task description based on type
+        // Determine task description and database task type
         $description = '';
+        $dbTaskType = '';
         switch ($taskType) {
             case 'ppmp':
                 $description = 'You are assigned to draft the Project Procurement Management Plan.';
+                $dbTaskType = 'PPMP Assignment';
                 break;
             case 'pr':
                 $description = 'You are assigned to create the Purchase Request.';
+                $dbTaskType = 'PR Assignment';
                 break;
             default:
                 return $this->response->setJSON(['success' => false, 'message' => 'Invalid task type.'])->setStatusCode(400);
@@ -281,7 +298,7 @@ class TasksController extends BaseController
             'submitted_by'     => $assignerId,
             'submitted_to'     => $assigneeId,
             'task_description' => $description,
-            'task_type'        => 'Assignment',
+            'task_type'        => $dbTaskType,
             'task_status'      => 'Pending',
         ];
 

@@ -27,4 +27,14 @@ class AppModel extends Model
 
     // Dates
     protected $useTimestamps = false;
+
+    public function hasApprovedAppForDepartment(int $departmentId): bool
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('app_dep_id_fk', $departmentId);
+        $builder->where('app_status', 'Approved');
+        $query = $builder->get();
+
+        return $query->getRow() !== null;
+    }
 }

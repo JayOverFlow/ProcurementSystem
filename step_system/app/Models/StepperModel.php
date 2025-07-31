@@ -50,20 +50,23 @@ class StepperModel extends Model
         // Phase 3: Get PR Status
         $stepperData['PR'] = $this->_getPrStatus($departmentId, $stepperData['APP']);
 
+        // For now, the following phases are set to Pending by default.
+        // TODO: Uncomment these lines as the corresponding features are implemented.
+
         // Phase 4: Get Bidding Status
-        $stepperData['Bidding'] = $this->_getBiddingStatus($departmentId, $stepperData['PR']);
+        $stepperData['Bidding'] = ['status' => 'Pending', 'remark' => 'Awaiting PR approval.'];
 
         // Phase 5: Get PO Status
-        $stepperData['PO'] = $this->_getPoStatus($departmentId, $stepperData['Bidding']);
+        $stepperData['PO'] = ['status' => 'Pending', 'remark' => 'Awaiting successful Bidding.'];
 
         // Phase 6: Get Delivery Status
-        $stepperData['Delivery'] = $this->_getDeliveryStatus($departmentId, $stepperData['PO']);
+        $stepperData['Delivery'] = ['status' => 'Pending', 'remark' => 'Awaiting PO approval.'];
 
         // Phase 7: Get PAR Status
-        $stepperData['PAR'] = $this->_getParStatus($departmentId, $stepperData['Delivery']);
+        $stepperData['PAR'] = ['status' => 'Pending', 'remark' => 'Awaiting Delivery completion.'];
 
         // Phase 8: Get ICS Status
-        $stepperData['ICS'] = $this->_getIcsStatus($departmentId, $stepperData['PAR']);
+        $stepperData['ICS'] = ['status' => 'Pending', 'remark' => 'Awaiting PAR creation.'];
 
         return $stepperData;
     }
@@ -73,21 +76,22 @@ class StepperModel extends Model
      */
     private function _getPpmpStatus(int $departmentId): array
     {
-        $ppmp = $this->db->table('ppmp_tbl')
+        $ppmps = $this->db->table('ppmp_tbl')
                          ->select('ppmp_status')
                          ->where('ppmp_office_fk', $departmentId)
                          ->orderBy('ppmp_id', 'DESC')
                          ->limit(1)
                          ->get()
-                         ->getRowArray();
+                         ->getResultArray();
 
-        if (!$ppmp || $ppmp['ppmp_status'] === 'Draft') {
+        if (empty($ppmps) || $ppmps[0]['ppmp_status'] === 'Draft') {
             return [
                 'status' => 'Pending',
                 'remark' => 'Not yet started',
             ];
         }
 
+        $latestPpmp = $ppmps[0];
         $statusMap = [
             'Approved' => 'Completed',
             'Pending'  => 'In Progress',
@@ -95,7 +99,7 @@ class StepperModel extends Model
         ];
 
         return [
-            'status' => $statusMap[$ppmp['ppmp_status']] ?? 'Pending',
+            'status' => $statusMap[$latestPpmp['ppmp_status']] ?? 'Pending',
             'remark' => 'No remarks',
         ];
     }
@@ -112,19 +116,20 @@ class StepperModel extends Model
         }
 
         // Query for the latest APP record for the given department.
-        $app = $this->db->table('app_tbl')
+        $apps = $this->db->table('app_tbl')
                         ->select('app_status') // Select only the columns we need
                         ->where('app_dep_id_fk', $departmentId)
                         ->orderBy('app_id', 'DESC') // Get the most recent APP
                         ->limit(1)
                         ->get()
-                        ->getRowArray();
+                        ->getResultArray();
 
         // If no APP record exists yet, the status is in progress.
-        if (!$app) {
+        if (empty($apps)) {
             return ['status' => 'In Progress', 'remark' => 'APP creation is pending.'];
         }
 
+        $latestApp = $apps[0];
         // Map the database status to the stepper's standardized statuses.
         $statusMap = [
             'Approved' => 'Completed',
@@ -134,7 +139,7 @@ class StepperModel extends Model
 
         // Return the mapped status and remark. Default to 'Pending' if status is unrecognized.
         return [
-            'status' => $statusMap[$app['app_status']] ?? 'Pending',
+            'status' => $statusMap[$latestApp['app_status']] ?? 'Pending',
             'remark' => 'No remarks'
         ];
     }
@@ -145,17 +150,18 @@ class StepperModel extends Model
             return ['status' => 'Pending', 'remark' => 'Awaiting APP completion.'];
         }
 
-        $pr = $this->db->table('pr_tbl')
+        $prs = $this->db->table('pr_tbl')
                        ->select('pr_status')
                        ->where('pr_department', $departmentId)
-                       ->orderBy('pr_id', 'DESC')->limit(1)->get()->getRowArray();
+                       ->orderBy('pr_id', 'DESC')->limit(1)->get()->getResultArray();
 
-        if (!$pr) {
+        if (empty($prs)) {
             return ['status' => 'In Progress', 'remark' => 'Purchase Request creation is pending.'];
         }
 
+        $latestPr = $prs[0];
         $statusMap = ['Approved' => 'Completed', 'Pending' => 'In Progress', 'Rejected' => 'In Progress'];
-        return ['status' => $statusMap[$pr['pr_status']] ?? 'Pending', 'remark' => 'No remarks'];
+        return ['status' => $statusMap[$latestPr['pr_status']] ?? 'Pending', 'remark' => 'No remarks'];
     }
 
     private function _getBiddingStatus(int $departmentId, array $prStatus): array
@@ -164,17 +170,18 @@ class StepperModel extends Model
             return ['status' => 'Pending', 'remark' => 'Awaiting PR approval.'];
         }
 
-        $bidding = $this->db->table('bidding_tbl')
-                            ->select('bidding_status')
-                            ->where('bidding_department', $departmentId)
-                            ->orderBy('bidding_id', 'DESC')->limit(1)->get()->getRowArray();
+        $biddings = $this->db->table('bidding_status')
+                         ->select('bidding_status')
+                         ->where('bidding_department', $departmentId)
+                         ->orderBy('bidding_id', 'DESC')->limit(1)->get()->getResultArray();
 
-        if (!$bidding) {
+        if (empty($biddings)) {
             return ['status' => 'In Progress', 'remark' => 'Bidding process is pending.'];
         }
 
+        $latestBidding = $biddings[0];
         $statusMap = ['Successful' => 'Completed', 'Failed' => 'In Progress'];
-        return ['status' => $statusMap[$bidding['bidding_status']] ?? 'Pending', 'remark' => 'No remarks'];
+        return ['status' => $statusMap[$latestBidding['bidding_status']] ?? 'Pending', 'remark' => 'No remarks'];
     }
 
     private function _getPoStatus(int $departmentId, array $biddingStatus): array
@@ -183,18 +190,19 @@ class StepperModel extends Model
             return ['status' => 'Pending', 'remark' => 'Awaiting successful Bidding.'];
         }
 
-        $po = $this->db->table('po_tbl')
+        $pos = $this->db->table('po_tbl')
                        ->select('po_status')
                        ->join('pr_tbl', 'po_tbl.po_pr_fk = pr_tbl.pr_id')
                        ->where('pr_tbl.pr_department', $departmentId)
-                       ->orderBy('po_id', 'DESC')->limit(1)->get()->getRowArray();
+                       ->orderBy('po_id', 'DESC')->limit(1)->get()->getResultArray();
 
-        if (!$po) {
+        if (empty($pos)) {
             return ['status' => 'In Progress', 'remark' => 'Purchase Order creation is pending.'];
         }
 
+        $latestPo = $pos[0];
         $statusMap = ['Approved' => 'Completed', 'Pending' => 'In Progress', 'Rejected' => 'In Progress'];
-        return ['status' => $statusMap[$po['po_status']] ?? 'Pending', 'remark' => 'No remarks'];
+        return ['status' => $statusMap[$latestPo['po_status']] ?? 'Pending', 'remark' => 'No remarks'];
     }
 
     private function _getDeliveryStatus(int $departmentId, array $poStatus): array
@@ -203,19 +211,20 @@ class StepperModel extends Model
             return ['status' => 'Pending', 'remark' => 'Awaiting PO approval.'];
         }
 
-        $delivery = $this->db->table('delivery_status_tbl')
+        $deliveries = $this->db->table('delivery_status_tbl')
                               ->select('status')
                               ->join('po_tbl', 'delivery_status_tbl.po_id_fk = po_tbl.po_id')
                               ->join('pr_tbl', 'po_tbl.po_pr_fk = pr_tbl.pr_id')
                               ->where('pr_tbl.pr_department', $departmentId)
-                              ->orderBy('delivery_stat_id', 'DESC')->limit(1)->get()->getRowArray();
+                              ->orderBy('delivery_stat_id', 'DESC')->limit(1)->get()->getResultArray();
 
-        if (!$delivery) {
+        if (empty($deliveries)) {
             return ['status' => 'In Progress', 'remark' => 'Delivery is pending.'];
         }
 
+        $latestDelivery = $deliveries[0];
         $statusMap = ['Delivered' => 'Completed'];
-        return ['status' => $statusMap[$delivery['status']] ?? 'Pending', 'remark' => 'No remarks'];
+        return ['status' => $statusMap[$latestDelivery['status']] ?? 'Pending', 'remark' => 'No remarks'];
     }
 
     private function _getParStatus(int $departmentId, array $deliveryStatus): array
