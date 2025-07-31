@@ -60,6 +60,16 @@ $is_procurement_page = in_array($current_path, $procurement_pages);
                     </div>
                 </a>
             </li>
+
+            <li class="menu">
+                <a href="<?= base_url('/inventory') ?>"
+                   class="dropdown-toggle <?= $current_path === '/inventory' ? 'active text-white fw-bold shadow-text' : '' ?>">
+                    <div>
+                        <img src="<?= base_url('assets/images/icon-inventory.svg') ?>" width="24" height="24" alt="Box">
+                        <span class="ms-2 shadow-text">Inventory</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </nav>
 </div>
