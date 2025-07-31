@@ -24,6 +24,8 @@
                                         $badge_class = 'badge-success';
                                     } elseif ($status === 'Rejected') {
                                         $badge_class = 'badge-danger';
+                                    } elseif ($status === 'Bidding Completed') {
+                                        $badge_class = 'badge-success';
                                     }
                                 ?>
                                 <span class="badge <?= $badge_class ?>"><?= esc($status) ?></span>

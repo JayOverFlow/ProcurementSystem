@@ -1,7 +1,7 @@
-<?= $this->extend('layouts/sup-base-layout') ?>
+<?= $this->extend('user-pages/supply/layout/sup-base-layout') ?>
 
 <?= $this->section('title') ?>
-    <title>TUP STEP | Faculty MR</title>
+    <title>TUP STEP | Supply Bidding & Delivery</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>

@@ -90,7 +90,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 modalDescription.textContent = data.task_description;
 
-                if (data.ppmp_id_fk) {
+                if (data.task_type === 'Purchase Order') {
+                    // Hide generic approve/reject buttons and status display
+                    modalActionButtons.innerHTML = `<button type="button" id="create-po-btn" class="btn btn-sm btn-danger" data-pr-id="${data.pr_id_fk}">Create Purchase Order</button>`;
+                    modalStatusDisplay.style.display = 'none';
+
+                    // Set preview link for PR
+                    modalPreviewLink.href = `/pr/preview/${data.pr_id_fk}`;
+                    modalPreviewLinkText.textContent = 'View submitted Purchase Request';
+                    modalPreviewLink.style.display = 'inline-flex';
+
+                    // Add event listener for the new button
+                    document.getElementById('create-po-btn').addEventListener('click', function() {
+                        window.location.href = `/po/create`;
+                    });
+
+                } else if (data.ppmp_id_fk) {
                     modalPreviewLink.href = `/ppmp/preview/${data.ppmp_id_fk}`;
                     modalPreviewLink.style.display = 'inline-flex';
                     modalPreviewLinkText.textContent = 'View submitted PPMP';
@@ -268,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         taskModal.hide();
                         Swal.fire(
-                            `${status}!`, 
+                            `${status}!`,
                             `The ${documentType} has been ${status.toLowerCase()}.`,
                             'success'
                         ).then(() => location.reload()); // Reload page to see changes

@@ -59,6 +59,8 @@
 								            $badge_class = 'badge-success';
 								        } elseif ($status === 'Rejected') {
 								            $badge_class = 'badge-danger';
+								        } elseif ($status === 'Bidding Completed') {
+								            $badge_class = 'badge-success';
 								        }
 								?>
 								        <tr class="task-row" style="cursor: pointer;" data-task-id="<?= esc($task['task_id']) ?>">

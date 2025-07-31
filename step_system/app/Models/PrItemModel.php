@@ -18,7 +18,8 @@ class PrItemModel extends Model
         'pr_items_cost',
         'pr_items_total_cost',
         'pr_items_unit',
-        'pr_items_descrip'
+        'pr_items_descrip',
+        'bidding_status' // Added for bidding status
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -50,4 +51,13 @@ class PrItemModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function areAllItemsSuccessful(int $prId): bool
+    {
+        // Count items for the given PR that are NOT 'successful'
+        $count = $this->where('pr_id_fk', $prId)
+                      ->where('bidding_status !=', 'successful')
+                      ->countAllResults();
+        return $count === 0; // True if all are 'successful'
+    }
 }

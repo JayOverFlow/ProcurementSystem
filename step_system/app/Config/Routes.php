@@ -223,3 +223,27 @@ $routes->get('ics/create/(:num)', 'Supply\\IcsController::index/$1', ['filter' =
 $routes->post('ics/save', 'Supply\\IcsController::save', ['filter' => 'userAuth']);
 $routes->post('ics/submit', 'Supply\\IcsController::submit', ['filter' => 'userAuth']);
 
+
+// Bidding & Delivery
+$routes->group('biddingAndDelivery', ['filter' => 'auth:auth'], function($routes) {
+    $routes->get('', 'BiddingAndDeliveryController::index');
+    // $routes->get('create/(:num)', 'IcsController::index/$1'); // For loading the form with the data
+    // $routes->post('save', 'IcsController::save');
+    // $routes->post('submit', 'IcsController::submit');
+});
+
+// Inventory
+$routes->group('inventory', ['filter' => 'auth:auth'], function($routes) {
+    $routes->get('', 'InventoryController::index');
+    // $routes->get('create/(:num)', 'IcsController::index/$1'); // For loading the form with the data
+    // $routes->post('save', 'IcsController::save');
+    // $routes->post('submit', 'IcsController::submit');
+});
+
+// Supply Officer specific routes for Bidding Status
+$routes->group('supply', function($routes) {
+    $routes->get('pr-for-bidding', 'BiddingController::listPrsForBidding');
+    $routes->get('pr/bidding-status-form/(:num)', 'BiddingController::displayBiddingStatusForm/$1');
+    $routes->post('pr/save-bidding-status', 'BiddingController::saveBiddingStatus');
+    $routes->post('pr/submit-bidding-to-procurement-head', 'BiddingController::submitBiddingToProcurementHead');
+});
