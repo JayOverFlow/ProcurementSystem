@@ -29,16 +29,25 @@ class MrController extends BaseController
         switch ($role) {
             case 'Director':
                 return view('user-pages/director/dir-mr', $data);
+                break;
+            case 'Assistant Director':
+                return view('user-pages/assistant-director/ast-dir-mr', $data);
+                break;
             case 'Planning Officer':
                 return view('user-pages/planning/plan-mr', $data);
+                break;
             case 'Head':
                 return view('user-pages/head/head-mr', $data);
+                break;
             case 'Faculty': // = Section Head
                 return view('user-pages/faculty/fac-mr', $data);
+                break;
             case 'Procurement':
                 return view('user-pages/procurement/pro-mr', $data);
+                break;
             case 'Supply':
                 return view('user-pages/supply/sup-mr', $data);
+                break;
             default:
                 return view('user-pages/unassigned/unassigned-mr', $data);
         }

@@ -111,7 +111,6 @@
                                     <div class="col-12">
                                         <div class="text-center">
                                             <p class="mb-0">Don't have an account ? <a href="<?= base_url('register'); ?>" style="color: #C62742">Register</a></p>
-                                            <p class="mb-0">Are you an admin? <a href="<?= base_url('admin/login'); ?>" style="color: #C62742;">Login Here</a></p>
 
                                         </div>
                                     </div>

@@ -97,14 +97,22 @@ class TasksController extends BaseController
         switch ($role) {
             case 'Director':
                 return view('user-pages/director/dir-tasks', $data);
+                break;
+            case 'Assistant Director':
+                return view('user-pages/assistant-director/ast-dir-tasks', $data);
+                break;
             case 'Planning Officer':
                 return view('user-pages/planning/plan-tasks', $data);
+                break;
             case 'Head':
                 return view('user-pages/head/head-tasks', $data);
+                break;
             case 'Procurement':
                 return view('user-pages/procurement/pro-tasks', $data);
+                break;
             case 'Supply':
                 return view('user-pages/supply/sup-tasks', $data);
+                break;
             default:
                 return view('user-pages/head/head-tasks', $data); // Default to head tasks
         }

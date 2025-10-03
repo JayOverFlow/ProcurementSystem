@@ -427,9 +427,9 @@ class AuthController extends BaseController {
                     'Planning Officer' => base_url('/dashboard'),
                     'Procurement' => base_url('/dashboard'),
                     'Supply' => base_url('/dashboard'),
-                    'Faculty' => base_url('/dashboard'),
+                    'Faculty' => base_url('/mr'),
                     'Assistant Director' => base_url('/dashboard'),
-                    null => base_url('/dashboard'),
+                    null => base_url('/mr'),
 
                     default => base_url('/login') // Default fallback if gen_role is not matched
                 };
