@@ -15,6 +15,16 @@ class InventoryController extends BaseController
             'user_data' => $userData,
         ];
 
-        return view('user-pages/supply/sup-inventory', $data);
+        switch ($userData['gen_role']) {
+            case 'Procurement':
+                return view('user-pages/procurement/pro-inventory', $data);
+                break;
+            case 'Supply':
+                return view('user-pages/supply/sup-inventory', $data);
+                break;
+            default:
+                return view('general-pages/404');
+                break;
+        }
     }
 }

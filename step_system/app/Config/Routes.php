@@ -198,18 +198,10 @@ $routes->group('dashboard', ['filter' => 'auth:auth'], function($routes) {
     $routes->get('', 'DashboardController::index');
 });
 
-// Procurement
-$routes->group('procurement', function($routes) {
-    $routes->get('', 'ProcurementController::index');
-});
-
 // Stepper
 $routes->group('stepper', function($routes) {
     $routes->get('stepper-status/(:num)', 'StepperController::getStepperStatus/$1');
 });
-
-// Procurement Feature Routes
-$routes->post('procurement/delete', 'ProcurementPageController::deleteForms'); // Route to handle soft deletion of forms
 
 //preview pages (DELETE THIS)
 $routes->group('preview', function ($routes) {
