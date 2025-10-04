@@ -251,18 +251,14 @@ $routes->group('supply', function($routes) {
 // API Routes
 
 // API Routes
-$routes->group('api', function($routes) {    
-    // This line for preflight requests should stay.
-    $routes->options('(:any)', function() {
-        return service('response')->setStatusCode(200);
-    });
+$routes->group('api', function($routes) {
+    // This handles preflight OPTIONS requests to prevent CORS errors.
+    $routes->options('(:any)', 'Cors::before'); // <-- ADD THIS LINE
 
-    // --- THE FIX ---
-    // Define specific routes BEFORE the general resource route.
+    // Your existing API routes
     $routes->post('user/login', 'Api\\UserController::login');
     $routes->post('user/register', 'Api\\UserController::register');
     $routes->post('user/verify', 'Api\\UserController::verify');
 
-    // The resource route should come AFTER specific routes to avoid conflicts.
     $routes->resource('user', ['controller' => 'Api\\UserController', 'except' => ['new', 'edit']]);
 });

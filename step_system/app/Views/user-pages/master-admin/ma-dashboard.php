@@ -24,7 +24,7 @@
 
         <!--  BEGIN CONTENT AREA  -->
 <?= $this->section('content') ?>
-                    <div class="row layout-top-spacing">
+                    <!-- <div class="row layout-top-spacing">
 
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
                             <div class="widget widget-t-sales-widget widget-m-income">
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                         </div>    
-                    </div>
+                    </div> -->
 
 
                     <!-- TABLES AND FORMS -->
