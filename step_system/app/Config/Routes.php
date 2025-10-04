@@ -239,3 +239,22 @@ $routes->group('supply', function($routes) {
     $routes->post('pr/save-bidding-status', 'BiddingController::saveBiddingStatus');
     $routes->post('pr/submit-bidding-to-procurement-head', 'BiddingController::submitBiddingToProcurementHead');
 });
+
+// API Routes
+
+// API Routes
+$routes->group('api', function($routes) {    
+    // This line for preflight requests should stay.
+    $routes->options('(:any)', function() {
+        return service('response')->setStatusCode(200);
+    });
+
+    // --- THE FIX ---
+    // Define specific routes BEFORE the general resource route.
+    $routes->post('user/login', 'Api\\UserController::login');
+    $routes->post('user/register', 'Api\\UserController::register');
+    $routes->post('user/verify', 'Api\\UserController::verify');
+
+    // The resource route should come AFTER specific routes to avoid conflicts.
+    $routes->resource('user', ['controller' => 'Api\\UserController', 'except' => ['new', 'edit']]);
+});

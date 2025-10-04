@@ -37,6 +37,7 @@ class Filters extends BaseFilters
         'adminAuth'     => \App\Filters\AdminAuthFilter::class,
         'userAuth'      => \App\Filters\UserAuthFilter::class,
         'auth'          => \App\Filters\AuthFilter::class,
+        'cors'          => \App\Filters\Cors::class,
     ];
 
     /**
@@ -75,6 +76,7 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'cors',
         ],
         'after' => [
             // 'honeypot',
