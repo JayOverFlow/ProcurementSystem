@@ -24,8 +24,60 @@
     <link href="<?= base_url('assets/src/plugins/css/light/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
 
+    <style>
+        /* Ensure the container for search and buttons is a flex container and vertically aligned */
+        .dataTables_wrapper .dt--top-section .dataTables_filter {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Custom styles for buttons */
+        #editAssignmentsButton {
+            padding: 0.7rem 1rem; /* Align with search bar */
+            margin-top: 0.4rem;
+            margin-right: 0.2rem;
+            line-height: 1;
+            color:rgb(89, 85, 85) !important;
+            border-color:rgb(182, 175, 175) !important;
+            background-color: transparent;
+        }
+        #editAssignmentsButton:hover {
+            background-color: #e7515a !important;
+            color: #fff !important;
+        }
+        .btn-action-icon {
+            padding: 0.4rem 0.5rem; /* Align with search bar */
+            margin-top: 0.4rem;
+            line-height: 1;
+        }
+        .btn-icon-add {
+            color: #1abc9c !important;
+            border-color: #1abc9c !important;
+        }
+        .btn-icon-add:hover {
+            background-color: #1abc9c !important;
+            color: #fff !important;
+        }
+        .btn-icon-save {
+            color: #1abc9c !important;
+            border-color: #1abc9c !important;
+        }
+        .btn-icon-save:hover {
+            background-color: #1abc9c !important;
+            color: #fff !important;
+        }
+        .btn-icon-cancel {
+            color: #e7515a !important;
+            border-color: #e7515a !important;
+        }
+        .btn-icon-cancel:hover {
+            background-color: #e7515a !important;
+            color: #fff !important;
+        }
+    </style>
+
 <?= $this->endSection() ?>
-  
+
 
         <!--  BEGIN CONTENT AREA  -->
 <?= $this->section('content') ?>
@@ -91,44 +143,22 @@
                                             <th>Last Name</th>
                                             <th>Role</th>
                                             <th>Department | Office</th>
-                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php if (isset($users) && is_array($users)): ?>
                                             <?php foreach ($users as $user): ?>
-                                                <tr>
-                                                    <td data-label="TUPT-ID"><?= esc($user['user_tupid'] ?? 'N/A') ?></td>
+                                                <tr data-assignment-id="<?= esc($user['assignment_id']) ?>">
+                                                    <td data-label="TUPT-ID" data-user-id="<?= esc($user['user_id']) ?>"><?= esc($user['user_tupid'] ?? 'N/A') ?></td>
                                                     <td data-label="First Name"><?= esc($user['user_firstname'] ?? 'N/A') ?></td>
                                                     <td data-label="Last Name"><?= esc($user['user_lastname'] ?? 'N/A') ?></td>
                                                     <td data-label="Role" class="editable-role" data-role-id="<?= esc($user['role_id'] ?? '') ?>"><?= esc($user['role_name'] ?? 'None') ?></td>
                                                     <td data-label="Department | Office" class="editable-department" data-department-id="<?= esc($user['department_id'] ?? '') ?>"><?= esc($user['dep_name'] ?? 'Not Assigned') ?></td>
-                                                    <td class="action-cell">
-                                                        <div class="action-btns">
-                                                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit" 
-                                                               data-user-id="<?= esc($user['user_id']) ?>" 
-                                                               data-old-role-id="<?= esc($user['role_id'] ?? '') ?>" 
-                                                               data-old-department-id="<?= esc($user['department_id'] ?? '') ?>">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                                            </a>
-                                                            <!-- <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                                            </a> -->
-                                                        </div>
-                                                        <div class="edit-btns" style="display: none;">
-                                                            <a href="javascript:void(0);" class="action-btn btn-save bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Save">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="action-btn btn-cancel bs-tooltip" data-toggle="tooltip" data-placement="top" title="Cancel">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                                                            </a>
-                                                        </div>
-                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="7" class="text-center">No user data available.</td>
+                                                <td colspan="5" class="text-center">No user data available.</td>
                                             </tr>
                                         <?php endif; ?>
                                         </tbody>
@@ -199,141 +229,32 @@
 
             $('#departmentFilter').on('change', function () {
                 var val = $(this).val();
-                console.log('Filter value:', val);
-                // Perform a literal, smart, and case-insensitive search on the 'Department | Office' column (index 5).
-                api.column(5).search(val, false, true, true).draw();
-                console.log('Column 5 data:', api.column(5).data().toArray());
+                // The 'Department | Office' column is the 5th one (index 4)
+                api.column(4).search(val ? '^' + val + '$' : '', true, false).draw();
             });
 
             // Add button for new assignment
-            var addButtonHtml = `
-                <button class="btn btn-outline-secondary btn-sm ms-3" id="addAssignmentButton" style="box-shadow: none !important;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            var actionButtonsHtml = `
+                <!-- Edit button -->
+                <button class="btn btn-outline-danger btn-sm ms-1" id="editAssignmentsButton">Edit</button>
+                
+                <!-- Add New Row button (Hidden as per request) -->
+                <button class="btn btn-outline-secondary btn-sm ms-3 btn-icon-add btn-action-icon" id="addNewAssignmentButton" style="display: none;" title="Add New Assignment" hidden>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+                <!-- Save Changes button -->
+                <button class="btn btn-outline-success btn-sm ms-1 btn-icon-save btn-action-icon" id="saveAssignmentsButton" style="display: none;" title="Save Changes">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <!-- Cancel button -->
+                <button class="btn btn-outline-danger btn-sm ms-1 btn-icon-cancel btn-action-icon" id="cancelEditButton" style="display: none;" title="Cancel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             `;
-            $('.myAddButton').html(addButtonHtml);
+            $('.myAddButton').html(actionButtonsHtml);
 
-            $('#addAssignmentButton').on('click', function() {
-                console.log(`[${performance.now().toFixed(2)}] Add Assignment Button Clicked!`);
+            // Logic for adding a new row will be handled by a new event handler
 
-                var newRowHtml = `
-                    <tr class="new-row temp-new-assignment-row">
-                        <td data-label="TUPT-ID"><span class="new-tupid-display">N/A</span></td>
-                        <td data-label="First Name">
-                            <input type="text" class="form-control form-control-sm user-firstname-input" placeholder="First Name">
-                            <input type="hidden" class="new-user-id" value="">
-                            <div class="user-suggestions-container" style="position: absolute; background-color: white; border: 1px solid #ccc; max-height: 200px; overflow-y: auto; z-index: 1000; width: auto; min-width: 150px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none;"></div>
-                        </td>
-                        <td data-label="Last Name"><input type="text" class="form-control form-control-sm user-lastname-input" placeholder="Last Name"></td>
-                        <td data-label="Role"><select class="form-control role-select"><option value="">Select Role</option></select></td>
-                        <td data-label="Department | Office">` + getDepartmentSelectHtml(null) + `</td>
-                        <td class="action-cell">
-                            <div class="action-btns new-row-action-btns">
-                                <a href="javascript:void(0);" class="action-btn btn-save-new bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Save New">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                                </a>
-                                <a href="javascript:void(0);" class="action-btn btn-cancel-new bs-tooltip" data-toggle="tooltip" data-placement="top" title="Cancel">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>`;
-
-                $('#style-1 tbody').prepend(newRowHtml);
-                
-                // Get a reference to the newly prepended row for event listeners
-                var $newRow = $('#style-1 tbody').find('.temp-new-assignment-row:first');
-                console.log(`[${performance.now().toFixed(2)}] New row prepended. $newRow length: ${$newRow.length}`);
-
-                // Scroll to the new row if it's not visible
-                $('html, body').animate({
-                    scrollTop: $newRow.offset().top
-                }, 500);
-
-                // Attach event listeners for the new row's elements
-                // User search functionality
-                $newRow.find('.user-firstname-input, .user-lastname-input').on('keyup', function() {
-                    var $thisInput = $(this);
-                    var query = $thisInput.val();
-                    var $suggestionsContainer = $thisInput.closest('td').find('.user-suggestions-container');
-                    
-                    if (query.length > 2) { // Start searching after 2 characters
-                        $.ajax({
-                            url: '<?= base_url('admin/rolesassign/searchUsers') ?>',
-                            method: 'GET',
-                            data: { query: query },
-                            dataType: 'json',
-                            success: function(users) {
-                                $suggestionsContainer.empty();
-                                if (users.length > 0) {
-                                    users.forEach(function(user) {
-                                        var fullname = user.user_firstname + ' ' + user.user_lastname;
-                                        $suggestionsContainer.append(`<div class="suggestion-item" data-user-id="${user.user_id}" data-firstname="${user.user_firstname}" data-lastname="${user.user_lastname}" data-tupid="${user.user_tupid || 'N/A'}">${fullname}</div>`);
-                                    });
-                                    $suggestionsContainer.show();
-                                } else {
-                                    $suggestionsContainer.hide();
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error("Error searching users:", xhr, status, error);
-                                $suggestionsContainer.hide();
-                            }
-                        });
-                    } else {
-                        $suggestionsContainer.hide();
-                    }
-                });
-
-                // Handle suggestion item click
-                $newRow.on('click', '.suggestion-item', function() {
-                    console.log(`[${performance.now().toFixed(2)}] Suggestion Item Clicked!`);
-                    var $item = $(this);
-                    var userId = $item.data('user-id');
-                    var firstname = $item.data('firstname');
-                    var lastname = $item.data('lastname');
-                    var tuptid = $item.data('tupid');
-
-                    $newRow.find('.new-user-id').val(userId);
-                    $newRow.find('.user-firstname-input').val(firstname).prop('readonly', true);
-                    $newRow.find('.user-lastname-input').val(lastname).prop('readonly', true);
-                    $newRow.find('.new-tupid-display').text(tuptid);
-                    $item.parent().hide(); // Hide suggestions container
-
-                    // Now that user is selected, enable and load roles for the department
-                    var $departmentSelect = $newRow.find('.department-select');
-                    var selectedDepartmentId = $departmentSelect.val();
-                    if (selectedDepartmentId) {
-                        // Pass null for selectedRoleId for new assignments
-                        loadRolesForDepartment(selectedDepartmentId, $newRow.find('.role-select'), null, userId, 'from_new_assign_after_user_select');
-                    } else {
-                        // If no department is pre-selected, clear roles just in case
-                        $newRow.find('.role-select').empty().append('<option value="">None</option>');
-                    }
-                });
-
-                // Hide suggestions when input loses focus, with a slight delay
-                $newRow.find('.user-firstname-input, .user-lastname-input').on('focusout', function() {
-                    var $suggestionsContainer = $(this).closest('td').find('.user-suggestions-container');
-                    setTimeout(function() {
-                        $suggestionsContainer.hide();
-                    }, 200); // Small delay to allow click on suggestion item
-                });
-
-                // Department change listener for new row
-                $newRow.find('.department-select').on('change', function() {
-                    console.log(`[${performance.now().toFixed(2)}] New Assignment - Department Change Event Triggered!`);
-                    var newDepartmentId = $(this).val();
-                    var userId = $newRow.find('.new-user-id').val();
-                    var roleSelectElement = $newRow.find('.role-select'); // Correctly target the role select element within the new row
-
-                    if (userId && newDepartmentId) {
-                        loadRolesForDepartment(newDepartmentId, roleSelectElement, null, userId, 'from_new_assign_change');
-                    } else {
-                        roleSelectElement.empty().append('<option value="">None</option>');
-                    }
-                });
-            });
         }
     });
 
@@ -367,6 +288,229 @@
         return departmentSelectHtml;
     }
 
+    // --- GLOBAL EDIT MODE LOGIC ---
+    $(document).on('click', '#editAssignmentsButton', function() {
+        // Toggle main buttons
+        $('#editAssignmentsButton').hide();
+        $('#addNewAssignmentButton, #saveAssignmentsButton, #cancelEditButton').show();
+
+        // Make each row editable
+        $('#style-1 tbody tr').each(function() {
+            var $row = $(this);
+            // Correctly get the user-id from the data attribute on the first cell.
+            var userId = $row.find('td:first').data('user-id');
+
+            // Store original values
+            var originalRoleCell = $row.find('.editable-role');
+            var originalDepCell = $row.find('.editable-department');
+            $row.data('original-role-html', originalRoleCell.html());
+            $row.data('original-dep-html', originalDepCell.html());
+            $row.data('original-role-id', originalRoleCell.data('role-id'));
+            $row.data('original-department-id', originalDepCell.data('department-id'));
+            $row.data('user-id', $row.find('td:first').data('user-id'));
+            $row.data('assignment-id', $row.data('assignment-id'));
+
+            // Make Department editable
+            var depId = originalDepCell.data('department-id');
+            originalDepCell.html(getDepartmentSelectHtml(depId));
+
+            // Make Role editable
+            var roleId = originalRoleCell.data('role-id');
+            var roleSelect = $('<select class="form-control form-control-sm role-select"></select>');
+            originalRoleCell.html(roleSelect);
+            loadRolesForDepartment(depId, roleSelect, roleId, userId, 'edit-mode-init');
+        });
+    });
+
+    // Delegated event handler for department change in edit mode
+    $('#style-1 tbody').on('change', 'tr:not(.new-assignment-row) .department-select', function() {
+        var $row = $(this).closest('tr');
+        var newDepId = $(this).val();
+        var roleSelect = $row.find('.role-select');
+        var userId = $row.data('user-id');
+        // When department changes, we don't pre-select any role
+        loadRolesForDepartment(newDepId, roleSelect, null, userId, 'edit-mode-change');
+    });
+
+    $(document).on('click', '#cancelEditButton', function() {
+        // Toggle main buttons
+        $('#addNewAssignmentButton, #saveAssignmentsButton, #cancelEditButton').hide();
+        $('#editAssignmentsButton').show();
+
+        // Revert all rows
+        $('#style-1 tbody tr').each(function() {
+            var $row = $(this);
+            if ($row.hasClass('new-assignment-row')) {
+                $row.remove();
+                return;
+            }
+            
+            $row.find('.editable-role').html($row.data('original-role-html'));
+            $row.find('.editable-department').html($row.data('original-dep-html')); // This also removes the appended button
+        });
+        c1.draw(false); // Redraw table to fix any display issues
+    });
+
+    $(document).on('click', '#saveAssignmentsButton', function() {
+        var newAssignments = [];
+        var updatedAssignments = [];
+
+        // Collect New Assignments
+        $('.new-assignment-row').each(function() {
+            var $row = $(this);
+            var userId = $row.find('.new-user-id').val();
+            var departmentId = $row.find('.department-select').val();
+            var roleId = $row.find('.role-select').val();
+
+            if (userId && departmentId) { 
+                newAssignments.push({ userId: userId, departmentId: departmentId, roleId: roleId || null });
+            }
+        });
+
+        // Collect Updated Assignments
+        $('#style-1 tbody tr:not(.new-assignment-row)').each(function() {
+            var $row = $(this);
+            var originalRole = $row.data('original-role-id');
+            var originalDep = $row.data('original-department-id');
+            var newRole = $row.find('.role-select').val();
+            var newDep = $row.find('.department-select').val();
+
+            // Check if a change has been made
+            if (newRole !== undefined && newDep !== undefined) { // Ensure we are in edit mode for this row
+                // Convert to string for consistent comparison, as data attributes can be strings and .val() can be number/string
+                var originalRoleStr = String(originalRole || '');
+                var newRoleStr = String(newRole || '');
+                var originalDepStr = String(originalDep || '');
+                var newDepStr = String(newDep || '');
+
+                if (originalRoleStr !== newRoleStr || originalDepStr !== newDepStr) {
+                    updatedAssignments.push({
+                        assignmentId: $row.data('assignment-id'), // Can be null for users not in the table
+                        userId: $row.data('user-id'), // Always needed for the upsert logic
+                        newRoleId: newRole || null,
+                        newDepartmentId: newDep
+                    });
+                }
+            }
+        });
+
+        if (newAssignments.length === 0 && updatedAssignments.length === 0) {
+            Swal.fire('No Changes', 'No new or updated assignments to save.', 'info');
+            return;
+        }
+
+        var confirmText = `You are about to:\n` +
+                          (newAssignments.length > 0 ? `- Create ${newAssignments.length} new assignment(s)\n` : '') +
+                          (updatedAssignments.length > 0 ? `- Update ${updatedAssignments.length} existing assignment(s)` : '');
+
+        Swal.fire({
+            title: 'Confirm Save',
+            text: confirmText,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, save it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '<?= base_url('admin/rolesassign/bulk-save') ?>',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 
+                        newAssignments: newAssignments,
+                        updatedAssignments: updatedAssignments
+                    }),
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire('Success!', response.message, 'success').then(() => location.reload());
+                        } else {
+                            Swal.fire('Error!', response.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error!', 'An unexpected error occurred.', 'error');
+                    }
+                });
+            }
+        });
+    });
+
+    // Handle adding a new row for assignment
+    $(document).on('click', '#addNewAssignmentButton', function() {
+        var newRowHtml = `
+            <tr class="new-assignment-row">
+                <td><span class="new-tupid-display">N/A</span></td>
+                <td>
+                    <input type="text" class="form-control form-control-sm user-search-input" data-search-type="firstname" placeholder="First Name">
+                    <div class="user-suggestions-container" style="position: absolute; background-color: white; border: 1px solid #ccc; max-height: 200px; overflow-y: auto; z-index: 1000; width: auto; min-width: 150px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none;"></div>
+                </td>
+                <td><input type="text" class="form-control form-control-sm user-search-input" data-search-type="lastname" placeholder="Last Name"></td>
+                <td><select class="form-control form-control-sm role-select"><option value="">Select Role</option></select></td>
+                <td>${getDepartmentSelectHtml(null)}</td>
+            </tr>`;
+        
+        var $newRow = $(newRowHtml);
+        $('#style-1 tbody').prepend($newRow);
+
+        // --- Event listeners for the new row ---
+        var $suggestionsContainer = $newRow.find('.user-suggestions-container');
+
+        $newRow.find('.user-search-input').on('keyup', function() {
+            var $input = $(this);
+            var query = $input.val();
+            
+            // Position the suggestions container relative to the current input field
+            $suggestionsContainer.css({ top: $input.position().top + $input.outerHeight(), left: $input.position().left });
+
+            if (query.length > 1) { // Search after 2 characters
+                $.ajax({
+                    url: '<?= base_url('admin/rolesassign/searchUsers') ?>',
+                    method: 'GET', data: { query: query }, dataType: 'json',
+                    success: function(users) {
+                        $suggestionsContainer.empty().show();
+                        if (users.length > 0) {
+                            users.forEach(function(user) {
+                                $suggestionsContainer.append(`<div class="suggestion-item" data-user-id="${user.user_id}" data-firstname="${user.user_firstname}" data-lastname="${user.user_lastname}" data-tupid="${user.user_tupid || 'N/A'}">${user.user_firstname} ${user.user_lastname}</div>`);
+                            });
+                        } else {
+                            $suggestionsContainer.append('<div class="p-2">No users found</div>');
+                        }
+                    }
+                });
+            } else {
+                $suggestionsContainer.hide();
+            }
+        });
+
+        $suggestionsContainer.on('click', '.suggestion-item', function() {
+            var $item = $(this);
+            var userId = $item.data('user-id');
+            var firstname = $item.data('firstname');
+            var lastname = $item.data('lastname');
+            var tuptid = $item.data('tupid');
+
+            $newRow.find('.new-user-id').val(userId);
+            $newRow.find('.new-tupid-display').text(tuptid);
+            $newRow.find('input[data-search-type="firstname"]').val(firstname).prop('readonly', true);
+            $newRow.find('input[data-search-type="lastname"]').val(lastname).prop('readonly', true);
+            $suggestionsContainer.hide();
+        });
+
+        // Hide suggestions when clicking outside
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.user-suggestions-container, .user-search-input').length) {
+                $suggestionsContainer.hide();
+            }
+        });
+
+        $newRow.find('.department-select').on('change', function() {
+            var depId = $(this).val();
+            var userId = $newRow.find('.new-user-id').val(); // May be empty, and that's okay
+            var roleSelect = $newRow.find('.role-select');
+            // Load roles as soon as a department is selected. 
+            // The user ID is passed so that if a user IS selected, we can still correctly disable occupied roles.
+            loadRolesForDepartment(depId, roleSelect, null, userId, 'new-row-change');
+        });
+    });
 
     multiCheck(c1);
 

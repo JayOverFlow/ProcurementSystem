@@ -65,46 +65,6 @@ class MADashboardController extends BaseController //
         return view('user-pages/master-admin/ma-rolesdep', $data);
     }
 
-    public function updateRoleDepartment(): ResponseInterface // Table 2
-    {
-        $roleModel = new RoleModel();
-
-        $rules = [
-            'role_id' => 'required|integer',
-            'role_name' => 'required|max_length[200]',
-            'dep_id' => 'required|integer'
-        ];
-
-        if (!$this->validate($rules)) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => $this->validator->getErrors()
-            ]);
-        }
-
-        $roleId = $this->request->getPost('role_id');
-        $roleName = $this->request->getPost('role_name');
-        $depId = $this->request->getPost('dep_id');
-
-        // Update the role in the database
-        $updateData = [
-            'role_name' => $roleName,
-            'role_dep_id_fk' => $depId
-        ];
-
-        if ($roleModel->update($roleId, $updateData)) {
-            return $this->response->setJSON([
-                'status' => 'success',
-                'message' => 'Role updated successfully.'
-            ]);
-        } else {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Failed to update role.'
-            ]);
-        }
-    }
-
     public function createRoleDepartment(): ResponseInterface // Table 2
     {
         $roleModel = new RoleModel();
@@ -139,47 +99,6 @@ class MADashboardController extends BaseController //
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'Failed to create role.'
-            ]);
-        }
-    }
-
-    public function deleteRoleDepartment(): ResponseInterface // Table 2
-    {
-        $roleModel = new RoleModel();
-        $roleId = $this->request->getPost('role_id');
-
-        if (empty($roleId) || !is_numeric($roleId)) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Invalid Role ID provided.'
-            ]);
-        }
-
-        $this->db->transBegin();
-
-        try {
-            // Set role_parent_role_id to NULL for any roles that reference the role being deleted as a parent.
-            $roleModel->where('role_parent_role_id', $roleId)
-                      ->set(['role_parent_role_id' => null])
-                      ->update();
-            log_message('debug', 'Roles referencing role ' . $roleId . ' as parent have been nulled.');
-
-            // Now, delete the role itself.
-            if ($roleModel->delete($roleId)) {
-                $this->db->transCommit();
-                return $this->response->setJSON([
-                    'status' => 'success',
-                    'message' => 'Role and its associated parent links deleted successfully.'
-                ]);
-            } else {
-                throw new \Exception('Failed to delete role.');
-            }
-        } catch (\Exception $e) {
-            $this->db->transRollback();
-            log_message('error', 'Role deletion failed: ' . $e->getMessage());
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Failed to delete role: ' . $e->getMessage()
             ]);
         }
     }
@@ -233,108 +152,108 @@ class MADashboardController extends BaseController //
         }
     }
 
-    public function userTypeIndex(): string // Table 3
-    {
-        $departmentModel = new DepartmentModel();
-        $userModel = new UserModel();
-        $roleModel = new RoleModel();
+    // public function userTypeIndex(): string // Table 3
+    // {
+    //     $departmentModel = new DepartmentModel();
+    //     $userModel = new UserModel();
+    //     $roleModel = new RoleModel();
 
-        $data['staffCount'] = $userModel->where('user_type', 'Staff')->countAllResults();  //Staff Counter
-        $data['facultyMembersCount'] = $userModel->where('user_type', 'Faculty')->countAllResults(); //Faculty Counter
-        $data['allRoleCount'] = $roleModel->countAllResults();  //Role Counter
-        $data['allDepCount'] = $departmentModel->countAllResults(); //Office Counter
+    //     $data['staffCount'] = $userModel->where('user_type', 'Staff')->countAllResults();  //Staff Counter
+    //     $data['facultyMembersCount'] = $userModel->where('user_type', 'Faculty')->countAllResults(); //Faculty Counter
+    //     $data['allRoleCount'] = $roleModel->countAllResults();  //Role Counter
+    //     $data['allDepCount'] = $departmentModel->countAllResults(); //Office Counter
         
-        $data['officesCount'] = $departmentModel->where('dep_type', 'Administrative')->countAllResults(); //Administrative Office Counter
-        $data['academicDepartmentsCount'] = $departmentModel->where('dep_type', 'Academic')->countAllResults(); //Academic Office Counter (Departments)
+    //     $data['officesCount'] = $departmentModel->where('dep_type', 'Administrative')->countAllResults(); //Administrative Office Counter
+    //     $data['academicDepartmentsCount'] = $departmentModel->where('dep_type', 'Academic')->countAllResults(); //Academic Office Counter (Departments)
 
-        // Fetch all users with their roles and departments using the view_user_department_type
-        $db = \Config\Database::connect();
-        $builder = $db->table('view_user_department_type');
-        $data['users'] = $builder->get()->getResultArray();
+    //     // Fetch all users with their roles and departments using the view_user_department_type
+    //     $db = \Config\Database::connect();
+    //     $builder = $db->table('view_user_department_type');
+    //     $data['users'] = $builder->get()->getResultArray();
 
-        // Fetch all departments, categorized by type, for the filter dropdown
-        $data['departments'] = [
-            'Academic' => $departmentModel->where('dep_type', 'Academic')->findAll(),
-            'Administrative' => $departmentModel->where('dep_type', 'Administrative')->findAll()
-        ];
+    //     // Fetch all departments, categorized by type, for the filter dropdown
+    //     $data['departments'] = [
+    //         'Academic' => $departmentModel->where('dep_type', 'Academic')->findAll(),
+    //         'Administrative' => $departmentModel->where('dep_type', 'Administrative')->findAll()
+    //     ];
         
-        return view('user-pages/master-admin/ma-usertype', $data);
-    }
+    //     return view('user-pages/master-admin/ma-usertype', $data);
+    // }
 
-    public function update(): ResponseInterface // Table 3
-    {
-        $input = $this->request->getPost();
+    // public function update(): ResponseInterface // Table 3
+    // {
+    //     $input = $this->request->getPost();
 
-        // Validate input
-        $rules = [
-            'user_id' => 'required|integer',
-            'department_id' => 'required|integer',
-            'user_type' => 'required|in_list[Faculty,Staff]',
-        ];
+    //     // Validate input
+    //     $rules = [
+    //         'user_id' => 'required|integer',
+    //         'department_id' => 'required|integer',
+    //         'user_type' => 'required|in_list[Faculty,Staff]',
+    //     ];
 
-        if (!$this->validate($rules)) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Validation failed.',
-                'errors' => $this->validator->getErrors()
-            ]);
-        }
+    //     if (!$this->validate($rules)) {
+    //         return $this->response->setJSON([
+    //             'status' => 'error',
+    //             'message' => 'Validation failed.',
+    //             'errors' => $this->validator->getErrors()
+    //         ]);
+    //     }
 
-        $userId = $input['user_id'];
-        $newDepartmentId = $input['department_id'];
-        $newUserType = $input['user_type'];
+    //     $userId = $input['user_id'];
+    //     $newDepartmentId = $input['department_id'];
+    //     $newUserType = $input['user_type'];
 
-        $userModel = new UserModel();
-        $userRoleDepartmentModel = new UserRoleDepartmentModel();
+    //     $userModel = new UserModel();
+    //     $userRoleDepartmentModel = new UserRoleDepartmentModel();
 
-        // Get current user details to find old department_id and current role_id
-        $db = \Config\Database::connect();
-        $builder = $db->table('user_role_department_tbl');
-        $currentUserAssignment = $builder->where('user_id', $userId)->get()->getRowArray();
+    //     // Get current user details to find old department_id and current role_id
+    //     $db = \Config\Database::connect();
+    //     $builder = $db->table('user_role_department_tbl');
+    //     $currentUserAssignment = $builder->where('user_id', $userId)->get()->getRowArray();
 
-        if (!$currentUserAssignment) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'User assignment not found.'
-            ]);
-        }
-        $oldDepartmentId = $currentUserAssignment['department_id'];
-        $currentRoleId = $currentUserAssignment['role_id'];
+    //     if (!$currentUserAssignment) {
+    //         return $this->response->setJSON([
+    //             'status' => 'error',
+    //             'message' => 'User assignment not found.'
+    //         ]);
+    //     }
+    //     $oldDepartmentId = $currentUserAssignment['department_id'];
+    //     $currentRoleId = $currentUserAssignment['role_id'];
 
-        $db->transBegin();
+    //     $db->transBegin();
 
-        try {
-            // Update user_type in users_tbl
-            $userModel->update($userId, ['user_type' => $newUserType]);
+    //     try {
+    //         // Update user_type in users_tbl
+    //         $userModel->update($userId, ['user_type' => $newUserType]);
 
-            // Update department_id in user_role_department_tbl
-            // Delete the old assignment
-            $userRoleDepartmentModel->where([
-                'user_id' => $userId,
-                'role_id' => $currentRoleId,
-                'department_id' => $oldDepartmentId
-            ])->delete();
+    //         // Update department_id in user_role_department_tbl
+    //         // Delete the old assignment
+    //         $userRoleDepartmentModel->where([
+    //             'user_id' => $userId,
+    //             'role_id' => $currentRoleId,
+    //             'department_id' => $oldDepartmentId
+    //         ])->delete();
 
-            // Insert the new assignment
-            $userRoleDepartmentModel->insert([
-                'user_id' => $userId,
-                'role_id' => $currentRoleId,
-                'department_id' => $newDepartmentId
-            ]);
+    //         // Insert the new assignment
+    //         $userRoleDepartmentModel->insert([
+    //             'user_id' => $userId,
+    //             'role_id' => $currentRoleId,
+    //             'department_id' => $newDepartmentId
+    //         ]);
 
-            $db->transCommit();
-            return $this->response->setJSON([
-                'status' => 'success',
-                'message' => 'User and department updated successfully.'
-            ]);
-        } catch (\Exception $e) {
-            $db->transRollback();
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Failed to update user and department: ' . $e->getMessage()
-            ]);
-        }
-    }
+    //         $db->transCommit();
+    //         return $this->response->setJSON([
+    //             'status' => 'success',
+    //             'message' => 'User and department updated successfully.'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         $db->transRollback();
+    //         return $this->response->setJSON([
+    //             'status' => 'error',
+    //             'message' => 'Failed to update user and department: ' . $e->getMessage()
+    //         ]);
+    //     }
+    // }
 
     public function roleAssignIndex(): string // Table 4
     {
@@ -342,17 +261,20 @@ class MADashboardController extends BaseController //
         $userModel = new UserModel();
         $roleModel = new RoleModel();
 
-        $data['staffCount'] = $userModel->where('user_type', 'Staff')->countAllResults();  //Staff Counter
-        $data['facultyMembersCount'] = $userModel->where('user_type', 'Faculty')->countAllResults(); //Faculty Counter
-        $data['allRoleCount'] = $roleModel->countAllResults();  //Role Counter
-        $data['allDepCount'] = $departmentModel->countAllResults(); //Office Counter
-        
-        $data['officesCount'] = $departmentModel->where('dep_type', 'Administrative')->countAllResults(); //Administrative Office Counter
-        $data['academicDepartmentsCount'] = $departmentModel->where('dep_type', 'Academic')->countAllResults(); //Academic Office Counter (Departments)
+        $data['staffCount'] = $userModel->where('user_type', 'Staff')->countAllResults();
+        $data['facultyMembersCount'] = $userModel->where('user_type', 'Faculty')->countAllResults();
+        $data['allRoleCount'] = $roleModel->countAllResults();
+        $data['allDepCount'] = $departmentModel->countAllResults();
+        $data['officesCount'] = $departmentModel->where('dep_type', 'Administrative')->countAllResults();
+        $data['academicDepartmentsCount'] = $departmentModel->where('dep_type', 'Academic')->countAllResults();
 
-        // Fetch all users with their roles and departments using the view_users_for_role_assignment
+        // Fetch all users with their roles and departments, ensuring we get the assignment ID
         $db = \Config\Database::connect();
-        $builder = $db->table('view_users_for_role_assignment');
+        $builder = $db->table('users_tbl u');
+        $builder->select('u.user_id, u.user_tupid, u.user_firstname, u.user_lastname, r.role_id, r.role_name, d.dep_id as department_id, d.dep_name, urd.id as assignment_id');
+        $builder->join('user_role_department_tbl urd', 'u.user_id = urd.user_id', 'left');
+        $builder->join('roles_tbl r', 'urd.role_id = r.role_id', 'left');
+        $builder->join('departments_tbl d', 'urd.department_id = d.dep_id', 'left');
         $data['users'] = $builder->get()->getResultArray();
 
         // Fetch all departments, categorized by type, for the filter dropdown
@@ -368,11 +290,11 @@ class MADashboardController extends BaseController //
         $userRoleDepartmentModel = new UserRoleDepartmentModel();
         $assignedRoles = $userRoleDepartmentModel->select(['role_id', 'user_id'])->findAll();
         
-        // Create an associative array where role_id is key and user_id is value
-        // This helps to quickly check if a role is assigned and by which user
         $data['occupiedRoles'] = [];
         foreach ($assignedRoles as $assignment) {
-            $data['occupiedRoles'][$assignment['role_id']] = $assignment['user_id'];
+            if (!empty($assignment['role_id'])) {
+                $data['occupiedRoles'][$assignment['role_id']] = $assignment['user_id'];
+            }
         }
         
         return view('user-pages/master-admin/ma-rolesassign', $data);
@@ -582,5 +504,214 @@ class MADashboardController extends BaseController //
         }
     }
 
-    
+    public function bulkUpdateRolesDepartments(): ResponseInterface
+    {
+        $this->db->transBegin();
+
+        try {
+            $rolesData = $this->request->getJSON(true);
+
+            if (empty($rolesData)) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'No data received.']);
+            }
+
+            $roleModel = new RoleModel();
+
+            foreach ($rolesData as $role) {
+                // Basic validation for each role entry
+                if (empty($role['role_id']) || empty($role['role_name']) || empty($role['dep_id'])) {
+                    throw new \Exception('Invalid data for one or more roles. All fields are required.');
+                }
+
+                $updateData = [
+                    'role_name' => esc($role['role_name']),
+                    'role_dep_id_fk' => esc($role['dep_id'])
+                ];
+
+                if (!$roleModel->update($role['role_id'], $updateData)) {
+                    // If any update fails, throw an exception to trigger a rollback
+                    throw new \Exception('Failed to update role ID: ' . $role['role_id']);
+                }
+            }
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Transaction failed.']);
+            } else {
+                $this->db->transCommit();
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Roles updated successfully.']);
+            }
+
+        } catch (\Exception $e) {
+            $this->db->transRollback();
+            log_message('error', 'Bulk update failed: ' . $e->getMessage());
+            return $this->response->setJSON(['status' => 'error', 'message' => 'An error occurred during the update: ' . $e->getMessage()]);
+        }
+    }
+
+    public function bulkDeleteRoles(): ResponseInterface
+    {
+        $this->db->transBegin();
+
+        try {
+            $roleIds = $this->request->getJSON(true);
+
+            if (empty($roleIds)) {
+                // It's not an error if there's nothing to delete.
+                return $this->response->setJSON(['status' => 'success', 'message' => 'No roles were marked for deletion.']);
+            }
+
+            $roleModel = new RoleModel();
+            
+            // First, nullify parent references to avoid foreign key constraints
+            $roleModel->whereIn('role_parent_role_id', $roleIds)->set(['role_parent_role_id' => null])->update();
+
+            // Now, delete the roles
+            if (!$roleModel->delete($roleIds)) {
+                throw new \Exception('Failed to delete one or more roles.');
+            }
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Transaction failed during deletion.']);
+            } else {
+                $this->db->transCommit();
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Roles deleted successfully.']);
+            }
+
+        } catch (\Exception $e) {
+            $this->db->transRollback();
+            log_message('error', 'Bulk delete failed: ' . $e->getMessage());
+            return $this->response->setJSON(['status' => 'error', 'message' => 'An error occurred during deletion: ' . $e->getMessage()]);
+        }
+    }
+
+    public function bulkDeleteDepartments(): ResponseInterface
+    {
+        $this->db->transBegin();
+
+        try {
+            $depIds = $this->request->getJSON(true);
+
+            if (empty($depIds)) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'No departments were marked for deletion.']);
+            }
+
+            $roleModel = new RoleModel();
+            $departmentModel = new DepartmentModel();
+            $userRoleDepartmentModel = new UserRoleDepartmentModel();
+
+            // 1. Find all roles that are going to be deleted.
+            $rolesToDelete = $roleModel->whereIn('role_dep_id_fk', $depIds)->findColumn('role_id');
+
+            if (!empty($rolesToDelete)) {
+                // 2. Nullify parent references for any roles that have one of the soon-to-be-deleted roles as a parent.
+                $roleModel->whereIn('role_parent_role_id', $rolesToDelete)->set(['role_parent_role_id' => null])->update();
+            }
+            
+            // 3. Delete all user assignments related to the departments to be deleted.
+            $userRoleDepartmentModel->whereIn('department_id', $depIds)->delete();
+
+            // 4. Delete all roles associated with the given departments.
+            if (!empty($rolesToDelete)) {
+                $roleModel->whereIn('role_id', $rolesToDelete)->delete();
+            }
+
+            // 5. Now, delete the departments themselves.
+            if (!$departmentModel->delete($depIds)) {
+                throw new \Exception('Failed to delete one or more departments.');
+            }
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Transaction failed during department deletion.']);
+            } else {
+                $this->db->transCommit();
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Departments and their roles deleted successfully.']);
+            }
+
+        } catch (\Exception $e) {
+            $this->db->transRollback();
+            log_message('error', 'Bulk department delete failed: ' . $e->getMessage());
+            return $this->response->setJSON(['status' => 'error', 'message' => 'An error occurred during department deletion: ' . $e->getMessage()]);
+        }
+    }
+
+    public function bulkSaveUserAssignments(): ResponseInterface
+    {
+        $this->db->transBegin();
+
+        try {
+            $payload = $this->request->getJSON(true);
+            $newAssignments = $payload['newAssignments'] ?? [];
+            $updatedAssignments = $payload['updatedAssignments'] ?? [];
+
+            $userRoleDepartmentModel = new UserRoleDepartmentModel();
+
+            // Handle New Assignments
+            if (!empty($newAssignments)) {
+                foreach ($newAssignments as $assignment) {
+                    if (empty($assignment['userId']) || empty($assignment['departmentId'])) {
+                        throw new \Exception('Invalid data for new assignment.');
+                    }
+                    $data = [
+                        'user_id' => $assignment['userId'],
+                        'department_id' => $assignment['departmentId'],
+                        'role_id' => empty($assignment['roleId']) ? null : $assignment['roleId'],
+                    ];
+                    if (!$userRoleDepartmentModel->insert($data)) {
+                        throw new \Exception('Failed to create a new user assignment.');
+                    }
+                }
+            }
+
+            // Handle Updated Assignments
+            if (!empty($updatedAssignments)) {
+                foreach ($updatedAssignments as $update) {
+                    if (empty($update['newDepartmentId'])) {
+                        throw new \Exception('Invalid data for updated assignment. New Department ID is required.');
+                    }
+
+                    $updateData = [
+                        'department_id' => $update['newDepartmentId'],
+                        'role_id' => $update['newRoleId'],
+                    ];
+
+                    // Check if an assignmentId was provided and exists
+                    if (!empty($update['assignmentId']) && $userRoleDepartmentModel->find($update['assignmentId'])) {
+                        // If it exists, update it
+                        if (!$userRoleDepartmentModel->update($update['assignmentId'], $updateData)) {
+                            throw new \Exception('Failed to update assignment for assignment ID: ' . $update['assignmentId']);
+                        }
+                    } else {
+                        // If it does not exist, create a new one. This handles users who were not in the table.
+                        // We need the user_id for this, which we must have passed from the frontend.
+                        if (empty($update['userId'])) {
+                            throw new \Exception('User ID is required to create a new assignment for an unlisted user.');
+                        }
+                        $newData = [
+                            'user_id' => $update['userId'],
+                            'department_id' => $update['newDepartmentId'],
+                            'role_id' => $update['newRoleId'],
+                        ];
+                        if (!$userRoleDepartmentModel->insert($newData)) {
+                            throw new \Exception('Failed to create new assignment for user ID: ' . $update['userId']);
+                        }
+                    }
+                }
+            }
+
+            if ($this->db->transStatus() === false) {
+                throw new \Exception('Database transaction failed.');
+            }
+
+            $this->db->transCommit();
+            return $this->response->setJSON(['status' => 'success', 'message' => 'All assignments saved successfully.']);
+
+        } catch (\Exception $e) {
+            $this->db->transRollback();
+            log_message('error', 'Bulk assignment save failed: ' . $e->getMessage());
+            return $this->response->setJSON(['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()]);
+        }
+    }
 }

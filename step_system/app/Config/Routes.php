@@ -49,10 +49,11 @@ $routes->group('admin', ['filter' => 'auth:admin'], function($routes){
     $routes->get('dashboard', 'MasterAdmin\MADashboardController::dashboardIndex'); // Table 1
 
     $routes->get('rolesdep', 'MasterAdmin\MADashboardController::rolesDepIndex'); // Table 2
-    $routes->post('rolesdep/update', 'MasterAdmin\MADashboardController::updateRoleDepartment'); // Table 2
     $routes->post('rolesdep/create', 'MasterAdmin\MADashboardController::createRoleDepartment'); // Table 2
-    $routes->post('rolesdep/delete', 'MasterAdmin\MADashboardController::deleteRoleDepartment'); // Table 2
     $routes->post('department/create', 'MasterAdmin\MADashboardController::createDepartment'); // Table 2 - Create New Department
+    $routes->post('rolesdep/bulk-update', 'MasterAdmin\MADashboardController::bulkUpdateRolesDepartments'); // Table 2 - Bulk Update
+    $routes->post('rolesdep/bulk-delete', 'MasterAdmin\MADashboardController::bulkDeleteRoles'); // Table 2 - Bulk Delete
+    $routes->post('rolesdep/bulk-delete-deps', 'MasterAdmin\MADashboardController::bulkDeleteDepartments'); // Table 2 - Bulk Delete Departments
 
     $routes->get('usertype', 'MasterAdmin\MADashboardController::userTypeIndex'); // Table 3
     $routes->post('usertype/update', 'MasterAdmin\MADashboardController::update'); // Table 3
@@ -62,6 +63,7 @@ $routes->group('admin', ['filter' => 'auth:admin'], function($routes){
     $routes->post('rolesassign/updateUserAssignment', 'MasterAdmin\MADashboardController::updateUserAssignment'); // Table 4
     $routes->get('rolesassign/searchUsers', 'MasterAdmin\MADashboardController::searchUsers'); // Table 4
     $routes->post('rolesassign/createUserAssignment', 'MasterAdmin\MADashboardController::createUserAssignment'); // Table 4
+    $routes->post('rolesassign/bulk-save', 'MasterAdmin\MADashboardController::bulkSaveUserAssignments'); // Table 4 - Bulk Save
 });
 
 // Faculty or Section Head
