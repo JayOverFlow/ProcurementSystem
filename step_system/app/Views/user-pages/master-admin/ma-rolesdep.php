@@ -25,6 +25,68 @@
     <link href="<?= base_url('assets/src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') ?>" rel="stylesheet" type="text/css" />
     <!-- END SWEETALERT2 STYLES -->
 
+    <style>
+        /* Ensure the container for search and buttons is a flex container and vertically aligned */
+        .dataTables_wrapper .dt--top-section .dataTables_filter {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Style for rows/items marked for deletion */
+        .item-marked-for-deletion {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .item-marked-for-deletion input, .item-marked-for-deletion select {
+            pointer-events: none; /* Disable interaction */
+            background-color: #ffdddd !important;
+        }
+
+        /* Custom styles for buttons */
+        #editRolesButton {
+            padding: 0.7rem 1rem; /* Align with search bar */
+            margin-top: 0.4rem;     
+            margin-right: 0.2rem;
+            line-height: 1;
+            color: #b6afaf !important;
+            border-color:rgb(182, 175, 175) !important;
+            background-color: transparent;
+        }
+        #editRolesButton:hover {
+            background-color: #e7515a !important;
+            color: #fff !important;
+        }
+        .btn-action-icon {
+            padding: 0.4rem 0.5rem; /* Align with search bar */
+            margin-top: 0.4rem;
+            line-height: 1;
+        }
+        .btn-icon-add {
+            color: #1abc9c !important;
+            border-color: #1abc9c !important;
+        }
+        .btn-icon-add:hover {
+            background-color: #1abc9c !important;
+            color: #fff !important;
+        }
+        .btn-icon-save {
+            color: #1abc9c !important;
+            border-color: #1abc9c !important;
+        }
+        .btn-icon-save:hover {
+            background-color: #1abc9c !important;
+            color: #fff !important;
+        }
+        .btn-icon-cancel {
+            color: #e7515a !important;
+            border-color: #e7515a !important;
+        }
+        .btn-icon-cancel:hover {
+            background-color: #e7515a !important;
+            color: #fff !important;
+        }
+    </style>
+
 <?= $this->endSection() ?>
   
 
@@ -89,7 +151,6 @@
                                         <tr>
                                             <th class="text-start">Role</th>
                                             <th>Office | Department</th>
-                                            <th class="text-center">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -98,21 +159,11 @@
                                                 <tr data-role-id="<?= esc($row['role_id']) ?>" data-dep-id="<?= esc($row['dep_id']) ?>">
                                                     <td class="text-start role-name-cell" data-original-value="<?= esc($row['role_name']) ?>"><?= esc($row['role_name']) ?></td>
                                                     <td class="department-name-cell" data-original-value="<?= esc($row['dep_name']) ?>" data-original-dep-id="<?= esc($row['dep_id']) ?>"><?= esc($row['dep_name']) ?></td>
-                                                    <td class="text-center action-cell">
-                                                        <div class="action-btns">
-                                                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                                            </a>
-                                                        </div>
-                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="3" class="text-center">No roles or departments data available.</td>
+                                                <td colspan="2" class="text-center">No roles or departments data available.</td>
                                             </tr>
                                         <?php endif; ?>
                                         </tbody>
@@ -198,32 +249,31 @@
             });
 
             // Add button for new row
-            var addButtonHtml = `
-                <button class="btn btn-outline-secondary btn-sm ms-3" id="addRoleButton" style="box-shadow: none !important;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            var actionButtonsHtml = `
+                <!-- Edit button -->
+                <button class="btn btn-outline-danger btn-sm ms-1" id="editRolesButton">Edit</button>
+                
+                <!-- Add New Row button -->
+                <button class="btn btn-outline-secondary btn-sm ms-3 btn-icon-add btn-action-icon" id="addNewRowButton" style="display: none;" title="Add New Row">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+                <!-- Save Changes button -->
+                <button class="btn btn-outline-success btn-sm ms-1 btn-icon-save btn-action-icon" id="saveRolesButton" style="display: none;" title="Save Changes">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <!-- Cancel button -->
+                <button class="btn btn-outline-danger btn-sm ms-1 btn-icon-cancel btn-action-icon" id="cancelEditButton" style="display: none;" title="Cancel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             `;
-            $('.myAddButton').html(addButtonHtml);
+            $('.myAddButton').html(actionButtonsHtml);
 
-            $('#addRoleButton').on('click', function() {
+            $('#addNewRowButton').on('click', function() {
                 var newRowNode = c1.row.add([
-                    `<input type="text" class="form-control form-control-sm new-role-name-input" placeholder="New Role Name">`,
-                    getDepartmentSelectHtml(null), // Null for no pre-selected department
-                    `<div class="action-btns">
-                        <a href="javascript:void(0);" class="action-btn btn-save-new bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Save New">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                        </a>
-                        <a href="javascript:void(0);" class="action-btn btn-cancel-new bs-tooltip" data-toggle="tooltip" data-placement="top" title="Cancel">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        </a>
-                    </div>`
+                    `<input type="text" class="form-control form-control-sm new-role-name-input" placeholder="Enter New Role Name">`,
+                    getDepartmentSelectHtml(null) // Null for no pre-selected department
                 ]).draw().node();
-                $(newRowNode).addClass('new-row'); // Add a class to identify new rows
-
-                // Scroll to the new row if it's not visible
-                $('html, body').animate({
-                    scrollTop: $(newRowNode).offset().top
-                }, 500);
+                $(newRowNode).addClass('new-row-entry'); // Add a class to identify new rows for saving
             });
         }
     });
@@ -283,225 +333,253 @@
         `;
     }
 
-    // Handle Edit button click
-    $('#style-1').on('click', '.btn-edit', function () {
-        var $row = $(this).closest('tr');
-        var roleId = $row.data('role-id');
-        var originalRoleName = $row.find('.role-name-cell').data('original-value');
-        var originalDepName = $row.find('.department-name-cell').data('original-value');
-        var originalDepId = $row.find('.department-name-cell').data('original-dep-id');
+    // =========================================================================
+    // === GLOBAL EDIT MODE LOGIC ===
+    // =========================================================================
 
-        // Make Role Name editable
-        $row.find('.role-name-cell').html(`<input type="text" class="form-control form-control-sm" value="${originalRoleName}">`);
+    // --- Enter Edit Mode ---
+    // When the main 'Edit' button is clicked.
+    $(document).on('click', '#editRolesButton', function() {
+        // 1. Toggle the main action buttons
+        $('#editRolesButton').hide();
+        $('#addNewRowButton, #saveRolesButton, #cancelEditButton').show();
 
-        // Make Department editable as a dropdown
-        $row.find('.department-name-cell').html(getDepartmentSelectHtml(originalDepId));
+        // 2. Make each row in the table editable
+        $('#style-1 tbody tr').each(function() {
+            var $row = $(this);
+            // Skip any row that is for creating a new entry
+            if ($row.hasClass('new-row')) {
+                return; // 'continue' in a .each() loop
+            }
 
-        // Change buttons to Save and Cancel
-        $row.find('.action-cell').html(`
-            <div class="action-btns">
-                <a href="javascript:void(0);" class="action-btn btn-save bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Save">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                </a>
-                <a href="javascript:void(0);" class="action-btn btn-cancel bs-tooltip" data-toggle="tooltip" data-placement="top" title="Cancel">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                </a>
-            </div>
-        `);
+            // Get original values from the cells
+            var $roleCell = $row.find('.role-name-cell');
+            var originalRoleName = $roleCell.data('original-value');
+
+            var $depCell = $row.find('.department-name-cell');
+            var originalDepId = $depCell.data('original-dep-id');
+
+            // --- Make Role cell editable ---
+            var roleRemoveButton = '<button class="btn btn-danger btn-sm ms-2 remove-role-btn" title="Remove this Role">&times;</button>';
+            $roleCell.html(`<div class="d-flex align-items-center">` + `<input type="text" class="form-control form-control-sm" value="${originalRoleName}">` + roleRemoveButton + `</div>`);
+
+            // --- Make Department cell editable ---
+            var depRemoveButton = '<button class="btn btn-danger btn-sm ms-2 remove-dep-btn" title="Remove this Department and all its Roles">&times;</button>';
+            $depCell.html(`<div class="d-flex align-items-center">` + getDepartmentSelectHtml(originalDepId) + depRemoveButton + `</div>`);
+        });
     });
 
-    // Handle Cancel button click (modified to handle new rows)
-    $('#style-1').on('click', '.btn-cancel, .btn-cancel-new', function () {
-        var $row = $(this).closest('tr');
-        if ($row.hasClass('new-row')) {
-            c1.row($row).remove().draw(false); // Remove new row if not saved
-        } else {
-            var originalRoleName = $row.find('.role-name-cell').data('original-value');
-            var originalDepName = $row.find('.department-name-cell').data('original-value');
+    // --- Save Changes (Revised Logic) ---
+    $(document).on('click', '#saveRolesButton', function() {
+        let rolesToDelete = [];
+        let depsToDelete = [];
+        let itemsToUpdate = [];
+        let itemsToCreate = [];
+        let isValid = true;
 
-            $row.find('.role-name-cell').text(originalRoleName);
-            $row.find('.department-name-cell').text(originalDepName);
-            $row.find('.action-cell').html(`
-                <div class="action-btns">
-                    <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                    </a>
-                    <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                </a>
-                </div>
-            `);
-        }
-    });
+        let deletedRoleNames = [];
+        let deletedDepNames = [];
 
-    // Handle Save button click (modified to handle new rows)
-    $('#style-1').on('click', '.btn-save, .btn-save-new', function () {
-        var $row = $(this).closest('tr');
-        var isNewRow = $row.hasClass('new-row');
-        var roleId = isNewRow ? null : $row.data('role-id');
-        var newRoleName = isNewRow ? $row.find('.new-role-name-input').val() : $row.find('.role-name-cell input').val();
-        var newDepId = isNewRow ? $row.find('.department-select').val() : $row.find('.department-name-cell select').val();
-        var newDepName = isNewRow ? $row.find('.department-select option:selected').text() : $row.find('.department-name-cell select option:selected').text(); // Get text for display
+        // 1. Collect data from all rows
+        $('#style-1 tbody tr').each(function() {
+            const $row = $(this);
 
-        // Basic validation
-        if (!newRoleName.trim() || !newDepId) {
-            alert('Role Name and Department cannot be empty.');
+            if ($row.hasClass('new-row-entry')) {
+                const newRoleName = $row.find('.new-role-name-input').val().trim();
+                const newDepId = $row.find('.department-select').val();
+                if (newRoleName && newDepId) {
+                    itemsToCreate.push({ role_name: newRoleName, dep_id: newDepId });
+                } else if (newRoleName || newDepId) {
+                    // If one field is filled but not the other, it's an error
+                    isValid = false;
+                }
+                return; // continue
+            }
+
+            const roleId = $row.data('role-id');
+            const depId = $row.data('dep-id');
+            const originalRoleName = $row.find('.role-name-cell').data('original-value');
+            const originalDepId = $row.find('.department-name-cell').data('original-dep-id');
+
+            const $roleCellDiv = $row.find('.role-name-cell div');
+            const $depCellDiv = $row.find('.department-name-cell div');
+
+            if ($roleCellDiv.hasClass('item-marked-for-deletion')) {
+                rolesToDelete.push(roleId);
+                deletedRoleNames.push(`"${originalRoleName}"`);
+            } else if ($depCellDiv.hasClass('item-marked-for-deletion')) {
+                depsToDelete.push(depId);
+                const depName = $row.find('.department-name-cell').data('original-value');
+                deletedDepNames.push(`"${depName}"`);
+            } else {
+                const newRoleName = $roleCellDiv.find('input').val().trim();
+                const newDepId = $depCellDiv.find('select').val();
+
+                if (!newRoleName || !newDepId) {
+                    isValid = false;
+                    return false; // break
+                }
+
+                if (newRoleName !== originalRoleName || newDepId != originalDepId) {
+                    itemsToUpdate.push({ role_id: roleId, role_name: newRoleName, dep_id: newDepId });
+                }
+            }
+        });
+
+        if (!isValid) {
+            Swal.fire('Invalid Input', 'All fields are required for new or updated roles.', 'error');
             return;
         }
 
-        var url = isNewRow ? '<?= base_url('admin/rolesdep/create') ?>' : '<?= base_url('admin/rolesdep/update') ?>';
-        var dataToSend = {
-            role_name: newRoleName,
-            dep_id: newDepId,
-            '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
-        };
+        // 2. Build dynamic confirmation message
+        let confirmationText = 'Are you sure?\n';
+        if (itemsToCreate.length > 0) {
+            confirmationText += `\nYou are about to CREATE ${itemsToCreate.length} new item(s).`;
+        }
+        if (deletedRoleNames.length > 0) {
+            confirmationText += `\nYou are about to DELETE ${deletedRoleNames.length} role(s).`;
+        }
+        if (deletedDepNames.length > 0) {
+            confirmationText += `\nYou are about to DELETE ${deletedDepNames.length} department(s) and all their roles.`;
+        }
+        if (itemsToUpdate.length > 0) {
+            confirmationText += `\nYou are about to UPDATE ${itemsToUpdate.length} item(s).`;
+        }
+        confirmationText += '\nThis action cannot be undone.';
 
-        if (!isNewRow) {
-            dataToSend.role_id = roleId;
+        if (rolesToDelete.length === 0 && depsToDelete.length === 0 && itemsToUpdate.length === 0 && itemsToCreate.length === 0) {
+            Swal.fire('No Changes', 'You have not made any changes to save.', 'info');
+            return;
         }
 
-        // AJAX request to save data
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: dataToSend,
-            dataType: 'json',
-            success: function (response) {
-                if (response.status === 'success') {
-                    Swal.fire(
-                        isNewRow ? 'Added!' : 'Updated!',
-                        isNewRow ? 'Role added successfully.' : 'Role updated successfully.',
-                        'success'
-                    );
-                    if (isNewRow) {
-                        // For new row, assign the new role_id and convert to static display
-                        $row.data('role-id', response.role_id); // Assuming response returns the new role_id
-                        $row.removeClass('new-row');
-                    }
-                    // Update the row with new values
-                    $row.find('.role-name-cell').text(newRoleName).data('original-value', newRoleName);
-                    $row.find('.department-name-cell').text(newDepName).data('original-value', newDepName).data('original-dep-id', newDepId);
-
-                    // Update DataTables internal data and redraw
-                    var rowData = c1.row($row).data();
-                    rowData[0] = newRoleName; // Assuming Role Name is the first column (index 0)
-                    rowData[1] = newDepName; // Assuming Department Name is the second column (index 1)
-                    c1.row($row).data(rowData).draw(false); // redraw(false) to keep current paging/sorting
-
-                    // Revert buttons to Edit and Delete
-                    $row.find('.action-cell').html(`
-                        <div class="action-btns">
-                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                            </a>
-                            <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                            </a>
-                        </div>
-                    `);
-                } else {
-                    Swal.fire(
-                        'Error!',
-                        response.message,
-                        'error'
-                    );
-                    // For new rows, if save fails, keep it editable or provide option to retry
-                    if (isNewRow) {
-                        // Optionally, revert the buttons to save/cancel new if error persists.
-                        // Or simply leave it as is for user to correct.
-                    }
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-                Swal.fire(
-                    'Error!',
-                    'An error occurred. Please check console for details.',
-                    'error'
-                );
+        // 3. Show confirmation
+        Swal.fire({
+            title: 'Confirm Changes',
+            text: confirmationText,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, save it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Chain AJAX calls: Dep Deletions -> Role Deletions -> Creations -> Updates
+                deleteDepartments(depsToDelete).then(() => {
+                    deleteRoles(rolesToDelete).then(() => {
+                        createItems(itemsToCreate).then(() => {
+                            updateItems(itemsToUpdate).then(() => {
+                                Swal.fire('Success!', 'All changes have been saved.', 'success').then(() => {
+                                    location.reload();
+                                });
+                            });
+                        });
+                    });
+                });
             }
         });
     });
 
-    // Helper function to save role with department (used after creating new department)
-    function saveRoleWithDepartment($row, roleName, depId, depName, isAfterDepartmentCreation) {
-        var isNewRow = $row.hasClass('new-row');
-        var roleId = isNewRow ? null : $row.data('role-id');
-        
-        var url = isNewRow ? '<?= base_url('admin/rolesdep/create') ?>' : '<?= base_url('admin/rolesdep/update') ?>';
-        var dataToSend = {
-            role_name: roleName,
-            dep_id: depId,
-            '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
-        };
-
-        if (!isNewRow) {
-            dataToSend.role_id = roleId;
-        }
-
-        // AJAX request to save role data
-        $.ajax({
-            url: url,
+    // Helper function for department deletion AJAX
+    function deleteDepartments(depIds) {
+        if (depIds.length === 0) return Promise.resolve();
+        return $.ajax({
+            url: '<?= base_url('admin/rolesdep/bulk-delete-deps') ?>',
             type: 'POST',
-            data: dataToSend,
-            dataType: 'json',
-            success: function (response) {
-                if (response.status === 'success') {
-                    var successMessage = isAfterDepartmentCreation ? 
-                        'Department and Role created successfully!' : 
-                        (isNewRow ? 'Role added successfully.' : 'Role updated successfully.');
-                    
-                    Swal.fire(
-                        isNewRow ? 'Added!' : 'Updated!',
-                        successMessage,
-                        'success'
-                    );
-                    
-                    if (isNewRow) {
-                        // For new row, assign the new role_id and convert to static display
-                        $row.data('role-id', response.role_id);
-                        $row.removeClass('new-row');
-                    }
-                    
-                    // Update the row with new values
-                    $row.find('.role-name-cell').text(roleName).data('original-value', roleName);
-                    $row.find('.department-name-cell').text(depName).data('original-value', depName).data('original-dep-id', depId);
-
-                    // Update DataTables internal data and redraw
-                    var rowData = c1.row($row).data();
-                    rowData[0] = roleName; // Role Name is the first column
-                    rowData[1] = depName; // Department Name is the second column
-                    c1.row($row).data(rowData).draw(false);
-
-                    // Revert buttons to Edit and Delete
-                    $row.find('.action-cell').html(`
-                        <div class="action-btns">
-                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                            </a>
-                            <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                            </a>
-                        </div>
-                    `);
-                } else {
-                    Swal.fire(
-                        'Error!',
-                        response.message,
-                        'error'
-                    );
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-                Swal.fire(
-                    'Error!',
-                    'An error occurred. Please check console for details.',
-                    'error'
-                );
-            }
+            contentType: 'application/json',
+            data: JSON.stringify(depIds),
+            error: (e) => Swal.fire('Error!', 'Failed to delete departments.', 'error')
         });
     }
+
+    // Helper function for role deletion AJAX
+    function deleteRoles(roleIds) {
+        if (roleIds.length === 0) return Promise.resolve();
+        return $.ajax({
+            url: '<?= base_url('admin/rolesdep/bulk-delete') ?>',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(roleIds),
+            error: (e) => Swal.fire('Error!', 'Failed to delete roles.', 'error')
+        });
+    }
+
+    // Helper function for item update AJAX
+    function updateItems(items) {
+        if (items.length === 0) return Promise.resolve();
+        return $.ajax({
+            url: '<?= base_url('admin/rolesdep/bulk-update') ?>',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(items),
+            error: (e) => Swal.fire('Error!', 'Failed to update items.', 'error')
+        });
+    }
+
+    // Helper function for item creation AJAX
+    function createItems(items) {
+        if (items.length === 0) return Promise.resolve();
+        
+        // We need to send these one by one because the endpoint is designed for single creation
+        const createPromises = items.map(item => {
+            return $.ajax({
+                url: '<?= base_url('admin/rolesdep/create') ?>',
+                type: 'POST',
+                data: {
+                    'role_name': item.role_name,
+                    'dep_id': item.dep_id,
+                    '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+                },
+                error: (e) => Swal.fire('Error!', `Failed to create role: ${item.role_name}.`, 'error')
+            });
+        });
+
+        return Promise.all(createPromises);
+    }
+
+    // --- Cancel Edit Mode ---
+    // When the main 'Cancel' button is clicked.
+    $(document).on('click', '#cancelEditButton', function() {
+        // 1. Restore the main action buttons to their default state
+        $('#addNewRowButton, #saveRolesButton, #cancelEditButton').hide();
+        $('#editRolesButton').show();
+
+        // 2. Revert all rows back to their original, non-editable state
+        $('#style-1 tbody tr').each(function() {
+            var $row = $(this);
+            // If a new-row was added and not saved, remove it on cancel
+            if ($row.hasClass('new-row-entry')) {
+                c1.row($row).remove().draw(false);
+                return; // 'continue' in a .each() loop
+            }
+
+            // Remove deletion marking if it exists
+            $row.find('.item-marked-for-deletion').removeClass('item-marked-for-deletion');
+
+            // --- Revert Role cell ---
+            var $roleCell = $row.find('.role-name-cell');
+            var originalRoleName = $roleCell.data('original-value');
+            $roleCell.text(originalRoleName);
+
+            // --- Revert Department cell ---
+            var $depCell = $row.find('.department-name-cell');
+            var originalDepName = $depCell.data('original-value');
+            $depCell.text(originalDepName);
+        });
+    });
+
+    // --- Mark Role for Deletion ---
+    $(document).on('click', '.remove-role-btn', function() {
+        var $container = $(this).closest('div');
+        $container.toggleClass('item-marked-for-deletion');
+        // If marking a role for deletion, ensure the department is not marked
+        $container.closest('tr').find('.department-name-cell div').removeClass('item-marked-for-deletion');
+    });
+
+    // --- Mark Department for Deletion ---
+    $(document).on('click', '.remove-dep-btn', function() {
+        var $container = $(this).closest('div');
+        $container.toggleClass('item-marked-for-deletion');
+        // If marking a department for deletion, ensure the role is not marked
+        $container.closest('tr').find('.role-name-cell div').removeClass('item-marked-for-deletion');
+    });
 
     // Handle department select change - show create new department form when "create-new" is selected
     $('#style-1').on('change', '.department-select', function() {
